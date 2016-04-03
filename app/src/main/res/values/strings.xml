@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Application</string>
+
+    <string name="AppName">Material</string>
+    <string name="Done">Done</string>
+    <string name="NumberPicker">NumberPicker</string>
+</resources>
