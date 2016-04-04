@@ -4,11 +4,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import org.app.material.LayoutHelper;
 import org.app.material.widget.NumberPicker;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button1 = new Button(this);
         button1.setText(getResources().getString(R.string.NumberPicker));
         button1.setOnClickListener(this);
-        frameLayout.addView(button1, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        frameLayout.addView(button1, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
 
         setContentView(frameLayout);
     }
@@ -41,12 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             numberPicker.setMaxValue(100);
             numberPicker.setValue(10);
             numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+            numberPicker.setSelectionDividerColor(0xff4285f4);
 
             builder.setView(numberPicker);
             builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    Toast.makeText(MainActivity.this, "Value = " + numberPicker.getValue(), Toast.LENGTH_SHORT).show();
                 }
             });
             builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
