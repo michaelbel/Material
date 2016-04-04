@@ -4,10 +4,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.app.material.LayoutHelper;
@@ -16,25 +15,31 @@ import org.app.material.widget.NumberPicker;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button button1;
+    private Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout frameLayout = new FrameLayout(this);
-        frameLayout.setBackgroundColor(0xffffffff);
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setBackgroundColor(0xffffffff);
 
         button1 = new Button(this);
         button1.setText(getResources().getString(R.string.NumberPicker));
         button1.setOnClickListener(this);
-        frameLayout.addView(button1, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        linearLayout.addView(button1, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
-        setContentView(frameLayout);
+        button2 = new Button(this);
+        button2.setText("Button");
+        button2.setOnClickListener(this);
+        linearLayout.addView(button2, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+
+        setContentView(linearLayout);
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == button1) {
+    public void onClick(View view) {
+        if (view == button1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Fast NumberPicker");
 
@@ -53,6 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
             builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
-        }
+        } else if (view == button2) {}
     }
 }

@@ -7,8 +7,8 @@ import android.widget.ScrollView;
 
 public class LayoutHelper {
 
-    public static final int WRAP_CONTENT = -1;
-    public static final int MATCH_PARENT = -2;
+    public static final int MATCH_PARENT = -1;
+    public static final int WRAP_CONTENT = -2;
 
     private static int getSize(float size) {
         return (int) (size < 0 ? size : DimenUtil.dp(size));
