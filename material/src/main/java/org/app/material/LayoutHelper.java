@@ -36,6 +36,12 @@ public class LayoutHelper {
         return new FrameLayout.LayoutParams(getSize(width), getSize(height), gravity);
     }
 
+    public static FrameLayout.LayoutParams createFrame(int width, float height, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getSize(width), getSize(height));
+        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        return layoutParams;
+    }
+
     public static FrameLayout.LayoutParams createFrame(int width, float height, int gravity, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getSize(width), getSize(height), gravity);
         layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
