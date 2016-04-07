@@ -29,13 +29,12 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FrameLayout layout = new FrameLayout(getActivity());
-        //layout.setLayoutParams(new ViewGroup.LayoutParams(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         layout.setBackgroundColor(0xffffffff);
 
         button1 = new Button(getActivity());
         button1.setText(getResources().getString(R.string.NumberPicker));
         button1.setOnClickListener(this);
-        layout.addView(button1, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+        layout.addView(button1, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
 
         return layout;
     }
