@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Application</string>
-
     <string name="AppName">Material</string>
     <string name="Done">Done</string>
     <string name="NumberPicker">NumberPicker</string>
+    <string name="Dialogs">Dialogs</string>
+    <string name="ListView">ListView</string>
+    <string name="RecyclerView">RecyclerView</string>
+    <string name="CardView">CardView</string>
 </resources>
