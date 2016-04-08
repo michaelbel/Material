@@ -1,4 +1,4 @@
-package org.app.material.core;
+package org.app.material.widget;
 
 import android.content.Context;
 import android.hardware.SensorManager;
