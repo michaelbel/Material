@@ -22,8 +22,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.app.material.core.Scroller;
-
 import java.util.Locale;
 
 public class NumberPicker extends LinearLayout {
