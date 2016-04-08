@@ -1,10 +1,13 @@
 package org.app.material;
 
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 
 import org.app.material.core.ApplicationLoader;
@@ -60,5 +63,15 @@ public class AndroidUtilities {
         Typeface typeFace;
         typeFace = Typeface.createFromAsset(ApplicationLoader.applicationContext.getAssets(), path);
         return typeFace;
+    }
+
+    public static Drawable getRipple(int background, int rippleColor) {
+        ColorStateList colorStateList;
+        RippleDrawable rippleDrawable;
+
+        colorStateList = ColorStateList.valueOf(rippleColor);
+        rippleDrawable = new RippleDrawable(colorStateList, new ColorDrawable(background), null);
+
+        return rippleDrawable;
     }
 }
