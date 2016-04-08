@@ -7,14 +7,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
-import org.app.material.core.AppLoader;
+import org.app.material.core.ApplicationLoader;
 
 public class AndroidUtilities {
 
     public static float density = 1;
 
     static {
-        density = AppLoader.applicationContext.getResources().getDisplayMetrics().density;
+        density = ApplicationLoader.applicationContext.getResources().getDisplayMetrics().density;
     }
 
     public static int dp(float value) {
@@ -26,11 +26,11 @@ public class AndroidUtilities {
     }
 
     public static boolean isPortrait() {
-        return AppLoader.applicationContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        return ApplicationLoader.applicationContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     public static boolean isLandscape() {
-        return AppLoader.applicationContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        return ApplicationLoader.applicationContext.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     public static boolean isLollipop() {
@@ -43,7 +43,7 @@ public class AndroidUtilities {
 
     public static Drawable getDrawable(int resource, int color) {
         int iconColor = 0;
-        Drawable iconDrawable = AppLoader.applicationContext.getResources().getDrawable(resource, null);
+        Drawable iconDrawable = ApplicationLoader.applicationContext.getResources().getDrawable(resource, null);
 
         if (color != 0) {
             iconColor = color;
@@ -58,7 +58,7 @@ public class AndroidUtilities {
 
     public static Typeface getTypeface(String path) {
         Typeface typeFace;
-        typeFace = Typeface.createFromAsset(AppLoader.applicationContext.getAssets(), path);
+        typeFace = Typeface.createFromAsset(ApplicationLoader.applicationContext.getAssets(), path);
         return typeFace;
     }
 }
