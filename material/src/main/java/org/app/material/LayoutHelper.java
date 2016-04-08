@@ -12,7 +12,7 @@ public class LayoutHelper {
     public static final int WRAP_CONTENT = -2;
 
     private static int getSize(float size) {
-        return (int) (size < 0 ? size : DimenUtil.dp(size));
+        return (int) (size < 0 ? size : AndroidUtilities.dp(size));
     }
 
     public static ScrollView.LayoutParams makeScroll(int width, int height) {
@@ -25,7 +25,7 @@ public class LayoutHelper {
 
     public static ScrollView.LayoutParams makeScroll(int width, int height, int gravity, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(getSize(width), getSize(height), gravity);
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
@@ -39,13 +39,13 @@ public class LayoutHelper {
 
     public static FrameLayout.LayoutParams makeFrame(int width, float height, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getSize(width), getSize(height));
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
     public static FrameLayout.LayoutParams makeFrame(int width, float height, int gravity, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(getSize(width), getSize(height), gravity);
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
@@ -71,26 +71,26 @@ public class LayoutHelper {
 
     public static LinearLayout.LayoutParams makeLinear(int width, int height, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getSize(width), getSize(height));
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
     public static LinearLayout.LayoutParams makeLinear(int width, int height, int gravity, int leftMargin, int topMargin, int rightMargin, int bottomMargin) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getSize(width), getSize(height));
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         layoutParams.gravity = gravity;
         return layoutParams;
     }
 
     public static LinearLayout.LayoutParams makeLinear(int width, int height, float weight, int leftMargin, int topMargin, int rightMargin, int bottomMargin) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getSize(width), getSize(height), weight);
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
     public static LinearLayout.LayoutParams makeLinear(int width, int height, float weight, int gravity, int leftMargin, int topMargin, int rightMargin, int bottomMargin) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getSize(width), getSize(height), weight);
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         layoutParams.gravity = gravity;
         return layoutParams;
     }
@@ -131,10 +131,10 @@ public class LayoutHelper {
         if (alignRelative >= 0 && anchorRelative >= 0) {
             layoutParams.addRule(alignRelative, anchorRelative);
         }
-        layoutParams.leftMargin = DimenUtil.dp(leftMargin);
-        layoutParams.topMargin = DimenUtil.dp(topMargin);
-        layoutParams.rightMargin = DimenUtil.dp(rightMargin);
-        layoutParams.bottomMargin = DimenUtil.dp(bottomMargin);
+        layoutParams.leftMargin = AndroidUtilities.dp(leftMargin);
+        layoutParams.topMargin = AndroidUtilities.dp(topMargin);
+        layoutParams.rightMargin = AndroidUtilities.dp(rightMargin);
+        layoutParams.bottomMargin = AndroidUtilities.dp(bottomMargin);
         return layoutParams;
     }
 
@@ -144,14 +144,14 @@ public class LayoutHelper {
 
     public static CoordinatorLayout.LayoutParams makeCoordinator(int width, int height, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(getSize(width), getSize(height));
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 
     public static CoordinatorLayout.LayoutParams makeCoordinator(int width, int height, int gravity, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(getSize(width), getSize(height));
         layoutParams.gravity = gravity;
-        layoutParams.setMargins(DimenUtil.dp(leftMargin), DimenUtil.dp(topMargin), DimenUtil.dp(rightMargin), DimenUtil.dp(bottomMargin));
+        layoutParams.setMargins(AndroidUtilities.dp(leftMargin), AndroidUtilities.dp(topMargin), AndroidUtilities.dp(rightMargin), AndroidUtilities.dp(bottomMargin));
         return layoutParams;
     }
 }
