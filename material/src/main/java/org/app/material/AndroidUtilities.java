@@ -44,16 +44,11 @@ public class AndroidUtilities {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static Drawable getDrawable(int resource, int color) {
-        int iconColor = 0;
+    public static Drawable getDrawable(int resource, int colorFilter) {
         Drawable iconDrawable = ApplicationLoader.applicationContext.getResources().getDrawable(resource, null);
 
-        if (color != 0) {
-            iconColor = color;
-        }
-
         if (iconDrawable != null) {
-            iconDrawable.setColorFilter(new PorterDuffColorFilter(iconColor, PorterDuff.Mode.MULTIPLY));
+            iconDrawable.setColorFilter(new PorterDuffColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY));
         }
 
         return iconDrawable;
