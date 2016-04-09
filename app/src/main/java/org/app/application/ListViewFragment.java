@@ -1,4 +1,4 @@
-package org.app.application.Fragments;
+package org.app.application;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -54,6 +54,9 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FrameLayout layout = new FrameLayout(getActivity());
+        layout.setBackgroundColor(0xFFECEFF1);
+
         adapter = new ListAdapter(getActivity());
 
         rowCount = 0;
@@ -73,10 +76,6 @@ public class ListViewFragment extends Fragment {
         radioRow1 = rowCount++;
         radioRow2 = rowCount++;
         radioRow3 = rowCount++;
-
-        FrameLayout layout = new FrameLayout(getActivity());
-        //layout.setBackgroundColor(0xFFF0F0F0);
-        //layout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         ListView listView = new ListView(getActivity());
         listView.setDivider(null);
