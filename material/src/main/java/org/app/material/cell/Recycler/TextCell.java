@@ -1,6 +1,7 @@
 package org.app.material.cell.Recycler;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.CheckBox;
@@ -112,6 +113,17 @@ public class TextCell extends FrameLayout {
 
         valueImageView.setVisibility(VISIBLE);
         valueImageView.setImageResource(image);
+        return this;
+    }
+
+    public TextCell addImage(Drawable image) {
+        valueTextView.setVisibility(INVISIBLE);
+        radioButton.setVisibility(INVISIBLE);
+        checkBox.setVisibility(INVISIBLE);
+        switchCompat.setVisibility(INVISIBLE);
+
+        valueImageView.setVisibility(VISIBLE);
+        valueImageView.setImageDrawable(image);
         return this;
     }
 
