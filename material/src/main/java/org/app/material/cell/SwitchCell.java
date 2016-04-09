@@ -1,6 +1,7 @@
 package org.app.material.cell;
 
 import android.content.Context;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -10,14 +11,13 @@ import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.LayoutHelper;
-import org.app.material.Switch;
 
 public class SwitchCell extends FrameLayout {
 
     private float height;
     private View listDivider;
     private TextView titleTextView;
-    private Switch mSwitch;
+    private SwitchCompat switchCompat;
 
     public SwitchCell(Context context) {
         super(context);
@@ -36,24 +36,18 @@ public class SwitchCell extends FrameLayout {
         titleTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         addView(titleTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
-        mSwitch = new Switch(context);
-        mSwitch.setClickable(false);
-        //mSwitch.setEnabled(false);
-        //mSwitch.setZ(1);
-        //mSwitch.setActivated(false);
-        //mSwitch.setContextClickable(false);
-        //mSwitch.setHovered(false);
-        //mSwitch.setPressed(false);
-        mSwitch.setFocusable(false);
-        mSwitch.setFocusableInTouchMode(false);
-        mSwitch.setVisibility(INVISIBLE);
-        mSwitch.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
-        mSwitch.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        addView(mSwitch, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        switchCompat = new SwitchCompat(context);
+        switchCompat.setClickable(false);
+        switchCompat.setFocusable(false);
+        switchCompat.setFocusableInTouchMode(false);
+        switchCompat.setVisibility(INVISIBLE);
+        switchCompat.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        switchCompat.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+        addView(switchCompat, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
 
         listDivider = new View(context);
         listDivider.setVisibility(INVISIBLE);
-        listDivider.setBackgroundColor(0xFFF5F5F5);
+        listDivider.setBackgroundColor(0xFFBDBDBD);
         addView(listDivider, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, 0.8f, Gravity.BOTTOM));
     }
 
@@ -63,8 +57,8 @@ public class SwitchCell extends FrameLayout {
     }
 
     public SwitchCell addSwitch(boolean checked) {
-        mSwitch.setVisibility(VISIBLE);
-        mSwitch.setChecked(checked);
+        switchCompat.setVisibility(VISIBLE);
+        switchCompat.setChecked(checked);
         return this;
     }
 

@@ -21,7 +21,10 @@ public class TextCell extends FrameLayout {
     public TextCell(Context context) {
         super(context);
 
+        //FrameLayout.LayoutParams params = LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0.5f);
+
         this.height = 48;
+        //this.setLayoutParams(params);
         this.setBackgroundColor(0xFFFFFFFF);
 
         titleTextView = new TextView(context);
