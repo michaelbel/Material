@@ -6,4 +6,7 @@
     <string name="ListView">ListView</string>
     <string name="RecyclerView">RecyclerView</string>
     <string name="CardView">CardView</string>
+    <string name="GithubURL">https://github.com/michael-bel/material</string>
+    <string name="OpenGithub">Open Github.com</string>
+    <string name="PopupMenu">Popup Menu</string>
 </resources>
