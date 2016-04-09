@@ -27,7 +27,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FrameLayout layout = new FrameLayout(getActivity());
-        //layout.setBackgroundColor(0xFFF0F0F0);
+        layout.setBackgroundColor(0xFFECEFF1);
 
         button1 = new Button(getActivity());
         button1.setText(getResources().getString(R.string.NumberPicker));
