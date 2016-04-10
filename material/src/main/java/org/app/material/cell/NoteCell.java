@@ -20,7 +20,7 @@ public class NoteCell extends FrameLayout {
 
         dividerLayout = new FrameLayout(context);
         dividerLayout.setVisibility(INVISIBLE);
-        dividerLayout.setBackground(AndroidUtilities.getDrawable(R.drawable.divider, 0));
+        dividerLayout.setBackground(AndroidUtilities.getIcon(R.drawable.divider, 0));
         addView(dividerLayout, LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
         FrameLayout noteLayout = new FrameLayout(context);
