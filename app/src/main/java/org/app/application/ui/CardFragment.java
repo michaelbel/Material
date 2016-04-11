@@ -1,6 +1,7 @@
-package org.app.application;
+package org.app.application.ui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import org.app.application.R;
+import org.app.application.cells.CardCell;
+import org.app.material.AndroidUtilities;
 import org.app.material.LayoutHelper;
 
 import java.util.ArrayList;
@@ -20,11 +24,11 @@ public class CardFragment extends Fragment {
     public class ListItem {
 
         public int icon;
-        public int dotsMenu;
+        public Drawable dotsMenu;
         public String title;
         public String value;
 
-        public ListItem(int icon, String title, String value, int dotsMenu) {
+        public ListItem(int icon, String title, String value, Drawable dotsMenu) {
             this.icon = icon;
             this.dotsMenu = dotsMenu;
             this.title = title;
@@ -38,11 +42,11 @@ public class CardFragment extends Fragment {
         layout.setBackgroundColor(0xFFECEFF1);
 
         List<ListItem> items = new ArrayList<>();
-        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 1", "Recycler Value 1", R.drawable.dots_vertical));
-        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 2", "Recycler Value 2", R.drawable.dots_vertical));
-        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 3", "Recycler Value 3", R.drawable.dots_vertical));
-        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 4", "Recycler Value 4", R.drawable.dots_vertical));
-        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 5", "Recycler Value 5", R.drawable.dots_vertical));
+        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 1", "Recycler Value 1", AndroidUtilities.getIcon(R.drawable.dots_vertical, 0xFF757575)));
+        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 2", "Recycler Value 2", AndroidUtilities.getIcon(R.drawable.dots_vertical, 0xFF757575)));
+        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 3", "Recycler Value 3", AndroidUtilities.getIcon(R.drawable.dots_vertical, 0xFF757575)));
+        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 4", "Recycler Value 4", AndroidUtilities.getIcon(R.drawable.dots_vertical, 0xFF757575)));
+        items.add(new ListItem(R.mipmap.ic_launcher, "Recycler Item 5", "Recycler Value 5", AndroidUtilities.getIcon(R.drawable.dots_vertical, 0xFF757575)));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items, getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
