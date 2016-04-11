@@ -9,4 +9,15 @@
     <string name="GithubURL">https://github.com/michael-bel/material</string>
     <string name="OpenGithub">Open Github.com</string>
     <string name="PopupMenu">Popup Menu</string>
+    <string name="MaterialDemo">Material Demo</string>
+    <string name="PlainText">Plain text</string>
+    <string name="TextAndValue">Text and Value</string>
+    <string name="SomeTitleText">Some title text</string>
+    <string name="TextLock">Lock</string>
+    <string name="TextDisabled">Disabled</string>
+
+    <string name="ListViewNoteRow">ListView is deprecated. The RecyclerView is much more powerful,
+        flexible and a major enhancement over ListView. In simple words, the RecyclerView is much
+        more customizable than the ListView and gives a lot of control and power to its developers.
+    </string>
 </resources>
