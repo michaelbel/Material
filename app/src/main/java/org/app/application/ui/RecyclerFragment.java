@@ -1,4 +1,4 @@
-package org.app.application;
+package org.app.application.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import org.app.application.R;
 import org.app.material.AndroidUtilities;
 import org.app.material.LayoutHelper;
-import org.app.material.cell.Recycler.EmptyCell;
-import org.app.material.cell.Recycler.IconCell;
-import org.app.material.cell.Recycler.TextCell;
+import org.app.material.cell.EmptyCell;
+import org.app.material.cell.IconCell;
+import org.app.material.cell.TextCell;
 
 public class RecyclerFragment extends Fragment {
 
@@ -118,11 +119,11 @@ public class RecyclerFragment extends Fragment {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int i) {
             if (holder.getItemViewType() == 0) {
                 if (i == textRow) {
-                    ((TextCell) holder.itemView).addTitle("Plain text 1");
+                    ((TextCell) holder.itemView).addTitle(getResources().getString(R.string.SomeTitleText));
                 } else if (i == textValueRow) {
-                    ((TextCell) holder.itemView).addTitle("Lock").addValue("DISABLED");
+                    ((TextCell) holder.itemView).addTitle(getResources().getString(R.string.TextLock)).addValue(getResources().getString(R.string.TextDisabled).toUpperCase());
                 } else if (i == imageValueRow) {
-                    ((TextCell) holder.itemView).addTitle("Starring").addImage(AndroidUtilities.getIcon(R.drawable.star, 0xFFFFFFFF));
+                    ((TextCell) holder.itemView).addTitle("Starring").addImage(AndroidUtilities.getIcon(R.drawable.heart, 0xFFF44336));
                 } else if (i == radioRow1) {
                     ((TextCell) holder.itemView).addTitle("Radio 1").addRadio(mRadio1);
                 } else if (i == radioRow2) {
@@ -134,11 +135,11 @@ public class RecyclerFragment extends Fragment {
                 }
             } else if (holder.getItemViewType() == 1) {
                 if (i == headerRow1) {
-                    ((EmptyCell) holder.itemView).addHead("Text", true);
+                    ((EmptyCell) holder.itemView).addHead(getResources().getString(R.string.PlainText), true);
                 } else if (i == noteRow1) {
-                    ((EmptyCell) holder.itemView).addNote("Title text and Value text");
+                    ((EmptyCell) holder.itemView).addNote(getResources().getString(R.string.TextAndValue));
                 } else if (i == headerRow2) {
-                    ((EmptyCell) holder.itemView).addHead("Text and Value", true);
+                    ((EmptyCell) holder.itemView).addHead(getResources().getString(R.string.TextAndValue), true);
                 } else if (i == headerRow3) {
                     ((EmptyCell) holder.itemView).addHead("Icon and Text", true);
                 } else if (i == noteRow2) {
@@ -152,9 +153,9 @@ public class RecyclerFragment extends Fragment {
                 }
             } else if (holder.getItemViewType() == 2) {
                 if (i == iconRow1) {
-                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(R.drawable.heart, 0xffff0000)).addShortDivider();
+                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(R.drawable.heart, 0xFFF44336)).addShortDivider();
                 } else if (i == iconRow2) {
-                    ((IconCell) holder.itemView).addTitle("Title two").addIcon(R.drawable.heart);
+                    ((IconCell) holder.itemView).addTitle("Title two").addIcon(AndroidUtilities.getIcon(R.drawable.heart, 0xFF4285f4));
                 }
             }
         }
