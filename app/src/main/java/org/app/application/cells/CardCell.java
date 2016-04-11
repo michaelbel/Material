@@ -1,4 +1,4 @@
-package org.app.application;
+package org.app.application.cells;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.app.application.R;
 import org.app.material.AndroidUtilities;
 import org.app.material.LayoutHelper;
 
@@ -26,7 +27,7 @@ public class CardCell extends CardView {
         params.setMargins(AndroidUtilities.dp(6), AndroidUtilities.dp(8), AndroidUtilities.dp(6), 0);
 
         this.setElevation(5);
-        this.setRadius(20);
+        //this.setRadius(20);
         this.setPreventCornerOverlap(false);
         this.setLayoutParams(params);
         this.setBackground(AndroidUtilities.getRipple(0xFFFFFFFF, 0xFFE0E0E0));
@@ -49,6 +50,7 @@ public class CardCell extends CardView {
 
         valueImageView = new ImageView(context);
         valueImageView.setVisibility(INVISIBLE);
+        valueImageView.setFocusable(false);
         valueImageView.setScaleType(ImageView.ScaleType.CENTER);
         valueImageView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         addView(valueImageView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
@@ -87,16 +89,11 @@ public class CardCell extends CardView {
         return this;
     }
 
-    public CardCell addOptionButton(int optionButton) {
+    public CardCell addOptionButton(Drawable optionButton) {
         optionsButton.setVisibility(VISIBLE);
-        optionsButton.setImageResource(optionButton);
+        optionsButton.setImageDrawable(optionButton);
         return this;
     }
-
-    //public CardCell setOnOptionsClick(OnClickListener listener) {
-    //    optionsButton.setOnClickListener(listener);
-    //    return this;
-    //}
 
     public void setOnOptionsClick(OnClickListener listener) {
         optionsButton.setOnClickListener(listener);
