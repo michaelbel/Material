@@ -1,4 +1,4 @@
-package org.app.material.cell.Recycler;
+package org.app.material.cell;
 
 import android.content.Context;
 import android.util.TypedValue;

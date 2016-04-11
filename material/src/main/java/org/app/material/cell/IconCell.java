@@ -1,4 +1,4 @@
-package org.app.material.cell.Recycler;
+package org.app.material.cell;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -69,5 +69,13 @@ public class IconCell extends FrameLayout {
     public IconCell addShortDivider() {
         listShortDivider.setVisibility(VISIBLE);
         return this;
+    }
+
+    public void setElevationCell(float elevation) {
+        this.setElevation(elevation);
+    }
+
+    public void setRiipleEffect(int background, int rippleColor) {
+        this.setBackground(AndroidUtilities.getRipple(background, rippleColor));
     }
 }
