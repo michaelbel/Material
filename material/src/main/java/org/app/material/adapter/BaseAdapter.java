@@ -1,11 +1,9 @@
 package org.app.material.adapter;
 
-import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
-public class BaseListAdapter extends BaseAdapter {
+public class BaseAdapter extends android.widget.BaseAdapter {
 
     @Override
     public int getCount() {
@@ -27,10 +25,10 @@ public class BaseListAdapter extends BaseAdapter {
         return null;
     }
 
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-        if (observer != null) {
-            super.unregisterDataSetObserver(observer);
-        }
-    }
+    //@Override
+    //public void unregisterDataSetObserver(DataSetObserver observer) {
+    //    if (observer != null) {
+    //        super.unregisterDataSetObserver(observer);
+    //    }
+    //}
 }
