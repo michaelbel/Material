@@ -173,7 +173,7 @@ public class FilePicker extends FrameLayout {
             String extDevice = null;
 
             while ((line = reader.readLine()) != null) {
-                if ((!line.contains("/mnt") && !line.contains("/ic_storage") && !line.contains("/sdcard")) || line.contains("asec") || line.contains("tmpfs") || line.contains("none")) {
+                if ((!line.contains("/mnt") && !line.contains("/storage") && !line.contains("/sdcard")) || line.contains("asec") || line.contains("tmpfs") || line.contains("none")) {
                     continue;
                 }
 
@@ -191,7 +191,6 @@ public class FilePicker extends FrameLayout {
 
                 result.add(info[1]);
             }
-
             reader.close();
 
             if (extDevice != null) {
