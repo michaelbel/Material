@@ -2,18 +2,19 @@ package org.app.application.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
-import org.app.material.LayoutHelper;
+import org.app.material.widget.LayoutHelper;
 import org.app.material.cell.EmptyCell;
 import org.app.material.cell.IconCell;
 import org.app.material.cell.TextCell;
@@ -79,12 +80,14 @@ public class RecyclerFragment extends Fragment {
         listAdapter = new ListAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
 
         recyclerView = new RecyclerView(getActivity());
-        recyclerView.setVerticalScrollBarEnabled(true);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(listAdapter);
+        recyclerView.setItemAnimator(itemAnimator);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setVerticalScrollBarEnabled(true);
 
         layout.addView(recyclerView, LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         return layout;
@@ -123,7 +126,7 @@ public class RecyclerFragment extends Fragment {
                 } else if (i == textValueRow) {
                     ((TextCell) holder.itemView).addTitle(getResources().getString(R.string.TextLock)).addValue(getResources().getString(R.string.TextDisabled).toUpperCase());
                 } else if (i == imageValueRow) {
-                    ((TextCell) holder.itemView).addTitle("Starring").addImage(AndroidUtilities.getIcon(R.drawable.heart, 0xFFF44336));
+                    ((TextCell) holder.itemView).addTitle("Settings").addImage(AndroidUtilities.getIcon(R.drawable.ic_chevron_right, 0xFFBDBDBD));
                 } else if (i == radioRow1) {
                     ((TextCell) holder.itemView).addTitle("Radio 1").addRadio(mRadio1);
                 } else if (i == radioRow2) {
@@ -153,9 +156,9 @@ public class RecyclerFragment extends Fragment {
                 }
             } else if (holder.getItemViewType() == 2) {
                 if (i == iconRow1) {
-                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(R.drawable.heart, 0xFFF44336)).addShortDivider();
+                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(R.drawable.ic_heart, 0xFFF44336)).addShortDivider();
                 } else if (i == iconRow2) {
-                    ((IconCell) holder.itemView).addTitle("Title two").addIcon(AndroidUtilities.getIcon(R.drawable.heart, 0xFF4285f4));
+                    ((IconCell) holder.itemView).addTitle("Settings").addIcon(AndroidUtilities.getIcon(R.drawable.ic_heart, 0xFF4285f4));
                 }
             }
         }
@@ -172,11 +175,11 @@ public class RecyclerFragment extends Fragment {
                         int i = recyclerView.getChildAdapterPosition(v);
 
                         if (i == textRow) {
-                            Toast.makeText(mContext, "Clicked on " + i, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                         } else if (i == textValueRow) {
-                            Toast.makeText(mContext, "Clicked on " + i, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                         } else if (i == imageValueRow) {
-                            Toast.makeText(mContext, "Clicked on " + i, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                         } else if (i == radioRow1) {
                             mRadio1 = true;
                             mRadio2 = false;
@@ -209,9 +212,9 @@ public class RecyclerFragment extends Fragment {
                         int i = recyclerView.getChildAdapterPosition(v);
 
                         if (i == iconRow1) {
-                            Toast.makeText(mContext, "Clicked on " + i, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                         } else if (i == iconRow2) {
-                            Toast.makeText(mContext, "Clicked on " + i, Toast.LENGTH_SHORT).show();
+                            Snackbar.make(v, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                         }
                     }
                 });
