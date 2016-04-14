@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
-import org.app.material.LayoutHelper;
+import org.app.material.widget.LayoutHelper;
 
 public class CardCell extends CardView {
 
