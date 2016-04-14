@@ -7,7 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.LayoutHelper;
+import org.app.material.widget.LayoutHelper;
 
 public class EmptyCell extends FrameLayout {
 
