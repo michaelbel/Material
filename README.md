@@ -1,6 +1,7 @@
 Material
 ------------
 Material Design Library for your apps.
+[ ![Download](https://api.bintray.com/packages/michael-bel/maven/Material/images/download.svg) ](https://bintray.com/michael-bel/maven/Material/_latestVersion)
 
 License
 ------------
