@@ -27,7 +27,6 @@ public class CardCell extends CardView {
         params.setMargins(AndroidUtilities.dp(6), AndroidUtilities.dp(8), AndroidUtilities.dp(6), 0);
 
         this.setElevation(5);
-        //this.setRadius(20);
         this.setPreventCornerOverlap(false);
         this.setLayoutParams(params);
         this.setBackground(AndroidUtilities.getRipple(0xFFFFFFFF, 0xFFE0E0E0));
