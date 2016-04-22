@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import org.app.application.ui.CardFragment;
 import org.app.application.ui.DialogFragment;
+import org.app.application.ui.FabFragment;
 import org.app.application.ui.ListViewFragment;
 import org.app.application.ui.RecyclerFragment;
 import org.app.material.widget.Browser;
@@ -23,8 +24,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int dotsMenu = 1;
-    private static final int github = 2;
+    private int dotsMenu = 1;
+    private int github = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new CardFragment(), getResources().getString(R.string.CardView));
         adapter.addFragment(new ListViewFragment(), getResources().getString(R.string.ListView));
         adapter.addFragment(new RecyclerFragment(), getResources().getString(R.string.RecyclerView));
+        adapter.addFragment(new FabFragment(), getResources().getString(R.string.Fab));
 
         if (viewPager != null) {
             viewPager.setAdapter(adapter);
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, github, Menu.NONE, getResources().getString(R.string.OpenGithub)).setIcon(R.drawable.ic_heart).setShowAsAction(1);
+        menu.add(0, github, Menu.NONE, getResources().getString(R.string.OpenGithub)).setIcon(R.drawable.ic_github).setShowAsAction(1);
         menu.add(0, dotsMenu, Menu.NONE, getResources().getString(R.string.PopupMenu)).setIcon(R.drawable.ic_dots_menu).setShowAsAction(1);
         return super.onCreateOptionsMenu(menu);
     }
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             browser.setShareIcon(R.drawable.abc_ic_menu_share_mtrl_alpha);
             browser.setShareIconHiddenText("Share link");
             browser.openUrl(this, getResources().getString(R.string.GithubURL));
-        }
+        } else if (item.getItemId() == dotsMenu) {}
 
         return super.onOptionsItemSelected(item);
     }
