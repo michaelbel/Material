@@ -10,8 +10,8 @@ ext {
 
     libraryDescription = 'Material Design Library'
 
-    siteUrl = 'https://github.com/michael-bel/Material'
-    gitUrl = 'https://github.com/michael-bel/Material.git'
+    siteUrl = 'https://github.com/MichaelBel/Material'
+    gitUrl = 'https://github.com/MichaelBel/Material.git'
 
     libraryVersion = '0.0.1'
 
@@ -46,9 +46,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
