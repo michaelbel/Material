@@ -7,6 +7,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 
 public class Browser {
 
@@ -14,15 +17,15 @@ public class Browser {
     private int shareIcon;
     private String shareIconText;
 
-    public void setToolbarColor(int color) {
+    public void setToolbarColor(@ColorRes int color) {
         this.toolbarColor = color;
     }
 
-    public void setShareIcon(int icon) {
+    public void setShareIcon(@DrawableRes int icon) {
         this.shareIcon = icon;
     }
 
-    public void setShareIconHiddenText(String text) {
+    public void setShareIconHiddenText(@NonNull String text) {
         this.shareIconText = text;
     }
 
