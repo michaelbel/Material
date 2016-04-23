@@ -384,6 +384,7 @@ public class NumberPicker extends LinearLayout {
                         break;
                 }
         }
+
         return super.dispatchKeyEvent(event);
     }
 
