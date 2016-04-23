@@ -1,5 +1,6 @@
 package org.app.material;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
@@ -23,6 +24,14 @@ public class AndroidUtilities {
         }
 
         return (int) Math.ceil(density * value);
+    }
+
+    public static int dp (Context context, float value) {
+        if (value == 0) {
+            return 0;
+        }
+
+        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
     public static boolean isPortrait() {
