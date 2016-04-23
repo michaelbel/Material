@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import org.app.application.R;
 import org.app.application.cells.ListCell;
-import org.app.material.LayoutHelper;
+import org.app.material.widget.LayoutHelper;
 import org.app.material.adapter.BaseAdapter;
 import org.app.material.cell.EmptyCell;
 
