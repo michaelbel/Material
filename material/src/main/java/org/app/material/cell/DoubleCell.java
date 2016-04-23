@@ -23,7 +23,7 @@ public class DoubleCell extends FrameLayout {
         iconView = new ImageView(context);
         iconView.setVisibility(INVISIBLE);
         iconView.setScaleType(ImageView.ScaleType.CENTER);
-        iconView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+        iconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
         addView(iconView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         titleTextView = new TextView(context);
@@ -35,7 +35,7 @@ public class DoubleCell extends FrameLayout {
         titleTextView.setTextColor(0xFF000000);
         titleTextView.setEllipsize(TextUtils.TruncateAt.END);
         titleTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        titleTextView.setPadding(AndroidUtilities.dp(16), AndroidUtilities.dp(10), 0, 0);
+        titleTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 10), 0, 0);
         addView(titleTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
 
         valueTextView = new TextView(context);
@@ -45,7 +45,7 @@ public class DoubleCell extends FrameLayout {
         valueTextView.setMaxLines(1);
         valueTextView.setSingleLine(true);
         valueTextView.setGravity(Gravity.START);
-        valueTextView.setPadding(AndroidUtilities.dp(16), AndroidUtilities.dp(35), 0, AndroidUtilities.dp(10));
+        valueTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 35), 0, AndroidUtilities.dp(context, 10));
         addView(valueTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
     }
 
