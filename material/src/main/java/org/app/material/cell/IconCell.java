@@ -31,7 +31,7 @@ public class IconCell extends FrameLayout {
         iconView = new ImageView(context);
         iconView.setVisibility(INVISIBLE);
         iconView.setScaleType(ImageView.ScaleType.CENTER);
-        iconView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+        iconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
         addView(iconView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         textView = new TextView(context);
@@ -39,7 +39,7 @@ public class IconCell extends FrameLayout {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         textView.setTextColor(0xFF444444);
         textView.setGravity(Gravity.START);
-        textView.setPadding(AndroidUtilities.dp(72), AndroidUtilities.dp(16), AndroidUtilities.dp(72), AndroidUtilities.dp(16));
+        textView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16));
         addView(textView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         listShortDivider = new View(context);
