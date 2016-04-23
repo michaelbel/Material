@@ -157,8 +157,7 @@ public class Scroller  {
 
                 break;
             }
-        }
-        else {
+        } else {
             currY = finalY;
             finished = true;
         }
