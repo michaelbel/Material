@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Michael Bel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.app.application.cells;
 
 import android.content.Context;
@@ -33,8 +49,8 @@ public class ListCell extends FrameLayout {
         titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         titleTextView.setTextColor(0xFF000000);
         titleTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        titleTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        addView(titleTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        titleTextView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        addView(titleTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         valueTextView = new TextView(context);
         valueTextView.setLines(1);
@@ -45,13 +61,13 @@ public class ListCell extends FrameLayout {
         valueTextView.setEllipsize(TextUtils.TruncateAt.END);
         valueTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
         valueTextView.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
-        valueTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        addView(valueTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        valueTextView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        addView(valueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
 
         listDivider = new View(context);
         listDivider.setVisibility(INVISIBLE);
         listDivider.setBackgroundColor(0xFFF5F5F5);
-        addView(listDivider, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, 0.8f, Gravity.BOTTOM));
+        addView(listDivider, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, 0.8f, Gravity.BOTTOM));
     }
 
     public ListCell addTitle(String title) {
@@ -83,6 +99,6 @@ public class ListCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getCellHeight()), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), getCellHeight()), MeasureSpec.EXACTLY));
     }
 }

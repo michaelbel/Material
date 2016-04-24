@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Michael Bel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.app.material.cell;
 
 import android.content.Context;
@@ -26,7 +42,7 @@ public class TextCell extends FrameLayout {
     public TextCell(Context context) {
         super(context);
 
-        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0.3f);
+        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 0.3f);
 
         this.setElevation(4);
         this.setLayoutParams(params);
@@ -38,7 +54,7 @@ public class TextCell extends FrameLayout {
         textView.setTextColor(0xFF444444);
         textView.setGravity(Gravity.START);
         textView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16));
-        addView(textView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         valueTextView = new TextView(context);
         valueTextView.setVisibility(INVISIBLE);
@@ -46,13 +62,13 @@ public class TextCell extends FrameLayout {
         valueTextView.setTextColor(0xFF757575);
         valueTextView.setGravity(Gravity.END);
         valueTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16));
-        addView(valueTextView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END));
+        addView(valueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END));
 
         valueImageView = new ImageView(context);
         valueImageView.setVisibility(INVISIBLE);
         valueImageView.setScaleType(ImageView.ScaleType.CENTER);
         valueImageView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
-        addView(valueImageView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        addView(valueImageView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
 
         radioButton = new RadioButton(context);
         radioButton.setClickable(false);
@@ -61,7 +77,7 @@ public class TextCell extends FrameLayout {
         radioButton.setVisibility(INVISIBLE);
         radioButton.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         radioButton.setPadding(AndroidUtilities.dp(context, 6), 0, AndroidUtilities.dp(context, 6), 0);
-        addView(radioButton, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        addView(radioButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
 
         checkBox = new CheckBox(context);
         checkBox.setClickable(false);
@@ -70,7 +86,7 @@ public class TextCell extends FrameLayout {
         checkBox.setVisibility(INVISIBLE);
         checkBox.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         checkBox.setPadding(AndroidUtilities.dp(context, 7), 0, AndroidUtilities.dp(context, 7), 0);
-        addView(checkBox, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        addView(checkBox, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
 
         switchCompat = new Switch(context);
         switchCompat.setClickable(false);
@@ -79,7 +95,7 @@ public class TextCell extends FrameLayout {
         switchCompat.setVisibility(INVISIBLE);
         switchCompat.setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
         switchCompat.setPadding(AndroidUtilities.dp(context, 12), 0, AndroidUtilities.dp(context, 12), 0);
-        addView(switchCompat, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        addView(switchCompat, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
     }
 
     public TextCell addTitle(String title) {

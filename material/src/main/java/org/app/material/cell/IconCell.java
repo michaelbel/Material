@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Michael Bel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.app.material.cell;
 
 import android.content.Context;
@@ -22,7 +38,7 @@ public class IconCell extends FrameLayout {
     public IconCell(Context context) {
         super(context);
 
-        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
 
         this.setElevation(4);
         this.setLayoutParams(params);
@@ -32,7 +48,7 @@ public class IconCell extends FrameLayout {
         iconView.setVisibility(INVISIBLE);
         iconView.setScaleType(ImageView.ScaleType.CENTER);
         iconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
-        addView(iconView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        addView(iconView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         textView = new TextView(context);
         textView.setVisibility(INVISIBLE);
@@ -40,12 +56,12 @@ public class IconCell extends FrameLayout {
         textView.setTextColor(0xFF444444);
         textView.setGravity(Gravity.START);
         textView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16));
-        addView(textView, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         listShortDivider = new View(context);
         listShortDivider.setVisibility(INVISIBLE);
         listShortDivider.setBackgroundColor(0xFF444444);
-        addView(listShortDivider, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, 0.3f, Gravity.BOTTOM, 70, 0, 0, 0));
+        addView(listShortDivider, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, 0.3f, Gravity.BOTTOM, 70, 0, 0, 0));
     }
 
     public IconCell addTitle(String text) {

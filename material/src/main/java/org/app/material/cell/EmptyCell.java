@@ -1,3 +1,19 @@
+/*
+ * Copyright 2016 Michael Bel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.app.material.cell;
 
 import android.content.Context;
@@ -17,23 +33,23 @@ public class EmptyCell extends FrameLayout {
     public EmptyCell(Context context) {
         super(context);
 
-        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
+        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
         this.setLayoutParams(params);
 
         headText = new TextView(context);
         headText.setVisibility(INVISIBLE);
         headText.setGravity(Gravity.START);
         headText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        headText.setTypeface(AndroidUtilities.getTypeface("medium.ttf"));
-        headText.setPadding(AndroidUtilities.dp(16), AndroidUtilities.dp(12), AndroidUtilities.dp(16), AndroidUtilities.dp(12));
-        addView(headText, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        headText.setTypeface(AndroidUtilities.getTypeface(context, "medium.ttf"));
+        headText.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 12), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 12));
+        addView(headText, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         noteText = new TextView(context);
         headText.setVisibility(INVISIBLE);
         noteText.setGravity(Gravity.START);
         noteText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        noteText.setPadding(AndroidUtilities.dp(16), AndroidUtilities.dp(12), AndroidUtilities.dp(16), AndroidUtilities.dp(12));
-        addView(noteText, LayoutHelper.makeFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        noteText.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 12), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 12));
+        addView(noteText, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
     }
 
     public EmptyCell addHead(String text, boolean toUpperCase) {
