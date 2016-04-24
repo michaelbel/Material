@@ -31,4 +31,11 @@
     <string name="SearchIcon">Search Icon</string>
     <string name="LockIcon">Lock Icon</string>
     <string name="DotsMenuIcon">Dots Menu Icon</string>
+    <string name="NumberPickerStrings">Number Picker Strings</string>
+    <string name="AlertStrings">Alert Strings</string>
+    <string name="NumberPickerTitle">NumberPicker</string>
+    <string name="ToolbarHide">Toolbar Hide</string>
+    <string name="ToolbarHideAnim">Toolbar Hide with Animation</string>
+    <string name="RemoveAllIcons">Remove All Icons</string>
+    <string name="ReplaceIcons">Replace Icons</string>
 </resources>
