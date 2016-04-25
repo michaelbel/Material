@@ -18,34 +18,41 @@ package org.app.material;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
-import org.app.material.widget.Toolbar;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.Toolbar;
 
 public class MaterialActivity extends FragmentActivity {
 
-    public LinearLayout containerLayout;
-    public ScrollView scrollView;
     public Toolbar toolbar;
+    public LinearLayout viewLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        containerLayout = new LinearLayout(this);
-
-        scrollView = new ScrollView(this);
+        CoordinatorLayout containerLayout = new CoordinatorLayout(this);
+        containerLayout.setLayoutParams(LayoutHelper.makeCoordinator(this, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
 
         toolbar = new Toolbar(this);
         toolbar.setToolbarColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary));
-        toolbar.initialise();
+        toolbar.setLayoutParams(LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
+        containerLayout.addView(toolbar);
 
-        containerLayout.addView(toolbar, LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
-        containerLayout.addView(scrollView, LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 0, toolbar.getHeight(), 0, 0));
-        setContentView(containerLayout, LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        viewLayout = new LinearLayout(this);
+        viewLayout.setOrientation(LinearLayout.VERTICAL);
+        viewLayout.setLayoutParams(LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 56, 0, 0));
+        containerLayout.addView(viewLayout);
+
+        setContentView(containerLayout);
+    }
+
+    public void addView(View view) {
+        viewLayout.addView(view);
     }
 }
