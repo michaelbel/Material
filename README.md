@@ -1,9 +1,14 @@
-Material
-------------
-Material Design Library for your apps.
+# Material
+Material Design Library for adding components and widgets Android.
 
-License
-------------
+## Requirements
+
+* Android 21 (Lollipop) 
+* Android Studio 2.0 with Gradle Plugin 2.0
+
+## Screenshots
+
+## License
 
     Copyright 2016 Michael Bel
 
