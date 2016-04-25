@@ -42,6 +42,12 @@ public class LayoutHelper {
         return new ScrollView.LayoutParams(getSize(context, width), getSize(context, height), gravity);
     }
 
+    public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
+        ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
+        layoutParams.setMargins(AndroidUtilities.dp(context, leftMargin), AndroidUtilities.dp(context, topMargin), AndroidUtilities.dp(context, rightMargin), AndroidUtilities.dp(context, bottomMargin));
+        return layoutParams;
+    }
+
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, int gravity, float leftMargin, float topMargin, float rightMargin, float bottomMargin) {
         ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(getSize(context, width), getSize(context, height), gravity);
         layoutParams.setMargins(AndroidUtilities.dp(context, leftMargin), AndroidUtilities.dp(context, topMargin), AndroidUtilities.dp(context, rightMargin), AndroidUtilities.dp(context, bottomMargin));
