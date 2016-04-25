@@ -1,6 +1,6 @@
 Material
 ------------
-Material Design Library for your apps.
+Material Design Library for adding components and widgets Android.
 
 License
 ------------
