@@ -16,6 +16,7 @@
 
 package org.app.application.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,14 +30,20 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
 import org.app.application.R;
+import org.app.application.ViewController;
+import org.app.material.drawable.MediaControlDrawable;
 import org.app.material.widget.LayoutHelper;
 
 public class FabFragment extends Fragment implements View.OnClickListener {
 
-    private Boolean isFabOpen = true;
+    private boolean isFabPlusState = true;
+    private boolean isFabMediaState = true;
 
     private FloatingActionButton fabPlus;
     private FloatingActionButton fabEdit;
+    private FloatingActionButton fabMedia;
+
+    private MediaControlDrawable mediaControl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,12 +53,22 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         fabPlus = new FloatingActionButton(getActivity());
         fabPlus.setOnClickListener(this);
         fabPlus.setImageResource(R.drawable.ic_plus);
-        layout.addView(fabPlus, LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 16, 16));
+        fabPlus.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 16, 16));
+        layout.addView(fabPlus);
 
         fabEdit = new FloatingActionButton(getActivity());
         fabEdit.setOnClickListener(this);
         fabEdit.setImageResource(R.drawable.ic_edit);
-        layout.addView(fabEdit, LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 84, 16));
+        fabEdit.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 84, 16));
+        layout.addView(fabEdit);
+
+        mediaControl = new MediaControlDrawable.Builder(getActivity()).setInitialState(MediaControlDrawable.State.PAUSE).build();
+
+        fabMedia = new FloatingActionButton(getActivity());
+        fabMedia.setOnClickListener(this);
+        fabMedia.setImageDrawable(mediaControl);
+        fabMedia.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 152, 16));
+        layout.addView(fabMedia);
 
         return layout;
     }
@@ -59,8 +76,12 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == fabPlus) {
-            fabPlus.startAnimation(isFabOpen ? toClose() : toPlus());
-            isFabOpen = !isFabOpen;
+            fabPlus.startAnimation(isFabPlusState ? toClose() : toPlus());
+            isFabPlusState = !isFabPlusState;
+        } else if (view == fabEdit) {
+            startActivity(new Intent(getActivity(), ViewController.class));
+        } else if (view == fabMedia) {
+            mediaControl.setMediaControlState(getNextState(mediaControl.getMediaControlState()));
         }
     }
 
@@ -68,7 +89,7 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         RotateAnimation rotate = new RotateAnimation(0, 135, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setInterpolator(new LinearInterpolator());
         rotate.setFillAfter(true);
-        rotate.setDuration(160);
+        rotate.setDuration(200);
         return rotate;
     }
 
@@ -76,7 +97,21 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         RotateAnimation rotate = new RotateAnimation(135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotate.setInterpolator(new LinearInterpolator());
         rotate.setFillAfter(true);
-        rotate.setDuration(160);
+        rotate.setDuration(200);
         return rotate;
+    }
+
+    private MediaControlDrawable.State getNextState(MediaControlDrawable.State state) {
+        switch (state) {
+            case PLAY:
+                isFabMediaState = !isFabMediaState;
+                return isFabMediaState ? MediaControlDrawable.State.PAUSE : MediaControlDrawable.State.STOP;
+            case STOP:
+                return isFabMediaState ? MediaControlDrawable.State.PLAY : MediaControlDrawable.State.PAUSE;
+            case PAUSE:
+                return isFabMediaState ? MediaControlDrawable.State.STOP : MediaControlDrawable.State.PLAY;
+        }
+
+        return null;
     }
 }
