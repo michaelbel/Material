@@ -142,7 +142,7 @@ public class RecyclerFragment extends Fragment {
                 } else if (i == textValueRow) {
                     ((TextCell) holder.itemView).addTitle(getResources().getString(R.string.TextLock)).addValue(getResources().getString(R.string.TextDisabled).toUpperCase());
                 } else if (i == imageValueRow) {
-                    ((TextCell) holder.itemView).addTitle("Settings").addImage(AndroidUtilities.getIcon(R.drawable.ic_chevron_right, 0xFFBDBDBD));
+                    ((TextCell) holder.itemView).addTitle("Settings").addImage(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_chevron_right, 0xFFBDBDBD));
                 } else if (i == radioRow1) {
                     ((TextCell) holder.itemView).addTitle("Radio 1").addRadio(mRadio1);
                 } else if (i == radioRow2) {
@@ -172,9 +172,9 @@ public class RecyclerFragment extends Fragment {
                 }
             } else if (holder.getItemViewType() == 2) {
                 if (i == iconRow1) {
-                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(R.drawable.ic_heart, 0xFFF44336)).addShortDivider();
+                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFFF44336)).addShortDivider();
                 } else if (i == iconRow2) {
-                    ((IconCell) holder.itemView).addTitle("Settings").addIcon(AndroidUtilities.getIcon(R.drawable.ic_heart, 0xFF4285f4));
+                    ((IconCell) holder.itemView).addTitle("Settings").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFF4285f4));
                 }
             }
         }
