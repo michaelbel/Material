@@ -62,8 +62,8 @@ public class AndroidUtilities {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static Drawable getIcon(int resource, int colorFilter) {
-        Drawable iconDrawable = ApplicationLoader.applicationContext.getResources().getDrawable(resource, null);
+    public static Drawable getIcon(Context context, int resource, int colorFilter) {
+        Drawable iconDrawable = context.getResources().getDrawable(resource, null);
 
         if (iconDrawable != null) {
             iconDrawable.mutate().setColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY);
