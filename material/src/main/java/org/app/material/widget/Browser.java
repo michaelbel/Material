@@ -23,38 +23,37 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 public class Browser {
 
-    private int toolbarColor;
-    private int shareIcon;
-    private String shareIconText;
+    private int mToolbarColor;
+    private int mShareIcon;
+    private String mShareIconText;
 
     public void setToolbarColor(int color) {
-        this.toolbarColor = color;
+        this.mToolbarColor = color;
     }
 
     public void setShareIcon(@DrawableRes int icon) {
-        this.shareIcon = icon;
+        this.mShareIcon = icon;
     }
 
     public void setShareIconHiddenText(@NonNull String text) {
-        this.shareIconText = text;
+        this.mShareIconText = text;
     }
 
     public int getToolbarColor() {
-        return toolbarColor;
+        return mToolbarColor;
     }
 
     public int getShareIcon() {
-        return shareIcon;
+        return mShareIcon;
     }
 
     public String getShareIconText() {
-        return shareIconText;
+        return mShareIconText;
     }
 
     public void openUrl(Context context, String url) {
@@ -73,7 +72,7 @@ public class Browser {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
-            if (toolbarColor != 0) {
+            if (mToolbarColor != 0) {
                 intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", getToolbarColor());
             }
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
@@ -84,10 +83,10 @@ public class Browser {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT);
             Bundle bundle = new Bundle();
             bundle.putInt("android.support.customtabs.customaction.ID", 0);
-            if (shareIcon != 0) {
+            if (mShareIcon != 0) {
                 bundle.putParcelable("android.support.customtabs.customaction.ICON", BitmapFactory.decodeResource(context.getResources(), getShareIcon()));
             }
-            if (shareIconText != null) {
+            if (mShareIconText != null) {
                 bundle.putString("android.support.customtabs.customaction.DESCRIPTION", getShareIconText());
             }
             bundle.putParcelable("android.support.customtabs.customaction.PENDING_INTENT", pendingIntent);
