@@ -19,7 +19,6 @@ package org.app.material.widget;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
@@ -44,23 +43,33 @@ import java.util.ArrayList;
 
 public class Toolbar extends FrameLayout {
 
-    private OnIconClickListener iconClickListener;
+    private ImageView mBackButtonIcon;
+    private ImageView mLogoView;
+    private TextView mTitleTextView;
+    private TextView mSubtitleTextView;
 
-    private ArrayList<ToolbarIconItem> iconItems = new ArrayList<>();
+    private boolean isSubtitle = false;
 
-    private ToolbarBackIcon backIconImage;
+//==================================================================================================
 
-    private ArrayList<BottomNavigationTab> tabs = new ArrayList<>();
-    private FrameLayout toolbarContainer;
-    private FrameLayout toolbarViews;
-    private LinearLayout toolbarIcons;
+
+    private OnIconClickListener onIconClickListener;
+
+    private ArrayList<ToolbarIconItem> mIconItems = new ArrayList<>();
+
+    private ToolbarBackIcon mBackIconImage;
+
+    private ArrayList<BottomNavigationTab> mTabs = new ArrayList<>();
+    private FrameLayout mToolbarContainer;
+    private FrameLayout mToolbarViews;
+    private LinearLayout mToolbarIcons;
 
     private Content content;
 
-    private Drawable backIcon = null;
-    private int toolbarImage = 0;
-    private String toolbarTitle = null;
-    private String toolbarSubTitle = null;
+    private Drawable mBackIcon = null;
+    private int mToolbarImage = 0;
+    private String mTitle = null;
+    private String mSubtitle = null;
     private static final int MIN_SIZE = 1;
     private static final int MAX_SIZE = 4;
 
@@ -69,10 +78,6 @@ public class Toolbar extends FrameLayout {
     public static final int BACKGROUND_STYLE_DEFAULT = 0;
     public static final int BACKGROUND_STYLE_STATIC = 1;
     public static final int BACKGROUND_STYLE_RIPPLE = 2;
-
-    //@IntDef({BACKGROUND_STYLE_DEFAULT, BACKGROUND_STYLE_STATIC, BACKGROUND_STYLE_RIPPLE})
-    //@Retention(RetentionPolicy.SOURCE)
-    //public @interface BackgroundStyle {}
 
     private static final Interpolator INTERPOLATOR = new LinearOutSlowInInterpolator();
     private ViewPropertyAnimatorCompat mTranslationAnimator;
@@ -84,40 +89,104 @@ public class Toolbar extends FrameLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    private void createBackButtonIcon() {
+        if (mBackButtonIcon != null) {
+            return;
+        }
+        mBackButtonIcon = new ImageView(getContext());
+        mBackButtonIcon.setScaleType(ImageView.ScaleType.CENTER);
+        mBackButtonIcon.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        addView(mBackButtonIcon);
+    }
+
+    private void createTitleTextView() {
+        if (mTitleTextView != null) {
+            return;
+        }
+        mTitleTextView = new TextView(getContext());
+        mTitleTextView.setSingleLine(true);
+        mTitleTextView.setTextColor(0xFFFFFFFF);
+        mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+        mTitleTextView.setTypeface(AndroidUtilities.getTypeface(getContext(), "medium.ttf"));
+        mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        if (AndroidUtilities.isLandscape(getContext())) {
+            mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        }
+        mTitleTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        mTitleTextView.setPadding(AndroidUtilities.dp(getContext(), 16), 0, 0, 0);
+        mTitleTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        addView(mTitleTextView);
+    }
+
+    private void createSubTitle() {
+        if (mSubtitleTextView != null) {
+            return;
+        }
+        mSubtitleTextView = new TextView(getContext());
+        mSubtitleTextView.setSingleLine(true);
+        mSubtitleTextView.setTextColor(0xFFFFFFFF);
+        mSubtitleTextView.setPadding(AndroidUtilities.dp(getContext(), 16), 0, 0, AndroidUtilities.dp(getContext(), 8));
+        mSubtitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        if (AndroidUtilities.isLandscape(getContext())) {
+            mSubtitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+            mSubtitleTextView.setPadding(AndroidUtilities.dp(getContext(), 16), 0, 0, AndroidUtilities.dp(getContext(), 13));
+        }
+        mSubtitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+        mSubtitleTextView.setGravity(Gravity.START | Gravity.BOTTOM);
+        mSubtitleTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM));
+        addView(mSubtitleTextView);
+    }
+
+    public void setBackButtonIcon(Drawable icon) {
+        createBackButtonIcon();
+        mBackButtonIcon.setImageDrawable(icon);
+        mTitleTextView.setPadding(AndroidUtilities.dp(getContext(), 56), 0, 0, 0);
+    }
+
+    public void setTitle(String title) {
+        if (!isSubtitle) {
+            createTitleTextView();
+        }
+
+        mTitleTextView.setText(title);
+    }
+
+    public void setSubtitle(String text) {
+        isSubtitle = true;
+
+        setTitle("App Name");
+        createSubTitle();
+        mSubtitleTextView.setText(text);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public Toolbar addIcon(Drawable icon) {
-        iconItems.add(0, new ToolbarIconItem(icon));
+        mIconItems.add(0, new ToolbarIconItem(icon));
         initialise();
         return this;
     }
-
-    //public Toolbar setBackIcon(@DrawableRes Drawable backImage) {
-    //    backIcon = backImage;
-    //    return this;
-    //}
 
     public Toolbar setLogo(int image) {
-        this.toolbarImage = image;
+        this.mToolbarImage = image;
         initialise();
         return this;
     }
 
-    public Toolbar setTitle(String text) {
-        this.toolbarTitle = text;
-        initialise();
-        return this;
-    }
-
-    public Toolbar setSubtitle(String text) {
-        this.toolbarSubTitle = text;
-        initialise();
-        return this;
-    }
-
-    public Toolbar setNavButtonView(@DrawableRes Drawable resId) {
-        backIcon = resId;
-        initialise();
-        return this;
-    }
+    //public Toolbar setSubtitle(String text) {
+    //    this.mSubtitle = text;
+    //    initialise();
+    //    return this;
+    //}
 
     public void hide() {
         hide(true);
@@ -146,7 +215,7 @@ public class Toolbar extends FrameLayout {
     }
 
     public Toolbar removeAllIcons() {
-        iconItems.clear();
+        mIconItems.clear();
         initialise();
         return this;
     }
@@ -155,60 +224,60 @@ public class Toolbar extends FrameLayout {
     public Toolbar(Context context) {
         super(context);
 
-        toolbarContainer = new FrameLayout(context);
-        toolbarContainer.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 56));
+        mToolbarContainer = new FrameLayout(context);
+        mToolbarContainer.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 56));
 
-        toolbarViews = new FrameLayout(context);
-        toolbarViews.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT));
-        toolbarContainer.addView(toolbarViews, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT));
+        mToolbarViews = new FrameLayout(context);
+        mToolbarViews.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT));
+        mToolbarContainer.addView(mToolbarViews, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT));
 
-        toolbarIcons = new LinearLayout(context);
-        toolbarIcons.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
-        toolbarIcons.setGravity(Gravity.CENTER);
-        toolbarIcons.setOrientation(LinearLayout.HORIZONTAL);
-        toolbarContainer.addView(toolbarIcons, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
+        mToolbarIcons = new LinearLayout(context);
+        mToolbarIcons.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
+        mToolbarIcons.setGravity(Gravity.CENTER);
+        mToolbarIcons.setOrientation(LinearLayout.HORIZONTAL);
+        mToolbarContainer.addView(mToolbarIcons, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END));
 
         content = new Content(context);
-        toolbarViews.addView(content, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START, 0, 0, 0, 0));
+        mToolbarViews.addView(content, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START, 0, 0, 0, 0));
 
-        backIconImage = new ToolbarBackIcon(context);
-        toolbarContainer.addView(backIconImage, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START));
+        mBackIconImage = new ToolbarBackIcon(context);
+        mToolbarContainer.addView(mBackIconImage, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START));
 
-        addView(toolbarContainer, LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 56));
+        addView(mToolbarContainer, LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 56));
         setClipToPadding(false);
     }
 
     public void initialise() {
-        if (iconItems.size() > MIN_SIZE - 1 || iconItems.size() < MAX_SIZE + 1) {
-            toolbarIcons.removeAllViews();
+        if (mIconItems.size() > MIN_SIZE - 1 || mIconItems.size() < MAX_SIZE + 1) {
+            mToolbarIcons.removeAllViews();
 
-            for (ToolbarIconItem item : iconItems) {
+            for (ToolbarIconItem item : mIconItems) {
                 ShiftingBottomNavigationTab tab = new ShiftingBottomNavigationTab(getContext());
                 setUpTab(tab, item);
             }
 
-            if (tabs.size() > 0) {
+            if (mTabs.size() > 0) {
                 selectTabInternal(0, true);
             }
         }
 
-        if (toolbarTitle != null) {
-            content.setTitle(toolbarTitle);
+        if (mTitle != null) {
+            content.setTitle(mTitle);
         }
 
-        if (toolbarSubTitle != null) {
-            content.setSubtitle(toolbarSubTitle);
+        if (mSubtitle != null) {
+            content.setSubtitle(mSubtitle);
         }
 
-        if (toolbarImage != 0) {
-            content.setLogo(toolbarImage);
+        if (mToolbarImage != 0) {
+            content.setLogo(mToolbarImage);
         }
 
-        if (backIcon != null) {
+        if (mBackIcon != null) {
             content.setTitlePadding();
 
-            backIconImage.setIcon(backIcon);
-            backIconImage.setOnClickListener(new OnClickListener() {
+            mBackIconImage.setIcon(mBackIcon);
+            mBackIconImage.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {}
             });
@@ -216,7 +285,7 @@ public class Toolbar extends FrameLayout {
     }
 
     private void setUpTab(BottomNavigationTab tab, ToolbarIconItem item) {
-        tab.setPosition(iconItems.indexOf(item));
+        tab.setPosition(mIconItems.indexOf(item));
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,10 +294,10 @@ public class Toolbar extends FrameLayout {
             }
         });
 
-        tabs.add(tab);
+        mTabs.add(tab);
         bindTabWithData(item, tab, this);
         tab.initialise();
-        toolbarIcons.addView(tab, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END));
+        mToolbarIcons.addView(tab, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END));
     }
 
     public void bindTabWithData(ToolbarIconItem bottomNavigationItem, BottomNavigationTab bottomNavigationTab, Toolbar bottomNavigationBar) {
@@ -263,13 +332,13 @@ public class Toolbar extends FrameLayout {
         int mAnimationDuration = 200;
         int mBackgroundStyle = BACKGROUND_STYLE_DEFAULT;
         if (mBackgroundStyle == BACKGROUND_STYLE_STATIC) {
-            tabs.get(newPosition).select(mAnimationDuration);
+            mTabs.get(newPosition).select(mAnimationDuration);
         } else if (mBackgroundStyle == BACKGROUND_STYLE_RIPPLE) {
             if (mSelectedPosition != -1) {
-                tabs.get(mSelectedPosition).unSelect(mAnimationDuration);
+                mTabs.get(mSelectedPosition).unSelect(mAnimationDuration);
             }
 
-            tabs.get(newPosition).select(mAnimationDuration);
+            mTabs.get(newPosition).select(mAnimationDuration);
         }
 
         mSelectedPosition = newPosition;
@@ -302,18 +371,18 @@ public class Toolbar extends FrameLayout {
 
 
     private void sendListenerCall(int oldPosition, int newPosition) {
-        if (iconClickListener != null && oldPosition != -1) {
-            iconClickListener.onIconClick(newPosition);
+        if (onIconClickListener != null && oldPosition != -1) {
+            onIconClickListener.onIconClick(newPosition);
         }
     }
 
     public Toolbar setOnIconClickListener(OnIconClickListener listener) {
-        this.iconClickListener = listener;
+        this.onIconClickListener = listener;
         return this;
     }
 
     public Toolbar setNavButtonClickListener(OnClickListener listener) {
-        backIconImage.setOnClickListener(listener);
+        mBackIconImage.setOnClickListener(listener);
         return this;
     }
 
