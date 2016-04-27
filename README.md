@@ -1,9 +1,9 @@
 # Material
-Material Design Library for adding components and widgets Android.
+Material Design Library
 
 ## Requirements
 
-* Android SDK 21+
+* Android 5.0+
 * Android Studio 2.0
 
 ## Screenshots
