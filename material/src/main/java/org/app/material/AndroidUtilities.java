@@ -25,7 +25,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.util.TypedValue;
 
 import java.util.Hashtable;
@@ -48,18 +47,6 @@ public class AndroidUtilities {
 
     public static boolean isLandscape(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    public static boolean isLollipop() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
-    }
-
-    public static boolean isLollipopMR1() {
-        return Build.VERSION.SDK_INT >= 22;
-    }
-
-    public static boolean isMarshmallow() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
     public static Drawable getIcon(Context context, int resource, int colorFilter) {
