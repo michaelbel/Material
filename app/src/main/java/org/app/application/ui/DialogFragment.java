@@ -168,6 +168,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
 
             LinearLayout linearLayout = new LinearLayout(getActivity());
             linearLayout.setOrientation(LinearLayout.VERTICAL);
+
             final ColorPicker colorPicker = new ColorPicker(getActivity());
             linearLayout.addView(colorPicker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             colorPicker.setOldCenterColor(0xFF00FF00);

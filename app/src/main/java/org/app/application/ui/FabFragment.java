@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +29,13 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.ViewController;
+import org.app.material.AndroidUtilities;
+import org.app.material.FabButton;
+import org.app.material.FabMenu;
 import org.app.material.drawable.MediaControlDrawable;
 import org.app.material.widget.LayoutHelper;
 
@@ -42,6 +47,8 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fabPlus;
     private FloatingActionButton fabEdit;
     private FloatingActionButton fabMedia;
+
+    private FabMenu fabMenu;
 
     private MediaControlDrawable mediaControl;
 
@@ -69,6 +76,50 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         fabMedia.setImageDrawable(mediaControl);
         fabMedia.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 152, 16));
         layout.addView(fabMedia);
+
+        fabMenu = new FabMenu(getActivity());
+        fabMenu.setIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_search, 0xFFFFFFFF));
+        fabMenu.setMenuButtonColorNormal(0xFF000000);
+        fabMenu.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        layout.addView(fabMenu);
+
+        final FabButton programFab1 = new FabButton(getActivity());
+        programFab1.setButtonSize(FabButton.SIZE_MINI);
+        programFab1.setLabelText("Label text");
+        programFab1.setImageResource(R.drawable.ic_edit);
+        fabMenu.addMenuButton(programFab1);
+        programFab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                programFab1.setLabelColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+                        ContextCompat.getColor(getActivity(), R.color.colorAccent),
+                        ContextCompat.getColor(getActivity(), R.color.textColorPrimary));
+                programFab1.setLabelTextColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+            }
+        });
+
+        fabMenu.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fabMenu.isOpened()) {
+                    Toast.makeText(getActivity(), fabMenu.getMenuButtonLabelText(), Toast.LENGTH_SHORT).show();
+                }
+
+                fabMenu.toggle(true);
+            }
+        });
+
+        FabButton button = new FabButton(getActivity());
+        button.setImageResource(R.drawable.ic_github);
+        button.setButtonSize(FabButton.SIZE_NORMAL);
+        button.setLabelText("Label");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //layout.addView(button);
 
         return layout;
     }
