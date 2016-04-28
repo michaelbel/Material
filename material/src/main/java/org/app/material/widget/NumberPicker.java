@@ -53,7 +53,7 @@ public class NumberPicker extends LinearLayout {
     private static final long DEFAULT_LONG_PRESS_UPDATE_INTERVAL = 300;
     private static final float TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f;
 
-    private int selectionDividersDistance;
+    private int mSelectionDividersDistance;
     private int minHeight;
     private int maxHeight;
     private int minWidth;
@@ -112,7 +112,7 @@ public class NumberPicker extends LinearLayout {
         solidColor = 0;
         selectionDivider = new ColorDrawable(0xffbdbdbd);
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
-        selectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
+        mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
         minHeight = SIZE_UNSPECIFIED;
         maxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
 
@@ -183,8 +183,8 @@ public class NumberPicker extends LinearLayout {
         if (changed) {
             initializeSelectorWheel();
             initializeFadingEdges();
-            topSelectionDividerTop = (getHeight() - selectionDividersDistance) / 2 - selectionDividerHeight;
-            bottomSelectionDividerBottom = topSelectionDividerTop + 2 * selectionDividerHeight + selectionDividersDistance;
+            topSelectionDividerTop = (getHeight() - mSelectionDividersDistance) / 2 - selectionDividerHeight;
+            bottomSelectionDividerBottom = topSelectionDividerTop + 2 * selectionDividerHeight + mSelectionDividersDistance;
         }
     }
 
