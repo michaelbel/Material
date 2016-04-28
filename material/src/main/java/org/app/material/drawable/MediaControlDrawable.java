@@ -186,7 +186,7 @@ public class MediaControlDrawable extends Drawable {
             float offset = (1f - fraction) * mPlayTipOffset;
             float offsetBase = (1f - fraction) * mPlayBaseOffset;
 
-            if (fraction > 0.5f) { // two paths
+            if (fraction > 0.5f) {
                 float primaryBottom = mCenter - (2f * fraction - 1f) * 3f / 20f * mSize;
                 float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mSize / 2f);
                 float secondaryTop = mCenter + (2f * fraction - 1f) * 3f / 20f * mSize;
@@ -230,13 +230,6 @@ public class MediaControlDrawable extends Drawable {
         invalidateSelf();
     }
 
-    /**
-     * This calculates the trim area for the icon as specified in the guidelines
-     *
-     * @param bounds
-     * @see <a href="https://www.google.com/design/spec/style/icons.html#icons-system-icons">
-     * Google design guidelines - Icon - Style - System Icons</a>
-     */
     private void calculateTrimArea(Rect bounds) {
         float size = Math.min(bounds.height(), bounds.width());
         float yOffset = (bounds.height() - size) / 2f;
@@ -250,15 +243,6 @@ public class MediaControlDrawable extends Drawable {
         setTransitionState(0f, 0f);
     }
 
-    /**
-     * Helper for interpolating between two values (ultimately points)
-     * This is only used for the more complex play/stop animations
-     *
-     * @param start    The value of the coordinate at the start of the animation
-     * @param end      The value of the coordinate at the end of the animation
-     * @param fraction The current fraction of the animation
-     * @return The interpolated value
-     */
     private float interpolate(float start, float end, float fraction) {
         return (1f - fraction) * start + fraction * end;
     }
