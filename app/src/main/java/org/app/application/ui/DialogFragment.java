@@ -104,7 +104,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
             builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
         } else if (view == button2) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("NumberPicker Strings");
+            builder.setTitle("String Picker");
 
             final NumberPicker numberPickerStrings = new NumberPicker(getActivity());
             numberPickerStrings.setMinValue(0);
