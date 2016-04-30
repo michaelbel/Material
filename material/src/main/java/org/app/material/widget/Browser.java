@@ -31,46 +31,51 @@ public class Browser {
     private int mToolbarColor;
     private int mShareIcon;
     private String mShareIconText;
+    private String mUrl;
 
-    public void setToolbarColor(int color) {
+    public Browser setUrl(String address) {
+        this.mUrl = address;
+        return this;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public Browser setToolbarColor(int color) {
         this.mToolbarColor = color;
-    }
-
-    public void setShareIcon(@DrawableRes int icon) {
-        this.mShareIcon = icon;
-    }
-
-    public void setShareIconHiddenText(@NonNull String text) {
-        this.mShareIconText = text;
+        return this;
     }
 
     public int getToolbarColor() {
         return mToolbarColor;
     }
 
+    public Browser setShareIcon(@DrawableRes int icon) {
+        this.mShareIcon = icon;
+        return this;
+    }
+
     public int getShareIcon() {
         return mShareIcon;
+    }
+
+    public Browser setShareIconHiddenText(@NonNull String text) {
+        this.mShareIconText = text;
+        return this;
     }
 
     public String getShareIconText() {
         return mShareIconText;
     }
 
-    public void openUrl(Context context, String url) {
-        if (context == null || url == null) {
-            return;
-        }
-
-        openUrl(context, Uri.parse(url));
-    }
-
-    public void openUrl(Context context, Uri uri) {
-        if (context == null || uri == null) {
-            return;
+    public Browser show(Context context) {
+        if (context == null || mUrl == null) {
+            return this;
         }
 
         try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
             if (mToolbarColor != 0) {
                 intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", getToolbarColor());
@@ -78,7 +83,7 @@ public class Browser {
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
             Intent actionIntent = new Intent(Intent.ACTION_SEND);
             actionIntent.setType("text/plain");
-            actionIntent.putExtra(Intent.EXTRA_TEXT, uri.toString());
+            actionIntent.putExtra(Intent.EXTRA_TEXT, Uri.parse(mUrl).toString());
             actionIntent.putExtra(Intent.EXTRA_SUBJECT, "");
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT);
             Bundle bundle = new Bundle();
@@ -95,5 +100,7 @@ public class Browser {
             intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, context.getPackageName());
             context.startActivity(intent);
         } catch (Exception ignored) {}
+
+        return this;
     }
 }
