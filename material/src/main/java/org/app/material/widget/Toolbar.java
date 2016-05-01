@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,9 +45,14 @@ import java.util.ArrayList;
 public class Toolbar extends FrameLayout {
 
     private ImageView mBackButtonIcon;
-    private ImageView mLogoView;
     private TextView mTitleTextView;
     private TextView mSubtitleTextView;
+    private EditText mSearchView;
+
+
+    private ImageView mLogoView;
+
+
 
     private boolean isSubtitle = false;
 
@@ -141,22 +147,34 @@ public class Toolbar extends FrameLayout {
         createBackButtonIcon();
         mBackButtonIcon.setImageDrawable(icon);
         mTitleTextView.setPadding(AndroidUtilities.dp(getContext(), 56), 0, 0, 0);
+        //mSearchView.setPadding(AndroidUtilities.dp(getContext(), 56), 0, AndroidUtilities.dp(getContext(), 56), 0);
     }
 
     public void setTitle(String title) {
-        if (!isSubtitle) {
-            createTitleTextView();
-        }
-
+        createTitleTextView();
         mTitleTextView.setText(title);
     }
 
+    @Deprecated
     public void setSubtitle(String text) {
-        isSubtitle = true;
-
-        setTitle("App Name");
         createSubTitle();
         mSubtitleTextView.setText(text);
+    }
+
+    public void openSearchField() {
+        mSearchView = new EditText(getContext());
+        mSearchView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        mSearchView.setHintTextColor(0x88ffffff);
+        mSearchView.setTextColor(0xffffffff);
+        mSearchView.setSingleLine(true);
+        mSearchView.setBackgroundResource(0);
+        mSearchView.setFocusableInTouchMode(true);
+        mSearchView.setPadding(AndroidUtilities.dp(getContext(), 56), 0, AndroidUtilities.dp(getContext(), 56), 0);
+        mSearchView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        addView(mSearchView);
+
+        mTitleTextView.setVisibility(INVISIBLE);
+        mSearchView.requestFocus();
     }
 
 
