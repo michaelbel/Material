@@ -66,19 +66,19 @@ public class FabMenu extends ViewGroup {
     private int mLabelsPaddingLeft = Util.dpToPx(getContext(), 8f);
     private ColorStateList mLabelsTextColor;
     private float mLabelsTextSize;
-    private int mLabelsCornerRadius = Util.dpToPx(getContext(), 3f);
+    private int mLabelsCornerRadius = 0;
     private boolean mLabelsShowShadow;
-    private int mLabelsColorNormal;
+    private int mLabelsColorNormal = 0xFF444444;
     private int mLabelsColorPressed;
     private int mLabelsColorRipple;
     private boolean mMenuShowShadow;
     private int mMenuShadowColor;
-    private float mMenuShadowRadius = 4f;
+    private float mMenuShadowRadius = 1f;
     private float mMenuShadowXOffset = 1f;
-    private float mMenuShadowYOffset = 3f;
-    private int mMenuColorNormal;
-    private int mMenuColorPressed;
-    private int mMenuColorRipple;
+    private float mMenuShadowYOffset = 1f;
+    private int mMenuColorNormal = 0xffFF5252;
+    private int mMenuColorPressed = 0xffFF5252;
+    private int mMenuColorRipple = 0xffFF5252;
 
     private int mAnimationDelayPerItem;
     private Interpolator mOpenInterpolator;
@@ -126,6 +126,8 @@ public class FabMenu extends ViewGroup {
 
     public FabMenu(Context context) {
         this(context, null);
+
+        this.setLayoutParams(new ViewGroup.LayoutParams(56, 56));
     }
 
     public FabMenu(Context context, AttributeSet attrs) {
@@ -153,6 +155,7 @@ public class FabMenu extends ViewGroup {
         if (mLabelsTextColor == null) {
             mLabelsTextColor = ColorStateList.valueOf(Color.WHITE);
         }
+
         mLabelsTextSize = attr.getDimension(R.styleable.FabMenu_menu_labels_textSize, getResources().getDimension(R.dimen.labels_text_size));
         mLabelsCornerRadius = attr.getDimensionPixelSize(R.styleable.FabMenu_menu_labels_cornerRadius, mLabelsCornerRadius);
         mLabelsShowShadow = attr.getBoolean(R.styleable.FabMenu_menu_labels_showShadow, true);
@@ -178,7 +181,7 @@ public class FabMenu extends ViewGroup {
         mMenuFabSize = attr.getInt(R.styleable.FabMenu_menu_fab_size, FabButton.SIZE_NORMAL);
         mLabelsStyle = attr.getResourceId(R.styleable.FabMenu_menu_labels_style, 0);
         mOpenDirection = attr.getInt(R.styleable.FabMenu_menu_openDirection, OPEN_UP);
-        mBackgroundColor = attr.getColor(R.styleable.FabMenu_menu_backgroundColor, Color.TRANSPARENT);
+        mBackgroundColor = attr.getColor(R.styleable.FabMenu_menu_backgroundColor, 0x00);
 
         if (attr.hasValue(R.styleable.FabMenu_menu_fab_label)) {
             mUsingMenuLabel = true;
@@ -560,8 +563,7 @@ public class FabMenu extends ViewGroup {
 
     @Override
     protected MarginLayoutParams generateDefaultLayoutParams() {
-        return new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT,
-                MarginLayoutParams.WRAP_CONTENT);
+        return new MarginLayoutParams(MarginLayoutParams.WRAP_CONTENT, MarginLayoutParams.WRAP_CONTENT);
     }
 
     @Override
