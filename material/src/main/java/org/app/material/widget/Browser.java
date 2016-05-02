@@ -23,8 +23,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+
+import org.app.material.R;
 
 public class Browser {
 
@@ -32,6 +33,12 @@ public class Browser {
     private int mShareIcon;
     private String mShareIconText;
     private String mUrl;
+    private boolean isShareIcon = false;
+    private Context mContext;
+
+    public Browser(Context context) {
+        this.mContext = context;
+    }
 
     public Browser setUrl(String address) {
         this.mUrl = address;
@@ -51,8 +58,8 @@ public class Browser {
         return mToolbarColor;
     }
 
-    public Browser setShareIcon(@DrawableRes int icon) {
-        this.mShareIcon = icon;
+    public Browser setShareIcon(boolean isIcon) {
+        this.isShareIcon = isIcon;
         return this;
     }
 
@@ -69,8 +76,8 @@ public class Browser {
         return mShareIconText;
     }
 
-    public Browser show(Context context) {
-        if (context == null || mUrl == null) {
+    public Browser show() {
+        if (mContext == null || mUrl == null) {
             return this;
         }
 
@@ -85,20 +92,20 @@ public class Browser {
             actionIntent.setType("text/plain");
             actionIntent.putExtra(Intent.EXTRA_TEXT, Uri.parse(mUrl).toString());
             actionIntent.putExtra(Intent.EXTRA_SUBJECT, "");
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT);
             Bundle bundle = new Bundle();
             bundle.putInt("android.support.customtabs.customaction.ID", 0);
-            if (mShareIcon != 0) {
-                bundle.putParcelable("android.support.customtabs.customaction.ICON", BitmapFactory.decodeResource(context.getResources(), getShareIcon()));
-            }
+            //if (isShareIcon) {
+                bundle.putParcelable("android.support.customtabs.customaction.ICON", BitmapFactory.decodeResource(mContext.getResources(), R.drawable.abc_ic_menu_share_mtrl_alpha));
+            //}
             if (mShareIconText != null) {
-                bundle.putString("android.support.customtabs.customaction.DESCRIPTION", getShareIconText());
+                bundle.putString("android.support.customtabs.customaction.DESCRIPTION", mShareIconText);
             }
             bundle.putParcelable("android.support.customtabs.customaction.PENDING_INTENT", pendingIntent);
             intent.putExtra("android.support.customtabs.extra.ACTION_BUTTON_BUNDLE", bundle);
             intent.putExtra("android.support.customtabs.extra.TINT_ACTION_BUTTON", false);
-            intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, context.getPackageName());
-            context.startActivity(intent);
+            intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, mContext.getPackageName());
+            mContext.startActivity(intent);
         } catch (Exception ignored) {}
 
         return this;
