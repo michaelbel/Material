@@ -31,7 +31,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import org.app.material.R;
-import org.app.material.adapter.BaseAdapter;
 import org.app.material.cell.DoubleCell;
 
 import java.io.BufferedReader;
@@ -375,7 +374,7 @@ public class FilePicker extends FrameLayout {
         }
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends android.widget.BaseAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {
