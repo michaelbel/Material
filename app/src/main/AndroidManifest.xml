@@ -8,6 +8,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/AppName"
         android:supportsRtl="true"
+        android:name=".ApplicationLoader"
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity">
@@ -18,6 +19,7 @@
         </activity>
 
         <activity android:name=".ViewController" />
+        <activity android:name=".ColorPickerActivity"/>
 
     </application>
 
