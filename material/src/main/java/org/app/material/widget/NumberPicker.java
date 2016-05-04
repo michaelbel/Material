@@ -38,6 +38,9 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.app.material.AndroidUtilities;
+import org.app.material.R;
+
 import java.util.Locale;
 
 public class NumberPicker extends LinearLayout {
@@ -110,7 +113,7 @@ public class NumberPicker extends LinearLayout {
 
     private void init() {
         solidColor = 0;
-        selectionDivider = new ColorDrawable(0xffbdbdbd);
+        selectionDivider = new ColorDrawable(AndroidUtilities.getContextColor(getContext(), R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
         mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
         minHeight = SIZE_UNSPECIFIED;
