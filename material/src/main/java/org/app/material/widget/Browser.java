@@ -95,9 +95,9 @@ public class Browser {
             PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, actionIntent, PendingIntent.FLAG_ONE_SHOT);
             Bundle bundle = new Bundle();
             bundle.putInt("android.support.customtabs.customaction.ID", 0);
-            //if (isShareIcon) {
+            if (isShareIcon) {
                 bundle.putParcelable("android.support.customtabs.customaction.ICON", BitmapFactory.decodeResource(mContext.getResources(), R.drawable.abc_ic_menu_share_mtrl_alpha));
-            //}
+            }
             if (mShareIconText != null) {
                 bundle.putString("android.support.customtabs.customaction.DESCRIPTION", mShareIconText);
             }
