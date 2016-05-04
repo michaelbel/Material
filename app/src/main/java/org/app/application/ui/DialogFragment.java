@@ -29,18 +29,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.app.application.R;
+import org.app.material.AndroidUtilities;
 import org.app.material.widget.ColorPicker;
-import org.app.material.widget.FilePicker;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.NumberPicker;
 
 public class DialogFragment extends Fragment implements View.OnClickListener {
 
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
-    private Button button5;
+    private Button mButton1;
+    private Button mButton2;
+    private Button mButton3;
+    private Button mButton4;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,145 +52,191 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setBackgroundColor(0xFFECEFF1);
 
-        button1 = new Button(getActivity());
-        button1.setText(getResources().getString(R.string.NumberPicker));
-        button1.setOnClickListener(this);
-        layout.addView(button1, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        mButton1 = new Button(getActivity());
+        mButton1.setOnClickListener(this);
+        mButton1.setText(R.string.Strings);
+        mButton1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton1);
 
-        button2 = new Button(getActivity());
-        button2.setText(R.string.NumberPickerStrings);
-        button2.setOnClickListener(this);
-        layout.addView(button2, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        mButton2 = new Button(getActivity());
+        mButton2.setOnClickListener(this);
+        mButton2.setText(R.string.NumberPicker);
+        mButton2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton2);
 
-        button3 = new Button(getActivity());
-        button3.setText(getResources().getString(R.string.FilePicker));
-        button3.setOnClickListener(this);
-        layout.addView(button3, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        mButton3 = new Button(getActivity());
+        mButton3.setOnClickListener(this);
+        mButton3.setText(R.string.StringPicker);
+        mButton3.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton3);
 
-        button4 = new Button(getActivity());
-        button4.setText(R.string.AlertStrings);
-        button4.setOnClickListener(this);
-        layout.addView(button4, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        mButton4 = new Button(getActivity());
+        mButton4.setOnClickListener(this);
+        mButton4.setText(R.string.ColorPickerRGB);
+        mButton4.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton4);
 
-        button5 = new Button(getActivity());
-        button5.setText("Color Picker");
-        button5.setOnClickListener(this);
-        layout.addView(button5, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //button1 = new Button(getActivity());
+        //button1.setOnClickListener(this);
+        //button1.setText(R.string.NumberPicker);
+        //button1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button1);
+
+        //button2 = new Button(getActivity());
+        //button2.setOnClickListener(this);
+        //button2.setText(R.string.NumberPickerStrings);
+        //button2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button2);
+
+        //button3 = new Button(getActivity());
+        //button3.setOnClickListener(this);
+        //button3.setText(R.string.FilePicker);
+        //button3.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button3);
+
+        //button4 = new Button(getActivity());
+        //button4.setText(R.string.AlertStrings);
+        //button4.setOnClickListener(this);
+        //button4.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button4);
+
+        //button5 = new Button(getActivity());
+        //button5.setText("Color Picker");
+        //button5.setOnClickListener(this);
+        //button5.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button5);
+
+        //button6 = new Button(getActivity());
+        //button6.setText(R.string.ColorPicker);
+        //button6.setOnClickListener(this);
+        //button6.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        //layout.addView(button6);
 
         return layout;
     }
 
     @Override
-    public void onClick(View view) {
-        if (view == button1) {
+    public void onClick(View v) {
+        if (v == mButton1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getResources().getString(R.string.NumberPickerTitle));
+            builder.setItems(new CharSequence[]{
+                    getString(R.string.Winter), getString(R.string.Spring), getString(R.string.Summer), getString(R.string.Autumn)
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String season = null;
 
-            final NumberPicker numberPicker = new NumberPicker(getActivity());
-            numberPicker.setMinValue(0);
-            numberPicker.setMaxValue(100);
-            numberPicker.setValue(10);
-            numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-            numberPicker.setSelectionDividerColor(0xff4285f4);
+                    if (i == 0) {
+                        season = getString(R.string.Winter);
+                    } else if (i == 1) {
+                        season = getString(R.string.Spring);
+                    } else if (i == 2) {
+                        season = getString(R.string.Summer);
+                    } else if (i == 3) {
+                        season = getString(R.string.Autumn);
+                    }
 
-            builder.setView(numberPicker);
+                    Toast.makeText(getActivity(), R.string.Season + season, Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show();
+        } else if (v == mButton2) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            final NumberPicker picker = new NumberPicker(getActivity());
+            picker.setMinValue(0);
+            picker.setMaxValue(100);
+            picker.setValue(10);
+            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+            builder.setView(picker);
+            builder.setTitle(R.string.NumberPickerTitle);
             builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "Value = " + numberPicker.getValue(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.Value + picker.getValue(), Toast.LENGTH_SHORT).show();
                 }
             });
-            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
-        } else if (view == button2) {
+            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+        } else if (v == mButton3) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("String Picker");
 
-            final NumberPicker numberPickerStrings = new NumberPicker(getActivity());
-            numberPickerStrings.setMinValue(0);
-            numberPickerStrings.setMaxValue(6);
-            numberPickerStrings.setValue(0);
-            numberPickerStrings.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-            numberPickerStrings.setSelectionDividerColor(0xff4285f4);
-            numberPickerStrings.setFormatter(new NumberPicker.Formatter() {
+            final NumberPicker picker = new NumberPicker(getActivity());
+            picker.setMinValue(0);
+            picker.setMaxValue(6);
+            picker.setValue(0);
+            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+            picker.setFormatter(new NumberPicker.Formatter() {
                 @Override
                 public String format(int value) {
                     if (value == 0) {
-                        return "Monday";
+                        return getString(R.string.Monday);
                     } else if (value == 1) {
-                        return "Tuesday";
+                        return getString(R.string.Tuesday);
                     } else if (value == 2) {
-                        return "Wednesday";
+                        return getString(R.string.Wednesday);
                     } else if (value == 3) {
-                        return  "Thursday";
+                        return getString(R.string.Thursday);
                     } else if (value == 4) {
-                        return "Friday";
+                        return getString(R.string.Friday);
                     } else if (value == 5) {
-                        return "Saturday";
+                        return getString(R.string.Saturday);
                     } else if (value == 6) {
-                        return "Sunday";
+                        return getString(R.string.Sunday);
                     }
 
                     return null;
                 }
             });
 
-            builder.setView(numberPickerStrings);
+            builder.setView(picker);
+            builder.setTitle(R.string.StringPicker);
             builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "Day = " + numberPickerStrings.getValue(), Toast.LENGTH_SHORT).show();
+                    String day = null;
+
+                    if (which == 0) {
+                        day = getString(R.string.Monday);
+                    } else if (which == 1) {
+                        day = getString(R.string.Tuesday);
+                    } else if (which == 2) {
+                        day = getString(R.string.Wednesday);
+                    } else if (which == 3) {
+                        day = getString(R.string.Thursday);
+                    } else if (which == 4) {
+                        day = getString(R.string.Friday);
+                    } else if (which == 5) {
+                        day = getString(R.string.Saturday);
+                    } else if (which == 6) {
+                        day = getString(R.string.Sunday);
+                    }
+
+                    Toast.makeText(getActivity(), R.string.Day + day, Toast.LENGTH_SHORT).show();
                 }
             });
-            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
-        } else if (view == button3) {
+            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+        } else if (v == mButton4) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-            FilePicker filePicker = new FilePicker(getActivity());
-            filePicker.showDivider();
+            final ColorPicker picker = new ColorPicker(getActivity());
+            //picker.setColor(25, 50, 75);
 
-            builder.setView(filePicker);
-            builder.show();
-        } else if (view == button4) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setItems(new CharSequence[]{
-                    "Winter", "Spring", "Summer", "Autumn"
-            }, new DialogInterface.OnClickListener() {
+            builder.setView(picker);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(getActivity(), "Season = " + i, Toast.LENGTH_SHORT).show();
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), "" + picker.getNewColor(), Toast.LENGTH_SHORT).show();
                 }
             });
-            builder.show();
-        } else if (view == button5) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Select color");
-
-            LinearLayout linearLayout = new LinearLayout(getActivity());
-            linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-            final ColorPicker colorPicker = new ColorPicker(getActivity());
-            linearLayout.addView(colorPicker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
-            colorPicker.setOldCenterColor(0xFF00FF00);
-            colorPicker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
-                @Override
-                public void onColorChanged(int i) {
-
-                }
-            });
-
-            builder.setView(linearLayout);
-            builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int which) {
-                    Toast.makeText(getActivity(), "Color = " + colorPicker.getColor(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            builder.setNeutralButton("Disabled", null);
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(0xff4285f4);
-            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setTextColor(0xff4285f4);
+            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
         }
+
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());//
+        //FilePicker filePicker = new FilePicker(getActivity());
+        //filePicker.showDivider();//
+        //builder.setView(filePicker);
+        //builder.show();
     }
 }
