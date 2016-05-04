@@ -29,9 +29,8 @@ import android.widget.ListView;
 
 import org.app.application.R;
 import org.app.application.cells.ListCell;
-import org.app.material.widget.LayoutHelper;
-import org.app.material.adapter.BaseAdapter;
 import org.app.material.cell.EmptyCell;
+import org.app.material.widget.LayoutHelper;
 
 public class ListViewFragment extends Fragment {
 
@@ -67,9 +66,9 @@ public class ListViewFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == textRow) {
-                    Snackbar.make(view, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    Snackbar.make(view, "Clicked = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 } else if (i == textValueRow) {
-                    Snackbar.make(view, "Clicked on position = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    Snackbar.make(view, "Clicked = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }
             }
         });
@@ -87,7 +86,7 @@ public class ListViewFragment extends Fragment {
         }
     }
 
-    public class ListAdapter extends BaseAdapter {
+    public class ListAdapter extends android.widget.BaseAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {
@@ -116,9 +115,9 @@ public class ListViewFragment extends Fragment {
                 ListCell cell = (ListCell) view;
 
                 if (i == textRow) {
-                    cell.addTitle(getResources().getString(R.string.SomeTitleText));
+                    cell.addTitle(getString(R.string.SomeTitleText));
                 } else if (i == textValueRow) {
-                    cell.addTitle(getResources().getString(R.string.TextLock)).addValue(getResources().getString(R.string.TextDisabled).toUpperCase());
+                    cell.addTitle(getString(R.string.TextLock)).addValue(getString(R.string.TextDisabled).toUpperCase());
                 }
             } else if (type == 1) {
                 if (view == null) {
@@ -128,11 +127,11 @@ public class ListViewFragment extends Fragment {
                 EmptyCell cell = (EmptyCell) view;
 
                 if (i == headerRow1) {
-                    cell.addHead(getResources().getString(R.string.PlainText), true);
+                    cell.addHead(getString(R.string.PlainText), true);
                 } else if (i == headerRow2) {
-                    cell.addHead(getResources().getString(R.string.TextAndValue), true);
+                    cell.addHead(getString(R.string.TextAndValue), true);
                 } else if (i == noteRow) {
-                    cell.addNote(getResources().getString(R.string.ListViewNoteRow));
+                    cell.addNote(getString(R.string.ListViewNoteRow));
                 }
             }
 
