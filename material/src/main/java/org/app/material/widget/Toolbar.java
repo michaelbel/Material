@@ -18,6 +18,7 @@ package org.app.material.widget;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -25,6 +26,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,6 +50,8 @@ public class Toolbar extends FrameLayout {
     private TextView mTitleTextView;
     private TextView mSubtitleTextView;
     private EditText mSearchView;
+
+    private float mElevation;
 
 
     private ImageView mLogoView;
@@ -89,6 +93,22 @@ public class Toolbar extends FrameLayout {
     private ViewPropertyAnimatorCompat mTranslationAnimator;
     private static final int DEFAULT_SELECTED_POSITION = -1;
     private int mSelectedPosition = DEFAULT_SELECTED_POSITION;
+
+
+    public Toolbar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.Toolbar, defStyleAttr, 0);
+
+        mElevation = attr.getDimensionPixelSize(R.styleable.Toolbar_toolbar_elevation, 0);
+        attr.recycle();
+    }
+
+    //private void init(Context context, AttributeSet attrs) {
+    //    TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.Toolbar, 0, 0);
+    //    mElevation = attr.getDimensionPixelSize(R.styleable.toolbar_elevation, 0);
+    //    attr.recycle();
+    //}
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
