@@ -1,6 +1,6 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,7 +23,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
+            fab:tabMode="scrollable"
             app:tabGravity="fill"/>
 
     </android.support.design.widget.AppBarLayout>
@@ -34,45 +34,5 @@
         android:visibility="visible"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-
-    <org.app.material.FabMenu
-        android:id="@+id/menu_green"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:menu_icon="@drawable/ic_plus">
-
-        <org.app.material.FabButton
-            android:layout_width="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            app:fab_label="Menu item 3"
-            app:fab_size="mini" />
-
-        <org.app.material.FabButton
-            android:id="@+id/ij"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            app:fab_label="Menu item 2"
-            app:fab_size="mini" />
-
-        <org.app.material.FabButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            app:fab_label="Menu item 1"
-            app:fab_size="mini" />
-
-    </org.app.material.FabMenu>
-
-    <org.app.material.FabButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_plus"
-        app:fab_showAnimation="@anim/show_from_bottom"
-        app:fab_hideAnimation="@anim/hide_to_bottom"/>
 
 </android.support.design.widget.CoordinatorLayout>

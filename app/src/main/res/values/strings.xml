@@ -1,29 +1,63 @@
 <resources>
     <string name="AppName">Material</string>
-    <string name="Done">Done</string>
-    <string name="NumberPicker">Number Picker</string>
+    <string name="MaterialDemo">Material Demo</string>
+    <!--Dialogs-->
     <string name="Dialogs">Dialogs</string>
+    <string name="Done">Done</string>
+    <string name="Ok">OK</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Set">Set</string>
+    <string name="Default">Default</string>
+    <string name="NumberPicker">Number Picker</string>
+    <string name="StringPicker">String Picker</string>
+    <string name="Strings">Strings</string>
+    <string name="ColorPicker">Color Picker</string>
+    <string name="FilePicker">File Picker</string>
+    <string name="FolderPicker">Folder Picker</string>
+    <string name="ColorPickerRGB">Color Picker RGB</string>
+    <string name="ColorPickerHolo">Color Picker Holo</string>
+    <string name="Winter">Winter</string>
+    <string name="Spring">Spring</string>
+    <string name="Summer">Summer</string>
+    <string name="Autumn">Autumn</string>
+    <string name="Season">Season = </string>
+    <string name="Value">Value = </string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Day">Day = </string>
+    <string name="SelectColor">Select Color</string>
+    <!--ListView-->
     <string name="ListView">ListView</string>
+    <string name="PlainText">Plain text</string>
+    <string name="TextAndValue">Text and Value</string>
+    <string name="ListViewNoteRow">ListView is deprecated. The RecyclerView is much more powerful,
+        flexible and a major enhancement over ListView. In simple words, the RecyclerView is much
+        more customizable than the ListView and gives a lot of control and power to its developers.
+    </string>
+
+
+
+
     <string name="RecyclerView">RecyclerView</string>
     <string name="CardView">CardView</string>
     <string name="GithubURL">https://github.com/michael-bel/material</string>
     <string name="OpenGithub">Open Github.com</string>
     <string name="PopupMenu">Popup Menu</string>
-    <string name="MaterialDemo">Material Demo</string>
-    <string name="PlainText">Plain text</string>
-    <string name="TextAndValue">Text and Value</string>
+
+
     <string name="SomeTitleText">Some title text</string>
     <string name="TextLock">Lock</string>
     <string name="TextDisabled">Disabled</string>
-    <string name="FilePicker">File Picker</string>
     <string name="Fab">Fab</string>
     <string name="CheckToClose">Check &amp; Close</string>
     <string name="PlusToClose">Plus &amp; Close</string>
 
-    <string name="ListViewNoteRow">ListView is deprecated. The RecyclerView is much more powerful,
-        flexible and a major enhancement over ListView. In simple words, the RecyclerView is much
-        more customizable than the ListView and gives a lot of control and power to its developers.
-    </string>
+
     <string name="BackIcon">Back Icon</string>
     <string name="TitleText">Title text</string>
     <string name="SubTitleText">SubTitle text</string>
@@ -31,11 +65,10 @@
     <string name="SearchIcon">Search Icon</string>
     <string name="LockIcon">Lock Icon</string>
     <string name="DotsMenuIcon">Dots Menu Icon</string>
-    <string name="NumberPickerStrings">Number Picker Strings</string>
     <string name="AlertStrings">Alert Strings</string>
-    <string name="NumberPickerTitle">NumberPicker</string>
     <string name="ToolbarHide">Toolbar Hide</string>
     <string name="ToolbarHideAnim">Toolbar Hide with Animation</string>
     <string name="RemoveAllIcons">Remove All Icons</string>
     <string name="ReplaceIcons">Replace Icons</string>
+
 </resources>

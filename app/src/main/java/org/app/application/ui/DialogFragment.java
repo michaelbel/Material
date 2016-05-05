@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
+import org.app.material.widget.ColorPickerHoloSheet;
 import org.app.material.widget.ColorPicker;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.NumberPicker;
@@ -40,6 +41,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
     private Button mButton2;
     private Button mButton3;
     private Button mButton4;
+    private Button mButton5;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,41 +78,11 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
         mButton4.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
         layout.addView(mButton4);
 
-        //button1 = new Button(getActivity());
-        //button1.setOnClickListener(this);
-        //button1.setText(R.string.NumberPicker);
-        //button1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button1);
-
-        //button2 = new Button(getActivity());
-        //button2.setOnClickListener(this);
-        //button2.setText(R.string.NumberPickerStrings);
-        //button2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button2);
-
-        //button3 = new Button(getActivity());
-        //button3.setOnClickListener(this);
-        //button3.setText(R.string.FilePicker);
-        //button3.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button3);
-
-        //button4 = new Button(getActivity());
-        //button4.setText(R.string.AlertStrings);
-        //button4.setOnClickListener(this);
-        //button4.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button4);
-
-        //button5 = new Button(getActivity());
-        //button5.setText("Color Picker");
-        //button5.setOnClickListener(this);
-        //button5.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button5);
-
-        //button6 = new Button(getActivity());
-        //button6.setText(R.string.ColorPicker);
-        //button6.setOnClickListener(this);
-        //button6.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(button6);
+        mButton5 = new Button(getActivity());
+        mButton5.setOnClickListener(this);
+        mButton5.setText("Color Picker Holo");
+        mButton5.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton5);
 
         return layout;
     }
@@ -150,7 +122,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
             picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
             builder.setView(picker);
-            builder.setTitle(R.string.NumberPickerTitle);
+            builder.setTitle(R.string.NumberPicker);
             builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -228,6 +200,24 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getActivity(), "" + picker.getNewColor(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+        } else if (v == mButton5) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final ColorPickerHoloSheet sheet = new ColorPickerHoloSheet(getActivity());
+            sheet.mColorPickerHolo.setOldCenterColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+            sheet.mColorPickerHolo.useMaterialColors(true);
+            sheet.addOpacityBar().addSaturationBar().addValueBar();
+
+            builder.setView(sheet);
+            builder.setTitle(R.string.SelectColor);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setNeutralButton(R.string.Default, null);
+            builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), "" + sheet.mColorPickerHolo.getColor(), Toast.LENGTH_SHORT).show();
                 }
             });
             builder.show().getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
