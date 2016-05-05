@@ -1,4 +1,57 @@
 <resources>
+    <!--Toolbar-->
+    <declare-styleable name="Toolbar">
+        <attr name="toolbar_elevation" format="dimension"/>
+    </declare-styleable>
+
+    <!--ColorPickerHolo-->
+    <declare-styleable name="ColorPickerHolo">
+        <attr name="color_wheel_radius" format="dimension"/>
+        <attr name="color_wheel_thickness" format="dimension"/>
+        <attr name="color_center_radius" format="dimension"/>
+        <attr name="color_center_halo_radius" format="dimension"/>
+        <attr name="color_pointer_radius" format="dimension"/>
+        <attr name="color_pointer_halo_radius" format="dimension"/>
+        <attr name="useMaterialColors" format="boolean"/>
+    </declare-styleable>
+
+    <!--ColorPickerHoloBars-->
+    <declare-styleable name="ColorPickerHoloBars">
+        <attr name="bar_thickness" format="dimension"/>
+        <attr name="bar_length" format="dimension"/>
+        <attr name="bar_pointer_radius" format="dimension"/>
+        <attr name="bar_pointer_halo_radius" format="dimension"/>
+        <attr name="bar_orientation_horizontal" format="boolean"/>
+    </declare-styleable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <declare-styleable name="FloatingActionButton">
         <attr name="fab_colorNormal" format="color" />
@@ -82,4 +135,87 @@
         <attr name="menu_fab_hide_animation" format="reference" />
     </declare-styleable>
 
+
+    <declare-styleable name="PieChart">
+        <attr name="viewBackgroundColor" format="integer" />
+        <attr name="strokeColor" format="integer" />
+        <attr name="strokeSize" format="float" />
+        <attr name="strokeStyle" format="integer">
+            <enum name="FILL" value="0" />
+            <enum name="FILL_AND_STROKE" value="1" />
+            <enum name="STROKE" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="Preference">
+        <attr name="useStockLayout" format="boolean" />
+    </declare-styleable>
+
+    <!-- These top three attributes are not accessible to library users -->
+    <attr name="md_divider" format="color" />
+
+    <!-- Accessible global theming attributes -->
+    <attr name="md_dark_theme" format="boolean" />
+    <attr name="md_background_color" format="color" />
+
+    <attr name="md_icon" format="reference" />
+    <attr name="md_icon_max_size" format="dimension" />
+    <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
+
+    <attr name="md_title_color" format="color" />
+    <attr name="md_content_color" format="color" />
+    <attr name="md_link_color" format="color" />
+
+    <attr name="md_positive_color" format="color" />
+    <attr name="md_neutral_color" format="color" />
+    <attr name="md_negative_color" format="color" />
+    <attr name="md_widget_color" format="color" />
+
+    <attr name="md_item_color" format="color" />
+    <attr name="md_divider_color" format="color" />
+    <attr name="md_list_selector" format="reference" />
+
+    <attr name="md_btn_stacked_selector" format="reference" />
+    <attr name="md_btn_positive_selector" format="reference" />
+    <attr name="md_btn_neutral_selector" format="reference" />
+    <attr name="md_btn_negative_selector" format="reference" />
+
+    <attr name="md_btn_ripple_color" format="color" />
+
+    <attr name="md_title_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <attr name="md_content_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <attr name="md_btnstacked_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <attr name="md_items_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <attr name="md_buttons_gravity" format="enum">
+        <enum name="start" value="0" />
+        <enum name="center" value="1" />
+        <enum name="end" value="2" />
+    </attr>
+
+    <declare-styleable name="MDRootLayout">
+        <attr name="md_reduce_padding_no_title_no_buttons" format="boolean" />
+    </declare-styleable>
+
+    <attr name="md_medium_font" format="string" />
+    <attr name="md_regular_font" format="string" />
 </resources>
