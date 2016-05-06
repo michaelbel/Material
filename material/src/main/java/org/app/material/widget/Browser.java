@@ -33,8 +33,8 @@ public class Browser {
     private int mShareIcon;
     private String mShareIconText;
     private String mUrl;
-    private boolean isShareIcon = false;
     private Context mContext;
+    private boolean isShareIcon = false;
 
     public Browser(Context context) {
         this.mContext = context;
@@ -63,16 +63,12 @@ public class Browser {
         return this;
     }
 
-    public int getShareIcon() {
-        return mShareIcon;
-    }
-
     public Browser setShareIconHiddenText(@NonNull String text) {
         this.mShareIconText = text;
         return this;
     }
 
-    public String getShareIconText() {
+    public String getShareIconHiddenText() {
         return mShareIconText;
     }
 
