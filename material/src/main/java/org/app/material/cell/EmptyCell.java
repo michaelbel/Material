@@ -17,6 +17,7 @@
 package org.app.material.cell;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -52,25 +53,31 @@ public class EmptyCell extends FrameLayout {
         addView(noteText, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
     }
 
-    public EmptyCell addHead(String text, boolean toUpperCase) {
+    public EmptyCell addHead(String text) {
         noteText.setVisibility(INVISIBLE);
-
         headText.setVisibility(VISIBLE);
+        headText.setText(text);
+        return this;
+    }
 
-        if (toUpperCase) {
-            headText.setText(text.toUpperCase());
-        } else {
-            headText.setText(text);
-        }
-
+    public EmptyCell addHead(@StringRes int resId) {
+        noteText.setVisibility(INVISIBLE);
+        headText.setVisibility(VISIBLE);
+        headText.setText(getContext().getResources().getText(resId));
         return this;
     }
 
     public EmptyCell addNote(String text) {
         headText.setVisibility(INVISIBLE);
-
         noteText.setVisibility(VISIBLE);
         noteText.setText(text);
+        return this;
+    }
+
+    public EmptyCell addNote(@StringRes int resId) {
+        headText.setVisibility(INVISIBLE);
+        noteText.setVisibility(VISIBLE);
+        noteText.setText(getContext().getResources().getText(resId));
         return this;
     }
 }

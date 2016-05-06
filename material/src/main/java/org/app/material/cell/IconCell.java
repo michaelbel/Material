@@ -18,6 +18,7 @@ package org.app.material.cell;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -67,6 +68,12 @@ public class IconCell extends FrameLayout {
     public IconCell addTitle(String text) {
         textView.setVisibility(VISIBLE);
         textView.setText(text);
+        return this;
+    }
+
+    public IconCell addTitle(@StringRes int resId) {
+        textView.setVisibility(VISIBLE);
+        textView.setText(getContext().getResources().getText(resId));
         return this;
     }
 

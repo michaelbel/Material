@@ -17,6 +17,7 @@
 package org.app.material.cell;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -79,9 +80,21 @@ public class DoubleCell extends FrameLayout {
         return this;
     }
 
+    public DoubleCell addTitle(@StringRes int resId) {
+        titleTextView.setVisibility(VISIBLE);
+        titleTextView.setText(getContext().getResources().getText(resId));
+        return this;
+    }
+
     public DoubleCell addValue(String value) {
         valueTextView.setVisibility(VISIBLE);
         valueTextView.setText(value);
+        return this;
+    }
+
+    public DoubleCell addValue(@StringRes int resId) {
+        valueTextView.setVisibility(VISIBLE);
+        valueTextView.setText(getContext().getResources().getText(resId));
         return this;
     }
 }

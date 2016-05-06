@@ -18,6 +18,7 @@ package org.app.material.cell;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.CheckBox;
@@ -110,6 +111,18 @@ public class TextCell extends FrameLayout {
         return this;
     }
 
+    public TextCell addTitle(@StringRes int resId) {
+        valueTextView.setVisibility(INVISIBLE);
+        valueImageView.setVisibility(INVISIBLE);
+        radioButton.setVisibility(INVISIBLE);
+        checkBox.setVisibility(INVISIBLE);
+        switchCompat.setVisibility(INVISIBLE);
+
+        textView.setVisibility(VISIBLE);
+        textView.setText(getContext().getResources().getText(resId));
+        return this;
+    }
+
     public TextCell addValue(String value) {
         valueImageView.setVisibility(INVISIBLE);
         radioButton.setVisibility(INVISIBLE);
@@ -118,6 +131,17 @@ public class TextCell extends FrameLayout {
 
         valueTextView.setVisibility(VISIBLE);
         valueTextView.setText(value);
+        return this;
+    }
+
+    public TextCell addValue(@StringRes int resId) {
+        valueImageView.setVisibility(INVISIBLE);
+        radioButton.setVisibility(INVISIBLE);
+        checkBox.setVisibility(INVISIBLE);
+        switchCompat.setVisibility(INVISIBLE);
+
+        valueTextView.setVisibility(VISIBLE);
+        valueTextView.setText(getContext().getResources().getText(resId));
         return this;
     }
 
