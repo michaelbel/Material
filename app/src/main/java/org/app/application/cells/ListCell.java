@@ -17,6 +17,7 @@
 package org.app.application.cells;
 
 import android.content.Context;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -70,17 +71,17 @@ public class ListCell extends FrameLayout {
         addView(listDivider, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, 0.8f, Gravity.BOTTOM));
     }
 
-    public ListCell addTitle(String title) {
+    public ListCell addTitle(@StringRes int resId) {
         valueTextView.setVisibility(INVISIBLE);
 
         titleTextView.setVisibility(VISIBLE);
-        titleTextView.setText(title);
+        titleTextView.setText(getResources().getText(resId));
         return this;
     }
 
-    public ListCell addValue(String value) {
+    public ListCell addValue(@StringRes int resId) {
         valueTextView.setVisibility(VISIBLE);
-        valueTextView.setText(value);
+        valueTextView.setText(getResources().getText(resId));
         return this;
     }
 

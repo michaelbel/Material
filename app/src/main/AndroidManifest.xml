@@ -19,7 +19,7 @@
         </activity>
 
         <activity android:name=".ViewController" />
-        <activity android:name=".ColorPickerActivity"/>
+        <activity android:name=".Test"/>
 
     </application>
 

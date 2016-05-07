@@ -34,7 +34,7 @@ import org.app.material.widget.LayoutHelper;
 
 public class ListViewFragment extends Fragment {
 
-    private ListAdapter adapter;
+    private ListAdapter mAdapter;
 
     private int rowCount;
     private int textRow;
@@ -48,7 +48,7 @@ public class ListViewFragment extends Fragment {
         FrameLayout layout = new FrameLayout(getActivity());
         layout.setBackgroundColor(0xFFECEFF1);
 
-        adapter = new ListAdapter(getActivity());
+        mAdapter = new ListAdapter(getActivity());
 
         rowCount = 0;
         headerRow1 = rowCount++;
@@ -58,17 +58,17 @@ public class ListViewFragment extends Fragment {
         noteRow = rowCount++;
 
         ListView listView = new ListView(getActivity());
-        listView.setDivider(null);
-        listView.setAdapter(adapter);
+        //listView.setDivider(null);
+        listView.setAdapter(mAdapter);
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == textRow) {
-                    Snackbar.make(view, "Clicked = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    Snackbar.make(view, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 } else if (i == textValueRow) {
-                    Snackbar.make(view, "Clicked = " + i, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                    Snackbar.make(view, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                 }
             }
         });
@@ -81,12 +81,13 @@ public class ListViewFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
         }
     }
 
     public class ListAdapter extends android.widget.BaseAdapter {
+
         private Context mContext;
 
         public ListAdapter(Context context) {
@@ -104,6 +105,16 @@ public class ListViewFragment extends Fragment {
         }
 
         @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
         public View getView(int i, View view, ViewGroup parent) {
             int type = getItemViewType(i);
 
@@ -115,9 +126,9 @@ public class ListViewFragment extends Fragment {
                 ListCell cell = (ListCell) view;
 
                 if (i == textRow) {
-                    cell.addTitle(getString(R.string.SomeTitleText));
+                    cell.addTitle(R.string.SomeTitleText);
                 } else if (i == textValueRow) {
-                    cell.addTitle(getString(R.string.TextLock)).addValue(getString(R.string.TextDisabled).toUpperCase());
+                    cell.addTitle(R.string.TextLock).addValue(R.string.TextDisabled);
                 }
             } else if (type == 1) {
                 if (view == null) {
@@ -127,11 +138,11 @@ public class ListViewFragment extends Fragment {
                 EmptyCell cell = (EmptyCell) view;
 
                 if (i == headerRow1) {
-                    cell.addHead(getString(R.string.PlainText), true);
+                    cell.addHead(R.string.PlainText);
                 } else if (i == headerRow2) {
-                    cell.addHead(getString(R.string.TextAndValue), true);
+                    cell.addHead(R.string.TextAndValue);
                 } else if (i == noteRow) {
-                    cell.addNote(getString(R.string.ListViewNoteRow));
+                    cell.addNote(R.string.ListViewNote);
                 }
             }
 
@@ -152,31 +163,6 @@ public class ListViewFragment extends Fragment {
         @Override
         public int getViewTypeCount() {
             return 2;
-        }
-
-        @Override
-        public boolean areAllItemsEnabled() {
-            return false;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return false;
-        }
-
-        @Override
-        public boolean isEmpty() {
-            return false;
         }
     }
 }

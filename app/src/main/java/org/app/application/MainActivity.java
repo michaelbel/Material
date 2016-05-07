@@ -17,9 +17,9 @@
 package org.app.application;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,7 +31,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.app.application.ui.DialogFragment;
+import org.app.application.ui.DialogsFragment;
+import org.app.application.ui.FabFragment;
 import org.app.application.ui.ListViewFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.Browser;
@@ -73,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DialogFragment(), getResources().getString(R.string.Dialogs));
-        adapter.addFragment(new ListViewFragment(), getResources().getString(R.string.ListView));
-        //adapter.addFragment(new CardFragment(), getResources().getString(R.string.CardView));
-        //adapter.addFragment(new RecyclerFragment(), getResources().getString(R.string.RecyclerView));
-        //adapter.addFragment(new FabFragment(), getResources().getString(R.string.Fab));
+        adapter.addFragment(new DialogsFragment(), R.string.Dialogs);
+        adapter.addFragment(new ListViewFragment(), R.string.ListView);
+        //adapter.addFragment(new CardFragment(), R.string.CardView);
+        //adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragment(new FabFragment(), R.string.Fab);
 
         if (viewPager != null) {
             viewPager.setAdapter(adapter);
@@ -104,10 +105,11 @@ public class MainActivity extends AppCompatActivity {
             browser.setUrl(getString(R.string.GithubURL))
                    .setToolbarColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary))
                    .setShareIcon(true)
-                   .setShareIconHiddenText("Share link")
+                   .setShareIconHiddenText(getString(R.string.ShareLink))
                    .show();
         } else if (item.getItemId() == dotsMenu) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.GithubURL))));
+            //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.GithubURL))));
+            startActivity(new Intent(MainActivity.this, ViewController.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     public class ViewPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> fragmentList = new ArrayList<>();
-        private final List<String> fragmentTitleList = new ArrayList<>();
+        private final List<CharSequence> fragmentTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -135,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title) {
             fragmentList.add(fragment);
             fragmentTitleList.add(title);
+        }
+
+        public void addFragment(Fragment fragment, @StringRes int resId) {
+            fragmentList.add(fragment);
+            fragmentTitleList.add(getResources().getText(resId));
         }
 
         @Override
