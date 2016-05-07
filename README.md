@@ -3,8 +3,8 @@ Material Design Library
 
 ## Requirements
 
-* Android 5.0+
-* Android Studio 2.0
+* Android 5.0
+* Android Studio 2.1
 
 ## Screenshots
 
