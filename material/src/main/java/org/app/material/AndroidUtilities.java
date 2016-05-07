@@ -91,11 +91,4 @@ public class AndroidUtilities {
         a.recycle();
         return color;
     }
-
-    /* Annotation enum example:
-    private static final int ONE = 1, TWO = 2, THREE = 3;
-    @IntDef({ONE, TWO, THREE})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface NUMBER {}
-    public void setNumber(@NUMBER int number) {} */
 }

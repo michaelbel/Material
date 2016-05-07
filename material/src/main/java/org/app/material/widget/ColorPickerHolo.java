@@ -40,10 +40,8 @@ public class ColorPickerHolo extends View {
 	private static final String STATE_OLD_COLOR = "color";
 	private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
-	private int[] COLORS = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
-	private int[] M_COLORS = new int[] { 0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336 };
-
-	private boolean mUsedColors;
+	// Used material colors.
+	private int[] COLORS = new int[] { 0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336 };
 
 	private Paint mColorWheelPaint;
 	private Paint mPointerHaloPaint;
@@ -61,7 +59,6 @@ public class ColorPickerHolo extends View {
 	private RectF mColorWheelRectangle = new RectF();
 	private RectF mCenterRectangle = new RectF();
 	private boolean mUserIsMovingPointer = false;
-	private int mColor;
 	private int mCenterOldColor;
 	private boolean mShowCenterOldColor;
 	private int mCenterNewColor;
@@ -72,12 +69,7 @@ public class ColorPickerHolo extends View {
 	private Paint mCenterOldPaint;
 	private Paint mCenterNewPaint;
 	private Paint mCenterHaloPaint;
-	private float[] mHSV = new float[3];
-	private SaturationValueBar mSVbar = null;
-	private OpacityBar mOpacityBar = null;
-	private SaturationBar mSaturationBar = null;
 	private boolean mTouchAnywhereOnColorWheelEnabled = true;
-	private ValueBar mValueBar = null;
 	private OnColorChangedListener onColorChangedListener;
 	private OnColorSelectedListener onColorSelectedListener;
 
@@ -101,21 +93,20 @@ public class ColorPickerHolo extends View {
 
 	private void init(AttributeSet attrs, int defStyle) {
 		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ColorPickerHolo, defStyle, 0);
-		mColorWheelThickness = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_wheel_thickness, AndroidUtilities.dp(getContext(), 8));
+		mColorWheelThickness = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_wheel_thickness, AndroidUtilities.dp(getContext(), 9));
 		mColorWheelRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_wheel_radius, AndroidUtilities.dp(getContext(), 124));
 		mPreferredColorWheelRadius = mColorWheelRadius;
 		mColorCenterRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_center_radius, AndroidUtilities.dp(getContext(), 54));
 		mPreferredColorCenterRadius = mColorCenterRadius;
 		mColorCenterHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_center_halo_radius, AndroidUtilities.dp(getContext(), 54));
 		mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
-		mColorPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_radius, AndroidUtilities.dp(getContext(), 15));
-		mColorPointerHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_halo_radius, AndroidUtilities.dp(getContext(), 14));
-		mUsedColors = a.getBoolean(R.styleable.ColorPickerHolo_useMaterialColors, true);
+		mColorPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_radius, AndroidUtilities.dp(getContext(), 16));
+		mColorPointerHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_halo_radius, AndroidUtilities.dp(getContext(), 16));
 		a.recycle();
 
 		mAngle = (float) (-Math.PI / 2);
 
-		Shader s = new SweepGradient(0, 0, mUsedColors ? M_COLORS : COLORS, null);
+		Shader s = new SweepGradient(0, 0, COLORS, null);
 
 		mColorWheelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mColorWheelPaint.setShader(s);
@@ -144,11 +135,6 @@ public class ColorPickerHolo extends View {
 		mCenterNewColor = calculateColor(mAngle);
 		mCenterOldColor = calculateColor(mAngle);
 		mShowCenterOldColor = true;
-	}
-
-	public ColorPickerHolo useMaterialColors(boolean isColors) {
-		mUsedColors = isColors;
-		return this;
 	}
 
 	public ColorPickerHolo setNewCenterColor(int color) {
@@ -182,94 +168,10 @@ public class ColorPickerHolo extends View {
 		return this;
 	}
 
-	public ColorPickerHolo addSVBar(SaturationValueBar bar) {
-		mSVbar = bar;
-		mSVbar.setColorPicker(this);
-		mSVbar.setColor(mColor);
-		return this;
-	}
-
-	public ColorPickerHolo addOpacityBar(OpacityBar bar) {
-		mOpacityBar = bar;
-		mOpacityBar.setColorPicker(this);
-		mOpacityBar.setColor(mColor);
-		return this;
-	}
-
-	public ColorPickerHolo addSaturationBar(SaturationBar bar) {
-		mSaturationBar = bar;
-		mSaturationBar.setColorPicker(this);
-		mSaturationBar.setColor(mColor);
-		return this;
-	}
-
-	public ColorPickerHolo addValueBar(ValueBar bar) {
-		mValueBar = bar;
-		mValueBar.setColorPicker(this);
-		mValueBar.setColor(mColor);
-		return this;
-	}
-
 	public ColorPickerHolo setColor(int color) {
 		mAngle = colorToAngle(color);
 		mPointerColor.setColor(calculateColor(mAngle));
-
-		if (mOpacityBar != null) {
-			mOpacityBar.setColor(mColor);
-			mOpacityBar.setOpacity(Color.alpha(color));
-		}
-
-		if (mSVbar != null) {
-			Color.colorToHSV(color, mHSV);
-			mSVbar.setColor(mColor);
-
-			if (mHSV[1] < mHSV[2]) {
-				mSVbar.setSaturation(mHSV[1]);
-			} else if(mHSV[1] > mHSV[2]){
-				mSVbar.setValue(mHSV[2]);
-			}
-		}
-
-		if (mSaturationBar != null) {
-			Color.colorToHSV(color, mHSV);
-			mSaturationBar.setColor(mColor);
-			mSaturationBar.setSaturation(mHSV[1]);
-		}
-
-		if (mValueBar != null && mSaturationBar == null) {
-			Color.colorToHSV(color, mHSV);
-			mValueBar.setColor(mColor);
-			mValueBar.setValue(mHSV[2]);
-		} else if (mValueBar != null) {
-			Color.colorToHSV(color, mHSV);
-			mValueBar.setValue(mHSV[2]);
-		}
-
 		setNewCenterColor(color);
-		return this;
-	}
-
-	public ColorPickerHolo changeOpacityBarColor(int color) {
-		if (mOpacityBar != null) {
-			mOpacityBar.setColor(color);
-		}
-
-		return this;
-	}
-
-	public ColorPickerHolo changeSaturationBarColor(int color) {
-		if (mSaturationBar != null) {
-			mSaturationBar.setColor(color);
-		}
-
-		return this;
-	}
-
-	public ColorPickerHolo changeValueBarColor(int color) {
-		if (mValueBar != null) {
-			mValueBar.setColor(color);
-		}
-
 		return this;
 	}
 
@@ -366,59 +268,36 @@ public class ColorPickerHolo extends View {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 				float[] pointerPosition = calculatePointerPosition(mAngle);
-				if (x >= (pointerPosition[0] - mColorPointerHaloRadius)
-						&& x <= (pointerPosition[0] + mColorPointerHaloRadius)
-						&& y >= (pointerPosition[1] - mColorPointerHaloRadius)
-						&& y <= (pointerPosition[1] + mColorPointerHaloRadius)) {
+
+				if (x >= (pointerPosition[0] - mColorPointerHaloRadius) && x <= (pointerPosition[0] + mColorPointerHaloRadius) && y >= (pointerPosition[1] - mColorPointerHaloRadius) && y <= (pointerPosition[1] + mColorPointerHaloRadius)) {
 					mSlopX = x - pointerPosition[0];
 					mSlopY = y - pointerPosition[1];
 					mUserIsMovingPointer = true;
 					invalidate();
-				} else if (x >= -mColorCenterRadius && x <= mColorCenterRadius
-						&& y >= -mColorCenterRadius && y <= mColorCenterRadius
-						&& mShowCenterOldColor) {
+				} else if (x >= -mColorCenterRadius && x <= mColorCenterRadius && y >= -mColorCenterRadius && y <= mColorCenterRadius && mShowCenterOldColor) {
 					mCenterHaloPaint.setAlpha(0x50);
 					setColor(getOldCenterColor());
 					invalidate();
-				} else if (Math.sqrt(x * x + y * y)  <= mColorWheelRadius + mColorPointerHaloRadius
-						&& Math.sqrt(x * x + y * y) >= mColorWheelRadius - mColorPointerHaloRadius
-						&& mTouchAnywhereOnColorWheelEnabled) {
-
+				} else if (Math.sqrt(x * x + y * y)  <= mColorWheelRadius + mColorPointerHaloRadius && Math.sqrt(x * x + y * y) >= mColorWheelRadius - mColorPointerHaloRadius && mTouchAnywhereOnColorWheelEnabled) {
 					mUserIsMovingPointer = true;
 					invalidate();
 				} else {
 					getParent().requestDisallowInterceptTouchEvent(false);
 					return false;
 				}
+
 				break;
 			case MotionEvent.ACTION_MOVE:
 				if (mUserIsMovingPointer) {
 					mAngle = (float) Math.atan2(y - mSlopY, x - mSlopX);
 					mPointerColor.setColor(calculateColor(mAngle));
-
 					setNewCenterColor(mCenterNewColor = calculateColor(mAngle));
-
-					if (mOpacityBar != null) {
-						mOpacityBar.setColor(mColor);
-					}
-
-					if (mValueBar != null) {
-						mValueBar.setColor(mColor);
-					}
-
-					if (mSaturationBar != null) {
-						mSaturationBar.setColor(mColor);
-					}
-
-					if (mSVbar != null) {
-						mSVbar.setColor(mColor);
-					}
-
 					invalidate();
 				} else {
 					getParent().requestDisallowInterceptTouchEvent(false);
 					return false;
 				}
+
 				break;
 			case MotionEvent.ACTION_UP:
 				mUserIsMovingPointer = false;
@@ -446,23 +325,19 @@ public class ColorPickerHolo extends View {
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		Parcelable superState = super.onSaveInstanceState();
-
 		Bundle state = new Bundle();
 		state.putParcelable(STATE_PARENT, superState);
 		state.putFloat(STATE_ANGLE, mAngle);
 		state.putInt(STATE_OLD_COLOR, mCenterOldColor);
 		state.putBoolean(STATE_SHOW_OLD_COLOR, mShowCenterOldColor);
-
 		return state;
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
 		Bundle savedState = (Bundle) state;
-
 		Parcelable superState = savedState.getParcelable(STATE_PARENT);
 		super.onRestoreInstanceState(superState);
-
 		mAngle = savedState.getFloat(STATE_ANGLE);
 		setOldCenterColor(savedState.getInt(STATE_OLD_COLOR));
 		mShowCenterOldColor = savedState.getBoolean(STATE_SHOW_OLD_COLOR);
@@ -477,19 +352,17 @@ public class ColorPickerHolo extends View {
 
 	private int calculateColor(float angle) {
 		float unit = (float) (angle / (2 * Math.PI));
-		int[] colors = mUsedColors ? M_COLORS : COLORS;
+		int[] colors = COLORS;
 
 		if (unit < 0) {
 			unit += 1;
 		}
 
 		if (unit <= 0) {
-			mColor = colors[0];
 			return colors[0];
 		}
 
 		if (unit >= 1) {
-			mColor = colors[colors.length - 1];
 			return colors[colors.length - 1];
 		}
 
@@ -504,7 +377,6 @@ public class ColorPickerHolo extends View {
 		int g = ave(Color.green(c0), Color.green(c1), p);
 		int b = ave(Color.blue(c0), Color.blue(c1), p);
 
-		mColor = Color.argb(a, r, g, b);
 		return Color.argb(a, r, g, b);
 	}
 
@@ -515,14 +387,12 @@ public class ColorPickerHolo extends View {
 	private float colorToAngle(int color) {
 		float[] colors = new float[3];
 		Color.colorToHSV(color, colors);
-		
 		return (float) Math.toRadians(-colors[0]);
 	}
 
 	private float[] calculatePointerPosition(float angle) {
 		float x = (float) (mColorWheelRadius * Math.cos(angle));
 		float y = (float) (mColorWheelRadius * Math.sin(angle));
-
 		return new float[] { x, y };
 	}
 
@@ -534,31 +404,11 @@ public class ColorPickerHolo extends View {
 		return mShowCenterOldColor;
 	}
 
-	public boolean hasOpacityBar(){
-		return mOpacityBar != null;
-	}
-
-	public boolean hasValueBar(){
-		return mValueBar != null;
-	}
-
-	public boolean hasSaturationBar(){
-		return mSaturationBar != null;
-	}
-
-	public boolean hasSVBar(){
-		return mSVbar != null;
-	}
-
 	public void setTouchAnywhereOnColorWheelEnabled(boolean TouchAnywhereOnColorWheelEnabled){
 		mTouchAnywhereOnColorWheelEnabled = TouchAnywhereOnColorWheelEnabled;
 	}
 
 	public boolean getTouchAnywhereOnColorWheel(){
 		return mTouchAnywhereOnColorWheelEnabled;
-	}
-
-	public boolean getUsedColors() {
-		return mUsedColors;
 	}
 }

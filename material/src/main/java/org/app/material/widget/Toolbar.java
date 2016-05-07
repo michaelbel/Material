@@ -20,6 +20,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.ViewCompat;
@@ -173,6 +174,11 @@ public class Toolbar extends FrameLayout {
     public void setTitle(String title) {
         createTitleTextView();
         mTitleTextView.setText(title);
+    }
+
+    public void setTitle(@StringRes int resId) {
+        createTitleTextView();
+        mTitleTextView.setText(getContext().getResources().getText(resId));
     }
 
     @Deprecated

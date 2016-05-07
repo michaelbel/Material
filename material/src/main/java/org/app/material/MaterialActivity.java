@@ -46,7 +46,8 @@ public class MaterialActivity extends FragmentActivity {
 
         viewLayout = new LinearLayout(this);
         viewLayout.setOrientation(LinearLayout.VERTICAL);
-        viewLayout.setLayoutParams(LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 56, 0, 0));
+        viewLayout.setPadding(0, AndroidUtilities.dp(this, 56), 0, 0);
+        viewLayout.setLayoutParams(LayoutHelper.makeLinear(this, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         containerLayout.addView(viewLayout);
 
         setContentView(containerLayout);

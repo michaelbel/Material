@@ -129,7 +129,9 @@ public class LayoutHelper {
     }
 
     public static RelativeLayout.LayoutParams makeRelative(Context context, int width, int height, int alignRelative, int anchorRelative) {
-        return makeRelative(context, width, height, 0, 0, 0, 0, -1, alignRelative, anchorRelative);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(getSize(context, width), getSize(context, height));
+        layoutParams.addRule(alignRelative, anchorRelative);
+        return layoutParams;
     }
 
     public static RelativeLayout.LayoutParams makeRelative(Context context, int width, int height, int alignParent, int alignRelative, int anchorRelative) {

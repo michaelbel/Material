@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.rey.material.widget.Slider;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.LayoutHelper;
 import org.app.material.SeekBar;
 
 public class ColorPicker extends FrameLayout implements Slider.OnPositionChangeListener {

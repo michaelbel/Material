@@ -57,15 +57,16 @@ public class NumberPicker extends LinearLayout {
     private static final float TOP_AND_BOTTOM_FADING_EDGE_STRENGTH = 0.9f;
 
     private int mSelectionDividersDistance;
-    private int minHeight;
-    private int maxHeight;
-    private int minWidth;
-    private int maxWidth;
-    private int textSize;
-    private int selectorTextGapHeight;
-    private int minValue;
-    private int maxValue;
-    private int value;
+    private int mMinHeight;
+    private int mMaxHeight;
+    private int mMinWidth;
+    private int mMaxWidth;
+    private int mTextSize;
+    private int mSelectorTextGapHeight;
+
+    private int mMinValue;
+    private int mMaxValue;
+    private int mValue;
     private int selectorElementHeight;
     private int initialScrollOffset = Integer.MIN_VALUE;
     private int currentScrollOffset;
@@ -116,15 +117,15 @@ public class NumberPicker extends LinearLayout {
         selectionDivider = new ColorDrawable(AndroidUtilities.getContextColor(getContext(), R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
         mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
-        minHeight = SIZE_UNSPECIFIED;
-        maxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
+        mMinHeight = SIZE_UNSPECIFIED;
+        mMaxHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, getResources().getDisplayMetrics());
 
-        if (minHeight != SIZE_UNSPECIFIED && maxHeight != SIZE_UNSPECIFIED && minHeight > maxHeight) {
-            throw new IllegalArgumentException("minHeight > maxHeight");
+        if (mMinHeight != SIZE_UNSPECIFIED && mMaxHeight != SIZE_UNSPECIFIED && mMinHeight > mMaxHeight) {
+            throw new IllegalArgumentException("mMinHeight > mMaxHeight");
         }
 
-        minWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, getResources().getDisplayMetrics());
-        maxWidth = SIZE_UNSPECIFIED;
+        mMinWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, getResources().getDisplayMetrics());
+        mMaxWidth = SIZE_UNSPECIFIED;
         computeMaxWidth = true;
         virtualButtonPressedDrawable = new ColorDrawable(0x00);
         pressedStateHelper = new PressedStateHelper();
@@ -140,11 +141,11 @@ public class NumberPicker extends LinearLayout {
         touchSlop = configuration.getScaledTouchSlop();
         minimumFlingVelocity = configuration.getScaledMinimumFlingVelocity();
         maximumFlingVelocity = configuration.getScaledMaximumFlingVelocity() / SELECTOR_MAX_FLING_VELOCITY_ADJUSTMENT;
-        textSize = (int) inputText.getTextSize();
+        mTextSize = (int) inputText.getTextSize();
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setTextAlign(Align.CENTER);
-        paint.setTextSize(textSize);
+        paint.setTextSize(mTextSize);
         paint.setTypeface(inputText.getTypeface());
         ColorStateList colors = inputText.getTextColors();
         int color = colors.getColorForState(ENABLED_STATE_SET, 0xffffffff);
@@ -193,11 +194,11 @@ public class NumberPicker extends LinearLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int newWidthMeasureSpec = makeMeasureSpec(widthMeasureSpec, maxWidth);
-        final int newHeightMeasureSpec = makeMeasureSpec(heightMeasureSpec, maxHeight);
+        final int newWidthMeasureSpec = makeMeasureSpec(widthMeasureSpec, mMaxWidth);
+        final int newHeightMeasureSpec = makeMeasureSpec(heightMeasureSpec, mMaxHeight);
         super.onMeasure(newWidthMeasureSpec, newHeightMeasureSpec);
-        final int widthSize = resolveSizeAndStateRespectingMinSize(minWidth, getMeasuredWidth(), widthMeasureSpec);
-        final int heightSize = resolveSizeAndStateRespectingMinSize(minHeight, getMeasuredHeight(), heightMeasureSpec);
+        final int widthSize = resolveSizeAndStateRespectingMinSize(mMinWidth, getMeasuredWidth(), widthMeasureSpec);
+        final int heightSize = resolveSizeAndStateRespectingMinSize(mMinHeight, getMeasuredHeight(), heightMeasureSpec);
         setMeasuredDimension(widthSize, heightSize);
     }
 
@@ -382,7 +383,7 @@ public class NumberPicker extends LinearLayout {
                 switch (event.getAction()) {
                     case KeyEvent.ACTION_DOWN:
                         if (wrapSelectorWheel || (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
-                                ? getValue() < getMaxValue() : getValue() > getMinValue()) {
+                                ? getValue() < getmMaxValue() : getValue() > getmMinValue()) {
                             requestFocus();
                             lastHandledDownDpadKeyCode = keyCode;
                             removeAllCallbacks();
@@ -459,34 +460,34 @@ public class NumberPicker extends LinearLayout {
     public void scrollBy(int x, int y) {
         int[] selectorIndices = this.selectorIndices;
 
-        if (!wrapSelectorWheel && y > 0 && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] <= minValue) {
+        if (!wrapSelectorWheel && y > 0 && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] <= mMinValue) {
             currentScrollOffset = initialScrollOffset;
             return;
         }
 
-        if (!wrapSelectorWheel && y < 0 && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] >= maxValue) {
+        if (!wrapSelectorWheel && y < 0 && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] >= mMaxValue) {
             currentScrollOffset = initialScrollOffset;
             return;
         }
 
         currentScrollOffset += y;
 
-        while (currentScrollOffset - initialScrollOffset > selectorTextGapHeight) {
+        while (currentScrollOffset - initialScrollOffset > mSelectorTextGapHeight) {
             currentScrollOffset -= selectorElementHeight;
             decrementSelectorIndices(selectorIndices);
             setValueInternal(selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX]);
 
-            if (!wrapSelectorWheel && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] <= minValue) {
+            if (!wrapSelectorWheel && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] <= mMinValue) {
                 currentScrollOffset = initialScrollOffset;
             }
         }
 
-        while (currentScrollOffset - initialScrollOffset < -selectorTextGapHeight) {
+        while (currentScrollOffset - initialScrollOffset < -mSelectorTextGapHeight) {
             currentScrollOffset += selectorElementHeight;
             incrementSelectorIndices(selectorIndices);
             setValueInternal(selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX]);
 
-            if (!wrapSelectorWheel && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] >= maxValue) {
+            if (!wrapSelectorWheel && selectorIndices[SELECTOR_MIDDLE_ITEM_INDEX] >= mMaxValue) {
                 currentScrollOffset = initialScrollOffset;
             }
         }
@@ -499,7 +500,7 @@ public class NumberPicker extends LinearLayout {
 
     @Override
     protected int computeVerticalScrollRange() {
-        return (maxValue - minValue + 1) * selectorElementHeight;
+        return (mMaxValue - mMinValue + 1) * selectorElementHeight;
     }
 
     @Override
@@ -594,7 +595,7 @@ public class NumberPicker extends LinearLayout {
         }
 
         int numberOfDigits = 0;
-        int current = maxValue;
+        int current = mMaxValue;
 
         while (current > 0) {
             numberOfDigits++;
@@ -604,11 +605,11 @@ public class NumberPicker extends LinearLayout {
         maxTextWidth = (int) (numberOfDigits * maxDigitWidth);
         maxTextWidth += inputText.getPaddingLeft() + inputText.getPaddingRight();
 
-        if (maxWidth != maxTextWidth) {
-            if (maxTextWidth > minWidth) {
-                maxWidth = maxTextWidth;
+        if (mMaxWidth != maxTextWidth) {
+            if (maxTextWidth > mMinWidth) {
+                mMaxWidth = maxTextWidth;
             } else {
-                maxWidth = minWidth;
+                mMaxWidth = mMinWidth;
             }
 
             invalidate();
@@ -616,7 +617,7 @@ public class NumberPicker extends LinearLayout {
     }
 
     public void setWrapSelectorWheel(boolean wrapSelectorWheel) {
-        final boolean wrappingAllowed = (maxValue - minValue) >= selectorIndices.length;
+        final boolean wrappingAllowed = (mMaxValue - mMinValue) >= selectorIndices.length;
 
         if ((!wrapSelectorWheel || wrappingAllowed) && wrapSelectorWheel != this.wrapSelectorWheel) {
             this.wrapSelectorWheel = wrapSelectorWheel;
@@ -624,29 +625,29 @@ public class NumberPicker extends LinearLayout {
     }
 
     public int getValue() {
-        return value;
+        return mValue;
     }
 
-    public int getMinValue() {
-        return minValue;
+    public int getmMinValue() {
+        return mMinValue;
     }
 
-    public void setMinValue(int minValue) {
-        if (this.minValue == minValue) {
+    public void setmMinValue(int mMinValue) {
+        if (this.mMinValue == mMinValue) {
             return;
         }
 
-        if (minValue < 0) {
-            throw new IllegalArgumentException("minValue must be >= 0");
+        if (mMinValue < 0) {
+            throw new IllegalArgumentException("mMinValue must be >= 0");
         }
 
-        this.minValue = minValue;
+        this.mMinValue = mMinValue;
 
-        if (this.minValue > value) {
-            value = this.minValue;
+        if (this.mMinValue > mValue) {
+            mValue = this.mMinValue;
         }
 
-        boolean wrapSelectorWheel = maxValue - this.minValue > selectorIndices.length;
+        boolean wrapSelectorWheel = mMaxValue - this.mMinValue > selectorIndices.length;
         setWrapSelectorWheel(wrapSelectorWheel);
         initializeSelectorWheelIndices();
         updateInputTextView();
@@ -654,26 +655,26 @@ public class NumberPicker extends LinearLayout {
         invalidate();
     }
 
-    public int getMaxValue() {
-        return maxValue;
+    public int getmMaxValue() {
+        return mMaxValue;
     }
 
-    public void setMaxValue(int maxValue) {
-        if (this.maxValue == maxValue) {
+    public void setmMaxValue(int mMaxValue) {
+        if (this.mMaxValue == mMaxValue) {
             return;
         }
 
-        if (maxValue < 0) {
-            throw new IllegalArgumentException("maxValue must be >= 0");
+        if (mMaxValue < 0) {
+            throw new IllegalArgumentException("mMaxValue must be >= 0");
         }
 
-        this.maxValue = maxValue;
+        this.mMaxValue = mMaxValue;
 
-        if (this.maxValue < value) {
-            value = this.maxValue;
+        if (this.mMaxValue < mValue) {
+            mValue = this.mMaxValue;
         }
 
-        boolean wrapSelectorWheel = this.maxValue - minValue > selectorIndices.length;
+        boolean wrapSelectorWheel = this.mMaxValue - mMinValue > selectorIndices.length;
         setWrapSelectorWheel(wrapSelectorWheel);
         initializeSelectorWheelIndices();
         updateInputTextView();
@@ -751,18 +752,18 @@ public class NumberPicker extends LinearLayout {
     }
 
     private void setValueInternal(int current) {
-        if (value == current) {
+        if (mValue == current) {
             return;
         }
 
         if (wrapSelectorWheel) {
             current = getWrappedSelectorIndex(current);
         } else {
-            current = Math.max(current, minValue);
-            current = Math.min(current, maxValue);
+            current = Math.max(current, mMinValue);
+            current = Math.min(current, mMaxValue);
         }
 
-        value = current;
+        mValue = current;
         updateInputTextView();
         initializeSelectorWheelIndices();
         invalidate();
@@ -789,11 +790,11 @@ public class NumberPicker extends LinearLayout {
     private void initializeSelectorWheel() {
         initializeSelectorWheelIndices();
         int[] selectorIndices = this.selectorIndices;
-        int totalTextHeight = selectorIndices.length * textSize;
+        int totalTextHeight = selectorIndices.length * mTextSize;
         float totalTextGapHeight = (getBottom() - getTop()) - totalTextHeight;
         float textGapCount = selectorIndices.length;
-        selectorTextGapHeight = (int) (totalTextGapHeight / textGapCount + 0.5f);
-        selectorElementHeight = textSize + selectorTextGapHeight;
+        mSelectorTextGapHeight = (int) (totalTextGapHeight / textGapCount + 0.5f);
+        selectorElementHeight = mTextSize + mSelectorTextGapHeight;
         int editTextTextPosition = inputText.getBaseline() + inputText.getTop();
         initialScrollOffset = editTextTextPosition - (selectorElementHeight * SELECTOR_MIDDLE_ITEM_INDEX);
         currentScrollOffset = initialScrollOffset;
@@ -802,7 +803,7 @@ public class NumberPicker extends LinearLayout {
 
     private void initializeFadingEdges() {
         setVerticalFadingEdgeEnabled(true);
-        setFadingEdgeLength((getBottom() - getTop() - textSize) / 2);
+        setFadingEdgeLength((getBottom() - getTop() - mTextSize) / 2);
     }
 
     private void onScrollerFinished(Scroller scroller) {
@@ -840,10 +841,10 @@ public class NumberPicker extends LinearLayout {
     }
 
     private int getWrappedSelectorIndex(int selectorIndex) {
-        if (selectorIndex > maxValue) {
-            return minValue + (selectorIndex - maxValue) % (maxValue - minValue) - 1;
-        } else if (selectorIndex < minValue) {
-            return maxValue - (minValue - selectorIndex) % (maxValue - minValue) + 1;
+        if (selectorIndex > mMaxValue) {
+            return mMinValue + (selectorIndex - mMaxValue) % (mMaxValue - mMinValue) - 1;
+        } else if (selectorIndex < mMinValue) {
+            return mMaxValue - (mMinValue - selectorIndex) % (mMaxValue - mMinValue) + 1;
         }
         return selectorIndex;
     }
@@ -852,8 +853,8 @@ public class NumberPicker extends LinearLayout {
         System.arraycopy(selectorIndices, 1, selectorIndices, 0, selectorIndices.length - 1);
         int nextScrollSelectorIndex = selectorIndices[selectorIndices.length - 2] + 1;
 
-        if (wrapSelectorWheel && nextScrollSelectorIndex > maxValue) {
-            nextScrollSelectorIndex = minValue;
+        if (wrapSelectorWheel && nextScrollSelectorIndex > mMaxValue) {
+            nextScrollSelectorIndex = mMinValue;
         }
 
         selectorIndices[selectorIndices.length - 1] = nextScrollSelectorIndex;
@@ -864,8 +865,8 @@ public class NumberPicker extends LinearLayout {
         System.arraycopy(selectorIndices, 0, selectorIndices, 1, selectorIndices.length - 1);
         int nextScrollSelectorIndex = selectorIndices[1] - 1;
 
-        if (wrapSelectorWheel && nextScrollSelectorIndex < minValue) {
-            nextScrollSelectorIndex = maxValue;
+        if (wrapSelectorWheel && nextScrollSelectorIndex < mMinValue) {
+            nextScrollSelectorIndex = mMaxValue;
         }
 
         selectorIndices[0] = nextScrollSelectorIndex;
@@ -880,7 +881,7 @@ public class NumberPicker extends LinearLayout {
             return;
         }
 
-        if (selectorIndex < minValue || selectorIndex > maxValue) {
+        if (selectorIndex < mMinValue || selectorIndex > mMaxValue) {
             scrollSelectorValue = "";
         } else {
             scrollSelectorValue = formatNumber(selectorIndex);
@@ -894,7 +895,7 @@ public class NumberPicker extends LinearLayout {
     }
 
     private boolean updateInputTextView() {
-        String text = formatNumber(value);
+        String text = formatNumber(mValue);
 
         if (!TextUtils.isEmpty(text) && !text.equals(inputText.getText().toString())) {
             inputText.setText(text);

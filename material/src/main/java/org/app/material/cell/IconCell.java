@@ -31,8 +31,8 @@ import org.app.material.widget.LayoutHelper;
 
 public class IconCell extends FrameLayout {
 
-    private TextView textView;
-    private ImageView iconView;
+    private TextView mTextView;
+    private ImageView mIconView;
 
     private View listShortDivider;
 
@@ -45,19 +45,19 @@ public class IconCell extends FrameLayout {
         this.setLayoutParams(params);
         this.setBackground(AndroidUtilities.getRipple(0xFFFFFFFF, 0xFFE0E0E0));
 
-        iconView = new ImageView(context);
-        iconView.setVisibility(INVISIBLE);
-        iconView.setScaleType(ImageView.ScaleType.CENTER);
-        iconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
-        addView(iconView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        mIconView = new ImageView(context);
+        mIconView.setVisibility(INVISIBLE);
+        mIconView.setScaleType(ImageView.ScaleType.CENTER);
+        mIconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        addView(mIconView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
-        textView = new TextView(context);
-        textView.setVisibility(INVISIBLE);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
-        textView.setTextColor(0xFF444444);
-        textView.setGravity(Gravity.START);
-        textView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16));
-        addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        mTextView = new TextView(context);
+        mTextView.setVisibility(INVISIBLE);
+        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17);
+        mTextView.setTextColor(0xFF444444);
+        mTextView.setGravity(Gravity.START);
+        mTextView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16));
+        addView(mTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         listShortDivider = new View(context);
         listShortDivider.setVisibility(INVISIBLE);
@@ -66,26 +66,26 @@ public class IconCell extends FrameLayout {
     }
 
     public IconCell addTitle(String text) {
-        textView.setVisibility(VISIBLE);
-        textView.setText(text);
+        mTextView.setVisibility(VISIBLE);
+        mTextView.setText(text);
         return this;
     }
 
     public IconCell addTitle(@StringRes int resId) {
-        textView.setVisibility(VISIBLE);
-        textView.setText(getContext().getResources().getText(resId));
+        mTextView.setVisibility(VISIBLE);
+        mTextView.setText(getResources().getText(resId));
         return this;
     }
 
     public IconCell addIcon(int icon) {
-        iconView.setVisibility(VISIBLE);
-        iconView.setImageResource(icon);
+        mIconView.setVisibility(VISIBLE);
+        mIconView.setImageResource(icon);
         return this;
     }
 
     public IconCell addIcon(Drawable icon) {
-        iconView.setVisibility(VISIBLE);
-        iconView.setImageDrawable(icon);
+        mIconView.setVisibility(VISIBLE);
+        mIconView.setImageDrawable(icon);
         return this;
     }
 

@@ -18,7 +18,6 @@ package org.app.material.drawable;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -38,22 +37,18 @@ public class MediaControlDrawable extends Drawable {
         PLAY, PAUSE, STOP
     }
 
-    private State mCurrentState = State.PLAY;
-    private State mTargetState = State.PLAY;
-
-    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private float mPadding = 0f;
-    private RectF mInternalBounds = new RectF();
-
     private float mRotation;
-    private Path mPrimaryPath = new Path();
-    private Path mSecondaryPath = new Path();
-
     private float mCenter;
     private float mSize;
     private float mPlayTipOffset;
     private float mPlayBaseOffset;
-
+    private Path mPrimaryPath = new Path();
+    private Path mSecondaryPath = new Path();
+    private RectF mInternalBounds = new RectF();
+    private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private State mCurrentState = State.PLAY;
+    private State mTargetState = State.PLAY;
     private ValueAnimatorCompat mAnimator;
 
     public MediaControlDrawable(Context context, @ColorInt int color, float padding, State state, Interpolator interpolator, int duration) {
@@ -65,7 +60,7 @@ public class MediaControlDrawable extends Drawable {
         mPaint.setColor(color);
 
         mAnimator = AnimationUtils.createAnimator();
-        mAnimator.setFloatValues(0f, 90f);
+        mAnimator.setFloatValues(0F, 90F);
         mAnimator.setDuration(duration);
         mAnimator.setInterpolator(interpolator);
         mAnimator.setUpdateListener(new ValueAnimatorCompat.AnimatorUpdateListener() {
@@ -81,7 +76,7 @@ public class MediaControlDrawable extends Drawable {
             @Override
             public void onAnimationEnd(ValueAnimatorCompat animator) {
                 mCurrentState = mTargetState;
-                setTransitionState(0f, 0f);
+                setTransitionState(0F, 0F);
             }
 
             @Override
@@ -142,13 +137,15 @@ public class MediaControlDrawable extends Drawable {
         if (mCurrentState == State.PLAY && (mTargetState == State.STOP || mTargetState == State.PLAY)) {
             float offset = (1f - fraction) * mPlayTipOffset;
             float offsetBase = (1f - fraction) * mPlayBaseOffset;
+
             mPrimaryPath.moveTo(mInternalBounds.right + offset, interpolate(mCenter, mInternalBounds.bottom, fraction));
             mPrimaryPath.lineTo(mInternalBounds.left + offset, mInternalBounds.bottom + offsetBase);
             mPrimaryPath.lineTo(mInternalBounds.left + offset, interpolate(mCenter, mInternalBounds.top, fraction));
             mPrimaryPath.lineTo(interpolate(mInternalBounds.left, mInternalBounds.right, fraction) + offset, mInternalBounds.top - offsetBase);
         } else if (mCurrentState == State.STOP && mTargetState == State.PAUSE) {
-            float primaryBottom = mCenter - fraction * 3f / 20f * mSize;
-            float secondaryTop = mCenter + fraction * 3f / 20f * mSize;
+            float primaryBottom = mCenter - fraction * 3F / 20F * mSize;
+            float secondaryTop = mCenter + fraction * 3F / 20F * mSize;
+
             mPrimaryPath.moveTo(mInternalBounds.right, mInternalBounds.top);
             mPrimaryPath.lineTo(mInternalBounds.right, primaryBottom);
             mPrimaryPath.lineTo(mInternalBounds.left, primaryBottom);
@@ -166,6 +163,7 @@ public class MediaControlDrawable extends Drawable {
                 float primaryBottomLeft = mInternalBounds.left + fraction * (mSize / 2f);
                 float secondaryLeft = mCenter + (-2f * fraction + 1f) * 3f / 20f * mSize;
                 float secondaryBottomRight = mInternalBounds.right - fraction * (mSize / 2f);
+
                 mPrimaryPath.moveTo(mInternalBounds.left - offsetBase, mInternalBounds.bottom - offset);
                 mPrimaryPath.lineTo(primaryRight, mInternalBounds.bottom - offset);
                 mPrimaryPath.lineTo(primaryRight, mInternalBounds.top - offset);
@@ -177,6 +175,7 @@ public class MediaControlDrawable extends Drawable {
             } else {
                 float primaryBottomLeft = mInternalBounds.left + fraction * (mSize / 2f);
                 float secondaryBottomRight = mInternalBounds.right - fraction * (mSize / 2f);
+
                 mPrimaryPath.moveTo(mInternalBounds.left - offsetBase, mInternalBounds.bottom - offset);
                 mPrimaryPath.lineTo(primaryBottomLeft, mInternalBounds.top - offset);
                 mPrimaryPath.lineTo(secondaryBottomRight, mInternalBounds.top - offset);
@@ -191,6 +190,7 @@ public class MediaControlDrawable extends Drawable {
                 float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mSize / 2f);
                 float secondaryTop = mCenter + (2f * fraction - 1f) * 3f / 20f * mSize;
                 float secondaryLeftBottom = mInternalBounds.right - (1f - fraction) * (mSize / 2f);
+
                 mPrimaryPath.moveTo(mInternalBounds.left + offset, mInternalBounds.top - offsetBase);
                 mPrimaryPath.lineTo(mInternalBounds.left + offset, primaryBottom);
                 mPrimaryPath.lineTo(mInternalBounds.right + offset, primaryBottom);
@@ -202,6 +202,7 @@ public class MediaControlDrawable extends Drawable {
             } else {
                 float primaryLeftTop = mInternalBounds.left + (1f - fraction) * (mSize / 2f);
                 float secondaryLeftBottom = mInternalBounds.right - (1f - fraction) * (mSize / 2f);
+
                 mPrimaryPath.moveTo(mInternalBounds.left + offset, mInternalBounds.top - offsetBase);
                 mPrimaryPath.lineTo(mInternalBounds.right + offset, primaryLeftTop);
                 mPrimaryPath.lineTo(mInternalBounds.right + offset, secondaryLeftBottom);
@@ -210,6 +211,7 @@ public class MediaControlDrawable extends Drawable {
         } else if (mCurrentState == State.PAUSE && (mTargetState == State.STOP || mTargetState == State.PAUSE)) {
             float primaryRight = mCenter - (1f - fraction) * 3f / 20f * mSize;
             float secondaryLeft = mCenter + (1f - fraction) * 3f / 20f * mSize;
+
             mPrimaryPath.moveTo(mInternalBounds.left, mInternalBounds.top);
             mPrimaryPath.lineTo(primaryRight, mInternalBounds.top);
             mPrimaryPath.lineTo(primaryRight, mInternalBounds.bottom);
@@ -221,6 +223,7 @@ public class MediaControlDrawable extends Drawable {
         } else if (mCurrentState == State.STOP && (mTargetState == State.PLAY || mTargetState == State.STOP)) {
             float offset = fraction * mPlayTipOffset;
             float offsetBase = fraction * mPlayBaseOffset;
+
             mPrimaryPath.moveTo(interpolate(mInternalBounds.left, mCenter, fraction), mInternalBounds.top - offset);
             mPrimaryPath.lineTo(mInternalBounds.left - offsetBase, mInternalBounds.bottom - offset);
             mPrimaryPath.lineTo(interpolate(mInternalBounds.right, mCenter, fraction), mInternalBounds.bottom - offset);
@@ -235,6 +238,7 @@ public class MediaControlDrawable extends Drawable {
         float yOffset = (bounds.height() - size) / 2f;
         float xOffset = (bounds.width() - size) / 2f;
         float padding = mPadding + (bounds.height() - 2f * mPadding) * 1f / 6f;
+
         mInternalBounds.set(bounds.left + padding + xOffset, bounds.top + padding + yOffset, bounds.right - padding - xOffset, bounds.bottom - padding - yOffset);
         mCenter = mInternalBounds.centerX();
         mSize = mInternalBounds.width();
@@ -261,20 +265,21 @@ public class MediaControlDrawable extends Drawable {
     }
 
     public static class Builder {
-        private Context mContext;
+
         private int mColor;
+        private int mAnimationDuration;
         private float mPadding;
         private State mInitialState;
+        private Context mContext;
         private Interpolator mAnimationInterpolator;
-        private int mAnimationDuration;
 
         public Builder(Context context) {
             mContext = context;
-            mColor = Color.WHITE;
+            mColor = 0xFFFFFFFF;
             mPadding = 0f;
             mInitialState = State.PLAY;
             mAnimationInterpolator = AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR;
-            mAnimationDuration = 500;
+            mAnimationDuration = 400; // 500
         }
 
         public Builder setColor(@ColorInt int color) {

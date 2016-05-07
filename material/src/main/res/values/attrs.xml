@@ -12,210 +12,26 @@
         <attr name="color_center_halo_radius" format="dimension"/>
         <attr name="color_pointer_radius" format="dimension"/>
         <attr name="color_pointer_halo_radius" format="dimension"/>
-        <attr name="useMaterialColors" format="boolean"/>
     </declare-styleable>
 
-    <!--ColorPickerHoloBars-->
-    <declare-styleable name="ColorPickerHoloBars">
-        <attr name="bar_thickness" format="dimension"/>
-        <attr name="bar_length" format="dimension"/>
-        <attr name="bar_pointer_radius" format="dimension"/>
-        <attr name="bar_pointer_halo_radius" format="dimension"/>
-        <attr name="bar_orientation_horizontal" format="boolean"/>
-    </declare-styleable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <declare-styleable name="FloatingActionButton">
-        <attr name="fab_colorNormal" format="color" />
-        <attr name="fab_colorPressed" format="color" />
-        <attr name="fab_colorDisabled" format="color" />
-        <attr name="fab_colorRipple" format="color" />
-        <attr name="fab_showShadow" format="boolean" />
-        <attr name="fab_shadowColor" format="color" />
-        <attr name="fab_shadowRadius" format="dimension" />
-        <attr name="fab_shadowXOffset" format="dimension" />
-        <attr name="fab_shadowYOffset" format="dimension" />
-        <attr name="fab_size" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="mini" value="1" />
+    <!--ColorPickerView-->
+    <declare-styleable name="ColorPickerView">
+        <attr name="alphaSlider" format="boolean"/>
+        <attr name="lightnessSlider" format="boolean"/>
+        <attr name="density" format="integer"/>
+        <attr name="initialColor" format="integer"/>
+        <attr name="wheelType" format="enum">
+            <enum name="FLOWER" value="0"/>
+            <enum name="CIRCLE" value="1"/>
         </attr>
-        <attr name="fab_showAnimation" format="reference" />
-        <attr name="fab_hideAnimation" format="reference" />
-        <attr name="fab_label" format="string" />
-        <attr name="fab_elevationCompat" format="dimension" />
-        <attr name="fab_progress_color" format="color" />
-        <attr name="fab_progress_backgroundColor" format="color" />
-        <attr name="fab_progress_indeterminate" format="boolean" />
-        <attr name="fab_progress_max" format="integer" />
-        <attr name="fab_progress" format="integer" />
-        <attr name="fab_progress_showBackground" format="boolean" />
+        <!--attr name="pickerColorEditTextColor" format="integer"/-->
+        <attr name="pickerTitle" format="reference|string"/>
+        <attr name="pickerButtonOk" format="reference|string"/>
+        <attr name="pickerButtonCancel" format="reference|string"/>
     </declare-styleable>
 
-    <declare-styleable name="FabMenu">
-        <attr name="menu_showShadow" format="boolean" />
-        <attr name="menu_buttonSpacing" format="dimension" />
-        <attr name="menu_labels_margin" format="dimension" />
-        <attr name="menu_labels_showAnimation" format="reference" />
-        <attr name="menu_labels_hideAnimation" format="reference" />
-        <attr name="menu_labels_paddingTop" format="dimension" />
-        <attr name="menu_labels_paddingLeft" format="dimension" />
-        <attr name="menu_labels_paddingRight" format="dimension" />
-        <attr name="menu_labels_paddingBottom" format="dimension" />
-        <attr name="menu_labels_padding" format="dimension" />
-        <attr name="menu_labels_textColor" format="reference|color" />
-        <attr name="menu_labels_textSize" format="dimension" />
-        <attr name="menu_labels_cornerRadius" format="dimension" />
-        <attr name="menu_labels_showShadow" format="boolean" />
-        <attr name="menu_labels_colorNormal" format="color" />
-        <attr name="menu_labels_colorPressed" format="color" />
-        <attr name="menu_labels_colorRipple" format="color" />
-        <attr name="menu_labels_position" format="enum">
-            <enum name="left" value="0" />
-            <enum name="right" value="1" />
-        </attr>
-        <attr name="menu_icon" format="reference" />
-        <attr name="menu_animationDelayPerItem" format="integer" />
-        <attr name="menu_buttonToggleAnimation" format="reference" />
-        <attr name="menu_labels_singleLine" format="boolean" />
-        <attr name="menu_labels_ellipsize" format="enum">
-            <enum name="none" value="0" />
-            <enum name="start" value="1" />
-            <enum name="middle" value="2" />
-            <enum name="end" value="3" />
-            <enum name="marquee" value="4" />
-        </attr>
-        <attr name="menu_labels_maxLines" format="integer" />
-        <attr name="menu_fab_size" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="mini" value="1" />
-        </attr>
-        <attr name="menu_labels_style" format="reference" />
-        <attr name="menu_shadowColor" format="color" />
-        <attr name="menu_shadowRadius" format="dimension" />
-        <attr name="menu_shadowXOffset" format="dimension" />
-        <attr name="menu_shadowYOffset" format="dimension" />
-        <attr name="menu_colorNormal" format="color" />
-        <attr name="menu_colorPressed" format="color" />
-        <attr name="menu_colorRipple" format="color" />
-        <attr name="menu_openDirection" format="enum">
-            <enum name="up" value="0" />
-            <enum name="down" value="1" />
-        </attr>
-        <attr name="menu_backgroundColor" format="color" />
-        <attr name="menu_fab_label" format="string" />
-        <attr name="menu_fab_show_animation" format="reference" />
-        <attr name="menu_fab_hide_animation" format="reference" />
+    <!--FabSheet-->
+    <declare-styleable name="FabSheet">
+
     </declare-styleable>
-
-
-    <declare-styleable name="PieChart">
-        <attr name="viewBackgroundColor" format="integer" />
-        <attr name="strokeColor" format="integer" />
-        <attr name="strokeSize" format="float" />
-        <attr name="strokeStyle" format="integer">
-            <enum name="FILL" value="0" />
-            <enum name="FILL_AND_STROKE" value="1" />
-            <enum name="STROKE" value="1" />
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="Preference">
-        <attr name="useStockLayout" format="boolean" />
-    </declare-styleable>
-
-    <!-- These top three attributes are not accessible to library users -->
-    <attr name="md_divider" format="color" />
-
-    <!-- Accessible global theming attributes -->
-    <attr name="md_dark_theme" format="boolean" />
-    <attr name="md_background_color" format="color" />
-
-    <attr name="md_icon" format="reference" />
-    <attr name="md_icon_max_size" format="dimension" />
-    <attr name="md_icon_limit_icon_to_default_size" format="boolean" />
-
-    <attr name="md_title_color" format="color" />
-    <attr name="md_content_color" format="color" />
-    <attr name="md_link_color" format="color" />
-
-    <attr name="md_positive_color" format="color" />
-    <attr name="md_neutral_color" format="color" />
-    <attr name="md_negative_color" format="color" />
-    <attr name="md_widget_color" format="color" />
-
-    <attr name="md_item_color" format="color" />
-    <attr name="md_divider_color" format="color" />
-    <attr name="md_list_selector" format="reference" />
-
-    <attr name="md_btn_stacked_selector" format="reference" />
-    <attr name="md_btn_positive_selector" format="reference" />
-    <attr name="md_btn_neutral_selector" format="reference" />
-    <attr name="md_btn_negative_selector" format="reference" />
-
-    <attr name="md_btn_ripple_color" format="color" />
-
-    <attr name="md_title_gravity" format="enum">
-        <enum name="start" value="0" />
-        <enum name="center" value="1" />
-        <enum name="end" value="2" />
-    </attr>
-
-    <attr name="md_content_gravity" format="enum">
-        <enum name="start" value="0" />
-        <enum name="center" value="1" />
-        <enum name="end" value="2" />
-    </attr>
-
-    <attr name="md_btnstacked_gravity" format="enum">
-        <enum name="start" value="0" />
-        <enum name="center" value="1" />
-        <enum name="end" value="2" />
-    </attr>
-
-    <attr name="md_items_gravity" format="enum">
-        <enum name="start" value="0" />
-        <enum name="center" value="1" />
-        <enum name="end" value="2" />
-    </attr>
-
-    <attr name="md_buttons_gravity" format="enum">
-        <enum name="start" value="0" />
-        <enum name="center" value="1" />
-        <enum name="end" value="2" />
-    </attr>
-
-    <declare-styleable name="MDRootLayout">
-        <attr name="md_reduce_padding_no_title_no_buttons" format="boolean" />
-    </declare-styleable>
-
-    <attr name="md_medium_font" format="string" />
-    <attr name="md_regular_font" format="string" />
 </resources>

@@ -32,13 +32,10 @@ public class AnimationUtils {
         return startValue + Math.round(fraction * (endValue - startValue));
     }
 
-    static final ValueAnimatorCompat.Creator DEFAULT_ANIMATOR_CREATOR
-            = new ValueAnimatorCompat.Creator() {
+    static final ValueAnimatorCompat.Creator DEFAULT_ANIMATOR_CREATOR = new ValueAnimatorCompat.Creator() {
         @Override
         public ValueAnimatorCompat createAnimator() {
-            return new ValueAnimatorCompat(Build.VERSION.SDK_INT >= 12
-                    ? new ValueAnimatorCompatImplHoneycombMr1()
-                    : new ValueAnimatorCompatImplEclairMr1());
+            return new ValueAnimatorCompat(Build.VERSION.SDK_INT >= 12 ? new ValueAnimatorCompatImplHoneycombMr1() : new ValueAnimatorCompatImplEclairMr1());
         }
     };
 

@@ -30,71 +30,71 @@ import org.app.material.widget.LayoutHelper;
 
 public class DoubleCell extends FrameLayout {
 
-    private ImageView iconView;
-    private TextView titleTextView;
-    private TextView valueTextView;
+    private ImageView mIconImageView;
+    private TextView mTitleTextView;
+    private TextView mValueTextView;
 
     public DoubleCell(Context context) {
         super(context);
 
-        iconView = new ImageView(context);
-        iconView.setVisibility(INVISIBLE);
-        iconView.setScaleType(ImageView.ScaleType.CENTER);
-        iconView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
-        addView(iconView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        mIconImageView = new ImageView(context);
+        mIconImageView.setVisibility(INVISIBLE);
+        mIconImageView.setScaleType(ImageView.ScaleType.CENTER);
+        mIconImageView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        addView(mIconImageView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
-        titleTextView = new TextView(context);
-        titleTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        titleTextView.setLines(1);
-        titleTextView.setMaxLines(1);
-        titleTextView.setVisibility(INVISIBLE);
-        titleTextView.setSingleLine(true);
-        titleTextView.setTextColor(0xFF000000);
-        titleTextView.setEllipsize(TextUtils.TruncateAt.END);
-        titleTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        titleTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 10), 0, 0);
-        addView(titleTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
+        mTitleTextView = new TextView(context);
+        mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        mTitleTextView.setLines(1);
+        mTitleTextView.setMaxLines(1);
+        mTitleTextView.setVisibility(INVISIBLE);
+        mTitleTextView.setSingleLine(true);
+        mTitleTextView.setTextColor(0xFF000000);
+        mTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+        mTitleTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+        mTitleTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 10), 0, 0);
+        addView(mTitleTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
 
-        valueTextView = new TextView(context);
-        valueTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
-        valueTextView.setLines(1);
-        valueTextView.setVisibility(INVISIBLE);
-        valueTextView.setMaxLines(1);
-        valueTextView.setSingleLine(true);
-        valueTextView.setGravity(Gravity.START);
-        valueTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 35), 0, AndroidUtilities.dp(context, 10));
-        addView(valueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
+        mValueTextView = new TextView(context);
+        mValueTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        mValueTextView.setLines(1);
+        mValueTextView.setVisibility(INVISIBLE);
+        mValueTextView.setMaxLines(1);
+        mValueTextView.setSingleLine(true);
+        mValueTextView.setGravity(Gravity.START);
+        mValueTextView.setPadding(AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 35), 0, AndroidUtilities.dp(context, 10));
+        addView(mValueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
     }
 
     public DoubleCell addIcon(int icon) {
-        iconView.setVisibility(VISIBLE);
-        iconView.setImageResource(icon);
-        titleTextView.setPadding(AndroidUtilities.dp(getContext(), 72), AndroidUtilities.dp(getContext(), 10), 0, 0);
-        valueTextView.setPadding(AndroidUtilities.dp(getContext(), 72), AndroidUtilities.dp(getContext(), 35), 0, AndroidUtilities.dp(getContext(), 10));
+        mIconImageView.setVisibility(VISIBLE);
+        mIconImageView.setImageResource(icon);
+        mTitleTextView.setPadding(AndroidUtilities.dp(getContext(), 72), AndroidUtilities.dp(getContext(), 10), 0, 0);
+        mValueTextView.setPadding(AndroidUtilities.dp(getContext(), 72), AndroidUtilities.dp(getContext(), 35), 0, AndroidUtilities.dp(getContext(), 10));
         return this;
     }
 
     public DoubleCell addTitle(String title) {
-        titleTextView.setVisibility(VISIBLE);
-        titleTextView.setText(title);
+        mTitleTextView.setVisibility(VISIBLE);
+        mTitleTextView.setText(title);
         return this;
     }
 
     public DoubleCell addTitle(@StringRes int resId) {
-        titleTextView.setVisibility(VISIBLE);
-        titleTextView.setText(getContext().getResources().getText(resId));
+        mTitleTextView.setVisibility(VISIBLE);
+        mTitleTextView.setText(getResources().getText(resId));
         return this;
     }
 
     public DoubleCell addValue(String value) {
-        valueTextView.setVisibility(VISIBLE);
-        valueTextView.setText(value);
+        mValueTextView.setVisibility(VISIBLE);
+        mValueTextView.setText(value);
         return this;
     }
 
     public DoubleCell addValue(@StringRes int resId) {
-        valueTextView.setVisibility(VISIBLE);
-        valueTextView.setText(getContext().getResources().getText(resId));
+        mValueTextView.setVisibility(VISIBLE);
+        mValueTextView.setText(getResources().getText(resId));
         return this;
     }
 }

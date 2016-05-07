@@ -1,6 +1,5 @@
 package org.app.material.widget;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -12,12 +11,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -28,101 +25,100 @@ import java.util.List;
 
 public class ColorPickerView extends View {
 
-	private static final float STROKE_RATIO = 2f;
-	private Bitmap colorWheel;
-	private Canvas colorWheelCanvas;
-	private int density = 10;
-	private float lightness = 1;
-	private float alpha = 1;
-	private Integer initialColors[] = new Integer[]{null, null, null, null, null};
-	private int colorSelection = 0;
-	private Integer initialColor;
-	private Integer pickerTextColor;
-	private Paint colorWheelFill = PaintBuilder.newPaint().color(0).build();
-	private Paint selectorStroke1 = PaintBuilder.newPaint().color(0xffffffff).build();
-	private Paint selectorStroke2 = PaintBuilder.newPaint().color(0xff000000).build();
-	private Paint alphaPatternPaint = PaintBuilder.newPaint().build();
-	private ColorCircle currentColorCircle;
-	private ArrayList<OnColorSelectedListener> listeners = new ArrayList<OnColorSelectedListener>();
-	//private LightnessSlider lightnessSlider;
-	//private AlphaSlider alphaSlider;
-	private EditText colorEdit;
+    public static final int FLOWER = 1;
+    public static final int CIRCLE = 2;
 
-	private TextWatcher colorTextChange = new TextWatcher() {
-		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-		}
+    @IntDef({FLOWER, CIRCLE})
+    public @interface TYPE {}
 
-		@Override
-		public void onTextChanged(CharSequence s, int start, int before, int count) {
-            try {
-                int color = Color.parseColor(s.toString());
-                setColor(color, false);
-            } catch (Exception ignored) {}
-		}
-
-		@Override
-		public void afterTextChanged(Editable s) {}
-	};
-
-	private LinearLayout colorPreview;
-	private ColorWheelRenderer renderer;
-	private int alphaSliderViewId, lightnessSliderViewId;
+    private int mDensity = 10;
+    private int mColorSelection = 0;
+    private float mLightness = 1;
+    private float mAlpha = 1;
+    private static final float STROKE_RATIO = 2f;
+    private Paint mColorWheelFill = PaintBuilder.newPaint().color(0).build();
+    private Paint mSelectorStroke1 = PaintBuilder.newPaint().color(0xffffffff).build();
+    private Paint mSelectorStroke2 = PaintBuilder.newPaint().color(0xff000000).build();
+    private Paint mAlphaPatternPaint = PaintBuilder.newPaint().build();
+    private Bitmap mColorWheel;
+    private Canvas mColorWheelCanvas;
+    private Integer mInitialColor;
+    private Integer initialColors[] = new Integer[]{null, null, null, null, null};
+    private ColorCircle mCurrentColorCircle;
+    private LinearLayout mColorPreview;
+    private ColorWheelRenderer mRenderer;
+	private ArrayList<OnColorSelectedListener> mListeners = new ArrayList<>();
 
 	public ColorPickerView(Context context) {
 		super(context);
-		initWith(context, null);
+		init(context, null);
 	}
 
 	public ColorPickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		initWith(context, attrs);
+		init(context, attrs);
 	}
 
 	public ColorPickerView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		initWith(context, attrs);
+		init(context, attrs);
 	}
 
-	@TargetApi(21)
-	public ColorPickerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-		super(context, attrs, defStyleAttr, defStyleRes);
-		initWith(context, attrs);
-	}
-
-	private void initWith(Context context, AttributeSet attrs) {
-		final TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerPreference);
-		density = attr.getInt(R.styleable.ColorPickerPreference_density, 10);
-		initialColor = attr.getInt(R.styleable.ColorPickerPreference_initialColor, 0xffffffff);
-		pickerTextColor = attr.getInt(R.styleable.ColorPickerPreference_pickerColorEditTextColor, 0xffffffff);
-		WHEEL_TYPE wheelType = WHEEL_TYPE.indexOf(attr.getInt(R.styleable.ColorPickerPreference_wheelType, 0));
+	private void init(Context context, AttributeSet attrs) {
+		final TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerView);
+		mDensity = attr.getInt(R.styleable.ColorPickerView_density, 10);
+		mInitialColor = attr.getInt(R.styleable.ColorPickerView_initialColor, 0xFFFFFFFF);
+		WHEEL_TYPE wheelType = WHEEL_TYPE.indexOf(attr.getInt(R.styleable.ColorPickerView_wheelType, 0));
 		ColorWheelRenderer renderer = ColorWheelRendererBuilder.getRenderer(wheelType);
-		alphaSliderViewId = attr.getResourceId(R.styleable.ColorPickerPreference_alphaSliderView, 0);
-		lightnessSliderViewId = attr.getResourceId(R.styleable.ColorPickerPreference_lightnessSliderView, 0);
 		setRenderer(renderer);
-		setDensity(density);
-		setInitialColor(initialColor, true);
+		setDensity(mDensity);
+		setInitialColor(mInitialColor);
 		attr.recycle();
 	}
+
+    public ColorPickerView setDensity(int density) {
+        this.mDensity = Math.max(2, density);
+        invalidate();
+        return this;
+    }
+
+    public ColorPickerView setType(@TYPE int type) {
+        if (type == CIRCLE) {
+            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder.getRenderer(ColorPickerView.WHEEL_TYPE.CIRCLE);
+            setRenderer(renderer);
+        } else if (type == FLOWER) {
+            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder.getRenderer(WHEEL_TYPE.FLOWER);
+            setRenderer(renderer);
+        }
+
+        return this;
+    }
+
+    public void setInitialColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+
+        this.mAlpha = Utils.getAlphaPercent(color);
+        this.mLightness = hsv[2];
+        this.initialColors[this.mColorSelection] = color;
+        this.mInitialColor = color;
+        setColorPreviewColor(color);
+
+        if (mRenderer.getColorCircleList() != null) {
+            mCurrentColorCircle = findNearestByColor(color);
+        }
+    }
 
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
-
-		//if (alphaSliderViewId != 0) {
-          //  setAlphaSlider((AlphaSlider) getRootView().findViewById(alphaSliderViewId));
-        //}
-
-		//if (lightnessSliderViewId != 0) {
-          //  setLightnessSlider((LightnessSlider) getRootView().findViewById(lightnessSliderViewId));
-       // }
 	}
 
 	@Override
 	public void onWindowFocusChanged(boolean hasWindowFocus) {
 		super.onWindowFocusChanged(hasWindowFocus);
 		updateColorWheel();
-		currentColorCircle = findNearestByColor(initialColor);
+		mCurrentColorCircle = findNearestByColor(mInitialColor);
 	}
 
 	private void updateColorWheel() {
@@ -137,36 +133,38 @@ public class ColorPickerView extends View {
             return;
         }
 
-		if (colorWheel == null) {
-			colorWheel = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
-			colorWheelCanvas = new Canvas(colorWheel);
-			alphaPatternPaint.setShader(PaintBuilder.createAlphaPatternShader(8));
+		if (mColorWheel == null) {
+			mColorWheel = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888);
+			mColorWheelCanvas = new Canvas(mColorWheel);
+			mAlphaPatternPaint.setShader(PaintBuilder.createAlphaPatternShader(8));
 		}
+
 		drawColorWheel();
 		invalidate();
 	}
 
 	private void drawColorWheel() {
-		colorWheelCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
+		mColorWheelCanvas.drawColor(0, PorterDuff.Mode.CLEAR);
 
-		if (renderer == null) return;
+		if (mRenderer == null) {
+            return;
+        }
 
-		float half = colorWheelCanvas.getWidth() / 2f;
+		float half = mColorWheelCanvas.getWidth() / 2f;
 		float strokeWidth = STROKE_RATIO * (1f + ColorWheelRenderer.GAP_PERCENTAGE);
-		float maxRadius = half - strokeWidth - half / density;
-		float cSize = maxRadius / (density - 1) / 2;
+		float maxRadius = half - strokeWidth - half / mDensity;
+		float cSize = maxRadius / (mDensity - 1) / 2;
 
-		ColorWheelRenderOption colorWheelRenderOption = renderer.getRenderOption();
-		colorWheelRenderOption.density = this.density;
+		ColorWheelRenderOption colorWheelRenderOption = mRenderer.getRenderOption();
+		colorWheelRenderOption.density = this.mDensity;
 		colorWheelRenderOption.maxRadius = maxRadius;
 		colorWheelRenderOption.cSize = cSize;
 		colorWheelRenderOption.strokeWidth = strokeWidth;
-		colorWheelRenderOption.alpha = alpha;
-		colorWheelRenderOption.lightness = lightness;
-		colorWheelRenderOption.targetCanvas = colorWheelCanvas;
-
-		renderer.initWith(colorWheelRenderOption);
-		renderer.draw();
+		colorWheelRenderOption.alpha = mAlpha;
+		colorWheelRenderOption.lightness = mLightness;
+		colorWheelRenderOption.targetCanvas = mColorWheelCanvas;
+		mRenderer.initWith(colorWheelRenderOption);
+		mRenderer.draw();
 	}
 
 	public interface OnColorSelectedListener {
@@ -178,24 +176,32 @@ public class ColorPickerView extends View {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
 		int width = 0;
-		if (widthMode == MeasureSpec.UNSPECIFIED)
-			width = widthMeasureSpec;
-		else if (widthMode == MeasureSpec.AT_MOST)
-			width = MeasureSpec.getSize(widthMeasureSpec);
-		else if (widthMode == MeasureSpec.EXACTLY)
-			width = MeasureSpec.getSize(widthMeasureSpec);
+
+		if (widthMode == MeasureSpec.UNSPECIFIED) {
+            width = widthMeasureSpec;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            width = MeasureSpec.getSize(widthMeasureSpec);
+        } else if (widthMode == MeasureSpec.EXACTLY) {
+            width = MeasureSpec.getSize(widthMeasureSpec);
+        }
 
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int height = 0;
-		if (heightMode == MeasureSpec.UNSPECIFIED)
-			height = widthMeasureSpec;
-		else if (heightMode == MeasureSpec.AT_MOST)
-			height = MeasureSpec.getSize(heightMeasureSpec);
-		else if (widthMode == MeasureSpec.EXACTLY)
-			height = MeasureSpec.getSize(heightMeasureSpec);
+
+		if (heightMode == MeasureSpec.UNSPECIFIED) {
+            height = widthMeasureSpec;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            height = MeasureSpec.getSize(heightMeasureSpec);
+        } else if (widthMode == MeasureSpec.EXACTLY) {
+            height = MeasureSpec.getSize(heightMeasureSpec);
+        }
+
 		int squareDimen = width;
-		if (height < width)
-			squareDimen = height;
+
+		if (height < width) {
+            squareDimen = height;
+        }
+
 		setMeasuredDimension(squareDimen, squareDimen);
 	}
 
@@ -204,31 +210,28 @@ public class ColorPickerView extends View {
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
 			case MotionEvent.ACTION_MOVE: {
-				currentColorCircle = findNearestByPosition(event.getX(), event.getY());
-				int selectedColor = getSelectedColor();
-				initialColor = selectedColor;
-				setColorToSliders(selectedColor);
+				mCurrentColorCircle = findNearestByPosition(event.getX(), event.getY());
+                mInitialColor = getSelectedColor();
 				invalidate();
 				break;
 			}
 			case MotionEvent.ACTION_UP: {
 				int selectedColor = getSelectedColor();
-				if (listeners != null) {
-					for (OnColorSelectedListener listener : listeners) {
+
+				if (mListeners != null) {
+					for (OnColorSelectedListener listener : mListeners) {
 						try {
 							listener.onColorSelected(selectedColor);
-						} catch (Exception e) {
-							//Squash individual listener exceptions
-						}
+						} catch (Exception ignored) {}
 					}
 				}
-				setColorToSliders(selectedColor);
-				setColorText(selectedColor);
+
 				setColorPreviewColor(selectedColor);
 				invalidate();
 				break;
 			}
 		}
+
 		return true;
 	}
 
@@ -237,17 +240,20 @@ public class ColorPickerView extends View {
 		super.onDraw(canvas);
 		int backgroundColor = 0x00000000;
 		canvas.drawColor(backgroundColor);
-		if (colorWheel != null)
-			canvas.drawBitmap(colorWheel, 0, 0, null);
-		if (currentColorCircle != null) {
+
+		if (mColorWheel != null) {
+            canvas.drawBitmap(mColorWheel, 0, 0, null);
+        }
+
+		if (mCurrentColorCircle != null) {
 			float maxRadius = canvas.getWidth() / 2f - STROKE_RATIO * (1f + ColorWheelRenderer.GAP_PERCENTAGE);
-			float size = maxRadius / density / 2;
-			colorWheelFill.setColor(Color.HSVToColor(currentColorCircle.getHsvWithLightness(this.lightness)));
-			colorWheelFill.setAlpha((int) (alpha * 0xff));
-			canvas.drawCircle(currentColorCircle.getX(), currentColorCircle.getY(), size * STROKE_RATIO, selectorStroke1);
-			canvas.drawCircle(currentColorCircle.getX(), currentColorCircle.getY(), size * (1 + (STROKE_RATIO - 1) / 2), selectorStroke2);
-			canvas.drawCircle(currentColorCircle.getX(), currentColorCircle.getY(), size, alphaPatternPaint);
-			canvas.drawCircle(currentColorCircle.getX(), currentColorCircle.getY(), size, colorWheelFill);
+			float size = maxRadius / mDensity / 2;
+			mColorWheelFill.setColor(Color.HSVToColor(mCurrentColorCircle.getHsvWithLightness(this.mLightness)));
+			mColorWheelFill.setAlpha((int) (mAlpha * 0xff));
+			canvas.drawCircle(mCurrentColorCircle.getX(), mCurrentColorCircle.getY(), size * STROKE_RATIO, mSelectorStroke1);
+			canvas.drawCircle(mCurrentColorCircle.getX(), mCurrentColorCircle.getY(), size * (1 + (STROKE_RATIO - 1) / 2), mSelectorStroke2);
+			canvas.drawCircle(mCurrentColorCircle.getX(), mCurrentColorCircle.getY(), size, mAlphaPatternPaint);
+			canvas.drawCircle(mCurrentColorCircle.getX(), mCurrentColorCircle.getY(), size, mColorWheelFill);
 		}
 	}
 
@@ -255,8 +261,9 @@ public class ColorPickerView extends View {
 		ColorCircle near = null;
 		double minDist = Double.MAX_VALUE;
 
-		for (ColorCircle colorCircle : renderer.getColorCircleList()) {
+		for (ColorCircle colorCircle : mRenderer.getColorCircleList()) {
 			double dist = colorCircle.sqDist(x, y);
+
 			if (minDist > dist) {
 				minDist = dist;
 				near = colorCircle;
@@ -268,13 +275,15 @@ public class ColorPickerView extends View {
 
 	private ColorCircle findNearestByColor(int color) {
 		float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
+
+        Color.colorToHSV(color, hsv);
 		ColorCircle near = null;
+
 		double minDiff = Double.MAX_VALUE;
 		double x = hsv[1] * Math.cos(hsv[0] * Math.PI / 180);
 		double y = hsv[1] * Math.sin(hsv[0] * Math.PI / 180);
 
-		for (ColorCircle colorCircle : renderer.getColorCircleList()) {
+		for (ColorCircle colorCircle : mRenderer.getColorCircleList()) {
 			float[] hsv1 = colorCircle.getHsv();
 			double x1 = hsv1[1] * Math.cos(hsv1[0] * Math.PI / 180);
 			double y1 = hsv1[1] * Math.sin(hsv1[0] * Math.PI / 180);
@@ -294,10 +303,11 @@ public class ColorPickerView extends View {
 	public int getSelectedColor() {
 		int color = 0;
 
-		if (currentColorCircle != null)
-			color = Color.HSVToColor(currentColorCircle.getHsvWithLightness(this.lightness));
+		if (mCurrentColorCircle != null) {
+            color = Color.HSVToColor(mCurrentColorCircle.getHsvWithLightness(this.mLightness));
+        }
 
-		return Utils.adjustAlpha(this.alpha, color);
+		return Utils.adjustAlpha(this.mAlpha, color);
 	}
 
 	public Integer[] getAllColors() {
@@ -306,134 +316,91 @@ public class ColorPickerView extends View {
 
 	public void setInitialColors(Integer[] colors, int selectedColor) {
 		this.initialColors = colors;
-		this.colorSelection = selectedColor;
-		Integer initialColor = this.initialColors[this.colorSelection];
-		if (initialColor == null) initialColor = 0xffffffff;
-		setInitialColor(initialColor, true);
-	}
+		this.mColorSelection = selectedColor;
+		Integer initialColor = this.initialColors[this.mColorSelection];
 
-	public void setInitialColor(int color, boolean updateText) {
-		float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
-
-		this.alpha = Utils.getAlphaPercent(color);
-		this.lightness = hsv[2];
-		this.initialColors[this.colorSelection] = color;
-		this.initialColor = color;
-		setColorPreviewColor(color);
-		setColorToSliders(color);
-
-		if (this.colorEdit != null && updateText) {
-            setColorText(color);
+		if (initialColor == null) {
+            initialColor = 0xFFFFFFFF;
         }
 
-		if (renderer.getColorCircleList() != null) {
-            currentColorCircle = findNearestByColor(color);
-        }
+		setInitialColor(initialColor);
 	}
 
-	public void setLightness(float lightness) {
-		this.lightness = lightness;
-		this.initialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.alpha), currentColorCircle.getHsvWithLightness(lightness));
-		if (this.colorEdit != null)
-			this.colorEdit.setText("#" + Integer.toHexString(this.initialColor).toUpperCase());
-		//if (this.alphaSlider != null && this.initialColor != null)
-		//	this.alphaSlider.setColor(this.initialColor);
+	public void setLightness(float mLightness) {
+		this.mLightness = mLightness;
+		this.mInitialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.mAlpha), mCurrentColorCircle.getHsvWithLightness(mLightness));
 		updateColorWheel();
 		invalidate();
 	}
 
-	public void setColor(int color, boolean updateText) {
-		setInitialColor(color, updateText);
+	public void setColor(int color) {
+		setInitialColor(color);
 		updateColorWheel();
 		invalidate();
 	}
 
 	public void setAlphaValue(float alpha) {
-		this.alpha = alpha;
-		this.initialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.alpha), currentColorCircle.getHsvWithLightness(this.lightness));
-		if (this.colorEdit != null)
-			this.colorEdit.setText("#" + Integer.toHexString(this.initialColor).toUpperCase());
-		//if (this.lightnessSlider != null && this.initialColor != null)
-		//	this.lightnessSlider.setColor(this.initialColor);
-		updateColorWheel();
+		this.mAlpha = alpha;
+		this.mInitialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.mAlpha), mCurrentColorCircle.getHsvWithLightness(this.mLightness));
+        updateColorWheel();
 		invalidate();
 	}
 
 	public void addOnColorSelectedListener(OnColorSelectedListener listener) {
-		this.listeners.add(listener);
+		this.mListeners.add(listener);
 	}
 
-	//public void setLightnessSlider(LightnessSlider lightnessSlider) {
-		//this.lightnessSlider = lightnessSlider;
-	//	if (lightnessSlider != null) {
-		//	this.lightnessSlider.setColorPicker(this);
-		//	this.lightnessSlider.setColor(getSelectedColor());
-	//	}
-	//}
-
-	//public void setAlphaSlider(AlphaSlider alphaSlider) {
-		//this.alphaSlider = alphaSlider;
-	//	if (alphaSlider != null) {
-		//	this.alphaSlider.setColorPicker(this);
-		//	this.alphaSlider.setColor(getSelectedColor());
-	//	}
-	//}
-
-	public void setColorEdit(EditText colorEdit) {
-		this.colorEdit = colorEdit;
-		if (this.colorEdit != null) {
-			this.colorEdit.setVisibility(View.VISIBLE);
-			this.colorEdit.addTextChangedListener(colorTextChange);
-			setColorEditTextColor(pickerTextColor);
-		}
-	}
-
-    public void setColorEditTextColor(int argb) {
-        this.pickerTextColor = argb;
-        if (colorEdit != null)
-            colorEdit.setTextColor(argb);
-    }
-
-	public void setDensity(int density) {
-		this.density = Math.max(2, density);
-		invalidate();
-	}
-
-	public void setRenderer(ColorWheelRenderer renderer) {
-		this.renderer = renderer;
+	private void setRenderer(ColorWheelRenderer mRenderer) {
+		this.mRenderer = mRenderer;
 		invalidate();
 	}
 
 	public void setColorPreview(LinearLayout colorPreview, Integer selectedColor) {
-		if (colorPreview == null)
-			return;
-		this.colorPreview = colorPreview;
-		if (selectedColor == null)
-			selectedColor = 0;
-		int children = colorPreview.getChildCount();
-		if (children == 0 || colorPreview.getVisibility() != View.VISIBLE)
-			return;
+		if (colorPreview == null) {
+            return;
+        }
+
+		this.mColorPreview = colorPreview;
+
+		if (selectedColor == null) {
+            selectedColor = 0;
+        }
+
+        int children = colorPreview.getChildCount();
+
+        if (children == 0 || colorPreview.getVisibility() != View.VISIBLE) {
+            return;
+        }
 
 		for (int i = 0; i < children; i++) {
 			View childView = colorPreview.getChildAt(i);
-			if (!(childView instanceof LinearLayout))
-				continue;
+
+			if (!(childView instanceof LinearLayout)) {
+                continue;
+            }
+
 			LinearLayout childLayout = (LinearLayout) childView;
+
 			if (i == selectedColor) {
-				childLayout.setBackgroundColor(Color.WHITE);
+				childLayout.setBackgroundColor(0xFFFFFFFF);
 			}
+
 			ImageView childImage = (ImageView) childLayout.findViewById(R.id.image_preview);
 			childImage.setClickable(true);
 			childImage.setTag(i);
 			childImage.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (v == null)
-						return;
+					if (v == null) {
+                        return;
+                    }
+
 					Object tag = v.getTag();
-					if (tag == null || !(tag instanceof Integer))
-						return;
+
+                    if (tag == null || !(tag instanceof Integer)) {
+                        return;
+                    }
+
 					setSelectedColor((int) tag);
 				}
 			});
@@ -441,26 +408,37 @@ public class ColorPickerView extends View {
 	}
 
 	public void setSelectedColor(int previewNumber) {
-		if (initialColors == null || initialColors.length < previewNumber)
-			return;
-		this.colorSelection = previewNumber;
+		if (initialColors == null || initialColors.length < previewNumber) {
+            return;
+        }
+
+		this.mColorSelection = previewNumber;
 		setHighlightedColor(previewNumber);
 		Integer color = initialColors[previewNumber];
-		if (color == null)
-			return;
-		setColor(color, true);
+
+		if (color == null) {
+            return;
+        }
+
+		setColor(color);
 	}
 
 	private void setHighlightedColor(int previewNumber) {
-		int children = colorPreview.getChildCount();
-		if (children == 0 || colorPreview.getVisibility() != View.VISIBLE)
-			return;
+		int children = mColorPreview.getChildCount();
+
+		if (children == 0 || mColorPreview.getVisibility() != View.VISIBLE) {
+            return;
+        }
 
 		for (int i = 0; i < children; i++) {
-			View childView = colorPreview.getChildAt(i);
-			if (!(childView instanceof LinearLayout))
-				continue;
-			LinearLayout childLayout = (LinearLayout) childView;
+			View childView = mColorPreview.getChildAt(i);
+
+			if (!(childView instanceof LinearLayout)) {
+                continue;
+            }
+
+            LinearLayout childLayout = (LinearLayout) childView;
+
 			if (i == previewNumber) {
 				childLayout.setBackgroundColor(Color.WHITE);
 			} else {
@@ -470,32 +448,25 @@ public class ColorPickerView extends View {
 	}
 
 	private void setColorPreviewColor(int newColor) {
-		if (colorPreview == null || initialColors == null || colorSelection > initialColors.length || initialColors[colorSelection] == null)
+		if (mColorPreview == null || initialColors == null || mColorSelection > initialColors.length || initialColors[mColorSelection] == null) {
 			return;
+        }
 
-		int children = colorPreview.getChildCount();
-		if (children == 0 || colorPreview.getVisibility() != View.VISIBLE)
-			return;
+		int children = mColorPreview.getChildCount();
 
-		View childView = colorPreview.getChildAt(colorSelection);
-		if (!(childView instanceof LinearLayout))
-			return;
+		if (children == 0 || mColorPreview.getVisibility() != View.VISIBLE) {
+            return;
+        }
+
+		View childView = mColorPreview.getChildAt(mColorSelection);
+
+		if (!(childView instanceof LinearLayout)) {
+            return;
+        }
+
 		LinearLayout childLayout = (LinearLayout) childView;
 		ImageView childImage = (ImageView) childLayout.findViewById(R.id.image_preview);
 		childImage.setImageDrawable(new CircleColorDrawable(newColor));
-	}
-
-	private void setColorText(int argb) {
-		if (colorEdit == null)
-			return;
-		colorEdit.setText("#" + Integer.toHexString(argb));
-	}
-
-	private void setColorToSliders(int selectedColor) {
-		//if (lightnessSlider != null)
-		//	lightnessSlider.setColor(selectedColor);
-		//if (alphaSlider != null)
-		//	alphaSlider.setColor(selectedColor);
 	}
 
 	public enum WHEEL_TYPE {
@@ -514,14 +485,11 @@ public class ColorPickerView extends View {
 	}
 
     public class CircleColorDrawable extends ColorDrawable {
+
         private float strokeWidth;
-        private Paint strokePaint = PaintBuilder.newPaint().style(Paint.Style.STROKE).stroke(strokeWidth).color(0xffffffff).build();
+        private Paint strokePaint = PaintBuilder.newPaint().style(Paint.Style.STROKE).stroke(strokeWidth).color(0xFFFFFFFF).build();
         private Paint fillPaint = PaintBuilder.newPaint().style(Paint.Style.FILL).color(0).build();
         private Paint fillBackPaint = PaintBuilder.newPaint().shader(PaintBuilder.createAlphaPatternShader(16)).build();
-
-        public CircleColorDrawable() {
-            super();
-        }
 
         public CircleColorDrawable(int color) {
             super(color);
@@ -530,15 +498,13 @@ public class ColorPickerView extends View {
         @Override
         public void draw(Canvas canvas) {
             canvas.drawColor(0);
-
             int width = canvas.getWidth();
-            float radius = width / 2f;
-            strokeWidth = radius / 12f;
-
+            float radius = width / 2F;
+            strokeWidth = radius / 12F;
             this.strokePaint.setStrokeWidth(strokeWidth);
             this.fillPaint.setColor(getColor());
-            canvas.drawCircle(radius, radius, radius - strokeWidth * 1.5f, fillBackPaint);
-            canvas.drawCircle(radius, radius, radius - strokeWidth * 1.5f, fillPaint);
+            canvas.drawCircle(radius, radius, radius - strokeWidth * 1.5F, fillBackPaint);
+            canvas.drawCircle(radius, radius, radius - strokeWidth * 1.5F, fillPaint);
             canvas.drawCircle(radius, radius, radius - strokeWidth, strokePaint);
         }
 
@@ -552,12 +518,12 @@ public class ColorPickerView extends View {
     public static class ColorWheelRendererBuilder {
 
         public static ColorWheelRenderer getRenderer(ColorPickerView.WHEEL_TYPE wheelType) {
-            switch (wheelType) {
-                case CIRCLE:
-                    return new SimpleColorWheelRenderer();
-                case FLOWER:
-                    return new FlowerColorWheelRenderer();
+            if (wheelType == WHEEL_TYPE.CIRCLE) {
+                return new SimpleColorWheelRenderer();
+            } else if (wheelType == WHEEL_TYPE.FLOWER) {
+                return new FlowerColorWheelRenderer();
             }
+
             throw new IllegalArgumentException("wrong WHEEL_TYPE");
         }
 
@@ -568,34 +534,34 @@ public class ColorPickerView extends View {
 
             @Override
             public void draw() {
-                final int setSize = colorCircleList.size();
+                final int setSize = mColorCircleList.size();
                 int currentCount = 0;
-                float half = colorWheelRenderOption.targetCanvas.getWidth() / 2f;
-                int density = colorWheelRenderOption.density;
-                float maxRadius = colorWheelRenderOption.maxRadius;
+                float half = mColorWheelRenderOption.targetCanvas.getWidth() / 2f;
+                int density = mColorWheelRenderOption.density;
+                float maxRadius = mColorWheelRenderOption.maxRadius;
 
                 for (int i = 0; i < density; i++) {
-                    float p = (float) i / (density - 1); // 0~1
+                    float p = (float) i / (density - 1);
                     float radius = maxRadius * p;
-                    float size = colorWheelRenderOption.cSize;
+                    float size = mColorWheelRenderOption.cSize;
                     int total = calcTotalCount(radius, size);
 
                     for (int j = 0; j < total; j++) {
                         double angle = Math.PI * 2 * j / total + (Math.PI / total) * ((i + 1) % 2);
                         float x = half + (float) (radius * Math.cos(angle));
                         float y = half + (float) (radius * Math.sin(angle));
+
                         hsv[0] = (float) (angle * 180 / Math.PI);
                         hsv[1] = radius / maxRadius;
-                        hsv[2] = colorWheelRenderOption.lightness;
+                        hsv[2] = mColorWheelRenderOption.lightness;
                         selectorFill.setColor(Color.HSVToColor(hsv));
                         selectorFill.setAlpha(getAlphaValueAsInt());
-
-                        colorWheelRenderOption.targetCanvas.drawCircle(x, y, size - colorWheelRenderOption.strokeWidth, selectorFill);
+                        mColorWheelRenderOption.targetCanvas.drawCircle(x, y, size - mColorWheelRenderOption.strokeWidth, selectorFill);
 
                         if (currentCount >= setSize) {
-                            colorCircleList.add(new ColorCircle(x, y, hsv));
+                            mColorCircleList.add(new ColorCircle(x, y, hsv));
                         } else {
-                            colorCircleList.get(currentCount).set(x, y, hsv);
+                            mColorCircleList.get(currentCount).set(x, y, hsv);
                         }
 
                         currentCount++;
@@ -611,13 +577,13 @@ public class ColorPickerView extends View {
 
             @Override
             public void draw() {
-                final int setSize = colorCircleList.size();
+                final int setSize = mColorCircleList.size();
                 int currentCount = 0;
-                float half = colorWheelRenderOption.targetCanvas.getWidth() / 2f;
-                int density = colorWheelRenderOption.density;
-                float strokeWidth = colorWheelRenderOption.strokeWidth;
-                float maxRadius = colorWheelRenderOption.maxRadius;
-                float cSize = colorWheelRenderOption.cSize;
+                float half = mColorWheelRenderOption.targetCanvas.getWidth() / 2f;
+                int density = mColorWheelRenderOption.density;
+                float strokeWidth = mColorWheelRenderOption.strokeWidth;
+                float maxRadius = mColorWheelRenderOption.maxRadius;
+                float cSize = mColorWheelRenderOption.cSize;
 
                 for (int i = 0; i < density; i++) {
                     float p = (float) i / (density - 1);
@@ -633,15 +599,15 @@ public class ColorPickerView extends View {
                         float y = half + (float) (radius * Math.sin(angle));
                         hsv[0] = (float) (angle * 180 / Math.PI);
                         hsv[1] = radius / maxRadius;
-                        hsv[2] = colorWheelRenderOption.lightness;
+                        hsv[2] = mColorWheelRenderOption.lightness;
                         selectorFill.setColor(Color.HSVToColor(hsv));
                         selectorFill.setAlpha(getAlphaValueAsInt());
-                        colorWheelRenderOption.targetCanvas.drawCircle(x, y, size - strokeWidth, selectorFill);
+                        mColorWheelRenderOption.targetCanvas.drawCircle(x, y, size - strokeWidth, selectorFill);
 
                         if (currentCount >= setSize) {
-                            colorCircleList.add(new ColorCircle(x, y, hsv));
+                            mColorCircleList.add(new ColorCircle(x, y, hsv));
                         } else {
-                            colorCircleList.get(currentCount).set(x, y, hsv);
+                            mColorCircleList.get(currentCount).set(x, y, hsv);
                         }
 
                         currentCount++;
@@ -670,11 +636,6 @@ public class ColorPickerView extends View {
                 return this;
             }
 
-            public PaintHolder antiAlias(boolean flag) {
-                this.paint.setAntiAlias(flag);
-                return this;
-            }
-
             public PaintHolder style(Paint.Style style) {
                 this.paint.setStyle(style);
                 return this;
@@ -687,11 +648,6 @@ public class ColorPickerView extends View {
 
             public PaintHolder stroke(float width) {
                 this.paint.setStrokeWidth(width);
-                return this;
-            }
-
-            public PaintHolder xPerMode(PorterDuff.Mode mode) {
-                this.paint.setXfermode(new PorterDuffXfermode(mode));
                 return this;
             }
 
@@ -715,13 +671,19 @@ public class ColorPickerView extends View {
             Paint alphaPatternPaint = PaintBuilder.newPaint().build();
             Bitmap bm = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
             Canvas c = new Canvas(bm);
-            int s = Math.round(size / 2f);
+            int s = Math.round(size / 2F);
+
             for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 2; j++) {
-                    if ((i + j) % 2 == 0) alphaPatternPaint.setColor(0xffffffff);
-                    else alphaPatternPaint.setColor(0xffd0d0d0);
+                    if ((i + j) % 2 == 0) {
+                        alphaPatternPaint.setColor(0xFFFFFFFF);
+                    } else {
+                        alphaPatternPaint.setColor(0xFFD0D0D0);
+                    }
+
                     c.drawRect(i * s, j * s, (i + 1) * s, (j + 1) * s, alphaPatternPaint);
                 }
+
             return bm;
         }
     }
@@ -729,7 +691,7 @@ public class ColorPickerView extends View {
     public static class Utils {
 
         public static float getAlphaPercent(int argb) {
-            return Color.alpha(argb) / 255f;
+            return Color.alpha(argb) / 255F;
         }
 
         public static int alphaValueAsInt(float alpha) {
@@ -737,45 +699,36 @@ public class ColorPickerView extends View {
         }
 
         public static int adjustAlpha(float alpha, int color) {
-            return alphaValueAsInt(alpha) << 24 | (0x00ffffff & color);
-        }
-
-        public static int colorAtLightness(int color, float lightness) {
-            float[] hsv = new float[3];
-            Color.colorToHSV(color, hsv);
-            hsv[2] = lightness;
-            return Color.HSVToColor(hsv);
-        }
-
-        public static float lightnessOfColor(int color) {
-            float[] hsv = new float[3];
-            Color.colorToHSV(color, hsv);
-            return hsv[2];
+            return alphaValueAsInt(alpha) << 24 | (0x00FFFFFF & color);
         }
     }
 
     public static abstract class AbsColorWheelRenderer implements ColorWheelRenderer {
 
-        protected ColorWheelRenderOption colorWheelRenderOption;
-        protected List<ColorCircle> colorCircleList;
+        protected ColorWheelRenderOption mColorWheelRenderOption;
+        protected List<ColorCircle> mColorCircleList;
 
         public void initWith(ColorWheelRenderOption colorWheelRenderOption) {
-            this.colorWheelRenderOption = colorWheelRenderOption;
-            this.colorCircleList = new ArrayList<>();
+            this.mColorWheelRenderOption = colorWheelRenderOption;
+            this.mColorCircleList = new ArrayList<>();
         }
 
         @Override
         public ColorWheelRenderOption getRenderOption() {
-            if (colorWheelRenderOption == null) colorWheelRenderOption = new ColorWheelRenderOption();
-            return colorWheelRenderOption;
+
+            if (mColorWheelRenderOption == null) {
+                mColorWheelRenderOption = new ColorWheelRenderOption();
+            }
+
+            return mColorWheelRenderOption;
         }
 
         public List<ColorCircle> getColorCircleList() {
-            return colorCircleList;
+            return mColorCircleList;
         }
 
         protected int getAlphaValueAsInt() {
-            return Math.round(colorWheelRenderOption.alpha * 255);
+            return Math.round(mColorWheelRenderOption.alpha * 255);
         }
 
         protected int calcTotalCount(float radius, float size) {
@@ -784,7 +737,7 @@ public class ColorPickerView extends View {
     }
 
     public interface ColorWheelRenderer {
-        float GAP_PERCENTAGE = 0.025f;
+        float GAP_PERCENTAGE = 0.025F;
 
         void draw();
 
