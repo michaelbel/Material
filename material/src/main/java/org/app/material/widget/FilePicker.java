@@ -227,7 +227,7 @@ public class FilePicker extends FrameLayout {
         list = new List();
         list.title = "/";
         list.value = "System Root";
-        list.icon = R.drawable.ic_folder;
+        list.icon = R.drawable.ic_file;
         list.file = new File("/");
         items.add(list);
 
@@ -294,7 +294,7 @@ public class FilePicker extends FrameLayout {
             if (file.isDirectory()) {
                 list = new List();
                 list.file = file;
-                list.icon = R.drawable.ic_folder;
+                list.icon = R.drawable.ic_file;
                 list.title = file.getName();
                 list.value = "Folder";
                 items.add(list);
@@ -331,7 +331,7 @@ public class FilePicker extends FrameLayout {
             item.value = "Folder";
         }
 
-        item.icon = R.drawable.ic_folder;
+        item.icon = R.drawable.ic_file;
         item.file = null;
         items.add(0, item);
 
