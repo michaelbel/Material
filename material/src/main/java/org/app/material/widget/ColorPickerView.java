@@ -43,7 +43,7 @@ public class ColorPickerView extends View {
     private Bitmap mColorWheel;
     private Canvas mColorWheelCanvas;
     private Integer mInitialColor;
-    private Integer initialColors[] = new Integer[]{null, null, null, null, null};
+    private Integer initialColors[] = new Integer[] { null, null, null, null, null };
     private ColorCircle mCurrentColorCircle;
     private LinearLayout mColorPreview;
     private ColorWheelRenderer mRenderer;
