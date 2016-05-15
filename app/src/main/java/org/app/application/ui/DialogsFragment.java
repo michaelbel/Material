@@ -27,10 +27,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
+import org.app.material.ColorPickerShift;
 import org.app.material.widget.ColorPicker;
 import org.app.material.widget.ColorPickerHolo;
 import org.app.material.widget.ColorPickerView;
@@ -46,6 +48,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
     private Button mButton5;
     private Button mButton6;
     private Button mButton7;
+    private Button mButton8;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,18 +99,23 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
 
         mButton7 = new Button(getActivity());
         mButton7.setOnClickListener(this);
-        mButton7.setText("OK");
+        mButton7.setText("Color Picker Primary ");
         mButton7.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(mButton7);
+        layout.addView(mButton7);
+
+        mButton8 = new Button(getActivity());
+        mButton8.setOnClickListener(this);
+        mButton8.setText("Color Picker Accent");
+        mButton8.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mButton8);
 
         return layout;
     }
 
     @Override
     public void onClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         if (v == mButton1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setItems(new CharSequence[]{
                     getString(R.string.Winter),
                     getString(R.string.Spring),
@@ -117,18 +125,19 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (i == 0) {
-                        toast(R.string.Winter);
+                        makeToast(R.string.Winter);
                     } else if (i == 1) {
-                        toast(R.string.Spring);
+                        makeToast(R.string.Spring);
                     } else if (i == 2) {
-                        toast(R.string.Summer);
+                        makeToast(R.string.Summer);
                     } else if (i == 3) {
-                        toast(R.string.Autumn);
+                        makeToast(R.string.Autumn);
                     }
                 }
             });
-            //builder.show();
+            builder.show();
         } else if (v == mButton2) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setmMinValue(0);
             picker.setmMaxValue(100);
@@ -144,8 +153,9 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), getString(R.string.Value, picker.getValue()), Toast.LENGTH_SHORT).show();
                 }
             });
-            //builder.show();
+            builder.show();
         } else if (v == mButton3) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             final NumberPicker picker = new NumberPicker(getActivity());
             picker.setmMinValue(0);
             picker.setmMaxValue(6);
@@ -183,24 +193,25 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     which = picker.getValue();
 
                     if (which == 0) {
-                        toast(R.string.Monday);
+                        makeToast(R.string.Monday);
                     } else if (which == 1) {
-                        toast(R.string.Tuesday);
+                        makeToast(R.string.Tuesday);
                     } else if (which == 2) {
-                        toast(R.string.Wednesday);
+                        makeToast(R.string.Wednesday);
                     } else if (which == 3) {
-                        toast(R.string.Thursday);
+                        makeToast(R.string.Thursday);
                     } else if (which == 4) {
-                        toast(R.string.Friday);
+                        makeToast(R.string.Friday);
                     } else if (which == 5) {
-                        toast(R.string.Saturday);
+                        makeToast(R.string.Saturday);
                     } else if (which == 6) {
-                        toast(R.string.Sunday);
+                        makeToast(R.string.Sunday);
                     }
                 }
             });
-            //builder.show();
+            builder.show();
         } else if (v == mButton4) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             final ColorPicker picker = new ColorPicker(getActivity());
             //picker.setColor(25, 50, 75);
 
@@ -212,8 +223,9 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getNewColor()), Toast.LENGTH_SHORT).show();
                 }
             });
-            //builder.show();
+            builder.show();
         } else if (v == mButton5) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LinearLayout layout = new LinearLayout(getActivity());
             layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -231,8 +243,9 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                 }
             });
-            //builder.show();
+            builder.show();
         } else if (v == mButton6) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LinearLayout layout = new LinearLayout(getActivity());
             layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -251,19 +264,78 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()), Toast.LENGTH_SHORT).show();
                 }
             });
-            //builder.show();
-        } else if (v == mButton7) {}
+            builder.show();
+        } else if (v == mButton7) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.show();
+            LinearLayout layout = new LinearLayout(getActivity());
+            layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24));
 
-        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());//
-        //FilePicker filePicker = new FilePicker(getActivity());
-        //filePicker.showDivider();//
-        //builder.setView(filePicker);
-        //builder.show();
+            final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
+            picker1.setColors(ColorPickerShift.Palette.getBaseColors(getActivity()));
+            picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            layout.addView(picker1);
+
+            final ColorPickerShift picker2 = new ColorPickerShift(getActivity());
+            picker2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
+
+            for (int i : picker1.getColors()) {
+                for (int i2 : ColorPickerShift.Palette.getColors(getActivity(), i)) {
+                    if (i2 == 0xff4CaF50) {
+                        picker1.setSelectedColor(i);
+                        picker2.setColors(ColorPickerShift.Palette.getColors(getActivity(), i));
+                        picker2.setSelectedColor(i2);
+                        break;
+                    }
+                }
+            }
+            layout.addView(picker2);
+
+            picker1.setOnColorChangedListener(new ColorPickerShift.OnColorChangedListener() {
+                @Override
+                public void onColorChanged(int c) {
+                    picker2.setColors(ColorPickerShift.Palette.getColors(getActivity(), picker1.getColor()));
+                    picker2.setSelectedColor(picker1.getColor());
+                }
+            });
+
+            builder.setView(layout);
+            builder.setTitle(R.string.PrimaryColor);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), Integer.toHexString(picker2.getColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show();
+        } else if (v == mButton8) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            RelativeLayout layout = new RelativeLayout(getActivity());
+            layout.setPadding(AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24));
+
+            final ColorPickerShift picker = new ColorPickerShift(getActivity());
+            picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            picker.setSelectedColorPosition(0);
+            picker.setColors(ColorPickerShift.Palette.getAccentColors(getActivity()));
+            picker.setSelectedColor(0xffFF5252);
+            layout.addView(picker);
+
+            builder.setView(layout);
+            builder.setTitle(R.string.AccentColor);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(getString(R.string.Ok), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+            builder.show();
+        }
     }
 
-    private void toast(@StringRes int resId) {
+    private void makeToast(@StringRes int resId) {
         Toast.makeText(getActivity(), getResources().getText(resId), Toast.LENGTH_SHORT).show();
     }
 }
