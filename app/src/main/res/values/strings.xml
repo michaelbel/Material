@@ -31,6 +31,8 @@
     <string name="Saturday">Saturday</string>
     <string name="Sunday">Sunday</string>
     <string name="SelectColor">Select Color</string>
+    <string name="AccentColor">Accent Color</string>
+    <string name="PrimaryColor">Primary Color</string>
     <!--ListView-->
     <string name="ListView">ListView</string>
     <string name="PlainText">PLAIN TEXT</string>
@@ -43,7 +45,6 @@
     <string name="SomeTitleText">Some title text</string>
     <string name="TextLock">Lock</string>
     <string name="TextDisabled">DISABLED</string>
-
 
 
     <string name="RecyclerView">RecyclerView</string>
