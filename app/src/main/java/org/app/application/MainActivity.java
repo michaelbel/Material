@@ -18,7 +18,6 @@ package org.app.application;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -38,21 +37,12 @@ import org.app.material.AndroidUtilities;
 import org.app.material.widget.Browser;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private int dotsMenu = 1;
     private int github = 2;
-
-    enum ProgressType {
-        INDETERMINATE, PROGRESS_POSITIVE, PROGRESS_NEGATIVE, HIDDEN, PROGRESS_NO_ANIMATION, PROGRESS_NO_BACKGROUND
-    }
-
-    int mMaxProgress = 100;
-    private Handler mUiHandler = new Handler();
-    LinkedList<ProgressType> mProgressTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setTitle(R.string.MaterialDemo);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -108,8 +97,7 @@ public class MainActivity extends AppCompatActivity {
                    .setShareIconHiddenText(getString(R.string.ShareLink))
                    .show();
         } else if (item.getItemId() == dotsMenu) {
-            //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.GithubURL))));
-            startActivity(new Intent(MainActivity.this, ViewController.class));
+            startActivity(new Intent(MainActivity.this, Test.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -132,11 +120,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return fragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            fragmentList.add(fragment);
-            fragmentTitleList.add(title);
         }
 
         public void addFragment(Fragment fragment, @StringRes int resId) {
