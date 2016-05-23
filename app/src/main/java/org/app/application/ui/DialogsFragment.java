@@ -32,8 +32,7 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
-import org.app.material.ColorPickerShift;
-import org.app.material.widget.ColorPicker;
+import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.ColorPickerHolo;
 import org.app.material.widget.ColorPickerView;
 import org.app.material.widget.LayoutHelper;
@@ -83,7 +82,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
         mButton4.setOnClickListener(this);
         mButton4.setText(R.string.ColorPickerRGB);
         mButton4.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        //layout.addView(mButton4);
+        layout.addView(mButton4);
 
         mButton5 = new Button(getActivity());
         mButton5.setOnClickListener(this);
@@ -211,19 +210,29 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
             });
             builder.show();
         } else if (v == mButton4) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            final ColorPicker picker = new ColorPicker(getActivity());
+            //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            //final ColorPicker picker = new ColorPicker(getActivity());
             //picker.setColor(25, 50, 75);
 
-            builder.setView(picker);
-            builder.setNegativeButton(R.string.Cancel, null);
-            builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getNewColor()), Toast.LENGTH_SHORT).show();
-                }
-            });
-            builder.show();
+            //builder.setView(picker);
+            //builder.setNegativeButton(R.string.Cancel, null);
+            //builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+            //    @Override
+            //    public void onClick(DialogInterface dialog, int which) {
+            //        Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getNewColor()), Toast.LENGTH_SHORT).show();
+            //    }
+            //});
+            //builder.show();
+
+            //BottomSheet sheet = new BottomSheet.Builder(this)
+            //        .icon(getRoundedBitmap(R.drawable.icon))
+            //        .title("To " + adapter.getItem(position))
+            //        .sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+            //            @Override
+            //            public void onClick(DialogInterface dialog, int which) {
+            //                ListAcitivty.this.onClick(adapter.getItem(position), which);
+            //            }
+            //        }).build();
         } else if (v == mButton5) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             LinearLayout layout = new LinearLayout(getActivity());
@@ -331,7 +340,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                 }
             });
-            builder.show();
+            builder.create();
         }
     }
 
