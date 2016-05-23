@@ -1,4 +1,4 @@
-package org.app.material;
+package org.app.material.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,15 +10,16 @@ import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.app.material.R;
+
 public class ColorPickerShift extends View {
 
 	public static final int HORIZONTAL = 0;
-	public static final int VERTICAL = 1;
+	//public static final int VERTICAL = 1;
 
 	int[] colors;
 
@@ -34,9 +35,9 @@ public class ColorPickerShift extends View {
 	private Rect rect = new Rect();
 	boolean isColorSelected = false;
 	private int selectedColor = colors[0];
-	private OnColorChangedListener onColorChanged;
 	private int cellSize;
 	private int mOrientation = HORIZONTAL;
+	private OnColorChangedListener onColorChanged;
 
 	public ColorPickerShift(Context context) {
 		super(context);
@@ -69,7 +70,6 @@ public class ColorPickerShift extends View {
 
             if (selected != -1) {
                 final int[] currentColors = getColors();
-
                 final int currentColorsLength = currentColors != null ? currentColors.length : 0;
 
                 if (selected < currentColorsLength) {
@@ -159,36 +159,30 @@ public class ColorPickerShift extends View {
 		int newColor;
 
 		switch (actionId) {
-		case MotionEvent.ACTION_DOWN:
-			isClick = true;
-			break;
-		case MotionEvent.ACTION_UP:
-			newColor = getColorAtXY(event.getX(), event.getY());
+			case MotionEvent.ACTION_DOWN:
+				isClick = true;
+				break;
+			case MotionEvent.ACTION_UP:
+				newColor = getColorAtXY(event.getX(), event.getY());
+				setSelectedColor(newColor);
 
-			setSelectedColor(newColor);
+				if (isClick) {
+					performClick();
+				}
 
-			if (isClick) {
-				performClick();
-			}
-
-			break;
-
-		case MotionEvent.ACTION_MOVE:
-			newColor = getColorAtXY(event.getX(), event.getY());
-
-			setSelectedColor(newColor);
-
-			break;
-		case MotionEvent.ACTION_CANCEL:
-			isClick = false;
-			break;
-
-		case MotionEvent.ACTION_OUTSIDE:
-			isClick = false;
-			break;
-
-		default:
-			break;
+				break;
+			case MotionEvent.ACTION_MOVE:
+				newColor = getColorAtXY(event.getX(), event.getY());
+				setSelectedColor(newColor);
+				break;
+			case MotionEvent.ACTION_CANCEL:
+				isClick = false;
+				break;
+			case MotionEvent.ACTION_OUTSIDE:
+				isClick = false;
+				break;
+			default:
+				break;
 		}
 
 		return true;
@@ -207,7 +201,6 @@ public class ColorPickerShift extends View {
 					return color;
 				}
 			}
-
 		} else {
 			int top;
 			int bottom = 0;
@@ -247,7 +240,7 @@ public class ColorPickerShift extends View {
 		this.isColorSelected = ss.isColorSelected;
 	}
 
-	static class SavedState extends BaseSavedState {
+	public static class SavedState extends BaseSavedState {
 		int selectedColor;
 		boolean isColorSelected;
 
@@ -272,7 +265,6 @@ public class ColorPickerShift extends View {
 			public SavedState createFromParcel(Parcel in) {
 				return new SavedState(in);
 			}
-
 			public SavedState[] newArray(int size) {
 				return new SavedState[size];
 			}
@@ -325,7 +317,6 @@ public class ColorPickerShift extends View {
 	}
 
 	private int recalcCellSize() {
-
 		if (mOrientation == HORIZONTAL) {
 			cellSize = Math.round(screenW / (colors.length * 1f));
 		} else {
@@ -358,19 +349,17 @@ public class ColorPickerShift extends View {
 	}
 
 	public static class Palette {
-
 		public static int[] DEFAULT;
 
 		private Palette() {}
 
-		{
+		static {
 			DEFAULT = new int[] { Color.parseColor("#b8c847"),
 					Color.parseColor("#67bb43"), Color.parseColor("#41b691"),
 					Color.parseColor("#4182b6"), Color.parseColor("#4149b6"),
 					Color.parseColor("#7641b6"), Color.parseColor("#b741a7"),
 					Color.parseColor("#c54657"), Color.parseColor("#d1694a"),
-					Color.parseColor("#d1904a"), Color.parseColor("#d1c54a") };
-
+					Color.parseColor("#d1904a"), Color.parseColor("#d1c54a")};
 		}
 
 		public static int[] getAccentColors(Context context){
@@ -389,19 +378,6 @@ public class ColorPickerShift extends View {
 					ContextCompat.getColor(context, R.color.md_brown_500),
 					ContextCompat.getColor(context, R.color.md_blue_grey_500),
 			};
-		}
-
-		public int getOscuredColor(int c){
-			float[] hsv = new float[3];
-			int color = c;
-			Color.colorToHSV(color, hsv);
-			hsv[2] *= 0.85f; // value component
-			color = Color.HSVToColor(hsv);
-			return color;
-		}
-
-		public int getTransparentColor(int color, int alpha){
-			return  ColorUtils.setAlphaComponent(color, alpha);
 		}
 
 		public static int[] getBaseColors(Context context) {
