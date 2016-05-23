@@ -25,6 +25,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
+import android.os.Handler;
 import android.util.TypedValue;
 
 import java.util.Hashtable;
@@ -32,6 +33,7 @@ import java.util.Hashtable;
 public class AndroidUtilities {
 
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
+    public static volatile Handler applicationHandler;
 
     public static int dp (Context context, float value) {
         if (value == 0) {
