@@ -2,6 +2,7 @@
     <!--Toolbar-->
     <declare-styleable name="Toolbar">
         <attr name="toolbar_elevation" format="dimension"/>
+        <attr name="toolbar_color" format="color"/>
     </declare-styleable>
 
     <!--ColorPickerHolo-->
