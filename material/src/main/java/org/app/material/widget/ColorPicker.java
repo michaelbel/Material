@@ -14,6 +14,7 @@ import com.rey.material.widget.Slider;
 import org.app.material.AndroidUtilities;
 import org.app.material.SeekBar;
 
+@Deprecated
 public class ColorPicker extends FrameLayout implements Slider.OnPositionChangeListener {
 
     private View mColorView;

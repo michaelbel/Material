@@ -40,7 +40,9 @@ public class ColorPickerHolo extends View {
 	private static final String STATE_OLD_COLOR = "color";
 	private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
-	// Used material colors.
+	/**
+	 * Used material colors.
+	 */
 	private int[] COLORS = new int[] { 0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336 };
 
 	private Paint mColorWheelPaint;
