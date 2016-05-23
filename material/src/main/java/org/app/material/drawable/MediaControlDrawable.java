@@ -28,8 +28,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.view.animation.Interpolator;
 
-import org.app.material.animation.AnimationUtils;
-import org.app.material.animation.ValueAnimatorCompat;
+import org.app.material.animation.a.AnimationUtils;
+import org.app.material.animation.a.ValueAnimatorCompat;
 
 public class MediaControlDrawable extends Drawable {
 
