@@ -17,15 +17,11 @@
 package org.app.material;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
-import android.os.Handler;
 import android.util.TypedValue;
 
 import java.util.Hashtable;
@@ -33,7 +29,6 @@ import java.util.Hashtable;
 public class AndroidUtilities {
 
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
-    public static volatile Handler applicationHandler;
 
     public static int dp (Context context, float value) {
         if (value == 0) {
@@ -76,21 +71,29 @@ public class AndroidUtilities {
         }
     }
 
-    public static Drawable getRipple(int background, int rippleColor) {
-        ColorStateList colorStateList;
-        RippleDrawable rippleDrawable;
-
-        colorStateList = ColorStateList.valueOf(rippleColor);
-        rippleDrawable = new RippleDrawable(colorStateList, new ColorDrawable(background), null);
-
-        return rippleDrawable;
-    }
-
     public static int getContextColor(Context context, int androidAttr) {
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{androidAttr});
         int color = a.getColor(0, 0);
         a.recycle();
         return color;
+    }
+
+    public static int selectableItemBackground(Context context) {
+        int[] attrs = new int[]{org.app.material.R.attr.selectableItemBackground};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static int selectableItemBackgroundBorderless(Context context) {
+        int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
     }
 }
