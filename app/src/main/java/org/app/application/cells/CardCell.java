@@ -44,12 +44,13 @@ public class CardCell extends CardView {
         this.setElevation(5);
         this.setPreventCornerOverlap(false);
         this.setLayoutParams(params);
-        this.setBackground(AndroidUtilities.getRipple(0xFFFFFFFF, 0xFFE0E0E0));
+        this.setBackgroundColor(0xFFFFFFFF);
 
-        //int attr[] = new int[] {R.attr.selectableItemBackgroundBorderless};
-        //TypedArray typedArray = context.obtainStyledAttributes(attr);
-        //Drawable drawable = typedArray.getDrawable(0);
-        //this.setBackgroundDrawable(drawable);
+        FrameLayout layout = new FrameLayout(context);
+        layout.setLayoutParams(params);
+
+        layout.setBackgroundResource(AndroidUtilities.selectableItemBackground(context));
+        addView(layout);
 
         textView = new TextView(context);
         textView.setVisibility(INVISIBLE);
@@ -57,7 +58,7 @@ public class CardCell extends CardView {
         textView.setTextColor(0xFF444444);
         textView.setGravity(Gravity.START);
         textView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 16));
-        addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+        layout.addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
 
         valueTextView = new TextView(context);
         valueTextView.setVisibility(INVISIBLE);
@@ -65,14 +66,14 @@ public class CardCell extends CardView {
         valueTextView.setTextColor(0xFFBDBDBD);
         valueTextView.setGravity(Gravity.START);
         valueTextView.setPadding(AndroidUtilities.dp(context, 72), AndroidUtilities.dp(context, 48), AndroidUtilities.dp(context, 16), AndroidUtilities.dp(context, 16));
-        addView(valueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START));
+        layout.addView(valueTextView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START));
 
         valueImageView = new ImageView(context);
         valueImageView.setVisibility(INVISIBLE);
         valueImageView.setFocusable(false);
         valueImageView.setScaleType(ImageView.ScaleType.CENTER);
         valueImageView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
-        addView(valueImageView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        layout.addView(valueImageView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         optionsButton = new ImageView(context);
         optionsButton.setVisibility(INVISIBLE);
@@ -80,7 +81,7 @@ public class CardCell extends CardView {
         //optionsButton.setBackgroundResource(R.drawable.ripple);
         optionsButton.setScaleType(ImageView.ScaleType.CENTER);
         optionsButton.setPadding(0, AndroidUtilities.dp(context, 10), AndroidUtilities.dp(context, 8), 0);
-        addView(optionsButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP));
+        layout.addView(optionsButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP));
 
     }
 
