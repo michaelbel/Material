@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.app.material.cell;
+package org.app.application.cells;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
@@ -29,6 +30,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.R;
 import org.app.material.widget.LayoutHelper;
 
 public class TextCell extends FrameLayout {
@@ -47,7 +49,13 @@ public class TextCell extends FrameLayout {
 
         this.setElevation(4);
         this.setLayoutParams(params);
-        this.setBackground(AndroidUtilities.getRipple(0xFFFFFFFF, 0xFFE0E0E0));
+        this.setBackgroundColor(0xFFFFFFFF);
+
+        int[] attrs = new int[]{R.attr.selectableItemBackground};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        this.setBackgroundResource(backgroundResource);
+        typedArray.recycle();
 
         mTextView = new TextView(context);
         mTextView.setVisibility(INVISIBLE);
@@ -205,7 +213,7 @@ public class TextCell extends FrameLayout {
     }
 
     public void setRiipleEffect(int background, int rippleColor) {
-        this.setBackground(AndroidUtilities.getRipple(background, rippleColor));
+        this.setBackgroundResource(AndroidUtilities.selectableItemBackground(getContext()));
     }
 
     public void setBackgroundCell(int color) {
