@@ -37,13 +37,13 @@ public class ColorPickerView extends View {
     private float mAlpha = 1;
     private static final float STROKE_RATIO = 2f;
     private Paint mColorWheelFill = PaintBuilder.newPaint().color(0).build();
-    private Paint mSelectorStroke1 = PaintBuilder.newPaint().color(0xffffffff).build();
+    private Paint mSelectorStroke1 = PaintBuilder.newPaint().color(0xFFFFFFFF).build();
     private Paint mSelectorStroke2 = PaintBuilder.newPaint().color(0xff000000).build();
     private Paint mAlphaPatternPaint = PaintBuilder.newPaint().build();
     private Bitmap mColorWheel;
     private Canvas mColorWheelCanvas;
     private Integer mInitialColor;
-    private Integer initialColors[] = new Integer[] { null, null, null, null, null };
+    private Integer initialColors[] = new Integer[]{0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336};
     private ColorCircle mCurrentColorCircle;
     private LinearLayout mColorPreview;
     private ColorWheelRenderer mRenderer;
@@ -97,8 +97,7 @@ public class ColorPickerView extends View {
     public void setInitialColor(int color) {
         float[] hsv = new float[3];
         Color.colorToHSV(color, hsv);
-
-        this.mAlpha = Utils.getAlphaPercent(color);
+        this.mAlpha = Color.alpha(color) / 255F;
         this.mLightness = hsv[2];
         this.initialColors[this.mColorSelection] = color;
         this.mInitialColor = color;
@@ -238,7 +237,7 @@ public class ColorPickerView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		int backgroundColor = 0x00000000;
+		int backgroundColor = 0x00;
 		canvas.drawColor(backgroundColor);
 
 		if (mColorWheel != null) {
@@ -307,7 +306,7 @@ public class ColorPickerView extends View {
             color = Color.HSVToColor(mCurrentColorCircle.getHsvWithLightness(this.mLightness));
         }
 
-		return Utils.adjustAlpha(this.mAlpha, color);
+		return Math.round(this.mAlpha * 255) << 24 | (0x00FFFFFF & color);
 	}
 
 	public Integer[] getAllColors() {
@@ -317,32 +316,18 @@ public class ColorPickerView extends View {
 	public void setInitialColors(Integer[] colors, int selectedColor) {
 		this.initialColors = colors;
 		this.mColorSelection = selectedColor;
-		Integer initialColor = this.initialColors[this.mColorSelection];
+		int initialColor = this.initialColors[this.mColorSelection];
 
-		if (initialColor == null) {
+		if (initialColor == 0) {
             initialColor = 0xFFFFFFFF;
         }
 
 		setInitialColor(initialColor);
 	}
 
-	public void setLightness(float mLightness) {
-		this.mLightness = mLightness;
-		this.mInitialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.mAlpha), mCurrentColorCircle.getHsvWithLightness(mLightness));
-		updateColorWheel();
-		invalidate();
-	}
-
 	public void setColor(int color) {
 		setInitialColor(color);
 		updateColorWheel();
-		invalidate();
-	}
-
-	public void setAlphaValue(float alpha) {
-		this.mAlpha = alpha;
-		this.mInitialColor = Color.HSVToColor(Utils.alphaValueAsInt(this.mAlpha), mCurrentColorCircle.getHsvWithLightness(this.mLightness));
-        updateColorWheel();
 		invalidate();
 	}
 
@@ -688,21 +673,6 @@ public class ColorPickerView extends View {
         }
     }
 
-    public static class Utils {
-
-        public static float getAlphaPercent(int argb) {
-            return Color.alpha(argb) / 255F;
-        }
-
-        public static int alphaValueAsInt(float alpha) {
-            return Math.round(alpha * 255);
-        }
-
-        public static int adjustAlpha(float alpha, int color) {
-            return alphaValueAsInt(alpha) << 24 | (0x00FFFFFF & color);
-        }
-    }
-
     public static abstract class AbsColorWheelRenderer implements ColorWheelRenderer {
 
         protected ColorWheelRenderOption mColorWheelRenderOption;
@@ -715,7 +685,6 @@ public class ColorPickerView extends View {
 
         @Override
         public ColorWheelRenderOption getRenderOption() {
-
             if (mColorWheelRenderOption == null) {
                 mColorWheelRenderOption = new ColorWheelRenderOption();
             }
