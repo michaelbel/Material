@@ -29,7 +29,7 @@ import android.widget.ListView;
 
 import org.app.application.R;
 import org.app.application.cells.ListCell;
-import org.app.material.cell.EmptyCell;
+import org.app.application.cells.EmptyCell;
 import org.app.material.widget.LayoutHelper;
 
 public class ListViewFragment extends Fragment {
@@ -58,7 +58,7 @@ public class ListViewFragment extends Fragment {
         noteRow = rowCount++;
 
         ListView listView = new ListView(getActivity());
-        //listView.setDivider(null);
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         listView.setAdapter(mAdapter);
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
@@ -73,7 +73,7 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        layout.addView(listView, LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        layout.addView(listView);
         return layout;
     }
 
