@@ -16,7 +16,6 @@
 
 package org.app.application.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -30,7 +29,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
 import org.app.application.R;
-import org.app.application.ViewController;
 import org.app.material.drawable.MediaControlDrawable;
 import org.app.material.widget.LayoutHelper;
 
@@ -79,8 +77,6 @@ public class FabFragment extends Fragment implements View.OnClickListener {
             mFabPlus.startAnimation(isFabPlusState ? toClose() : toPlus());
             isFabPlusState = !isFabPlusState;
         } else if (view == mFabEdit) {
-            startActivity(new Intent(getActivity(), ViewController.class));
-            //startActivity(new Intent(getActivity(), MainActivity2.class));
         } else if (view == mFabMedia) {
             mMediaControl.setMediaControlState(getNextState(mMediaControl.getMediaControlState()));
         }
