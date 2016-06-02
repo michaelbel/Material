@@ -31,9 +31,8 @@ import android.widget.FrameLayout;
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
-import org.app.material.cell.EmptyCell;
-import org.app.material.cell.IconCell;
-import org.app.material.cell.TextCell;
+import org.app.application.cells.EmptyCell;
+import org.app.application.cells.TextCell;
 
 public class RecyclerFragment extends Fragment {
 
@@ -170,13 +169,13 @@ public class RecyclerFragment extends Fragment {
                 } else if (i == noteRow5) {
                     ((EmptyCell) holder.itemView).addNote("Title text and Switch");
                 }
-            } else if (holder.getItemViewType() == 2) {
-                if (i == iconRow1) {
-                    ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFFF44336)).addShortDivider();
-                } else if (i == iconRow2) {
-                    ((IconCell) holder.itemView).addTitle("Settings").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFF4285f4));
-                }
-            }
+            } //else if (holder.getItemViewType() == 2) {
+              //  if (i == iconRow1) {
+              //      ((IconCell) holder.itemView).addTitle("Title one").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFFF44336)).addShortDivider();
+              //  } else if (i == iconRow2) {
+              //      ((IconCell) holder.itemView).addTitle("Settings").addIcon(AndroidUtilities.getIcon(getActivity(), R.drawable.ic_heart, 0xFF4285f4));
+              //  }
+            //}
         }
 
         @Override
@@ -221,19 +220,19 @@ public class RecyclerFragment extends Fragment {
             } else if (viewType == 1) {
                 view = new EmptyCell(mContext);
             } else if (viewType == 2) {
-                view = new IconCell(mContext);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int i = recyclerView.getChildAdapterPosition(v);
-
-                        if (i == iconRow1) {
-                            Snackbar.make(v, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                        } else if (i == iconRow2) {
-                            Snackbar.make(v, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-                        }
-                    }
-                });
+                //view = new IconCell(mContext);
+                //view.setOnClickListener(new View.OnClickListener() {
+                //    @Override
+                //    public void onClick(View v) {
+                //        int i = recyclerView.getChildAdapterPosition(v);
+//
+                //        if (i == iconRow1) {
+                //            Snackbar.make(v, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                //        } else if (i == iconRow2) {
+                //            Snackbar.make(v, getString(R.string.Position, i), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+                //        }
+                //    }
+                //});
             }
 
             return new Holder(view);
