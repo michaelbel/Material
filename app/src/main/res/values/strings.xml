@@ -16,8 +16,15 @@
     <string name="FilePicker">File Picker</string>
     <string name="FolderPicker">Folder Picker</string>
     <string name="ColorPickerRGB">Color Picker RGB</string>
+    <string name="ColorPickerHSV">Color Picker HSV</string>
+    <string name="ColorPickerARGB">Color Picker ARGB</string>
+    <string name="ColorPickerCMYK">Color Picker CMYK</string>
+    <string name="ColorPickerCMYK255">Color Picker CMYK255</string>
+    <string name="ColorPickerHSL">Color Picker HSL</string>
     <string name="ColorPickerHolo">Color Picker Holo</string>
     <string name="ColorPickerView">Color Picker View</string>
+    <string name="ColorPickerPrimary">Color Picker Primary</string>
+    <string name="ColorPickerAccent">Color Picker Accent</string>
     <string name="Winter">Winter</string>
     <string name="Spring">Spring</string>
     <string name="Summer">Summer</string>
@@ -45,6 +52,9 @@
     <string name="SomeTitleText">Some title text</string>
     <string name="TextLock">Lock</string>
     <string name="TextDisabled">DISABLED</string>
+    <!--Bottoms-->
+    <string name="Bottoms">Bottoms</string>
+    <string name="BottomPickerLayout">Bottom Picker Layout</string>
 
 
     <string name="RecyclerView">RecyclerView</string>
