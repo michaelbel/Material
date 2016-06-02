@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.app.material.cell;
+package org.app.application.cells;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
