@@ -16,7 +16,6 @@
 
 package org.app.application;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.TabLayout;
@@ -24,22 +23,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import org.app.application.ui.BottomsFragment;
+import org.app.application.ui.CardFragment;
 import org.app.application.ui.DialogsFragment;
 import org.app.application.ui.FabFragment;
 import org.app.application.ui.ListViewFragment;
-import org.app.material.AndroidUtilities;
+import org.app.application.ui.Recycler;
+import org.app.application.ui.RecyclerFragment;
+import org.app.material.OnClickListener;
 import org.app.material.widget.Browser;
+import org.app.material.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Toolbar toolbar;
+    private FrameLayout layout;
 
     private int dotsMenu = 1;
     private int github = 2;
@@ -49,25 +54,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        layout = (FrameLayout) findViewById(R.id.frameLayout);
 
-        ActionBar actionBar = getSupportActionBar();
-        try {
-            assert actionBar != null;
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setTitle(R.string.MaterialDemo);
-        } catch (Exception ignored) {}
+        toolbar = new Toolbar(this)
+                .setTitle(R.string.MaterialDemo)
+                .setNavIcon(R.drawable.ic_menu)
+                .setNavIconClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick() {
+                        Toast.makeText(MainActivity.this, "OnClick", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addIcons(
+                        new org.app.material.widget.Toolbar.ToolbarIcon(this).setToolbarIcon(R.drawable.ic_dots_menu)
+                                .setOnClick(new OnClickListener() {
+                            @Override
+                            public void onClick() {
+                                Browser.openUrl(MainActivity.this, getString(R.string.GithubURL));
+                            }
+                        })
+                );
+        layout.addView(toolbar);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DialogsFragment(), R.string.Dialogs);
         adapter.addFragment(new ListViewFragment(), R.string.ListView);
-        //adapter.addFragment(new CardFragment(), R.string.CardView);
-        //adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragment(new CardFragment(), R.string.CardView);
+        adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragment(new Recycler(), R.string.RecyclerView);
         adapter.addFragment(new FabFragment(), R.string.Fab);
+        adapter.addFragment(new BottomsFragment(), R.string.Bottoms);
 
         if (viewPager != null) {
             viewPager.setAdapter(adapter);
@@ -80,31 +98,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, github, Menu.NONE, getString(R.string.OpenGithub)).setIcon(R.drawable.ic_github).setShowAsAction(1);
-        menu.add(0, dotsMenu, Menu.NONE, getString(R.string.PopupMenu)).setIcon(R.drawable.ic_dots_menu).setShowAsAction(1);
-        return super.onCreateOptionsMenu(menu);
-    }
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
+    //    menu.add(0, github, Menu.NONE, getString(R.string.OpenGithub)).setIcon(R.drawable.ic_github).setShowAsAction(1);
+    //    menu.add(0, dotsMenu, Menu.NONE, getString(R.string.PopupMenu)).setIcon(R.drawable.ic_dots_menu).setShowAsAction(1);
+    //    return super.onCreateOptionsMenu(menu);
+    //}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == github) {
-            Browser browser = new Browser(this);
-            browser.setUrl(getString(R.string.GithubURL))
-                   .setToolbarColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary))
-                   .setShareIcon(true)
-                   .setShareIconHiddenText(getString(R.string.ShareLink))
-                   .show();
-        } else if (item.getItemId() == dotsMenu) {
-            startActivity(new Intent(MainActivity.this, Test.class));
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    //@Override
+    //public boolean onOptionsItemSelected(MenuItem item) {
+    //    if (item.getItemId() == github) {
+    //
+    //    } else if (item.getItemId() == dotsMenu) {
+    //        startActivity(new Intent(MainActivity.this, Test.class));
+    //    }
+    //    return super.onOptionsItemSelected(item);
+    //}
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
-
         private final List<Fragment> fragmentList = new ArrayList<>();
         private final List<CharSequence> fragmentTitleList = new ArrayList<>();
 
