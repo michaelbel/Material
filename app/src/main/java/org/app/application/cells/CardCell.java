@@ -38,18 +38,15 @@ public class CardCell extends CardView {
     public CardCell(Context context) {
         super(context);
 
-        FrameLayout.LayoutParams params = LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT);
-        params.setMargins(AndroidUtilities.dp(context, 6), AndroidUtilities.dp(context, 8), AndroidUtilities.dp(context, 6), 0);
-
         this.setElevation(5);
+        this.setRadius(AndroidUtilities.dp(context, 5));
         this.setPreventCornerOverlap(false);
-        this.setLayoutParams(params);
+        this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 10, 10, 10, 0));
         this.setBackgroundColor(0xFFFFFFFF);
 
         FrameLayout layout = new FrameLayout(context);
-        layout.setLayoutParams(params);
-
-        layout.setBackgroundResource(AndroidUtilities.selectableItemBackground(context));
+        layout.setClickable(true);
+        layout.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
         addView(layout);
 
         textView = new TextView(context);
@@ -78,11 +75,11 @@ public class CardCell extends CardView {
         optionsButton = new ImageView(context);
         optionsButton.setVisibility(INVISIBLE);
         optionsButton.setFocusable(false);
-        //optionsButton.setBackgroundResource(R.drawable.ripple);
+        optionsButton.setClickable(true);
+        optionsButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
         optionsButton.setScaleType(ImageView.ScaleType.CENTER);
         optionsButton.setPadding(0, AndroidUtilities.dp(context, 10), AndroidUtilities.dp(context, 8), 0);
         layout.addView(optionsButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP));
-
     }
 
     public CardCell addTitle(String title) {
@@ -100,12 +97,6 @@ public class CardCell extends CardView {
     public CardCell addImage(int image) {
         valueImageView.setVisibility(VISIBLE);
         valueImageView.setImageResource(image);
-        return this;
-    }
-
-    public CardCell addImage(Drawable image) {
-        valueImageView.setVisibility(VISIBLE);
-        valueImageView.setImageDrawable(image);
         return this;
     }
 
