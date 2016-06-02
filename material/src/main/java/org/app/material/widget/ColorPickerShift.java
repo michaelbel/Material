@@ -31,26 +31,26 @@ public class ColorPickerShift extends View {
         }
     }
 
-	private Paint paint;
-	private Rect rect = new Rect();
+	private Paint mPaint;
+	private Rect mRect = new Rect();
 	boolean isColorSelected = false;
-	private int selectedColor = colors[0];
-	private int cellSize;
+	private int mSelectedColor = colors[0];
+	private int mCellSize;
 	private int mOrientation = HORIZONTAL;
 	private OnColorChangedListener onColorChanged;
 
 	public ColorPickerShift(Context context) {
 		super(context);
 
-		paint = new Paint();
-		paint.setStyle(Style.FILL);
+		mPaint = new Paint();
+		mPaint.setStyle(Style.FILL);
 	}
 
 	public ColorPickerShift(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		paint = new Paint();
-		paint.setStyle(Style.FILL);
+		mPaint = new Paint();
+		mPaint.setStyle(Style.FILL);
 
 		final TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ColorPickerShift, 0, 0);
 
@@ -94,52 +94,52 @@ public class ColorPickerShift extends View {
 	}
 
 	private void drawVerticalPicker(Canvas canvas) {
-		rect.left = 0;
-		rect.top = 0;
-		rect.right = canvas.getWidth();
-		rect.bottom = 0;
+		mRect.left = 0;
+		mRect.top = 0;
+		mRect.right = canvas.getWidth();
+		mRect.bottom = 0;
 
 		int margin = Math.round(canvas.getWidth() * 0.08f);
 
 		for (int color : colors) {
-			paint.setColor(color);
-			rect.top = rect.bottom;
-			rect.bottom += cellSize;
+			mPaint.setColor(color);
+			mRect.top = mRect.bottom;
+			mRect.bottom += mCellSize;
 
-			if (isColorSelected && color == selectedColor) {
-				rect.left = 0;
-				rect.right = canvas.getWidth();
+			if (isColorSelected && color == mSelectedColor) {
+				mRect.left = 0;
+				mRect.right = canvas.getWidth();
 			} else {
-				rect.left = margin;
-				rect.right = canvas.getWidth() - margin;
+				mRect.left = margin;
+				mRect.right = canvas.getWidth() - margin;
 			}
 
-			canvas.drawRect(rect, paint);
+			canvas.drawRect(mRect, mPaint);
 		}
 	}
 
 	private void drawHorizontalPicker(Canvas canvas) {
-		rect.left = 0;
-		rect.top = 0;
-		rect.right = 0;
-		rect.bottom = canvas.getHeight();
+		mRect.left = 0;
+		mRect.top = 0;
+		mRect.right = 0;
+		mRect.bottom = canvas.getHeight();
 
 		int margin = Math.round(canvas.getHeight() * 0.08f);
 
 		for (int color : colors) {
-			paint.setColor(color);
-			rect.left = rect.right;
-			rect.right += cellSize;
+			mPaint.setColor(color);
+			mRect.left = mRect.right;
+			mRect.right += mCellSize;
 
-			if (isColorSelected && color == selectedColor) {
-				rect.top = 0;
-				rect.bottom = canvas.getHeight();
+			if (isColorSelected && color == mSelectedColor) {
+				mRect.top = 0;
+				mRect.bottom = canvas.getHeight();
 			} else {
-				rect.top = margin;
-				rect.bottom = canvas.getHeight() - margin;
+				mRect.top = margin;
+				mRect.bottom = canvas.getHeight() - margin;
 			}
 
-			canvas.drawRect(rect, paint);
+			canvas.drawRect(mRect, mPaint);
 		}
 	}
 
@@ -195,7 +195,7 @@ public class ColorPickerShift extends View {
 
 			for (int color : colors) {
 				left = right;
-				right += cellSize;
+				right += mCellSize;
 
 				if (left <= x && right >= x) {
 					return color;
@@ -207,7 +207,7 @@ public class ColorPickerShift extends View {
 
 			for (int color : colors) {
 				top = bottom;
-				bottom += cellSize;
+				bottom += mCellSize;
 
 				if (y >= top && y <= bottom) {
 					return color;
@@ -215,14 +215,14 @@ public class ColorPickerShift extends View {
 			}
 		}
 
-		return selectedColor;
+		return mSelectedColor;
 	}
 
 	@Override
 	protected Parcelable onSaveInstanceState() {
 		Parcelable superState = super.onSaveInstanceState();
 		SavedState ss = new SavedState(superState);
-		ss.selectedColor = this.selectedColor;
+		ss.selectedColor = this.mSelectedColor;
 		ss.isColorSelected = this.isColorSelected;
 		return ss;
 	}
@@ -236,7 +236,7 @@ public class ColorPickerShift extends View {
 
 		SavedState ss = (SavedState) state;
 		super.onRestoreInstanceState(ss.getSuperState());
-		this.selectedColor = ss.selectedColor;
+		this.mSelectedColor = ss.selectedColor;
 		this.isColorSelected = ss.isColorSelected;
 	}
 
@@ -285,7 +285,7 @@ public class ColorPickerShift extends View {
 	}
 
 	public int getColor() {
-		return selectedColor;
+		return mSelectedColor;
 	}
 
 	public void setSelectedColor(int color) {
@@ -293,8 +293,8 @@ public class ColorPickerShift extends View {
 			return;
 		}
 
-		if (!isColorSelected || selectedColor != color) {
-			this.selectedColor = color;
+		if (!isColorSelected || mSelectedColor != color) {
+			this.mSelectedColor = color;
 			isColorSelected = true;
 			invalidate();
 			onColorChanged(color);
@@ -308,8 +308,8 @@ public class ColorPickerShift extends View {
 	public void setColors(int[] colors) {
 		this.colors = colors;
 
-		if (!containsColor(colors, selectedColor)) {
-			selectedColor = colors[0];
+		if (!containsColor(colors, mSelectedColor)) {
+			mSelectedColor = colors[0];
 		}
 
 		recalcCellSize();
@@ -318,12 +318,12 @@ public class ColorPickerShift extends View {
 
 	private int recalcCellSize() {
 		if (mOrientation == HORIZONTAL) {
-			cellSize = Math.round(screenW / (colors.length * 1f));
+			mCellSize = Math.round(screenW / (colors.length * 1f));
 		} else {
-			cellSize = Math.round(screenH / (colors.length * 1f));
+			mCellSize = Math.round(screenH / (colors.length * 1f));
 		}
 
-		return cellSize;
+		return mCellSize;
 	}
 
 	public int[] getColors() {
