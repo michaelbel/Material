@@ -80,6 +80,7 @@ public class FabFragment extends Fragment implements View.OnClickListener {
             isFabPlusState = !isFabPlusState;
         } else if (view == mFabEdit) {
             startActivity(new Intent(getActivity(), ViewController.class));
+            //startActivity(new Intent(getActivity(), MainActivity2.class));
         } else if (view == mFabMedia) {
             mMediaControl.setMediaControlState(getNextState(mMediaControl.getMediaControlState()));
         }
