@@ -18,8 +18,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ViewController" />
-        <activity android:name=".Test"/>
+        <activity android:name=".TestFabSheet"/>
 
     </application>
 
