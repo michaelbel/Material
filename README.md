@@ -1,10 +1,10 @@
 # Material
-Material Design Library for any projects.
+Material Design Library your any projects
 
 ## Requirements
 
 * Android 5.0
-* Android Studio 2.1.1
+* Android Studio 2.1
 
 ## Screenshots
 
