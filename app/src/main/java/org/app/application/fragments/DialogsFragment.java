@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.app.application.ui;
+package org.app.application.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -27,18 +26,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import org.app.application.R;
-import org.app.application.ui.dialogs.ColorPickerAccentDialog;
-import org.app.application.ui.dialogs.ColorPickerHoloDialog;
-import org.app.application.ui.dialogs.ColorPickerPrimaryDialog;
-import org.app.application.ui.dialogs.ColorPickerViewDialog;
-import org.app.application.ui.dialogs.ItemsDialog;
-import org.app.application.ui.dialogs.NumberPickerDialog;
-import org.app.application.ui.dialogs.StringPickerDialog;
+import org.app.application.dialogs.ColorPickerAccentDialog;
+import org.app.application.dialogs.ColorPickerDialog;
+import org.app.application.dialogs.ColorPickerHoloDialog;
+import org.app.application.dialogs.ColorPickerPrimaryDialog;
+import org.app.application.dialogs.ColorPickerViewDialog;
+import org.app.application.dialogs.ItemsDialog;
+import org.app.application.dialogs.NumberPickerDialog;
+import org.app.application.dialogs.StringPickerDialog;
 import org.app.material.AndroidUtilities;
-import org.app.material.ColorPickerDialog;
+import org.app.material.widget.ColorView;
 import org.app.material.widget.LayoutHelper;
 
 import java.util.ArrayList;
@@ -66,17 +65,11 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
     private List<Button> buttons = new ArrayList<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ScrollView sView = new ScrollView(getActivity());
 
         LinearLayout layout = new LinearLayout(getActivity());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setBackgroundColor(0xFFECEFF1);
+        layout.setBackgroundColor(0xFFF0F0F0);
 
         sView.addView(layout);
 
@@ -94,7 +87,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
 
         mButton4 = new Button(getActivity());
         mButton4.setText("");
-        layout.addView(mButton4);
+        //layout.addView(mButton4);
 
         mButton5 = new Button(getActivity());
         mButton5.setText(R.string.ColorPickerHolo);
@@ -187,49 +180,45 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
         } else if (v == mButton9) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.RGB)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.HEX)
+                    .colorMode(ColorView.ColorMode.RGB)
+                    .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()
                     .show(getFragmentManager(), "dialog1");
         } else if (v == mButton10) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.ARGB)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.HEX)
+                    .colorMode(ColorView.ColorMode.ARGB)
+                    .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()
                     .show(getFragmentManager(), "dialog2");
         } else if (v == mButton11) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.HSV)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.DECIMAL)
+                    .colorMode(ColorView.ColorMode.HSV)
+                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog3");
         } else if (v == mButton12) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.HSL)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.DECIMAL)
+                    .colorMode(ColorView.ColorMode.HSL)
+                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog4");
         } else if (v == mButton13) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.CMYK)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.DECIMAL)
+                    .colorMode(ColorView.ColorMode.CMYK)
+                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog5");
         } else if (v == mButton14) {
             new ColorPickerDialog.Builder()
                     .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
-                    .colorMode(ColorPickerDialog.ColorMode.CMYK255)
-                    .indicatorMode(ColorPickerDialog.IndicatorMode.HEX)
+                    .colorMode(ColorView.ColorMode.CMYK255)
+                    .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()
                     .show(getFragmentManager(), "dialog6");
         }
-    }
-
-    private void makeToast(@StringRes int resId) {
-        Toast.makeText(getActivity(), getResources().getText(resId), Toast.LENGTH_SHORT).show();
     }
 }

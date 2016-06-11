@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.app.application.ui;
+package org.app.application.fragments;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,14 +24,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
 import org.app.application.R;
-import org.app.material.drawable.MediaControlDrawable;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.MediaControlDrawable;
 
 public class FabFragment extends Fragment implements View.OnClickListener {
 
@@ -42,6 +42,9 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton mFabMedia;
 
     private MediaControlDrawable mMediaControl;
+
+    private ObjectAnimator mObjectAnimator;
+    private final Interpolator INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,28 +77,34 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == mFabPlus) {
-            mFabPlus.startAnimation(isFabPlusState ? toClose() : toPlus());
+            if (isFabPlusState) {
+                startAnimation();
+            } else {
+                endAnimation();
+            }
+
             isFabPlusState = !isFabPlusState;
         } else if (view == mFabEdit) {
+
         } else if (view == mFabMedia) {
             mMediaControl.setMediaControlState(getNextState(mMediaControl.getMediaControlState()));
         }
     }
 
-    private RotateAnimation toClose() {
-        RotateAnimation rotate = new RotateAnimation(0, 135, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setInterpolator(new LinearInterpolator());
-        rotate.setFillAfter(true);
-        rotate.setDuration(200);
-        return rotate;
+    private ObjectAnimator startAnimation() {
+        mObjectAnimator = ObjectAnimator.ofFloat(mFabPlus, "rotation", 0F, 135F);
+        mObjectAnimator.setInterpolator(INTERPOLATOR);
+        mObjectAnimator.setDuration(250);
+        mObjectAnimator.start();
+        return mObjectAnimator;
     }
 
-    private RotateAnimation toPlus() {
-        RotateAnimation rotate = new RotateAnimation(135, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setInterpolator(new LinearInterpolator());
-        rotate.setFillAfter(true);
-        rotate.setDuration(200);
-        return rotate;
+    private ObjectAnimator endAnimation() {
+        mObjectAnimator = ObjectAnimator.ofFloat(mFabPlus, "rotation", 135F, 0F);
+        mObjectAnimator.setInterpolator(INTERPOLATOR);
+        mObjectAnimator.setDuration(250);
+        mObjectAnimator.start();
+        return mObjectAnimator;
     }
 
     private MediaControlDrawable.State getNextState(MediaControlDrawable.State state) {
