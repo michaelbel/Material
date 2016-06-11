@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity {
 
         layout = (FrameLayout) findViewById(R.id.frameLayout);
 
+
         toolbar = new Toolbar(this)
                 .setTitle(R.string.MaterialDemo)
                 .setNavIcon(R.drawable.ic_menu)
