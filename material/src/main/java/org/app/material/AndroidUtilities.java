@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,15 +19,26 @@ package org.app.material;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
+import android.view.WindowManager;
 
 import java.util.Hashtable;
 
 public class AndroidUtilities {
 
+    public static float density = 1;
+    public static Point displaySize = new Point();
+    public static boolean usingHardwareInput;
+    public static volatile Handler applicationHandler;
+    public static DisplayMetrics displayMetrics = new DisplayMetrics();
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
 
     public static int dp (Context context, float value) {
@@ -36,6 +47,57 @@ public class AndroidUtilities {
         }
 
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
+    }
+
+    public static float dpf2(Context context, float value) {
+        if (value == 0) {
+            return 0;
+        }
+        return context.getResources().getDisplayMetrics().density * value;
+    }
+
+    public static float getDensity(Context context) {
+        density = context.getResources().getDisplayMetrics().density;
+        return density;
+    }
+
+    public static void runOnUIThread(Context context, Runnable runnable) {
+        runOnUIThread(context, runnable, 0);
+    }
+
+    public static void runOnUIThread(Context context, Runnable runnable, long delay) {
+        if (delay == 0) {
+            applicationHandler = new Handler(context.getMainLooper());
+            applicationHandler.post(runnable);
+        } else {
+            applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Context context, Runnable runnable) {
+        applicationHandler = new Handler(context.getMainLooper()); // ???
+        applicationHandler.removeCallbacks(runnable);
+    }
+
+    public static void checkDisplaySize(Context context) {
+        checkDisplaySize(context);
+
+        try {
+            Configuration configuration = context.getResources().getConfiguration();
+            usingHardwareInput = configuration.keyboard != Configuration.KEYBOARD_NOKEYS && configuration.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
+            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            if (manager != null) {
+                Display display = manager.getDefaultDisplay();
+                if (display != null) {
+                    display.getMetrics(displayMetrics);
+                    if (Build.VERSION.SDK_INT < 13) {
+                        displaySize.set(display.getWidth(), display.getHeight());
+                    } else {
+                        display.getSize(displaySize);
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
     }
 
     public static boolean isPortrait(Context context) {
@@ -95,6 +157,10 @@ public class AndroidUtilities {
         typedArray.recycle();
 
         return backgroundResource;
+    }
+
+    public static Drawable customSelector(Context context) {
+        return context.getDrawable(R.drawable.list_selector);
     }
 
     public static int getStatusBarHeight(Context context) {
