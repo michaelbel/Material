@@ -25,8 +25,8 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.app.application.CheckBox;
 import org.app.material.AndroidUtilities;
+import org.app.material.widget.CheckBox;
 import org.app.material.widget.LayoutHelper;
 
 public class CheckBoxCell extends FrameLayout {
