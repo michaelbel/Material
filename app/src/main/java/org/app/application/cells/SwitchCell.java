@@ -25,9 +25,9 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.app.application.Switch;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.Switch;
 
 public class SwitchCell extends FrameLayout {
 
