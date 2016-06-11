@@ -1,3 +1,5 @@
+// Add License
+
 package org.app.material.widget;
 
 import android.content.Context;
@@ -17,7 +19,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import org.app.material.R;
 
 import java.util.ArrayList;

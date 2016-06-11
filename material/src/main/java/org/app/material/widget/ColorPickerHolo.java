@@ -29,9 +29,9 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import org.app.material.R;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.R;
 
 public class ColorPickerHolo extends View {
 

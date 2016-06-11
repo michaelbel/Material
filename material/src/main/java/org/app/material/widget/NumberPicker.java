@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -101,6 +101,7 @@ public class NumberPicker extends LinearLayout {
     private VelocityTracker velocityTracker;
     private PressedStateHelper pressedStateHelper;
     private ChangeCurrentByOneFromLongPressCommand changeCurrentByOneFromLongPressCommand;
+    private OnValueChangeListener mOnValueChangeListener;
 
     public interface OnScrollListener {
         int SCROLL_STATE_IDLE = 0;
@@ -383,7 +384,7 @@ public class NumberPicker extends LinearLayout {
                 switch (event.getAction()) {
                     case KeyEvent.ACTION_DOWN:
                         if (wrapSelectorWheel || (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
-                                ? getValue() < getmMaxValue() : getValue() > getmMinValue()) {
+                                ? getValue() < getmMaxValue() : getValue() > getMinValue()) {
                             requestFocus();
                             lastHandledDownDpadKeyCode = keyCode;
                             removeAllCallbacks();
@@ -628,11 +629,11 @@ public class NumberPicker extends LinearLayout {
         return mValue;
     }
 
-    public int getmMinValue() {
+    public int getMinValue() {
         return mMinValue;
     }
 
-    public void setmMinValue(int mMinValue) {
+    public void setMinValue(int mMinValue) {
         if (this.mMinValue == mMinValue) {
             return;
         }
@@ -1051,5 +1052,13 @@ public class NumberPicker extends LinearLayout {
         mFormatter = formatter;
         initializeSelectorWheelIndices();
         updateInputTextView();
+    }
+
+    public void setOnValueChangedListener(OnValueChangeListener onValueChangedListener) {
+        mOnValueChangeListener = onValueChangedListener;
+    }
+
+    public interface OnValueChangeListener {
+        void onValueChange(NumberPicker picker, int oldVal, int newVal);
     }
 }

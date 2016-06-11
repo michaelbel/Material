@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import android.view.animation.Interpolator;
 
 public class Scroller  {
 
-    private int mode;
-    private int startX;
-    private int startY;
-    private int finalX;
-    private int finalY;
+    private int mMode;
+    private int mStartX;
+    private int mStartY;
+    private int mFinalX;
+    private int mFinalY;
     private int minX;
     private int maxX;
     private int minY;
@@ -122,11 +122,11 @@ public class Scroller  {
     }
 
     public final int getStartY() {
-        return startY;
+        return mStartY;
     }
 
     public final int getFinalY() {
-        return finalY;
+        return mFinalY;
     }
 
     public boolean computeScrollOffset() {
@@ -138,7 +138,7 @@ public class Scroller  {
         int mCurrX;
 
         if (timePassed < duration) {
-            switch (mode) {
+            switch (mMode) {
             case SCROLL_MODE:
                 float x = timePassed * durationReciprocal;
     
@@ -148,7 +148,7 @@ public class Scroller  {
                     x = interpolator.getInterpolation(x);
                 }
 
-                currY = startY + Math.round(x * deltaY);
+                currY = mStartY + Math.round(x * deltaY);
                 break;
             case FLING_MODE:
                 final float t = (float) timePassed / duration;
@@ -159,36 +159,36 @@ public class Scroller  {
                 final float d_sup = SPLINE[index + 1];
                 final float distanceCoef = d_inf + (t - t_inf) / (t_sup - t_inf) * (d_sup - d_inf);
 
-                mCurrX = startX + Math.round(distanceCoef * (finalX - startX));
+                mCurrX = mStartX + Math.round(distanceCoef * (mFinalX - mStartX));
                 mCurrX = Math.min(mCurrX, maxX);
                 mCurrX = Math.max(mCurrX, minX);
 
-                currY = startY + Math.round(distanceCoef * (finalY - startY));
+                currY = mStartY + Math.round(distanceCoef * (mFinalY - mStartY));
                 currY = Math.min(currY, maxY);
                 currY = Math.max(currY, minY);
 
-                if (mCurrX == finalX && currY == finalY) {
+                if (mCurrX == mFinalX && currY == mFinalY) {
                     finished = true;
                 }
 
                 break;
             }
         } else {
-            currY = finalY;
+            currY = mFinalY;
             finished = true;
         }
         return true;
     }
 
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-        mode = SCROLL_MODE;
+        mMode = SCROLL_MODE;
         finished = false;
         this.duration = duration;
         startTime = AnimationUtils.currentAnimationTimeMillis();
-        this.startX = startX;
-        this.startY = startY;
-        finalX = startX + dx;
-        finalY = startY + dy;
+        this.mStartX = startX;
+        this.mStartY = startY;
+        mFinalX = startX + dx;
+        mFinalY = startY + dy;
         deltaY = dy;
         durationReciprocal = 1.0f / (float) this.duration;
     }
@@ -197,8 +197,8 @@ public class Scroller  {
         if (flywheel && !finished) {
             float oldVel = getCurrVelocity();
 
-            float dx = (float) (finalX - this.startX);
-            float dy = (float) (finalY - this.startY);
+            float dx = (float) (mFinalX - this.mStartX);
+            float dy = (float) (mFinalY - this.mStartY);
             float hyp = (float) Math.sqrt(dx * dx + dy * dy);
 
             float ndx = dx / hyp;
@@ -213,7 +213,7 @@ public class Scroller  {
             }
         }
 
-        mode = FLING_MODE;
+        mMode = FLING_MODE;
         finished = false;
         float velocity = (float) Math.sqrt(velocityX * velocityX + velocityY * velocityY);
         this.velocity = velocity;
@@ -223,8 +223,8 @@ public class Scroller  {
         duration = (int) (1000.0 * Math.exp(l / (DECELERATION_RATE - 1.0)));
         startTime = AnimationUtils.currentAnimationTimeMillis();
 
-        this.startX = startX;
-        this.startY = startY;
+        this.mStartX = startX;
+        this.mStartY = startY;
 
         float coeffX = velocity == 0 ? 1.0f : velocityX / velocity;
         float coeffY = velocity == 0 ? 1.0f : velocityY / velocity;
@@ -236,12 +236,12 @@ public class Scroller  {
         this.minY = minY;
         this.maxY = maxY;
 
-        finalX = startX + Math.round(totalDistance * coeffX);
-        finalX = Math.min(finalX, this.maxX);
-        finalX = Math.max(finalX, this.minX);
-        finalY = startY + Math.round(totalDistance * coeffY);
-        finalY = Math.min(finalY, this.maxY);
-        finalY = Math.max(finalY, this.minY);
+        mFinalX = startX + Math.round(totalDistance * coeffX);
+        mFinalX = Math.min(mFinalX, this.maxX);
+        mFinalX = Math.max(mFinalX, this.minX);
+        mFinalY = startY + Math.round(totalDistance * coeffY);
+        mFinalY = Math.min(mFinalY, this.maxY);
+        mFinalY = Math.max(mFinalY, this.minY);
     }
     
     static float viscousFluid(float x) {

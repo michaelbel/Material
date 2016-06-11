@@ -1,6 +1,23 @@
+/*
+ * Copyright 2015 Michael Bel
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.app.material.widget;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.StringRes;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
@@ -10,21 +27,17 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import org.app.material.R;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.R;
 
 public class BottomPickerLayout extends FrameLayout {
 
     private TextView mNegativeButton;
     private TextView mPositiveButton;
-    private ViewPropertyAnimatorCompat mTranslationAnimator;
-
-    //private org.app.material.OnClickListener positiveButtonListener;
-    //private org.app.material.OnClickListener negativeButtonListener;
-
     private ClickListener positiveButtonListener;
     private ClickListener negativeButtonListener;
+    private ViewPropertyAnimatorCompat mTranslationAnimator;
 
     public interface ClickListener {
         void onClick(View v);
@@ -37,25 +50,31 @@ public class BottomPickerLayout extends FrameLayout {
         this.setElevation(AndroidUtilities.dp(context, 10));
 
         mNegativeButton = new TextView(context);
+        mNegativeButton.setClickable(true);
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mNegativeButton.setTypeface(AndroidUtilities.getTypeface(context, "medium.ttf"));
+        mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mNegativeButton.setTextColor(AndroidUtilities.getContextColor(context, R.attr.colorPrimary));
         mNegativeButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
         mNegativeButton.setPadding(AndroidUtilities.dp(context, 32), 0, AndroidUtilities.dp(context, 32), 0);
-        addView(mNegativeButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        addView(mNegativeButton);
 
         mPositiveButton = new TextView(context);
+        mPositiveButton.setClickable(true);
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mPositiveButton.setTypeface(AndroidUtilities.getTypeface(context, "medium.ttf"));
+        mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mPositiveButton.setTextColor(AndroidUtilities.getContextColor(context, R.attr.colorPrimary));
         mPositiveButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
         mPositiveButton.setPadding(AndroidUtilities.dp(context, 32), 0, AndroidUtilities.dp(context, 32), 0);
-        addView(mPositiveButton, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        addView(mPositiveButton);
     }
 
     public BottomPickerLayout setNegativeButton(@StringRes int resId, ClickListener listener) {
+        this.negativeButtonListener = listener;
+
         mNegativeButton.setText(getResources().getString(resId).toUpperCase());
         mNegativeButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -65,10 +84,13 @@ public class BottomPickerLayout extends FrameLayout {
                 }
             }
         });
+
         return this;
     }
 
     public BottomPickerLayout setPositiveButton(@StringRes int resId, ClickListener listener) {
+        this.positiveButtonListener = listener;
+
         mPositiveButton.setText(getResources().getString(resId).toUpperCase());
         mPositiveButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -78,6 +100,7 @@ public class BottomPickerLayout extends FrameLayout {
                 }
             }
         });
+
         return this;
     }
 
@@ -123,5 +146,10 @@ public class BottomPickerLayout extends FrameLayout {
         }
 
         mTranslationAnimator.translationY(offset).start();
+    }
+
+    @Override
+    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 48), MeasureSpec.EXACTLY));
     }
 }

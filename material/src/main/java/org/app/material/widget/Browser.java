@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import org.app.material.R;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.R;
 
 public class Browser {
 

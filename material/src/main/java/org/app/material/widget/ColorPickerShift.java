@@ -1,3 +1,5 @@
+// Add License
+
 package org.app.material.widget;
 
 import android.content.Context;
@@ -13,13 +15,12 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 import org.app.material.R;
 
 public class ColorPickerShift extends View {
 
+	public static final int VERTICAL = 1;
 	public static final int HORIZONTAL = 0;
-	//public static final int VERTICAL = 1;
 
 	int[] colors;
 
@@ -38,6 +39,9 @@ public class ColorPickerShift extends View {
 	private int mCellSize;
 	private int mOrientation = HORIZONTAL;
 	private OnColorChangedListener onColorChanged;
+	private boolean isClick = false;
+	private int screenW;
+	private int screenH;
 
 	public ColorPickerShift(Context context) {
 		super(context);
@@ -149,10 +153,6 @@ public class ColorPickerShift extends View {
 		}
 	}
 
-	private boolean isClick = false;
-	private int screenW;
-	private int screenH;
-
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int actionId = event.getAction();
@@ -241,10 +241,10 @@ public class ColorPickerShift extends View {
 	}
 
 	public static class SavedState extends BaseSavedState {
-		int selectedColor;
-		boolean isColorSelected;
+		private int selectedColor;
+		private boolean isColorSelected;
 
-		SavedState(Parcelable superState) {
+		private SavedState(Parcelable superState) {
 			super(superState);
 		}
 
