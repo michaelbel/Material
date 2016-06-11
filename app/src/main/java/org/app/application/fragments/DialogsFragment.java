@@ -69,6 +69,7 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
         ScrollView sView = new ScrollView(getActivity());
 
         LinearLayout layout = new LinearLayout(getActivity());
+        layout.setOrientation(LinearLayout.VERTICAL);
         layout.setBackgroundColor(0xFFF0F0F0);
 
         sView.addView(layout);
