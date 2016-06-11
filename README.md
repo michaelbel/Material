@@ -1,5 +1,5 @@
 # Material
-Material Design Library for your projects
+Material Design Library
 
 ## Requirements
 
