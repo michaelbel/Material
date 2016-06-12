@@ -25,9 +25,9 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.app.application.RadioButton;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.RadioButton;
 
 public class RadioCell extends FrameLayout {
 
