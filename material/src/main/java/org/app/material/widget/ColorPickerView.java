@@ -1,5 +1,3 @@
-// Add License
-
 package org.app.material.widget;
 
 import android.content.Context;

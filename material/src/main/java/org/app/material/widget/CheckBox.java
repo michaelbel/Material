@@ -31,49 +31,60 @@ import org.app.material.AndroidUtilities;
 
 public class CheckBox extends View {
 
-    private static Paint mEraser;
-    private static Paint mCheckPaint;
-    private static Paint mBackgroundPaint;
-    private static RectF mRectF;
-    private Bitmap mDrawBitmap;
-    private Canvas mDrawCanvas;
-    private ObjectAnimator mAnimator;
+    private static Paint eraser;
+    private static Paint checkPaint;
+    private static Paint backgroundPaint;
+    private static RectF rectF;
 
-    private float mProgress;
-    private boolean mAttachedToWindow;
+    private Bitmap drawBitmap;
+    private Canvas drawCanvas;
+
+    private float progress;
+    private ObjectAnimator checkAnimator;
+
+    private boolean attachedToWindow;
     private boolean isChecked;
     private boolean isDisabled;
 
     private int checkColor = 0xFFFFFFFF;
-    private int borderColor = 0xFFB0B0B0;
     private int colorAccent = 0xFFFF5252;
 
     public CheckBox(Context context) {
         super(context);
-
-        if (mCheckPaint == null) {
-            mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mCheckPaint.setColor(checkColor);
-            mCheckPaint.setStyle(Paint.Style.STROKE);
-            mCheckPaint.setStrokeWidth(AndroidUtilities.dp(context, 2));
-            mEraser = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mEraser.setColor(0);
-            mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mRectF = new RectF();
+        if (checkPaint == null) {
+            checkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            checkPaint.setColor(checkColor);
+            checkPaint.setStyle(Paint.Style.STROKE);
+            checkPaint.setStrokeWidth(AndroidUtilities.dp(context, 2));
+            eraser = new Paint(Paint.ANTI_ALIAS_FLAG);
+            eraser.setColor(0);
+            eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            rectF = new RectF();
         }
 
-        mDrawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(context, 18), AndroidUtilities.dp(context, 18), Bitmap.Config.ARGB_4444);
-        mDrawCanvas = new Canvas(mDrawBitmap);
+        drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(context, 18), AndroidUtilities.dp(context, 18), Bitmap.Config.ARGB_4444);
+        drawCanvas = new Canvas(drawBitmap);
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+        if (visibility == VISIBLE && drawBitmap == null) {
+
+        }
     }
 
     public void setProgress(float value) {
-        if (mProgress == value) {
+        if (progress == value) {
             return;
         }
-
-        mProgress = value;
+        progress = value;
         invalidate();
+    }
+
+    public float getProgress() {
+        return progress;
     }
 
     public void setColor(int value) {
@@ -81,27 +92,27 @@ public class CheckBox extends View {
     }
 
     private void cancelCheckAnimator() {
-        if (mAnimator != null) {
-            mAnimator.cancel();
+        if (checkAnimator != null) {
+            checkAnimator.cancel();
         }
     }
 
     private void animateToCheckedState(boolean newCheckedState) {
-        mAnimator = ObjectAnimator.ofFloat(this, "progress", newCheckedState ? 1 : 0);
-        mAnimator.setDuration(300);
-        mAnimator.start();
+        checkAnimator = ObjectAnimator.ofFloat(this, "progress", newCheckedState ? 1 : 0);
+        checkAnimator.setDuration(300);
+        checkAnimator.start();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mAttachedToWindow = true;
+        attachedToWindow = true;
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mAttachedToWindow = false;
+        attachedToWindow = false;
     }
 
     @Override
@@ -113,10 +124,8 @@ public class CheckBox extends View {
         if (checked == isChecked) {
             return;
         }
-
         isChecked = checked;
-
-        if (mAttachedToWindow && animated) {
+        if (attachedToWindow && animated) {
             animateToCheckedState(checked);
         } else {
             cancelCheckAnimator();
@@ -141,44 +150,41 @@ public class CheckBox extends View {
 
         float checkProgress;
         float bounceProgress;
-
-        if (mProgress <= 0.5f) {
-            bounceProgress = checkProgress = mProgress / 0.5f;
+        if (progress <= 0.5f) {
+            bounceProgress = checkProgress = progress / 0.5f;
             int rD = (int) ((Color.red(colorAccent) - 0x73) * checkProgress);
             int gD = (int) ((Color.green(colorAccent) - 0x73) * checkProgress);
             int bD = (int) ((Color.blue(colorAccent) - 0x73) * checkProgress);
             int c = Color.rgb(0x73 + rD, 0x73 + gD, 0x73 + bD);
-            mBackgroundPaint.setColor(c);
+            backgroundPaint.setColor(c);
         } else {
-            bounceProgress = 2.0f - mProgress / 0.5f;
+            bounceProgress = 2.0f - progress / 0.5f;
             checkProgress = 1.0f;
-            mBackgroundPaint.setColor(colorAccent);
+            backgroundPaint.setColor(colorAccent);
         }
-
         if (isDisabled) {
-            mBackgroundPaint.setColor(borderColor);
+            backgroundPaint.setColor(0xffb0b0b0);
         }
-
         float bounce = AndroidUtilities.dp(getContext(), 1) * bounceProgress;
-        mRectF.set(bounce, bounce, AndroidUtilities.dp(getContext(), 18) - bounce, AndroidUtilities.dp(getContext(), 18) - bounce);
-        mDrawBitmap.eraseColor(0);
-        mDrawCanvas.drawRoundRect(mRectF, AndroidUtilities.dp(getContext(), 2), AndroidUtilities.dp(getContext(), 2), mBackgroundPaint);
+        rectF.set(bounce, bounce, AndroidUtilities.dp(getContext(), 18) - bounce, AndroidUtilities.dp(getContext(), 18) - bounce);
+
+        drawBitmap.eraseColor(0);
+        drawCanvas.drawRoundRect(rectF, AndroidUtilities.dp(getContext(), 2), AndroidUtilities.dp(getContext(), 2), backgroundPaint);
 
         if (checkProgress != 1) {
             float rad = Math.min(AndroidUtilities.dp(getContext(), 7), AndroidUtilities.dp(getContext(), 7) * checkProgress + bounce);
-            mRectF.set(AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 16) - rad, AndroidUtilities.dp(getContext(), 16) - rad);
-            mDrawCanvas.drawRect(mRectF, mEraser);
+            rectF.set(AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 16) - rad, AndroidUtilities.dp(getContext(), 16) - rad);
+            drawCanvas.drawRect(rectF, eraser);
         }
 
-        if (mProgress > 0.5f) {
+        if (progress > 0.5f) {
             int endX = (int) (AndroidUtilities.dp(getContext(), 7.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
             int endY = (int) (AndroidUtilities.dpf2(getContext(), 13.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
-            mDrawCanvas.drawLine(AndroidUtilities.dp(getContext(), 7.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, mCheckPaint);
+            drawCanvas.drawLine(AndroidUtilities.dp(getContext(), 7.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, checkPaint);
             endX = (int) (AndroidUtilities.dpf2(getContext(), 6.5f) + AndroidUtilities.dp(getContext(), 9) * (1.0f - bounceProgress));
             endY = (int) (AndroidUtilities.dpf2(getContext(), 13.5f) - AndroidUtilities.dp(getContext(), 9) * (1.0f - bounceProgress));
-            mDrawCanvas.drawLine((int) AndroidUtilities.dpf2(getContext(), 6.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, mCheckPaint);
+            drawCanvas.drawLine((int) AndroidUtilities.dpf2(getContext(), 6.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, checkPaint);
         }
-
-        canvas.drawBitmap(mDrawBitmap, 0, 0, null);
+        canvas.drawBitmap(drawBitmap, 0, 0, null);
     }
 }
