@@ -51,4 +51,8 @@ public class Browser {
             context.startActivity(intent);
         } catch (Exception ignored) {}
     }
+
+    public static void openBrowserUrl(Context context, String url) {
+        context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }
 }
