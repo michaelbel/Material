@@ -33,7 +33,9 @@ import org.app.application.fragments.RecyclerFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.Drawer.Drawer;
 import org.app.material.Drawer.DrawerBuilder;
+import org.app.material.Drawer.model.DividerDrawerItem;
 import org.app.material.Drawer.model.PrimaryDrawerItem;
+import org.app.material.Drawer.model.SectionDrawerItem;
 import org.app.material.Drawer.model.interfaces.IDrawerItem;
 import org.app.material.widget.Browser;
 import org.app.material.widget.FragmentsPagerAdapter;
@@ -82,6 +84,7 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragment(new CardFragment(), R.string.CardView);
         adapter.addFragment(new FabFragment(), R.string.Fabs);
         adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragment(new Recycler(), "Recycler Test");
 
         if (viewPager != null) {
             viewPager.setAdapter(adapter);
@@ -97,7 +100,10 @@ public class LaunchActivity extends FragmentActivity {
                 .setHasStableIds(true)
                 .setSavedInstance(savedInstanceState)
                 .setHeader(new DrawerHeaderCell(this))
+                .setShowDrawerOnFirstLaunch(false)
                 .addDrawerItems(
+                        new SectionDrawerItem()
+                                .withName("Tabs"),
                         new PrimaryDrawerItem()
                                 .setName(R.string.Dialogs)
                                 .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
@@ -162,7 +168,8 @@ public class LaunchActivity extends FragmentActivity {
                                         }
                                         return false;
                                     }
-                                })
+                                }),
+                        new DividerDrawerItem()
                 )
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
