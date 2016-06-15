@@ -18,6 +18,8 @@ package org.app.material.widget;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,8 +32,23 @@ public class LayoutHelper {
     public static final int MATCH_PARENT = -1;
     public static final int WRAP_CONTENT = -2;
 
+    /**
+     * @param context current activity
+     * @param size size in pixels
+     * @return size in dp
+     */
     private static int getSize(Context context, float size) {
         return (int) (size < 0 ? size : AndroidUtilities.dp(context, size));
+    }
+
+    /**
+     * @param context current activity
+     * @param width width of ViewGroup
+     * @param height height of ViewGroup
+     * @return a new ViewGroup with params
+     */
+    public static ViewGroup.LayoutParams makeView(Context context, int width, int height) {
+        return new ViewGroup.LayoutParams(getSize(context, width), getSize(context, height));
     }
 
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height) {
@@ -179,6 +196,11 @@ public class LayoutHelper {
         CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         layoutParams.gravity = gravity;
         layoutParams.setMargins(AndroidUtilities.dp(context, leftMargin), AndroidUtilities.dp(context, topMargin), AndroidUtilities.dp(context, rightMargin), AndroidUtilities.dp(context, bottomMargin));
+        return layoutParams;
+    }
+
+    public static SwipeRefreshLayout.LayoutParams makeSwipeRefresh(Context context, int width, int height) {
+        SwipeRefreshLayout.LayoutParams layoutParams = new SwipeRefreshLayout.LayoutParams(getSize(context, width), getSize(context, height));
         return layoutParams;
     }
 }
