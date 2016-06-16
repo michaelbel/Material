@@ -40,6 +40,8 @@ public class CheckBoxCell extends FrameLayout {
     public CheckBoxCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         if (paint == null) {
             paint = new Paint();
             paint.setColor(0xffd9d9d9);
@@ -52,7 +54,7 @@ public class CheckBoxCell extends FrameLayout {
         mTextView.setTextColor(0xFF000000);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mTextView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mTextView);
 
