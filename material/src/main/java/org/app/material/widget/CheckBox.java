@@ -51,11 +51,14 @@ public class CheckBox extends View {
 
     public CheckBox(Context context) {
         super(context);
+
+        AndroidUtilities.bind(context);
+
         if (checkPaint == null) {
             checkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             checkPaint.setColor(checkColor);
             checkPaint.setStyle(Paint.Style.STROKE);
-            checkPaint.setStrokeWidth(AndroidUtilities.dp(context, 2));
+            checkPaint.setStrokeWidth(AndroidUtilities.dp(2));
             eraser = new Paint(Paint.ANTI_ALIAS_FLAG);
             eraser.setColor(0);
             eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -63,7 +66,7 @@ public class CheckBox extends View {
             rectF = new RectF();
         }
 
-        drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(context, 18), AndroidUtilities.dp(context, 18), Bitmap.Config.ARGB_4444);
+        drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(18), AndroidUtilities.dp(18), Bitmap.Config.ARGB_4444);
         drawCanvas = new Canvas(drawBitmap);
     }
 
@@ -165,25 +168,25 @@ public class CheckBox extends View {
         if (isDisabled) {
             backgroundPaint.setColor(0xffb0b0b0);
         }
-        float bounce = AndroidUtilities.dp(getContext(), 1) * bounceProgress;
-        rectF.set(bounce, bounce, AndroidUtilities.dp(getContext(), 18) - bounce, AndroidUtilities.dp(getContext(), 18) - bounce);
+        float bounce = AndroidUtilities.dp(1) * bounceProgress;
+        rectF.set(bounce, bounce, AndroidUtilities.dp(18) - bounce, AndroidUtilities.dp(18) - bounce);
 
         drawBitmap.eraseColor(0);
-        drawCanvas.drawRoundRect(rectF, AndroidUtilities.dp(getContext(), 2), AndroidUtilities.dp(getContext(), 2), backgroundPaint);
+        drawCanvas.drawRoundRect(rectF, AndroidUtilities.dp(2), AndroidUtilities.dp(2), backgroundPaint);
 
         if (checkProgress != 1) {
-            float rad = Math.min(AndroidUtilities.dp(getContext(), 7), AndroidUtilities.dp(getContext(), 7) * checkProgress + bounce);
-            rectF.set(AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 2) + rad, AndroidUtilities.dp(getContext(), 16) - rad, AndroidUtilities.dp(getContext(), 16) - rad);
+            float rad = Math.min(AndroidUtilities.dp(7), AndroidUtilities.dp(7) * checkProgress + bounce);
+            rectF.set(AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(16) - rad, AndroidUtilities.dp(16) - rad);
             drawCanvas.drawRect(rectF, eraser);
         }
 
         if (progress > 0.5f) {
-            int endX = (int) (AndroidUtilities.dp(getContext(), 7.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
-            int endY = (int) (AndroidUtilities.dpf2(getContext(), 13.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
-            drawCanvas.drawLine(AndroidUtilities.dp(getContext(), 7.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, checkPaint);
-            endX = (int) (AndroidUtilities.dpf2(getContext(), 6.5f) + AndroidUtilities.dp(getContext(), 9) * (1.0f - bounceProgress));
-            endY = (int) (AndroidUtilities.dpf2(getContext(), 13.5f) - AndroidUtilities.dp(getContext(), 9) * (1.0f - bounceProgress));
-            drawCanvas.drawLine((int) AndroidUtilities.dpf2(getContext(), 6.5f), (int) AndroidUtilities.dpf2(getContext(), 13.5f), endX, endY, checkPaint);
+            int endX = (int) (AndroidUtilities.dp(7.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
+            int endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
+            drawCanvas.drawLine(AndroidUtilities.dp(7.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, checkPaint);
+            endX = (int) (AndroidUtilities.dpf2(6.5f) + AndroidUtilities.dp(9) * (1.0f - bounceProgress));
+            endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(9) * (1.0f - bounceProgress));
+            drawCanvas.drawLine((int) AndroidUtilities.dpf2(6.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, checkPaint);
         }
         canvas.drawBitmap(drawBitmap, 0, 0, null);
     }
