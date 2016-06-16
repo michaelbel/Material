@@ -46,17 +46,19 @@ public class BottomPickerLayout extends FrameLayout {
     public BottomPickerLayout(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setBackgroundColor(0xFFFFFFFF);
-        this.setElevation(AndroidUtilities.dp(context, 10));
+        this.setElevation(AndroidUtilities.dp(10));
 
         mNegativeButton = new TextView(context);
         mNegativeButton.setClickable(true);
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mNegativeButton.setTextColor(AndroidUtilities.getContextColor(context, R.attr.colorPrimary));
-        mNegativeButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
-        mNegativeButton.setPadding(AndroidUtilities.dp(context, 32), 0, AndroidUtilities.dp(context, 32), 0);
+        mNegativeButton.setTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mNegativeButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        mNegativeButton.setPadding(AndroidUtilities.dp(32), 0, AndroidUtilities.dp(32), 0);
         mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mNegativeButton);
 
@@ -65,9 +67,9 @@ public class BottomPickerLayout extends FrameLayout {
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mPositiveButton.setTextColor(AndroidUtilities.getContextColor(context, R.attr.colorPrimary));
-        mPositiveButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
-        mPositiveButton.setPadding(AndroidUtilities.dp(context, 32), 0, AndroidUtilities.dp(context, 32), 0);
+        mPositiveButton.setTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mPositiveButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        mPositiveButton.setPadding(AndroidUtilities.dp(32), 0, AndroidUtilities.dp(32), 0);
         mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
         addView(mPositiveButton);
     }
@@ -150,6 +152,6 @@ public class BottomPickerLayout extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 48), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(48), MeasureSpec.EXACTLY));
     }
 }
