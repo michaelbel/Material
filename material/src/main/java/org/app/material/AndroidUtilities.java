@@ -19,6 +19,7 @@ package org.app.material;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -51,6 +52,8 @@ public class AndroidUtilities {
      *
      */
     private static volatile Handler applicationHandler;
+
+    public static Point displaySize = new Point();
 
     public static void bind(@NonNull Context context) {
         AndroidUtilities.context = context;
