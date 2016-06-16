@@ -53,14 +53,16 @@ public class CardCell extends CardView {
     public CardCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setCardBackgroundColor(0xFFFFFFFF);
-        this.setRadius(AndroidUtilities.dp(context, 4F));
-        this.setCardElevation(AndroidUtilities.dp(context, 2));
+        this.setRadius(AndroidUtilities.dp(4F));
+        this.setCardElevation(AndroidUtilities.dp(2));
         this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 6, 6, 0));
 
         layout = new FrameLayout(context);
         layout.setClickable(true);
-        layout.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
+        layout.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +82,7 @@ public class CardCell extends CardView {
         mTextView1 = new TextView(context);
         mTextView1.setTextColor(0xFF000000);
         mTextView1.setGravity(Gravity.START | Gravity.TOP);
-        mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
+        mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 16, 21, 0));
         layout.addView(mTextView1);
@@ -111,8 +113,8 @@ public class CardCell extends CardView {
                 }
             }
         });
-        mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(context));
-        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(context, R.drawable.ic_dots_menu, 0xFF757575));
+        mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
         mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
         layout.addView(mOptionButton);
     }
@@ -147,6 +149,6 @@ public class CardCell extends CardView {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 116), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(116), MeasureSpec.EXACTLY));
     }
 }
