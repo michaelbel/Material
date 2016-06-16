@@ -39,6 +39,8 @@ public class DoubleCell extends FrameLayout {
     public DoubleCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {
@@ -86,6 +88,6 @@ public class DoubleCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 60 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(60 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 }
