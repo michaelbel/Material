@@ -36,6 +36,7 @@ import java.util.List;
 public class CardFragment extends Fragment {
 
     public class CardItem {
+
         private int mImage;
         private String mText1;
         private String mText2;
@@ -55,8 +56,8 @@ public class CardFragment extends Fragment {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ArrayList<Object> items = new ArrayList<>();
-        items.add(new CardItem(R.mipmap.space1, "Card main text 0", "Card middle text 0", "Card small text 0"));
-        items.add(new CardItem(R.mipmap.space2, "Card main text 1", "Card middle text 1", "Card small text 1"));
+        items.add(new CardItem(R.mipmap.space3, "Card main text 0", "Card middle text 0", "Card small text 0"));
+        items.add(new CardItem(R.mipmap.space3, "Card main text 1", "Card middle text 1", "Card small text 1"));
         items.add(new CardItem(R.mipmap.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
         items.add(new CardItem(R.mipmap.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
         items.add(new CardItem(R.mipmap.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
