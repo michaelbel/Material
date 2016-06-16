@@ -35,10 +35,12 @@ public class ColorPickerAccentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AndroidUtilities.bind(getActivity());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         RelativeLayout layout = new RelativeLayout(getActivity());
-        layout.setPadding(AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24));
+        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
 
         final ColorPickerShift picker = new ColorPickerShift(getActivity());
         picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(), LayoutHelper.MATCH_PARENT, 60));
