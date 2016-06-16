@@ -36,6 +36,8 @@ public class ColorPickerHoloDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AndroidUtilities.bind(getActivity());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -43,7 +45,7 @@ public class ColorPickerHoloDialog extends DialogFragment {
         final ColorPickerHolo picker = new ColorPickerHolo(getActivity());
         picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         layout.addView(picker);
-        picker.setOldCenterColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+        picker.setOldCenterColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
 
         builder.setView(layout);
         builder.setTitle(R.string.ColorPickerHolo);
