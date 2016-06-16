@@ -19,31 +19,44 @@ package org.app.material;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Handler;
-import android.util.DisplayMetrics;
+import android.support.annotation.NonNull;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Hashtable;
 
 public class AndroidUtilities {
 
-    public static float density = 1;
-    public static Point displaySize = new Point();
-    public static boolean usingHardwareInput;
-    public static volatile Handler applicationHandler;
-    public static DisplayMetrics displayMetrics = new DisplayMetrics();
+    /**
+     * Binder context.
+     */
+    private static Context context;
+
+    /**
+     *
+     */
+    private static float density = 1;
+
+    /**
+     *
+     */
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
 
-    public static int dp (Context context, float value) {
+    /**
+     *
+     */
+    private static volatile Handler applicationHandler;
+
+    public static void bind(@NonNull Context context) {
+        AndroidUtilities.context = context;
+    }
+
+    public static int dp (float value) {
         if (value == 0) {
             return 0;
         }
@@ -51,23 +64,49 @@ public class AndroidUtilities {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
-    public static float dpf2(Context context, float value) {
+    public static int dp (@NonNull Context context, float value) {
         if (value == 0) {
             return 0;
         }
+
+        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
+    }
+
+    public static float dpf2(float value) {
+        if (value == 0) {
+            return 0;
+        }
+
         return context.getResources().getDisplayMetrics().density * value;
     }
 
-    public static float getDensity(Context context) {
+    public static float dpf2(@NonNull Context context, float value) {
+        if (value == 0) {
+            return 0;
+        }
+
+        return context.getResources().getDisplayMetrics().density * value;
+    }
+
+    public static float getDensity() {
         density = context.getResources().getDisplayMetrics().density;
         return density;
     }
 
-    public static void runOnUIThread(Context context, Runnable runnable) {
+    public static float getDensity(@NonNull Context context) {
+        density = context.getResources().getDisplayMetrics().density;
+        return density;
+    }
+
+    public static void runOnUIThread(Runnable runnable) {
         runOnUIThread(context, runnable, 0);
     }
 
-    public static void runOnUIThread(Context context, Runnable runnable, long delay) {
+    public static void runOnUIThread(@NonNull Context context, Runnable runnable) {
+        runOnUIThread(context, runnable, 0);
+    }
+
+    public static void runOnUIThread(Runnable runnable, long delay) {
         if (delay == 0) {
             applicationHandler = new Handler(context.getMainLooper());
             applicationHandler.post(runnable);
@@ -76,41 +115,42 @@ public class AndroidUtilities {
         }
     }
 
-    public static void cancelRunOnUIThread(Context context, Runnable runnable) {
-        applicationHandler = new Handler(context.getMainLooper()); // ???
+    public static void runOnUIThread(@NonNull Context context, Runnable runnable, long delay) {
+        if (delay == 0) {
+            applicationHandler = new Handler(context.getMainLooper());
+            applicationHandler.post(runnable);
+        } else {
+            applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Runnable runnable) {
+        applicationHandler = new Handler(context.getMainLooper());
         applicationHandler.removeCallbacks(runnable);
     }
 
-    public static void checkDisplaySize(Context context) {
-        checkDisplaySize(context);
-
-        try {
-            Configuration configuration = context.getResources().getConfiguration();
-            usingHardwareInput = configuration.keyboard != Configuration.KEYBOARD_NOKEYS && configuration.hardKeyboardHidden == Configuration.HARDKEYBOARDHIDDEN_NO;
-            WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            if (manager != null) {
-                Display display = manager.getDefaultDisplay();
-                if (display != null) {
-                    display.getMetrics(displayMetrics);
-                    if (Build.VERSION.SDK_INT < 13) {
-                        displaySize.set(display.getWidth(), display.getHeight());
-                    } else {
-                        display.getSize(displaySize);
-                    }
-                }
-            }
-        } catch (Exception ignored) {}
+    public static void cancelRunOnUIThread(@NonNull Context context, Runnable runnable) {
+        applicationHandler = new Handler(context.getMainLooper());
+        applicationHandler.removeCallbacks(runnable);
     }
 
-    public static boolean isPortrait(Context context) {
+    public static boolean isPortrait() {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
-    public static boolean isLandscape(Context context) {
+    public static boolean isPortrait(@NonNull Context context) {
+        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    public static boolean isLandscape() {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    public static Drawable getIcon(Context context, int resource, int colorFilter) {
+    public static boolean isLandscape(@NonNull Context context) {
+        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static Drawable getIcon(int resource, int colorFilter) {
         Drawable iconDrawable = context.getResources().getDrawable(resource, null);
 
         if (iconDrawable != null) {
@@ -120,7 +160,17 @@ public class AndroidUtilities {
         return iconDrawable;
     }
 
-    public static Typeface getTypeface(Context context, String assetPath) {
+    public static Drawable getIcon(@NonNull Context context, int resource, int colorFilter) {
+        Drawable iconDrawable = context.getResources().getDrawable(resource, null);
+
+        if (iconDrawable != null) {
+            iconDrawable.mutate().setColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY);
+        }
+
+        return iconDrawable;
+    }
+
+    public static Typeface getTypeface(String assetPath) {
         synchronized (typefaceCache) {
             if (!typefaceCache.containsKey(assetPath)) {
                 try {
@@ -135,7 +185,22 @@ public class AndroidUtilities {
         }
     }
 
-    public static int getContextColor(Context context, int androidAttr) {
+    public static Typeface getTypeface(@NonNull Context context, String assetPath) {
+        synchronized (typefaceCache) {
+            if (!typefaceCache.containsKey(assetPath)) {
+                try {
+                    Typeface t = Typeface.createFromAsset(context.getAssets(), assetPath);
+                    typefaceCache.put(assetPath, t);
+                } catch (Exception e) {
+                    return null;
+                }
+            }
+
+            return typefaceCache.get(assetPath);
+        }
+    }
+
+    public static int getContextColor(int androidAttr) {
         TypedValue typedValue = new TypedValue();
         TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{androidAttr});
         int color = a.getColor(0, 0);
@@ -143,7 +208,15 @@ public class AndroidUtilities {
         return color;
     }
 
-    public static int selectableItemBackground(Context context) {
+    public static int getContextColor(@NonNull Context context, int androidAttr) {
+        TypedValue typedValue = new TypedValue();
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{androidAttr});
+        int color = a.getColor(0, 0);
+        a.recycle();
+        return color;
+    }
+
+    public static int selectableItemBackground() {
         int[] attrs = new int[]{org.app.material.R.attr.selectableItemBackground};
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
@@ -152,7 +225,16 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
-    public static int selectableItemBackgroundBorderless(Context context) {
+    public static int selectableItemBackground(@NonNull Context context) {
+        int[] attrs = new int[]{org.app.material.R.attr.selectableItemBackground};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static int selectableItemBackgroundBorderless() {
         int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
@@ -161,11 +243,35 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
-    public static Drawable customSelector(Context context) {
+    public static int selectableItemBackgroundBorderless(@NonNull Context context) {
+        int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static Drawable customSelector() {
         return context.getDrawable(R.drawable.list_selector);
     }
 
-    public static int getStatusBarHeight(Context context) {
+    public static Drawable customSelector(@NonNull Context context) {
+        return context.getDrawable(R.drawable.list_selector);
+    }
+
+    public static int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return result ;
+    }
+
+    public static int getStatusBarHeight(@NonNull Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
 
