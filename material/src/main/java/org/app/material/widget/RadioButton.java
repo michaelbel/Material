@@ -46,14 +46,18 @@ public class RadioButton extends View {
 
     private boolean attachedToWindow;
     private boolean isChecked;
-    private int size = AndroidUtilities.dp(getContext(), 22);
+    private int size;
 
     public RadioButton(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
+        size = AndroidUtilities.dp(22);
+
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            paint.setStrokeWidth(AndroidUtilities.dp(context, 2));
+            paint.setStrokeWidth(AndroidUtilities.dp(2));
             paint.setStyle(Paint.Style.STROKE);
             checkedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             eraser = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -62,7 +66,7 @@ public class RadioButton extends View {
         }
 
         try {
-            bitmap = Bitmap.createBitmap(AndroidUtilities.dp(context, size), AndroidUtilities.dp(context, size), Bitmap.Config.ARGB_4444);
+            bitmap = Bitmap.createBitmap(AndroidUtilities.dp(size), AndroidUtilities.dp(size), Bitmap.Config.ARGB_4444);
 
             if (ImageLoader.getInstance().runtimeHack != null) {
                 ImageLoader.getInstance().runtimeHack.trackFree(bitmap.getRowBytes() * bitmap.getHeight());
@@ -189,14 +193,14 @@ public class RadioButton extends View {
 
         if (bitmap != null) {
             bitmap.eraseColor(0);
-            float rad = size / 2 - (1 + circleProgress) * AndroidUtilities.getDensity(getContext());
+            float rad = size / 2 - (1 + circleProgress) * AndroidUtilities.getDensity();
             bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad, paint);
 
             if (progress <= 0.5f) {
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - AndroidUtilities.dp(getContext(), 1)), checkedPaint);
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - AndroidUtilities.dp(getContext(), 1)) * (1.0f - circleProgress), eraser);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - AndroidUtilities.dp(1)), checkedPaint);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - AndroidUtilities.dp(1)) * (1.0f - circleProgress), eraser);
             } else {
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, size / 4 + (rad - AndroidUtilities.dp(getContext(), 1) - size / 4) * circleProgress, checkedPaint);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, size / 4 + (rad - AndroidUtilities.dp(1) - size / 4) * circleProgress, checkedPaint);
             }
 
             canvas.drawBitmap(bitmap, 0, 0, null);

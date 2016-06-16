@@ -40,6 +40,8 @@ public class RadioCell extends FrameLayout {
     public RadioCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {
@@ -52,7 +54,7 @@ public class RadioCell extends FrameLayout {
         mTextView.setTextColor(0xFF000000);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mTextView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mTextView);
 
@@ -78,7 +80,7 @@ public class RadioCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 
     @Override

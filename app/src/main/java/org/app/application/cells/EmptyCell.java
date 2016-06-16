@@ -34,13 +34,15 @@ public class EmptyCell extends FrameLayout {
     public EmptyCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         mHeadText = new TextView(context);
         mHeadText.setGravity(Gravity.START);
         mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mHeadText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mHeadText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
-        mHeadText.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        mHeadText.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         addView(mHeadText);
     }
 
@@ -64,6 +66,6 @@ public class EmptyCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 44), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(44), MeasureSpec.EXACTLY));
     }
 }

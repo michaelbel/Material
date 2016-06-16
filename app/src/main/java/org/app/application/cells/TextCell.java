@@ -39,6 +39,8 @@ public class TextCell extends FrameLayout {
     public TextCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {
@@ -51,7 +53,7 @@ public class TextCell extends FrameLayout {
         mTextView.setTextColor(0xFF000000);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mTextView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mTextView);
 
@@ -59,7 +61,7 @@ public class TextCell extends FrameLayout {
         mValueView.setTextColor(0xFF757575);
         mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mValueView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mValueView.setPadding(AndroidUtilities.dp(context, 16), 0, AndroidUtilities.dp(context, 16), 0);
+        mValueView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
         mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
         addView(mValueView);
     }
@@ -93,6 +95,6 @@ public class TextCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 }

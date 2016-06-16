@@ -28,16 +28,18 @@ public class DrawerHeaderCell extends FrameLayout {
     public DrawerHeaderCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.setBackgroundResource(R.mipmap.header);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (Build.VERSION.SDK_INT >= 21) {
-            super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 148) + AndroidUtilities.getStatusBarHeight(getContext()), MeasureSpec.EXACTLY));
+            super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(148) + AndroidUtilities.getStatusBarHeight(getContext()), MeasureSpec.EXACTLY));
         } else {
             try {
-                super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 148), MeasureSpec.EXACTLY));
+                super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(148), MeasureSpec.EXACTLY));
             } catch (Exception ignored) {}
         }
     }

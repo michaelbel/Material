@@ -100,7 +100,9 @@ public class Switch extends CompoundButton {
     public Switch(Context context) {
         super(context);
 
-        NONE = new Insets(AndroidUtilities.dp(context, 4), 0, AndroidUtilities.dp(context, 4), 0);
+        AndroidUtilities.bind(context);
+
+        NONE = new Insets(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(4), 0);
 
         mThumbDrawable = context.getResources().getDrawable(R.drawable.switch_thumb, null);
 
@@ -114,8 +116,8 @@ public class Switch extends CompoundButton {
             mTrackDrawable.setCallback(this);
         }
 
-        if (AndroidUtilities.getDensity(getContext()) < 1) {
-            mSwitchMinWidth = AndroidUtilities.dp(context, 30);
+        if (AndroidUtilities.getDensity() < 1) {
+            mSwitchMinWidth = AndroidUtilities.dp(30);
         } else {
             mSwitchMinWidth = 0;
         }
@@ -562,7 +564,7 @@ public class Switch extends CompoundButton {
 
             final int thumbLeft = thumbInitialLeft - padding.left;
             final int thumbRight = thumbInitialLeft + mThumbWidth + padding.right;
-            int offset = (AndroidUtilities.getDensity(getContext()) == 1.5f ? AndroidUtilities.dp(getContext(), 1) : 0);
+            int offset = (AndroidUtilities.getDensity() == 1.5f ? AndroidUtilities.dp(1) : 0);
             mThumbDrawable.setBounds(thumbLeft, switchTop + offset, thumbRight, switchBottom + offset);
 
             final Drawable background = getBackground();
