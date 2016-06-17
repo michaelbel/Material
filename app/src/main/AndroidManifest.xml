@@ -19,8 +19,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AES.Encrypt"/>
-
     </application>
 
 </manifest>
