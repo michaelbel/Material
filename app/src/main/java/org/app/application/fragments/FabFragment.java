@@ -17,7 +17,6 @@
 package org.app.application.fragments;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -29,7 +28,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import org.app.application.AES.Encrypt;
 import org.app.application.R;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.MediaControlDrawable;
@@ -87,7 +85,6 @@ public class FabFragment extends Fragment implements View.OnClickListener {
 
             isFabPlusState = !isFabPlusState;
         } else if (view == mFabEdit) {
-            startActivity(new Intent(getActivity(), Encrypt.class));
         } else if (view == mFabMedia) {
             mMediaControl.setMediaControlState(getNextState(mMediaControl.getMediaControlState()));
         }
