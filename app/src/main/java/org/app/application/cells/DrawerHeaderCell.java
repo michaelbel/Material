@@ -30,7 +30,7 @@ public class DrawerHeaderCell extends FrameLayout {
 
         AndroidUtilities.bind(context);
 
-        this.setBackgroundResource(R.mipmap.header);
+        this.setBackgroundResource(R.drawable.header);
     }
 
     @Override
