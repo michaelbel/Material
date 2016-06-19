@@ -20,10 +20,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
-import org.app.application.cells.DrawerHeaderCell;
 import org.app.application.fragments.BottomsFragment;
 import org.app.application.fragments.CardFragment;
 import org.app.application.fragments.DialogsFragment;
@@ -31,51 +30,62 @@ import org.app.application.fragments.FabFragment;
 import org.app.application.fragments.ListViewFragment;
 import org.app.application.fragments.RecyclerFragment;
 import org.app.material.AndroidUtilities;
-import org.app.material.Drawer.Drawer;
-import org.app.material.Drawer.DrawerBuilder;
-import org.app.material.Drawer.model.DividerDrawerItem;
-import org.app.material.Drawer.model.PrimaryDrawerItem;
-import org.app.material.Drawer.model.SectionDrawerItem;
-import org.app.material.Drawer.model.interfaces.IDrawerItem;
+import org.app.material.widget.ActionBar;
+import org.app.material.widget.ActionBarMenu;
+import org.app.material.widget.ActionBarMenuItem;
 import org.app.material.widget.Browser;
 import org.app.material.widget.FragmentsPagerAdapter;
-import org.app.material.widget.OnClickListener;
-import org.app.material.widget.Toolbar;
 
 public class LaunchActivity extends FragmentActivity {
 
-    private Drawer drawer;
-    private TabLayout tabLayout;
     private TabLayout.Tab tab;
+    private TabLayout tabLayout;
+    private ActionBar actionBar;
+
+    private static final int github = 1;
+    private static final int settings = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        FrameLayout toolbarLayout = (FrameLayout) findViewById(R.id.frameLayout);
+        AndroidUtilities.bind(this);
 
-        Toolbar toolbar = new Toolbar(this)
+        FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
+        layout.setBackgroundColor(0xFFF0F0F0);
+
+        actionBar = new ActionBar(this)
+                .setBackGroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
+                .setBackButtonImage(R.drawable.ic_menu)
                 .setTitle(R.string.MaterialDemo)
-                .setNavIcon(R.drawable.ic_menu)
-                .setNavIconClickListener(new OnClickListener() {
+                .setOccupyStatusBar(false)
+                .setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
                     @Override
-                    public void onClick() {
-                        drawer.openDrawer();
+                    public void onItemClick(int id) {
+                        if (id == -1) {
+                            Toast.makeText(LaunchActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
+                        } else if (id == github) {
+                            Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
+                        } else if (id == settings) {
+                            Toast.makeText(LaunchActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                })
-                .addIcons(
-                        new Toolbar.ToolbarIcon(this).setToolbarIcon(R.drawable.ic_dots_menu)
-                                .setOnClick(new OnClickListener() {
-                                    @Override
-                                    public void onClick() {
-                                        Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
-                                    }
-                                })
-                );
-        toolbarLayout.addView(toolbar);
+                });
+
+        ActionBarMenu menu = actionBar.createMenu();
+        menu.addItem(github, R.drawable.ic_github);
+
+        ActionBarMenuItem item = menu.addItem(0, R.drawable.ic_dots_menu);
+        item.addSubItem(settings, R.string.Settings, 0);
+
+        layout.addView(actionBar);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        FrameLayout.LayoutParams viewPagerParams = (FrameLayout.LayoutParams) viewPager.getLayoutParams();
+        viewPagerParams.setMargins(0, AndroidUtilities.isLandscape() ? AndroidUtilities.dp(96) : AndroidUtilities.dp(104), 0, 0);
+        viewPager.setLayoutParams(viewPagerParams);
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
         adapter.addFragment(new DialogsFragment(), R.string.Dialogs);
@@ -84,11 +94,8 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragment(new CardFragment(), R.string.CardView);
         adapter.addFragment(new FabFragment(), R.string.Fabs);
         adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
-        adapter.addFragment(new Recycler(), "Recycler Test");
 
-        if (viewPager != null) {
-            viewPager.setAdapter(adapter);
-        }
+        viewPager.setAdapter(adapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -96,94 +103,13 @@ public class LaunchActivity extends FragmentActivity {
         tabLayout.setBackgroundColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
 
-        drawer = new DrawerBuilder(this)
-                .setHasStableIds(true)
-                .setSavedInstance(savedInstanceState)
-                .setHeader(new DrawerHeaderCell(this))
-                .setShowDrawerOnFirstLaunch(false)
-                .addDrawerItems(
-                        new SectionDrawerItem()
-                                .withName("Tabs"),
-                        new PrimaryDrawerItem()
-                                .setName(R.string.Dialogs)
-                                .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
-                                .setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        tab = tabLayout.getTabAt(0);
-                                        if (tab != null) {
-                                            tab.select();
-                                        }
-                                        return false;
-                                    }
-                                }),
-                        new PrimaryDrawerItem()
-                                .setName(R.string.Bottoms)
-                                .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
-                                .setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        tab = tabLayout.getTabAt(1);
-                                        if (tab != null) {
-                                            tab.select();
-                                        }
-                                        return false;
-                                    }
-                                }),
-                        new PrimaryDrawerItem()
-                                .setName(R.string.ListView)
-                                .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
-                                .setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        tab = tabLayout.getTabAt(2);
-                                        if (tab != null) {
-                                            tab.select();
-                                        }
-                                        return false;
-                                    }
-                                }),
-                        new PrimaryDrawerItem()
-                                .setName(R.string.CardView)
-                                .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
-                                .setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        tab = tabLayout.getTabAt(3);
-                                        if (tab != null) {
-                                            tab.select();
-                                        }
-                                        return false;
-                                    }
-                                }),
-                        new PrimaryDrawerItem()
-                                .setName(R.string.Fabs)
-                                .setIcon(AndroidUtilities.getIcon(this, R.drawable.ic_edit, 0xFF616161))
-                                .setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                                    @Override
-                                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                                        tab = tabLayout.getTabAt(4);
-                                        if (tab != null) {
-                                            tab.select();
-                                        }
-                                        return false;
-                                    }
-                                }),
-                        new DividerDrawerItem()
-                )
-                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                    }
+        FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();
+        tabLayoutParams.setMargins(0, ActionBar.getCurrentActionBarHeight(), 0, 0);
+        tabLayout.setLayoutParams(tabLayoutParams);
+    }
 
-                    @Override
-                    public void onDrawerClosed(View drawerView) {
-                    }
-
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
-                    }
-                })
-                .build();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
