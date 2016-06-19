@@ -56,18 +56,18 @@ public class CardFragment extends Fragment {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ArrayList<Object> items = new ArrayList<>();
-        items.add(new CardItem(R.mipmap.space3, "Card main text 0", "Card middle text 0", "Card small text 0"));
-        items.add(new CardItem(R.mipmap.space3, "Card main text 1", "Card middle text 1", "Card small text 1"));
-        items.add(new CardItem(R.mipmap.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
-        items.add(new CardItem(R.mipmap.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
-        items.add(new CardItem(R.mipmap.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
-        items.add(new CardItem(R.mipmap.space6, "Card main text 5", "Card middle text 5", "Card small text 5"));
-        items.add(new CardItem(R.mipmap.space1, "Card main text 6", "Card middle text 6", "Card small text 6"));
-        items.add(new CardItem(R.mipmap.space2, "Card main text 7", "Card middle text 7", "Card small text 7"));
-        items.add(new CardItem(R.mipmap.space3, "Card main text 8", "Card middle text 8", "Card small text 8"));
-        items.add(new CardItem(R.mipmap.space4, "Card main text 9", "Card middle text 9", "Card small text 9"));
-        items.add(new CardItem(R.mipmap.space5, "Card main text 10", "Card middle text 10", "Card small text 10"));
-        items.add(new CardItem(R.mipmap.space6, "Card main text 11", "Card middle text 11", "Card small text 11"));
+        items.add(new CardItem(R.drawable.space3, "Card main text 0", "Card middle text 0", "Card small text 0"));
+        items.add(new CardItem(R.drawable.space3, "Card main text 1", "Card middle text 1", "Card small text 1"));
+        items.add(new CardItem(R.drawable.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
+        items.add(new CardItem(R.drawable.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
+        items.add(new CardItem(R.drawable.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
+        items.add(new CardItem(R.drawable.space6, "Card main text 5", "Card middle text 5", "Card small text 5"));
+        items.add(new CardItem(R.drawable.space1, "Card main text 6", "Card middle text 6", "Card small text 6"));
+        items.add(new CardItem(R.drawable.space2, "Card main text 7", "Card middle text 7", "Card small text 7"));
+        items.add(new CardItem(R.drawable.space3, "Card main text 8", "Card middle text 8", "Card small text 8"));
+        items.add(new CardItem(R.drawable.space4, "Card main text 9", "Card middle text 9", "Card small text 9"));
+        items.add(new CardItem(R.drawable.space5, "Card main text 10", "Card middle text 10", "Card small text 10"));
+        items.add(new CardItem(R.drawable.space6, "Card main text 11", "Card middle text 11", "Card small text 11"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 
