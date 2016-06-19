@@ -5,12 +5,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:label="Material"
-        android:allowBackup="true"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         android:name=".ApplicationLoader"
-        android:icon="@mipmap/ic_launcher">
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme"
+        android:label="Material">
 
         <activity android:name=".LaunchActivity">
             <intent-filter>
