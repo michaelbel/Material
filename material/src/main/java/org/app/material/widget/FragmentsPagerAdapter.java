@@ -54,8 +54,22 @@ public class FragmentsPagerAdapter extends FragmentPagerAdapter {
 
     public void addFragment(Fragment fragment, @StringRes int resId) {
         fragments.add(fragment);
-        titles.add(context.getResources().getText(resId));
+        titles.add(context.getResources().getString(resId));
     }
+
+    public void addFragments(FragmentSet... fragmentSet) {
+        for (FragmentSet set : fragmentSet) {
+            fragments.add(set.getFragment());
+            titles.add(context.getResources().getString(set.getResId()));
+        }
+    }
+
+    /*public void addFragments(FragmentSet... fragmentSet) {
+        for (FragmentSet set : fragmentSet) {
+            fragments.add(set.getFragment());
+            titles.add(set.getTitle());
+        }
+    }*/
 
     @Override
     public CharSequence getPageTitle(int position) {
