@@ -31,10 +31,10 @@ import org.app.material.AndroidUtilities;
 
 public class CheckBox extends View {
 
-    private static Paint eraser;
-    private static Paint checkPaint;
-    private static Paint backgroundPaint;
-    private static RectF rectF;
+    private static Paint mEraser;
+    private static Paint mCheckPaint;
+    private static Paint mBackgroundPaint;
+    private static RectF mRectF;
 
     private Bitmap drawBitmap;
     private Canvas drawCanvas;
@@ -54,16 +54,16 @@ public class CheckBox extends View {
 
         AndroidUtilities.bind(context);
 
-        if (checkPaint == null) {
-            checkPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            checkPaint.setColor(checkColor);
-            checkPaint.setStyle(Paint.Style.STROKE);
-            checkPaint.setStrokeWidth(AndroidUtilities.dp(2));
-            eraser = new Paint(Paint.ANTI_ALIAS_FLAG);
-            eraser.setColor(0);
-            eraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-            backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            rectF = new RectF();
+        if (mCheckPaint == null) {
+            mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mCheckPaint.setColor(checkColor);
+            mCheckPaint.setStyle(Paint.Style.STROKE);
+            mCheckPaint.setStrokeWidth(AndroidUtilities.dp(2));
+            mEraser = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mEraser.setColor(0);
+            mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+            mBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            mRectF = new RectF();
         }
 
         drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(18), AndroidUtilities.dp(18), Bitmap.Config.ARGB_4444);
@@ -73,15 +73,13 @@ public class CheckBox extends View {
     @Override
     public void setVisibility(int visibility) {
         super.setVisibility(visibility);
-        if (visibility == VISIBLE && drawBitmap == null) {
-
-        }
     }
 
     public void setProgress(float value) {
         if (progress == value) {
             return;
         }
+
         progress = value;
         invalidate();
     }
@@ -159,34 +157,34 @@ public class CheckBox extends View {
             int gD = (int) ((Color.green(colorAccent) - 0x73) * checkProgress);
             int bD = (int) ((Color.blue(colorAccent) - 0x73) * checkProgress);
             int c = Color.rgb(0x73 + rD, 0x73 + gD, 0x73 + bD);
-            backgroundPaint.setColor(c);
+            mBackgroundPaint.setColor(c);
         } else {
             bounceProgress = 2.0f - progress / 0.5f;
             checkProgress = 1.0f;
-            backgroundPaint.setColor(colorAccent);
+            mBackgroundPaint.setColor(colorAccent);
         }
         if (isDisabled) {
-            backgroundPaint.setColor(0xffb0b0b0);
+            mBackgroundPaint.setColor(0xffb0b0b0);
         }
         float bounce = AndroidUtilities.dp(1) * bounceProgress;
-        rectF.set(bounce, bounce, AndroidUtilities.dp(18) - bounce, AndroidUtilities.dp(18) - bounce);
+        mRectF.set(bounce, bounce, AndroidUtilities.dp(18) - bounce, AndroidUtilities.dp(18) - bounce);
 
         drawBitmap.eraseColor(0);
-        drawCanvas.drawRoundRect(rectF, AndroidUtilities.dp(2), AndroidUtilities.dp(2), backgroundPaint);
+        drawCanvas.drawRoundRect(mRectF, AndroidUtilities.dp(2), AndroidUtilities.dp(2), mBackgroundPaint);
 
         if (checkProgress != 1) {
             float rad = Math.min(AndroidUtilities.dp(7), AndroidUtilities.dp(7) * checkProgress + bounce);
-            rectF.set(AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(16) - rad, AndroidUtilities.dp(16) - rad);
-            drawCanvas.drawRect(rectF, eraser);
+            mRectF.set(AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(16) - rad, AndroidUtilities.dp(16) - rad);
+            drawCanvas.drawRect(mRectF, mEraser);
         }
 
         if (progress > 0.5f) {
             int endX = (int) (AndroidUtilities.dp(7.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
             int endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
-            drawCanvas.drawLine(AndroidUtilities.dp(7.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, checkPaint);
+            drawCanvas.drawLine(AndroidUtilities.dp(7.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
             endX = (int) (AndroidUtilities.dpf2(6.5f) + AndroidUtilities.dp(9) * (1.0f - bounceProgress));
             endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(9) * (1.0f - bounceProgress));
-            drawCanvas.drawLine((int) AndroidUtilities.dpf2(6.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, checkPaint);
+            drawCanvas.drawLine((int) AndroidUtilities.dpf2(6.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
         }
         canvas.drawBitmap(drawBitmap, 0, 0, null);
     }
