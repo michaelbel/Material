@@ -33,6 +33,8 @@ import org.app.material.AndroidUtilities;
 
 public class BottomPickerLayout extends FrameLayout {
 
+    private int mAnimationDuration = 400;
+
     private TextView mNegativeButton;
     private TextView mPositiveButton;
     private ClickListener positiveButtonListener;
@@ -106,6 +108,15 @@ public class BottomPickerLayout extends FrameLayout {
         return this;
     }
 
+    public BottomPickerLayout setAnimationDuration(int duration) {
+        this.mAnimationDuration = duration;
+        return this;
+    }
+
+    public int getAnimationDuration() {
+        return mAnimationDuration;
+    }
+
     public BottomPickerLayout hide() {
         hide(true);
         return this;
@@ -141,7 +152,7 @@ public class BottomPickerLayout extends FrameLayout {
     private void animateOffset(final int offset) {
         if (mTranslationAnimator == null) {
             mTranslationAnimator = ViewCompat.animate(this);
-            mTranslationAnimator.setDuration(400);
+            mTranslationAnimator.setDuration(mAnimationDuration);
             mTranslationAnimator.setInterpolator(new LinearOutSlowInInterpolator());
         } else {
             mTranslationAnimator.cancel();
