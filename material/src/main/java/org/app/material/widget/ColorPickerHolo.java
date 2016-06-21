@@ -17,7 +17,6 @@
 package org.app.material.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -29,7 +28,6 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import org.app.material.R;
 
 import org.app.material.AndroidUtilities;
 
@@ -80,6 +78,9 @@ public class ColorPickerHolo extends View {
 
 	public ColorPickerHolo(Context context) {
 		super(context);
+
+        AndroidUtilities.bind(context);
+
 		init(null, 0);
 	}
 
@@ -94,17 +95,15 @@ public class ColorPickerHolo extends View {
 	}
 
 	private void init(AttributeSet attrs, int defStyle) {
-		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ColorPickerHolo, defStyle, 0);
-		mColorWheelThickness = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_wheel_thickness, AndroidUtilities.dp(getContext(), 9));
-		mColorWheelRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_wheel_radius, AndroidUtilities.dp(getContext(), 124));
+		mColorWheelThickness = AndroidUtilities.dp(9);
+		mColorWheelRadius = AndroidUtilities.dp(124);
 		mPreferredColorWheelRadius = mColorWheelRadius;
-		mColorCenterRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_center_radius, AndroidUtilities.dp(getContext(), 54));
+		mColorCenterRadius = AndroidUtilities.dp(54);
 		mPreferredColorCenterRadius = mColorCenterRadius;
-		mColorCenterHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_center_halo_radius, AndroidUtilities.dp(getContext(), 54));
+		mColorCenterHaloRadius = AndroidUtilities.dp(54);
 		mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
-		mColorPointerRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_radius, AndroidUtilities.dp(getContext(), 16));
-		mColorPointerHaloRadius = a.getDimensionPixelSize(R.styleable.ColorPickerHolo_color_pointer_halo_radius, AndroidUtilities.dp(getContext(), 16));
-		a.recycle();
+		mColorPointerRadius = AndroidUtilities.dp(16);
+		mColorPointerHaloRadius = AndroidUtilities.dp(16);
 
 		mAngle = (float) (-Math.PI / 2);
 
@@ -340,10 +339,12 @@ public class ColorPickerHolo extends View {
 		Bundle savedState = (Bundle) state;
 		Parcelable superState = savedState.getParcelable(STATE_PARENT);
 		super.onRestoreInstanceState(superState);
+
 		mAngle = savedState.getFloat(STATE_ANGLE);
 		setOldCenterColor(savedState.getInt(STATE_OLD_COLOR));
 		mShowCenterOldColor = savedState.getBoolean(STATE_SHOW_OLD_COLOR);
-		int currentColor = calculateColor(mAngle);
+
+        int currentColor = calculateColor(mAngle);
 		mPointerColor.setColor(currentColor);
 		setNewCenterColor(currentColor);
 	}
