@@ -28,12 +28,13 @@ import org.app.application.fragments.CardFragment;
 import org.app.application.fragments.DialogsFragment;
 import org.app.application.fragments.FabFragment;
 import org.app.application.fragments.ListViewFragment;
-import org.app.application.fragments.RecyclerFragment;
+import org.app.application.fragments.PatternViewFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
 import org.app.material.widget.ActionBarMenuItem;
 import org.app.material.widget.Browser;
+import org.app.material.widget.FragmentSet;
 import org.app.material.widget.FragmentsPagerAdapter;
 
 public class LaunchActivity extends FragmentActivity {
@@ -69,6 +70,7 @@ public class LaunchActivity extends FragmentActivity {
                             Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
                         } else if (id == settings) {
                             Toast.makeText(LaunchActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
+                            //startActivity(new Intent(LaunchActivity.this, MainActivity.class));
                         }
                     }
                 });
@@ -88,12 +90,16 @@ public class LaunchActivity extends FragmentActivity {
         viewPager.setLayoutParams(viewPagerParams);
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
-        adapter.addFragment(new DialogsFragment(), R.string.Dialogs);
-        adapter.addFragment(new BottomsFragment(), R.string.Bottoms);
-        adapter.addFragment(new ListViewFragment(), R.string.ListView);
-        adapter.addFragment(new CardFragment(), R.string.CardView);
-        adapter.addFragment(new FabFragment(), R.string.Fabs);
-        adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragments(
+            new FragmentSet(new DialogsFragment(), R.string.Dialogs),
+            new FragmentSet(new BottomsFragment(), R.string.Bottoms),
+            //new FragmentSet(new Recycler(), R.string.Pattern),
+            new FragmentSet(new ListViewFragment(), R.string.ListView),
+            new FragmentSet(new CardFragment(), R.string.CardView),
+            new FragmentSet(new FabFragment(), R.string.Fabs),
+            //new FragmentSet(new RecyclerFragment(), R.string.RecyclerView),
+            new FragmentSet(new PatternViewFragment(), R.string.Pattern)
+        );
 
         viewPager.setAdapter(adapter);
 
