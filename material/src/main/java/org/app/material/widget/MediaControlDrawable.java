@@ -56,7 +56,7 @@ public class MediaControlDrawable extends Drawable {
     private State mTargetState = State.PLAY;
     private ValueAnimatorCompat mAnimator;
 
-    public MediaControlDrawable(Context context, @ColorInt int color, float padding, State state, Interpolator interpolator, int duration) {
+    public MediaControlDrawable(@ColorInt int color, float padding, State state, Interpolator interpolator, int duration) {
         mPadding = padding;
         mCurrentState = state;
         mTargetState = state;
@@ -74,15 +74,16 @@ public class MediaControlDrawable extends Drawable {
                 setTransitionState(animator.getAnimatedFloatValue(), animator.getAnimatedFraction());
             }
         });
-        mAnimator.setListener(new ValueAnimatorCompat.AnimatorListener() {
-            @Override
-            public void onAnimationStart(ValueAnimatorCompat animator) {}
 
+        mAnimator.setListener(new ValueAnimatorCompat.AnimatorListener() {
             @Override
             public void onAnimationEnd(ValueAnimatorCompat animator) {
                 mCurrentState = mTargetState;
                 setTransitionState(0F, 0F);
             }
+
+            @Override
+            public void onAnimationStart(ValueAnimatorCompat animator) {}
 
             @Override
             public void onAnimationCancel(ValueAnimatorCompat animator) {}
@@ -240,16 +241,16 @@ public class MediaControlDrawable extends Drawable {
 
     private void calculateTrimArea(Rect bounds) {
         float size = Math.min(bounds.height(), bounds.width());
-        float yOffset = (bounds.height() - size) / 2f;
-        float xOffset = (bounds.width() - size) / 2f;
-        float padding = mPadding + (bounds.height() - 2f * mPadding) * 1f / 6f;
+        float yOffset = (bounds.height() - size) / 2F;
+        float xOffset = (bounds.width() - size) / 2F;
+        float padding = mPadding + (bounds.height() - 2F * mPadding) * 1F / 6F;
 
         mInternalBounds.set(bounds.left + padding + xOffset, bounds.top + padding + yOffset, bounds.right - padding - xOffset, bounds.bottom - padding - yOffset);
         mCenter = mInternalBounds.centerX();
         mSize = mInternalBounds.width();
-        mPlayTipOffset = 1f / 6f * mSize;
-        mPlayBaseOffset = 0.07735f * mSize;
-        setTransitionState(0f, 0f);
+        mPlayTipOffset = 1F / 6F * mSize;
+        mPlayBaseOffset = 0.07735F * mSize;
+        setTransitionState(0F, 0F);
     }
 
     private float interpolate(float start, float end, float fraction) {
@@ -284,7 +285,7 @@ public class MediaControlDrawable extends Drawable {
             mPadding = 0f;
             mInitialState = State.PLAY;
             mAnimationInterpolator = AnimationUtils.ACCELERATE_DECELERATE_INTERPOLATOR;
-            mAnimationDuration = 400; // 500
+            mAnimationDuration = 400;
         }
 
         public Builder setColor(@ColorInt int color) {
@@ -313,7 +314,7 @@ public class MediaControlDrawable extends Drawable {
         }
 
         public MediaControlDrawable build() {
-            return new MediaControlDrawable(mContext, mColor, mPadding, mInitialState, mAnimationInterpolator, mAnimationDuration);
+            return new MediaControlDrawable(mColor, mPadding, mInitialState, mAnimationInterpolator, mAnimationDuration);
         }
     }
 

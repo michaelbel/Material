@@ -46,6 +46,7 @@ public class LayoutHelper {
      * TableRow (partially)
      * TableLayout
      * GridLayout (not implemented)
+     * DrawerLayout (not implemented)
      */
 
     /**
