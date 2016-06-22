@@ -16,8 +16,13 @@
 
 package org.app.application.fragments;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,14 +40,14 @@ import java.util.List;
 
 public class CardFragment extends Fragment {
 
-    public class CardItem {
+    public class CardModel {
 
         private int mImage;
         private String mText1;
         private String mText2;
         private String mText3;
 
-        public CardItem(int image, String text1, String text2, String text3) {
+        public CardModel(int image, String text1, String text2, String text3) {
             this.mImage = image;
             this.mText1 = text1;
             this.mText2 = text2;
@@ -56,18 +61,18 @@ public class CardFragment extends Fragment {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ArrayList<Object> items = new ArrayList<>();
-        items.add(new CardItem(R.drawable.space3, "Card main text 0", "Card middle text 0", "Card small text 0"));
-        items.add(new CardItem(R.drawable.space3, "Card main text 1", "Card middle text 1", "Card small text 1"));
-        items.add(new CardItem(R.drawable.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
-        items.add(new CardItem(R.drawable.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
-        items.add(new CardItem(R.drawable.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
-        items.add(new CardItem(R.drawable.space6, "Card main text 5", "Card middle text 5", "Card small text 5"));
-        items.add(new CardItem(R.drawable.space1, "Card main text 6", "Card middle text 6", "Card small text 6"));
-        items.add(new CardItem(R.drawable.space2, "Card main text 7", "Card middle text 7", "Card small text 7"));
-        items.add(new CardItem(R.drawable.space3, "Card main text 8", "Card middle text 8", "Card small text 8"));
-        items.add(new CardItem(R.drawable.space4, "Card main text 9", "Card middle text 9", "Card small text 9"));
-        items.add(new CardItem(R.drawable.space5, "Card main text 10", "Card middle text 10", "Card small text 10"));
-        items.add(new CardItem(R.drawable.space6, "Card main text 11", "Card middle text 11", "Card small text 11"));
+        items.add(new CardModel(R.drawable.space3, "Card main text 0", "Card middle text 0", "Card small text 0"));
+        items.add(new CardModel(R.drawable.space3, "Card main text 1", "Card middle text 1", "Card small text 1"));
+        items.add(new CardModel(R.drawable.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
+        items.add(new CardModel(R.drawable.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
+        items.add(new CardModel(R.drawable.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
+        items.add(new CardModel(R.drawable.space6, "Card main text 5", "Card middle text 5", "Card small text 5"));
+        items.add(new CardModel(R.drawable.space1, "Card main text 6", "Card middle text 6", "Card small text 6"));
+        items.add(new CardModel(R.drawable.space2, "Card main text 7", "Card middle text 7", "Card small text 7"));
+        items.add(new CardModel(R.drawable.space3, "Card main text 8", "Card middle text 8", "Card small text 8"));
+        items.add(new CardModel(R.drawable.space4, "Card main text 9", "Card middle text 9", "Card small text 9"));
+        items.add(new CardModel(R.drawable.space5, "Card main text 10", "Card middle text 10", "Card small text 10"));
+        items.add(new CardModel(R.drawable.space6, "Card main text 11", "Card middle text 11", "Card small text 11"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 
@@ -100,7 +105,8 @@ public class CardFragment extends Fragment {
                 @Override
                 public void onClick() {
                     int i = getAdapterPosition();
-                    Toast.makeText(getActivity(), getString(R.string.ClickOnCardOptions, i), Toast.LENGTH_SHORT).show();
+                    DialogFragment dialog = new ItemsDialog();
+                    dialog.show(getFragmentManager(), "options");
                 }
             });
         }
@@ -133,12 +139,37 @@ public class CardFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            CardItem item = (CardItem) items.get(position);
+            CardModel item = (CardModel) items.get(position);
             ((CardViewHolder) viewHolder).cardCell
                     .setText1(item.mText1)
                     .setText2(item.mText2)
                     .setText3(item.mText3)
                     .setImage(item.mImage);
+        }
+    }
+
+    public static class ItemsDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.Options);
+            builder.setItems(new CharSequence[]{
+                    getString(R.string.Open),
+                    getString(R.string.Delete)
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == 0) {
+                        Toast.makeText(getActivity(), getString(R.string.Opening), Toast.LENGTH_SHORT).show();
+                    } else if (i == 1) {
+
+                    }
+                }
+            });
+
+            return builder.create();
         }
     }
 }
