@@ -51,6 +51,7 @@ public class TextCell extends FrameLayout {
 
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF000000);
+        mTextView.setText("Row primary text");
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
