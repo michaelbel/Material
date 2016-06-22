@@ -29,6 +29,7 @@ import org.app.application.R;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.Palette;
 
 public class ColorPickerPrimaryDialog extends DialogFragment {
 
@@ -43,7 +44,7 @@ public class ColorPickerPrimaryDialog extends DialogFragment {
         layout.setPadding(AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24));
 
         final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
-        picker1.setColors(ColorPickerShift.Palette.getBaseColors(getActivity()));
+        picker1.setColors(Palette.getBaseColors(getActivity()));
         picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 60));
         layout.addView(picker1);
 
@@ -51,10 +52,10 @@ public class ColorPickerPrimaryDialog extends DialogFragment {
         picker2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
 
         for (int i : picker1.getColors()) {
-            for (int i2 : ColorPickerShift.Palette.getColors(getActivity(), i)) {
+            for (int i2 : Palette.getColors(getActivity(), i)) {
                 if (i2 == 0xff4CaF50) {
                     picker1.setSelectedColor(i);
-                    picker2.setColors(ColorPickerShift.Palette.getColors(getActivity(), i));
+                    picker2.setColors(Palette.getColors(getActivity(), i));
                     picker2.setSelectedColor(i2);
                     break;
                 }
@@ -65,7 +66,7 @@ public class ColorPickerPrimaryDialog extends DialogFragment {
         picker1.setOnColorChangedListener(new ColorPickerShift.OnColorChangedListener() {
             @Override
             public void onColorChanged(int c) {
-                picker2.setColors(ColorPickerShift.Palette.getColors(getActivity(), picker1.getColor()));
+                picker2.setColors(Palette.getColors(getActivity(), picker1.getColor()));
                 picker2.setSelectedColor(picker1.getColor());
             }
         });

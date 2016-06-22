@@ -29,6 +29,7 @@ import org.app.application.R;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.Palette;
 
 public class ColorPickerAccentDialog extends DialogFragment {
 
@@ -45,7 +46,7 @@ public class ColorPickerAccentDialog extends DialogFragment {
         final ColorPickerShift picker = new ColorPickerShift(getActivity());
         picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(), LayoutHelper.MATCH_PARENT, 60));
         picker.setSelectedColorPosition(0);
-        picker.setColors(ColorPickerShift.Palette.getAccentColors(getActivity()));
+        picker.setColors(Palette.getAccentColors(getActivity()));
         picker.setSelectedColor(0xffFF5252);
         layout.addView(picker);
 
