@@ -289,6 +289,7 @@ public class AndroidUtilities {
         if (view == null) {
             return;
         }
+
         InputMethodManager inputManager = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
@@ -297,6 +298,7 @@ public class AndroidUtilities {
         if (view == null) {
             return false;
         }
+
         InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         return inputManager.isActive(view);
     }
@@ -305,10 +307,13 @@ public class AndroidUtilities {
         if (view == null) {
             return;
         }
+
         InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
         if (!imm.isActive()) {
             return;
         }
+
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
