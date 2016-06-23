@@ -23,8 +23,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
-import org.app.application.BottomSheet;
 import org.app.application.R;
+import org.app.material.widget.BottomSheet;
 
 public class BottomSheetDialog extends DialogFragment {
 
