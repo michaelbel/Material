@@ -16,6 +16,7 @@
 
 package org.app.application;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -39,12 +40,9 @@ import org.app.material.widget.FragmentsPagerAdapter;
 
 public class LaunchActivity extends FragmentActivity {
 
-    private TabLayout.Tab tab;
-    private TabLayout tabLayout;
-    private ActionBar actionBar;
-
     private static final int github = 1;
     private static final int settings = 2;
+    private static final int adding = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +54,7 @@ public class LaunchActivity extends FragmentActivity {
         FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        actionBar = new ActionBar(this)
+        ActionBar actionBar = new ActionBar(this)
                 .setBackGroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
                 .setBackButtonImage(R.drawable.ic_menu)
                 .setTitle(R.string.MaterialDemo)
@@ -65,12 +63,13 @@ public class LaunchActivity extends FragmentActivity {
                     @Override
                     public void onItemClick(int id) {
                         if (id == -1) {
-                            Toast.makeText(LaunchActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Drawer Not Implemented", Toast.LENGTH_SHORT).show();
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
                         } else if (id == settings) {
-                            Toast.makeText(LaunchActivity.this, "Not Implemented", Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+                            startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
+                        } else if (id == adding) {
+                            Toast.makeText(LaunchActivity.this, "Adding Not Implemented", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -93,21 +92,37 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragments(
             new FragmentSet(new DialogsFragment(), R.string.Dialogs),
             new FragmentSet(new BottomsFragment(), R.string.Bottoms),
-            //new FragmentSet(new Recycler(), R.string.Pattern),
             new FragmentSet(new ListViewFragment(), R.string.ListView),
             new FragmentSet(new CardFragment(), R.string.CardView),
             new FragmentSet(new FabFragment(), R.string.Fabs),
-            //new FragmentSet(new RecyclerFragment(), R.string.RecyclerView),
             new FragmentSet(new PatternViewFragment(), R.string.Pattern)
         );
 
         viewPager.setAdapter(adapter);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setBackgroundColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                /*if (tab.getPosition() == 4) {
+
+                }*/
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();
         tabLayoutParams.setMargins(0, ActionBar.getCurrentActionBarHeight(), 0, 0);
