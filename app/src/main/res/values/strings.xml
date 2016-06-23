@@ -44,7 +44,6 @@
     <string name="TextAndValue">Text and Value</string>
     <string name="Position">Position = %1$s</string>
     <string name="ClickOnCard">Click on card %1$s</string>
-    <string name="ClickOnCardOptions">Click on the card options %1$s</string>
     <string name="SomeTitleText">Some title text</string>
     <string name="TextLock">Lock</string>
     <string name="TextDisabled">DISABLED</string>
@@ -84,4 +83,9 @@
     <string name="ReplaceIcons">Replace Icons</string>
     <string name="BottomBar">Bottom Bar</string>
     <string name="Settings">Settings</string>
+    <string name="Pattern">Pattern</string>
+    <string name="Open">Open</string>
+    <string name="Remove">Remove</string>
+    <string name="Opening">Opening…</string>
+    <string name="Options">Options</string>
 </resources>
