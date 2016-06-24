@@ -42,23 +42,15 @@ public class CardCell extends CardView {
     public OnCardClickListener mCardClickListener;
     public OnOptionClickListener mOptionClickListener;
 
-    public interface OnOptionClickListener {
-        void onClick();
-    }
-
-    public interface OnCardClickListener {
-        void onClick();
-    }
-
     public CardCell(Context context) {
         super(context);
 
         AndroidUtilities.bind(context);
 
         this.setCardBackgroundColor(0xFFFFFFFF);
-        this.setRadius(AndroidUtilities.dp(4F));
-        this.setCardElevation(AndroidUtilities.dp(2));
-        this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 6, 6, 0));
+        this.setRadius(AndroidUtilities.dp(3.5F));
+        this.setCardElevation(AndroidUtilities.dp(1.8F));
+        this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
 
         layout = new FrameLayout(context);
         layout.setClickable(true);
@@ -150,5 +142,13 @@ public class CardCell extends CardView {
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
         super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(116), MeasureSpec.EXACTLY));
+    }
+
+    public interface OnOptionClickListener {
+        void onClick();
+    }
+
+    public interface OnCardClickListener {
+        void onClick();
     }
 }
