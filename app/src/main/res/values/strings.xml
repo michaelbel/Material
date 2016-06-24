@@ -88,4 +88,6 @@
     <string name="Remove">Remove</string>
     <string name="Opening">Opening…</string>
     <string name="Options">Options</string>
+    <string name="Undo">Undo</string>
+    <string name="ItemRemoved">Item Removed</string>
 </resources>
