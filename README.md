@@ -1,3 +1,5 @@
+[![Licence](https://img.shields.io/badge/Licence-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
 # Material
 Material Design Library
 
