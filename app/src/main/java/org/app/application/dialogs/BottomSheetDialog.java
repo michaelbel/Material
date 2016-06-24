@@ -31,6 +31,7 @@ public class BottomSheetDialog extends DialogFragment {
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheet.Builder builder = new BottomSheet.Builder(getActivity());
+        builder.setTitle("Select day");
         builder.setItems(new CharSequence[]{ getString(R.string.Monday), getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday) }, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, final int which) {

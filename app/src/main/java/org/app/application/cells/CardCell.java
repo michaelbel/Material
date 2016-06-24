@@ -76,7 +76,7 @@ public class CardCell extends CardView {
         mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 16, 21, 0));
+        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
         layout.addView(mTextView1);
 
         mTextView2 = new TextView(context);
@@ -90,7 +90,7 @@ public class CardCell extends CardView {
         mTextView3.setTextColor(0xFF9E9E9E);
         mTextView3.setGravity(Gravity.START | Gravity.BOTTOM);
         mTextView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 16));
+        mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
         layout.addView(mTextView3);
 
         mOptionButton = new ImageView(context);
@@ -141,7 +141,7 @@ public class CardCell extends CardView {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(116), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(110), MeasureSpec.EXACTLY));
     }
 
     public interface OnOptionClickListener {

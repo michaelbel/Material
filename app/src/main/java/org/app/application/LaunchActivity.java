@@ -64,13 +64,13 @@ public class LaunchActivity extends FragmentActivity {
                     @Override
                     public void onItemClick(int id) {
                         if (id == -1) {
-                            Toast.makeText(LaunchActivity.this, "Drawer Not Implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Drawer is Not Implemented", Toast.LENGTH_SHORT).show();
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
                         } else if (id == settings) {
                             startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
                         } else if (id == adding) {
-                            Toast.makeText(LaunchActivity.this, "Adding Not Implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Adding is Not Implemented", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -110,9 +110,7 @@ public class LaunchActivity extends FragmentActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                /*if (tab.getPosition() == 4) {
-
-                }*/
+                /*if (tab.getPosition() == 4) {}*/
             }
 
             @Override

@@ -23,23 +23,26 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.app.application.R;
+import org.app.application.cells.TextCell;
 import org.app.application.dialogs.BottomSheetDialog;
 import org.app.material.widget.BottomPickerLayout;
 import org.app.material.widget.LayoutHelper;
 
-public class BottomsFragment extends Fragment implements View.OnClickListener {
+public class BottomsFragment extends Fragment {
 
-    private Button mButton1;
-    private Button mButton2;
-    private Button mButton3;
+    private int rowCount;
+    private int bottomBarRow;
+    private int bottomSheetRow;
+    private int bottomPickerRow;
 
     private boolean plVisible = false;
-
     private BottomPickerLayout pickerLayout;
 
     @Override
@@ -47,34 +50,16 @@ public class BottomsFragment extends Fragment implements View.OnClickListener {
         FrameLayout layout = new FrameLayout(getActivity());
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        mButton1 = new Button(getActivity());
-        mButton1.setOnClickListener(this);
-        mButton1.setText(R.string.BottomBar);
-        mButton1.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 1, 0, 0));
-        layout.addView(mButton1);
-
-        mButton2 = new Button(getActivity());
-        mButton2.setOnClickListener(this);
-        mButton2.setText(R.string.BottomSheetDialog);
-        mButton2.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 45, 0, 0));
-        layout.addView(mButton2);
-
-        mButton3 = new Button(getActivity());
-        mButton3.setOnClickListener(this);
-        mButton3.setText(R.string.BottomPickerLayout);
-        mButton3.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 90, 0, 0));
-        layout.addView(mButton3);
-
         pickerLayout = new BottomPickerLayout(getActivity());
         pickerLayout.setVisibility(View.INVISIBLE);
         pickerLayout.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM));
-        pickerLayout.setPositiveButton(R.string.Done, new BottomPickerLayout.ClickListener() {
+        pickerLayout.setPositiveButton(R.string.Done, new BottomPickerLayout.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), getString(R.string.Done), Toast.LENGTH_SHORT).show();
             }
         });
-        pickerLayout.setNegativeButton(R.string.Cancel, new BottomPickerLayout.ClickListener() {
+        pickerLayout.setNegativeButton(R.string.Cancel, new BottomPickerLayout.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), getString(R.string.Cancel), Toast.LENGTH_SHORT).show();
@@ -83,24 +68,73 @@ public class BottomsFragment extends Fragment implements View.OnClickListener {
 
         layout.addView(pickerLayout);
 
+        rowCount = 0;
+        bottomBarRow = rowCount++;
+        bottomSheetRow = rowCount++;
+        bottomPickerRow = rowCount++;
+
+        ListView listView = new ListView(getActivity());
+        listView.setDividerHeight(0);
+        listView.setDrawSelectorOnTop(true);
+        listView.setAdapter(new ListViewAdapter());
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
+                if (i == bottomBarRow) {
+                    Toast.makeText(getActivity(), "BottomBar is not implemented", Toast.LENGTH_SHORT).show();
+                } else if (i == bottomSheetRow) {
+                    DialogFragment dialog = new BottomSheetDialog();
+                    dialog.show(getFragmentManager(), "bottomSheet");
+                } else if (i == bottomPickerRow) {
+                    if (plVisible = !plVisible) {
+                        pickerLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        pickerLayout.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        });
+        layout.addView(listView);
+
         return layout;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == mButton1) {
-            Toast.makeText(getActivity(), "Not implemented", Toast.LENGTH_SHORT).show();
-        } else if (v == mButton2) {
-            DialogFragment dialog = new BottomSheetDialog();
-            dialog.show(getFragmentManager(), "bottomSheet");
-        } else if (v == mButton3){
-            plVisible = !plVisible;
+    public class ListViewAdapter extends BaseAdapter {
 
-            if (plVisible) {
-                pickerLayout.setVisibility(View.VISIBLE);
-            } else {
-                pickerLayout.setVisibility(View.INVISIBLE);
+        /*@Override
+        public boolean isEnabled(int i) {
+            return i == bottomBarRow || i == bottomSheetRow || i == bottomPickerRow;
+        }*/
+
+        @Override
+        public int getCount() {
+            return rowCount;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            TextCell cell = new TextCell(getActivity());
+
+            if (i == bottomBarRow) {
+                cell.setText(R.string.BottomBar).setDivider(true);
+            } else if (i == bottomSheetRow) {
+                cell.setText(R.string.BottomSheetDialog).setDivider(true);
+            } else if (i == bottomPickerRow) {
+                cell.setText(R.string.BottomPickerLayout);
             }
+
+            return cell;
         }
     }
 }
