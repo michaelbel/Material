@@ -16,7 +16,6 @@ import java.util.List;
 
 public class PatternViewFragment extends Fragment {
 
-    private final boolean patternVisibility = false;
     private final String correctPattern = "24865";
 
     private PatternView lockView;
@@ -30,7 +29,7 @@ public class PatternViewFragment extends Fragment {
         layout.setBackgroundColor(0xFF64B5F6);
 
         lockView = (PatternView) view.findViewById(R.id.patternLock);
-        lockView.setInStealthMode(patternVisibility);
+        lockView.setInStealthMode(false);
         lockView.setOnPatternListener(new PatternView.OnPatternListener() {
             @Override
             public void onPatternDetected(List<PatternView.Cell> pattern, String SimplePattern) {

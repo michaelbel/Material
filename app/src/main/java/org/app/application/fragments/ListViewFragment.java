@@ -52,13 +52,10 @@ public class ListViewFragment extends Fragment {
     private int headerRow4;
     private int headerRow5;
     private int headerRow6;
-    private int headerRow7;
 
     private boolean switchParam = true;
     private boolean checkBoxParam = true;
     private boolean radioParam = true;
-
-    private ListAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,15 +76,12 @@ public class ListViewFragment extends Fragment {
         checkBoxRow = rowCount++;
         headerRow6 = rowCount++;
         radioRow = rowCount++;
-        //headerRow7 = rowCount++;
-
-        adapter = new ListAdapter();
 
         ListView listView = new ListView(getActivity());
-        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-        listView.setAdapter(adapter);
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
+        listView.setAdapter(new ListViewAdapter());
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
@@ -116,7 +110,7 @@ public class ListViewFragment extends Fragment {
         return layout;
     }
 
-    public class ListAdapter extends BaseAdapter {
+    public class ListViewAdapter extends BaseAdapter {
 
         @Override
         public boolean isEnabled(int i) {
@@ -176,8 +170,6 @@ public class ListViewFragment extends Fragment {
                     cell.setHeader(R.string.CheckBox);
                 } else if (i == headerRow6) {
                     cell.setHeader(R.string.RadioButton);
-                } else if (i == headerRow7) {
-                    cell.setHeader(null);
                 }
             } else if (type == 2) {
                 if (view == null) {
@@ -228,7 +220,7 @@ public class ListViewFragment extends Fragment {
         public int getItemViewType(int i) {
             if (i == textRow || i == textValueRow1 || i == textValueRow2) {
                 return 0;
-            } else if (i == headerRow1 || i == headerRow2 || i == headerRow3 || i == headerRow4 || i == headerRow5 || i == headerRow6 || i == headerRow7) {
+            } else if (i == headerRow1 || i == headerRow2 || i == headerRow3 || i == headerRow4 || i == headerRow5 || i == headerRow6) {
                 return 1;
             } else if (i == switchRow) {
                 return 2;

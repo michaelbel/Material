@@ -42,11 +42,9 @@ import java.util.List;
 
 public class RecyclerFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private FrameLayout layout;
-    private ItemModel itemModel;
-    private int mIndexOfRemovedItem;
     private ItemModel mRemovedItem;
+    private int mIndexOfRemovedItem;
 
     public class ItemModel {
 
