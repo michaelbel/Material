@@ -37,11 +37,11 @@ public class BottomPickerLayout extends FrameLayout {
 
     private TextView mNegativeButton;
     private TextView mPositiveButton;
-    private ClickListener positiveButtonListener;
-    private ClickListener negativeButtonListener;
+    private OnClickListener positiveButtonListener;
+    private OnClickListener negativeButtonListener;
     private ViewPropertyAnimatorCompat mTranslationAnimator;
 
-    public interface ClickListener {
+    public interface OnClickListener {
         void onClick(View v);
     }
 
@@ -76,11 +76,11 @@ public class BottomPickerLayout extends FrameLayout {
         addView(mPositiveButton);
     }
 
-    public BottomPickerLayout setNegativeButton(@StringRes int resId, ClickListener listener) {
+    public BottomPickerLayout setNegativeButton(@StringRes int resId, OnClickListener listener) {
         this.negativeButtonListener = listener;
 
         mNegativeButton.setText(getResources().getString(resId).toUpperCase());
-        mNegativeButton.setOnClickListener(new OnClickListener() {
+        mNegativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (negativeButtonListener != null) {
@@ -92,11 +92,11 @@ public class BottomPickerLayout extends FrameLayout {
         return this;
     }
 
-    public BottomPickerLayout setPositiveButton(@StringRes int resId, ClickListener listener) {
+    public BottomPickerLayout setPositiveButton(@StringRes int resId, OnClickListener listener) {
         this.positiveButtonListener = listener;
 
         mPositiveButton.setText(getResources().getString(resId).toUpperCase());
-        mPositiveButton.setOnClickListener(new OnClickListener() {
+        mPositiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (positiveButtonListener != null) {
