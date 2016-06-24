@@ -30,6 +30,7 @@ import org.app.application.fragments.DialogsFragment;
 import org.app.application.fragments.FabFragment;
 import org.app.application.fragments.ListViewFragment;
 import org.app.application.fragments.PatternViewFragment;
+import org.app.application.fragments.RecyclerFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
@@ -94,6 +95,7 @@ public class LaunchActivity extends FragmentActivity {
             new FragmentSet(new BottomsFragment(), R.string.Bottoms),
             new FragmentSet(new ListViewFragment(), R.string.ListView),
             new FragmentSet(new CardFragment(), R.string.CardView),
+            new FragmentSet(new RecyclerFragment(), R.string.RecyclerView),
             new FragmentSet(new FabFragment(), R.string.Fabs),
             new FragmentSet(new PatternViewFragment(), R.string.Pattern)
         );
