@@ -7,6 +7,9 @@ Material Design Library
 * Android Studio 2.1.2
 
 ## Screenshots
+<img src="/screenshots/screenshot_1.png" height="400px"/>
+<img src="/screenshots/screenshot_2.png" height="400px"/>
+<img src="/screenshots/screenshot_3.png" height="400px"/>
 
 ## License
 
