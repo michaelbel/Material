@@ -13,7 +13,7 @@ Material Design Library
 
 ## License
 
-    Copyright 2015 Michael Bel
+    Copyright 2015-2016 Michael Bel
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
