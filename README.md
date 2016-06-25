@@ -1,7 +1,8 @@
 # Material
 Material Design Library
 
-[![Licence](https://img.shields.io/badge/Licence-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![API](https://img.shields.io/badge/API-10%2B-blue.svg)][repo]
+[![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Requirements
 
