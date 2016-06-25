@@ -15,6 +15,7 @@ Project build.gradle
 ```gradle
 allprojects {
     repositories {
+        ...
         maven { url "https://jitpack.io" }
     }
 }
@@ -23,7 +24,7 @@ allprojects {
 Module build.gradle
 ```gradle
 dependencies {
-    compile 'com.github.MichaelBel:Material:v1.0.0'
+    compile 'com.github.michaelbel:material:v1.0.0'
 }
 ```
 
