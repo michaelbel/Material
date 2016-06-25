@@ -36,7 +36,7 @@ dependencies {
     <img style="margin-left:10px;" src="/screenshots/3.jpg" width="30%">
 </div>
 
-#### License
+### License
 
     Copyright 2015-2016 Michael Bel
 
