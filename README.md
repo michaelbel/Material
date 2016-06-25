@@ -13,9 +13,9 @@ Material Design Library
 ## Import
 Project build.gradle
 ```gradle
-repositories {
-    maven {
-        url "https://jitpack.io"
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
     }
 }
 ```
