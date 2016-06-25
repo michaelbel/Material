@@ -1,17 +1,34 @@
-[![Licence](https://img.shields.io/badge/Licence-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-
 # Material
 Material Design Library
+
+[![Licence](https://img.shields.io/badge/Licence-Apache%202-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Requirements
 
 * Android 5.0
 * Android Studio 2.1.2
 
+## Import
+Project build.gradle
+```java
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+```
+
+Module build.gradle
+```java
+dependencies {
+  compile 'com.github.MichaelBel:Material:v1.0.0'
+}
+```
+
 ## Screenshots
-<img src="/screenshots/screenshot_1.png" height="400px"/>
-<img src="/screenshots/screenshot_2.png" height="400px"/>
-<img src="/screenshots/screenshot_3.png" height="400px"/>
+<img src="/screenshots/screenshot_1.png" height="500px"/>
+<img src="/screenshots/screenshot_2.png" height="500px"/>
+<img src="/screenshots/screenshot_3.png" height="500px"/>
 
 ## License
 
