@@ -3,7 +3,7 @@ Material Design Library
 
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
 [![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![JitPack](https://img.shields.io/badge/Jitpack-v1.0.0-blue.svg)](https://jitpack.io/#MichaelBel/Material)
+[![JitPack](https://img.shields.io/badge/Jitpack-v1.0.0-blue.svg)](https://jitpack.io/#MichaelBel/Material/v1.0.0)
 
 ## Requirements
 
