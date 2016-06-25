@@ -1,8 +1,9 @@
 # Material
 Material Design Library
 
-[![API](https://img.shields.io/badge/API-21%2B-blue.svg)](repo)
-[![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
+[![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
+[![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![JitPack](https://img.shields.io/badge/Jitpack-v1.0.0-blue.svg)](https://jitpack.io/#MichaelBel/Material)
 
 ## Requirements
 
@@ -11,7 +12,7 @@ Material Design Library
 
 ## Import
 Project build.gradle
-```java
+```gradle
 repositories {
     maven {
         url "https://jitpack.io"
@@ -20,7 +21,7 @@ repositories {
 ```
 
 Module build.gradle
-```java
+```gradle
 dependencies {
     compile 'com.github.MichaelBel:Material:v1.0.0'
 }
