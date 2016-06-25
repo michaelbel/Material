@@ -1,11 +1,5 @@
 apply plugin: 'com.android.library'
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.android.support:cardview-v7:24.0.0'
-}
-
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
@@ -13,46 +7,57 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 3
-        versionName "1.0.0"
+        versionCode 4
+        versionName "1.0.1"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
-ext {
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.michaelbel'
+
+/*apply from: 'gradle-mvn-push.gradle'*/
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+}
+
+// The temporary solution
+/*ext {
     bintrayRepo = 'maven'
     bintrayName = 'material'
 
-    publishedGroupId = 'com.github.michael-bel'
+    publishedGroupId = 'com.github.michaelbel'
     libraryName = 'Material'
     artifact = 'material'
 
+    siteUrl = 'https://github.com/michaelbel/Material'
+    gitUrl = 'https://github.com/michaelbel/Material.git'
+
+    libraryVersion = '1.0.1'
     libraryDescription = 'Material Design Library'
 
-    siteUrl = 'https://github.com/MichaelBel/Material'
-    gitUrl = 'https://github.com/MichaelBel/Material.git'
-
-    libraryVersion = '0.0.3'
-
-    developerId = 'michael-bel'
+    developerId = 'michaelbel'
     developerName = 'Michael Bel'
-    developerEmail = 'michael-bel@outlook.com'
+    developerEmail = 'michaelbel24865@gmail.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    licenseUrl = 'https://github.com/michaelbel/Material/blob/master/LICENSE'
     allLicenses = ["Apache-2.0"]
 }
 
-//ext {
-//    PUBLISH_GROUP_ID = 'com.pavelsikun'
-//    PUBLISH_ARTIFACT_ID = 'vintage-chroma'
-//    PUBLISH_VERSION = '1.3.1'
-//}
-
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'*/
