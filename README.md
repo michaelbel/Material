@@ -21,7 +21,7 @@ repositories {
 Module build.gradle
 ```java
 dependencies {
-  compile 'com.github.MichaelBel:Material:v1.0.0'
+    compile 'com.github.MichaelBel:Material:v1.0.0'
 }
 ```
 
