@@ -19,7 +19,6 @@
             <enum name="FLOWER" value="0"/>
             <enum name="CIRCLE" value="1"/>
         </attr>
-        <!--attr name="pickerColorEditTextColor" format="integer"/-->
         <attr name="pickerTitle" format="reference|string"/>
         <attr name="pickerButtonOk" format="reference|string"/>
         <attr name="pickerButtonCancel" format="reference|string"/>
