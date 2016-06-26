@@ -29,53 +29,21 @@ public class PatternViewFragment extends Fragment {
         layout.setBackgroundColor(0xFF64B5F6);
 
         lockView = (PatternView) view.findViewById(R.id.patternLock);
-        lockView.setInStealthMode(false);
+        lockView.setVibrate(true);
         lockView.setOnPatternListener(new PatternView.OnPatternListener() {
             @Override
             public void onPatternDetected(List<PatternView.Cell> pattern, String SimplePattern) {
                 if (!SimplePattern.equals(correctPattern)) {
-                    lockView.setDisplayMode(PatternView.DisplayMode.Wrong);
-
-                    Toast.makeText(getActivity(), "Pattern is invalid \n" + lockView.getPattern(), Toast.LENGTH_SHORT).show();
-                    lockView.clearPattern();
+                    Toast.makeText(getActivity(), getString(R.string.PatternInvalid), Toast.LENGTH_SHORT).show();
                 } else {
-                    lockView.setDisplayMode(PatternView.DisplayMode.Correct);
-                    Toast.makeText(getActivity(), "Pattern is correct", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.PatternCorrect), Toast.LENGTH_SHORT).show();
                 }
+
+                lockView.clearPattern();
                 super.onPatternDetected(pattern, SimplePattern);
             }
         });
 
         return view;
     }
-
-    /*@Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FrameLayout layout = new FrameLayout(getActivity());
-        layout.setBackgroundColor(0xFFF0F0F0);
-
-        FrameLayout lockFrame = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.pattern_fr, null);
-        lockFrame.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
-        layout.addView(lockFrame);
-
-        lockView = (MaterialLockView) getActivity().findViewById(R.id.patternLock);
-        lockView.setOnPatternListener(new MaterialLockView.OnPatternListener() {
-            @Override
-            public void onPatternDetected(List<MaterialLockView.Cell> pattern, String SimplePattern) {
-                if (!SimplePattern.equals(correctPattern)) {
-                    lockView.setDisplayMode(MaterialLockView.DisplayMode.Wrong);
-
-                    Toast.makeText(getActivity(), "Pattern is invalid", Toast.LENGTH_SHORT).show();
-                    lockView.clearPattern();
-                } else {
-                    lockView.setDisplayMode(MaterialLockView.DisplayMode.Correct);
-                    Toast.makeText(getActivity(), "Pattern is correct", Toast.LENGTH_SHORT).show();
-                }
-                super.onPatternDetected(pattern, SimplePattern);
-            }
-        });
-
-        return layout;
-    }*/
 }

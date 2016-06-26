@@ -83,19 +83,16 @@ public class RecyclerFragment extends Fragment {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ArrayList<ItemModel> items = new ArrayList<>();
-        items.add(new ItemModel(0, R.drawable.space1, "Primary text 0", "Secondary text 0"));
-        items.add(new ItemModel(1, R.drawable.space2, "Primary text 1", "Secondary text 1"));
-        items.add(new ItemModel(2, R.drawable.space3, "Primary text 2", "Secondary text 2"));
-        items.add(new ItemModel(3, R.drawable.space4, "Primary text 3", "Secondary text 3"));
-        items.add(new ItemModel(4, R.drawable.space5, "Primary text 4", "Secondary text 4"));
-        items.add(new ItemModel(5, R.drawable.space6, "Primary text 5", "Secondary text 5"));
-        items.add(new ItemModel(6, R.drawable.space1, "Primary text 6", "Secondary text 6"));
-        items.add(new ItemModel(7, R.drawable.space2, "Primary text 7", "Secondary text 7"));
-        items.add(new ItemModel(8, R.drawable.space3, "Primary text 8", "Secondary text 8"));
-        items.add(new ItemModel(9, R.drawable.space4, "Primary text 9", "Secondary text 9"));
-        items.add(new ItemModel(10, R.drawable.space5, "Primary text 10", "Secondary text 10"));
-        items.add(new ItemModel(11, R.drawable.space6, "Primary text 11", "Secondary text 11"));
-        items.add(new ItemModel(12, R.drawable.space1, "Primary text 12", "Secondary text 12"));
+
+        items.add(new ItemModel(1, R.drawable.space1, "1. Primary text", "Secondary text"));
+        items.add(new ItemModel(2, R.drawable.space2, "2. Primary text", "Secondary text"));
+        items.add(new ItemModel(3, R.drawable.space3, "3. Primary text", "Secondary text"));
+        items.add(new ItemModel(4, R.drawable.space4, "4. Primary text", "Secondary text"));
+        items.add(new ItemModel(5, R.drawable.space5, "5. Primary text", "Secondary text"));
+        items.add(new ItemModel(6, R.drawable.space6, "6. Primary text", "Secondary text"));
+        items.add(new ItemModel(7, R.drawable.space1, "7. Primary text", "Secondary text"));
+        items.add(new ItemModel(8, R.drawable.space2, "8. Primary text", "Secondary text"));
+        items.add(new ItemModel(9, R.drawable.space3, "9. Primary text", "Secondary text"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 
@@ -195,16 +192,14 @@ public class RecyclerFragment extends Fragment {
                 recyclerCell.setOnItemClick(new RecyclerCell.OnRecyclerClickListener() {
                     @Override
                     public void onClick() {
-                        int i = getAdapterPosition();
-                        Toast.makeText(getActivity(), getString(R.string.ClickOnCard, i), Toast.LENGTH_SHORT).show();
+                        final ItemModel item = items.get(getAdapterPosition());
+                        Toast.makeText(getActivity(), getString(R.string.ClickOnItem, item.getId()), Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 recyclerCell.setOnOptionsClick(new RecyclerCell.OnOptionClickListener() {
                     @Override
                     public void onClick() {
-                        final ItemModel item = (ItemModel) items.get(getAdapterPosition());
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(R.string.Options);
                         builder.setItems(new CharSequence[]{getString(R.string.Open), getString(R.string.Remove)
@@ -212,7 +207,8 @@ public class RecyclerFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i == 0) {
-                                    Toast.makeText(getActivity(), "Opening card " + item.getId(), Toast.LENGTH_SHORT).show();
+                                    final ItemModel item = items.get(getAdapterPosition());
+                                    Toast.makeText(getActivity(), getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());

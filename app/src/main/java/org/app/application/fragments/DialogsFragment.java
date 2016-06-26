@@ -60,8 +60,6 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
     private Button mButton13;
     private Button mButton14;
 
-    private DialogFragment dialog;
-
     private List<Button> buttons = new ArrayList<>();
 
     @Override
@@ -155,6 +153,8 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        DialogFragment dialog;
+
         if (v == mButton1) {
             dialog = new ItemsDialog();
             dialog.show(getFragmentManager(), "items");

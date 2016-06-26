@@ -64,13 +64,13 @@ public class LaunchActivity extends FragmentActivity {
                     @Override
                     public void onItemClick(int id) {
                         if (id == -1) {
-                            Toast.makeText(LaunchActivity.this, "Drawer is Not Implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Drawer is not implemented", Toast.LENGTH_SHORT).show();
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
                         } else if (id == settings) {
                             startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
                         } else if (id == adding) {
-                            Toast.makeText(LaunchActivity.this, "Adding is Not Implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Adding is not implemented", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -114,14 +114,10 @@ public class LaunchActivity extends FragmentActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
 
         FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();

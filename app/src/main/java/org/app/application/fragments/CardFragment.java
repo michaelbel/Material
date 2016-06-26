@@ -82,19 +82,15 @@ public class CardFragment extends Fragment {
 
         ArrayList<Object> items = new ArrayList<>();
 
-        items.add(new CardModel(0, R.drawable.space1, "Card main text 0", "Card middle text 0", "Card small text 0"));
-        items.add(new CardModel(1, R.drawable.space2, "Card main text 1", "Card middle text 1", "Card small text 1"));
-        items.add(new CardModel(2, R.drawable.space3, "Card main text 2", "Card middle text 2", "Card small text 2"));
-        items.add(new CardModel(3, R.drawable.space4, "Card main text 3", "Card middle text 3", "Card small text 3"));
-        items.add(new CardModel(4, R.drawable.space5, "Card main text 4", "Card middle text 4", "Card small text 4"));
-        items.add(new CardModel(5, R.drawable.space6, "Card main text 5", "Card middle text 5", "Card small text 5"));
-        items.add(new CardModel(6, R.drawable.space1, "Card main text 6", "Card middle text 6", "Card small text 6"));
-        items.add(new CardModel(7, R.drawable.space2, "Card main text 7", "Card middle text 7", "Card small text 7"));
-        items.add(new CardModel(8, R.drawable.space3, "Card main text 8", "Card middle text 8", "Card small text 8"));
-        items.add(new CardModel(9, R.drawable.space4, "Card main text 9", "Card middle text 9", "Card small text 9"));
-        items.add(new CardModel(10, R.drawable.space5, "Card main text 10", "Card middle text 10", "Card small text 10"));
-        items.add(new CardModel(11, R.drawable.space6, "Card main text 11", "Card middle text 11", "Card small text 11"));
-        items.add(new CardModel(12, R.drawable.space1, "Card main text 12", "Card middle text 12", "Card small text 12"));
+        items.add(new CardModel(1, R.drawable.space1, "1. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(2, R.drawable.space2, "2. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(3, R.drawable.space3, "3. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(4, R.drawable.space4, "4. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(5, R.drawable.space5, "5. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(6, R.drawable.space6, "6. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(7, R.drawable.space1, "7. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(8, R.drawable.space2, "8. Main text", "Middle text", "Small text"));
+        items.add(new CardModel(9, R.drawable.space3, "9. Main text", "Middle text", "Small text"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 
@@ -156,24 +152,24 @@ public class CardFragment extends Fragment {
                 cardCell.setOnCardClick(new CardCell.OnCardClickListener() {
                     @Override
                     public void onClick() {
-                        int i = getAdapterPosition();
-                        Toast.makeText(getActivity(), getString(R.string.ClickOnCard, i), Toast.LENGTH_SHORT).show();
+                        final CardModel item = (CardModel) items.get(getAdapterPosition());
+                        Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 cardCell.setOnOptionsClick(new CardCell.OnOptionClickListener() {
                     @Override
                     public void onClick() {
-                        final CardModel item = (CardModel) items.get(getAdapterPosition());
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(R.string.Options);
                         builder.setItems(new CharSequence[]{getString(R.string.Open), getString(R.string.Remove)
                         }, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                final CardModel item = (CardModel) items.get(getAdapterPosition());
+
                                 if (i == 0) {
-                                    Toast.makeText(getActivity(), "Opening card " + item.getId(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.OpeningCard, item.getId()), Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
