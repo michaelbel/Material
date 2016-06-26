@@ -36,9 +36,8 @@ public class RecyclerCell extends FrameLayout {
 
     private TextView mTextView1;
     private TextView mTextView2;
-    private AvatarImageView mImageView;
     private ImageView mOptionButton;
-    private FrameLayout layout;
+    private AvatarImageView mImageView;
 
     private static Paint mPaint;
     private boolean needDivider = false;
@@ -53,33 +52,30 @@ public class RecyclerCell extends FrameLayout {
 
         if (mPaint == null) {
             mPaint = new Paint();
-            mPaint.setColor(0xffd9d9d9);
+            mPaint.setColor(0xFFD9D9D9);
             mPaint.setStrokeWidth(1);
         }
 
+        this.setClickable(true);
         this.setBackgroundColor(0xFFFFFFFF);
         this.setElevation(AndroidUtilities.dp(0.5F));
+        this.setForeground(AndroidUtilities.customSelectable());
         this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 64));
-
-        layout = new FrameLayout(context);
-        layout.setClickable(true);
-        layout.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        layout.setOnClickListener(new OnClickListener() {
+        this.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (mItemClickListener != null) {
                     mItemClickListener.onClick();
                 }
             }
         });
-        addView(layout);
 
         mImageView = new AvatarImageView(context);
         mImageView.setFocusable(false);
         mImageView.setScaleType(ImageView.ScaleType.CENTER);
         mImageView.setShapeDrawable(AvatarImageView.CIRCLE);
         mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 46, 46, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        layout.addView(mImageView);
+        addView(mImageView);
 
         mTextView1 = new TextView(context);
         mTextView1.setTextColor(0xFF000000);
@@ -87,14 +83,14 @@ public class RecyclerCell extends FrameLayout {
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 80, 10, 21, 0));
-        layout.addView(mTextView1);
+        addView(mTextView1);
 
         mTextView2 = new TextView(context);
         mTextView2.setTextColor(0xFF616161);
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView2.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
-        layout.addView(mTextView2);
+        addView(mTextView2);
 
         mOptionButton = new ImageView(context);
         mOptionButton.setClickable(true);
@@ -111,7 +107,7 @@ public class RecyclerCell extends FrameLayout {
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
         mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
-        layout.addView(mOptionButton);
+        addView(mOptionButton);
     }
 
     public RecyclerCell setImage(int image) {
