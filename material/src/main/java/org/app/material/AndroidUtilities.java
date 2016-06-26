@@ -220,7 +220,7 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
-    public static Drawable customSelector() {
+    public static Drawable customSelectable() {
         return context.getDrawable(R.drawable.list_selector);
     }
 
