@@ -24,13 +24,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.R;
 
 public class Browser {
 
-    public static void openUrl(Context context, String url) {
+    public static void openUrl(@NonNull Context context, String url) {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
@@ -53,11 +54,11 @@ public class Browser {
         } catch (Exception ignored) {}
     }
 
-    public static void openBrowserUrl(Context context, String url) {
+    public static void openBrowserUrl(@NonNull Context context, String url) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
-    public static void openGooglePlayApp(Context context, String packageName) {
+    public static void openGooglePlayApp(@NonNull Context context, String packageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
         } catch (ActivityNotFoundException exception) {
