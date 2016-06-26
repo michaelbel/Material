@@ -1,4 +1,4 @@
-# Material
+## Material
 Material Design Library
 
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
@@ -6,13 +6,13 @@ Material Design Library
 [![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/michaelbel/material/releases)
 [![JitPack](https://img.shields.io/badge/Jitpack-v1.0.0-blue.svg)](https://jitpack.io/#MichaelBel/Material/v1.0.0)
 
-## Requirements
+### Requirements
 
 * Android 5.0
 * Android Studio 2.1.2
 
-## Import
-Project build.gradle
+### Import
+###### Project build.gradle
 ```gradle
 allprojects {
     repositories {
@@ -22,21 +22,21 @@ allprojects {
 }
 ```
 
-Module build.gradle
+###### Module build.gradle
 ```gradle
 dependencies {
     compile 'com.github.michaelbel:material:v1.0.0'
 }
 ```
 
-## Screenshots
+### Screenshots
 <div style="dispaly:flex;">
-    <img  src="/screenshots/screenshot_1.png" width="30%">
-    <img style="margin-left:10px;" src="/screenshots/screenshot_2.png" width="30%">
-    <img style="margin-left:10px;" src="/screenshots/screenshot_3.png" width="30%">
+    <img  src="/screenshots/1.jpg" width="30%">
+    <img style="margin-left:10px;" src="/screenshots/2.jpg" width="30%">
+    <img style="margin-left:10px;" src="/screenshots/3.jpg" width="30%">
 </div>
 
-## License
+### License
 
     Copyright 2015-2016 Michael Bel
 
