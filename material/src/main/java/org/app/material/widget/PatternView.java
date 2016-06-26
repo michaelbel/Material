@@ -1,5 +1,6 @@
 package org.app.material.widget;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -10,14 +11,12 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Debug;
-import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
+import android.support.annotation.Size;
 import android.util.AttributeSet;
-import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -32,29 +31,185 @@ import java.util.List;
 
 public class PatternView extends View {
 
+    public enum DisplayMode {
+        Correct,
+        Animate,
+        Wrong
+    }
+
+    private final int MILLIS_PER_CIRCLE_ANIMATING = 700;
     private static final int LOCK_SIZE = 3;
-    private static final int MATRIX_SIZE = LOCK_SIZE * LOCK_SIZE;
-    private static final int MILLIS_PER_CIRCLE_ANIMATING = 700;
-    private static final float DRAG_THRESHHOLD = 0.0f;
-    private static final boolean PROFILE_DRAWING = false;
+    private final int MATRIX_SIZE = LOCK_SIZE * LOCK_SIZE;
+    private float DRAG_THRESHHOLD = 0.0f;
+    private boolean PROFILE_DRAWING = false;
 
-    private final int mDotSize;
-    private final int mDotSizeActivated;
-    private final int mPathWidth;
+    private int mVibrateDuration = 40;
+    private int mDotSize;
+    private int mDotSizePressed;
+    private int mPathWidth;
+    private int mRegularColor = 0xFFFFFFFF;
+    private int mErrorColor = 0xFFFF5252;
+    private int mSuccessColor = 0xFF388E3C;
+    private long mAnimatingPeriodStart;
     private float mHitFactor = 0.6f;
+    private float mSquareWidth;
+    private float mSquareHeight;
+    private float mInProgressX = -1;
+    private float mInProgressY = -1;
+    private boolean mVibrate = false;
     private boolean mInputEnabled = true;
+    private boolean mMode = false;
+    private boolean mPatternInProgress = false;
+    private boolean mDrawingProfilingStarted = false;
+    private boolean[][] mPatternDrawLookup = new boolean[LOCK_SIZE][LOCK_SIZE];
 
-    private final CellState[][] mCellStates;
-    private final Path mCurrentPath = new Path();
-    private final Rect mInvalidate = new Rect();
-    private final Rect mTmpInvalidateRect = new Rect();
+    private Rect mInvalidate = new Rect();
+    private Rect mTmpInvalidateRect = new Rect();
+    private Path mCurrentPath = new Path();
     private Paint mPaint = new Paint();
     private Paint mPathPaint = new Paint();
-    private OnPatternListener mOnPatternListener;
+    private CellState[][] mCellStates;
     private ArrayList<Cell> mPattern = new ArrayList<>(MATRIX_SIZE);
     private DisplayMode mPatternDisplayMode = DisplayMode.Correct;
     private Interpolator mFastOutSlowInInterpolator;
     private Interpolator mLinearOutSlowInInterpolator;
+    private OnPatternListener mOnPatternListener;
+
+    public PatternView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        AndroidUtilities.bind(context);
+
+        setClickable(true);
+        mPathPaint.setAntiAlias(true);
+        mPathPaint.setDither(true);
+
+        mPathPaint.setColor(mRegularColor);
+        mPathPaint.setStyle(Paint.Style.STROKE);
+        mPathPaint.setStrokeJoin(Paint.Join.ROUND);
+        mPathPaint.setStrokeCap(Paint.Cap.ROUND);
+
+        mPathWidth = AndroidUtilities.dp(3);
+        mPathPaint.setStrokeWidth(mPathWidth);
+        mDotSize = AndroidUtilities.dp(14);
+        mDotSizePressed = AndroidUtilities.dp(18);
+        mPaint.setAntiAlias(true);
+        mPaint.setDither(true);
+
+        mCellStates = new CellState[LOCK_SIZE][LOCK_SIZE];
+
+        for (int i = 0; i < LOCK_SIZE; i++) {
+            for (int j = 0; j < LOCK_SIZE; j++) {
+                mCellStates[i][j] = new CellState();
+                mCellStates[i][j].size = mDotSize;
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= 21 && !isInEditMode()) {
+            mFastOutSlowInInterpolator = AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in);
+            mLinearOutSlowInInterpolator = AnimationUtils.loadInterpolator(context, android.R.interpolator.linear_out_slow_in);
+        }
+    }
+
+    public PatternView setVibrateDuration(int duration) {
+        this.mVibrateDuration = duration;
+        return this;
+    }
+
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    public PatternView setVibrate(boolean vibrate) {
+        this.mVibrate = vibrate;
+        return this;
+    }
+
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    public PatternView setVibrate(boolean vibrate, int duration) {
+        this.mVibrate = vibrate;
+        this.mVibrateDuration = duration;
+        return this;
+    }
+
+    public PatternView setEnableInput(boolean state) {
+        mInputEnabled = state;
+        return this;
+    }
+
+    public PatternView setOnPatternListener(OnPatternListener onPatternListener) {
+        mOnPatternListener = onPatternListener;
+        return this;
+    }
+
+    public PatternView setDisplayMode(DisplayMode displayMode) {
+        mPatternDisplayMode = displayMode;
+
+        if (displayMode == DisplayMode.Animate) {
+            mAnimatingPeriodStart = SystemClock.elapsedRealtime();
+            final Cell first = mPattern.get(0);
+            mInProgressX = getCenterXForColumn(first.column);
+            mInProgressY = getCenterYForRow(first.row);
+            clearPatternDrawLookup();
+        }
+
+        invalidate();
+        return this;
+    }
+
+    public PatternView setDotsSize(@Size(min = 1) int size) {
+        if (size != 0) {
+            this.mDotSize = size;
+        }
+
+        return this;
+    }
+
+    public PatternView setDotsSizePressed(@Size(min = 1)int size) {
+        if (size != 0) {
+            this.mDotSizePressed = size;
+        }
+
+        return this;
+    }
+
+    public PatternView setRegularColor(int color) {
+        this.mRegularColor = color;
+        return this;
+    }
+
+    public PatternView setErrorColor(int color) {
+        this.mErrorColor = color;
+        return this;
+    }
+
+    public PatternView setSuccessColor(int color) {
+        this.mSuccessColor = color;
+        return this;
+    }
+
+    public PatternView setPattern(DisplayMode displayMode, List<Cell> pattern) {
+        mPattern.clear();
+        mPattern.addAll(pattern);
+        clearPatternDrawLookup();
+
+        for (Cell cell : pattern) {
+            mPatternDrawLookup[cell.row][cell.column] = true;
+        }
+
+        setDisplayMode(displayMode);
+        return this;
+    }
+
+    public PatternView setMode(boolean mode) {
+        mMode = mode;
+        return this;
+    }
+
+    public PatternView clearPattern() {
+        mPattern.clear();
+        clearPatternDrawLookup();
+        mPatternDisplayMode = DisplayMode.Correct;
+        invalidate();
+        return this;
+    }
 
 
 
@@ -67,13 +222,13 @@ public class PatternView extends View {
 
     public static class Cell implements Parcelable {
 
-        public final int row, column;
-        static Cell[][] sCells = new Cell[LOCK_SIZE][LOCK_SIZE];
+        private int row, column;
+        private static Cell[][] mCells = new Cell[LOCK_SIZE][LOCK_SIZE];
 
         static {
             for (int i = 0; i < LOCK_SIZE; i++) {
                 for (int j = 0; j < LOCK_SIZE; j++) {
-                    sCells[i][j] = new Cell(i, j);
+                    mCells[i][j] = new Cell(i, j);
                 }
             }
         }
@@ -90,7 +245,7 @@ public class PatternView extends View {
 
         public static synchronized Cell of(int row, int column) {
             checkRange(row, column);
-            return sCells[row][column];
+            return mCells[row][column];
         }
 
         public static synchronized Cell of(int id) {
@@ -109,7 +264,7 @@ public class PatternView extends View {
 
         @Override
         public String toString() {
-            return "(ROW=" + row + ",COL=" + column + ")";
+            return "(ROW = " + row + ",COL = " + column + ")";
         }
 
         @Override
@@ -149,12 +304,6 @@ public class PatternView extends View {
         }
     }
 
-    public enum DisplayMode {
-        Correct,
-        Animate,
-        Wrong
-    }
-
     public static abstract class OnPatternListener {
 
         public void onPatternStart() {}
@@ -166,94 +315,23 @@ public class PatternView extends View {
         public void onPatternDetected(List<Cell> pattern, String SimplePattern) {}
     }
 
-
-    private boolean mDrawingProfilingStarted = false;
-    private boolean[][] mPatternDrawLookup = new boolean[LOCK_SIZE][LOCK_SIZE];
-    private float mInProgressX = -1;
-    private float mInProgressY = -1;
-    private long mAnimatingPeriodStart;
-
-    private boolean mInStealthMode = false;
-    private boolean mEnableHapticFeedback = true;
-    private boolean mPatternInProgress = false;
-    private float mSquareWidth;
-    private float mSquareHeight;
-    private int mRegularColor;
-    private int mErrorColor;
-    private int mSuccessColor;
-
     public static class CellState {
-        public float scale = 1.0f;
-        public float translateY = 0.0f;
-        public float alpha = 1.0f;
+
+        public float scale = 1.0F;
+        public float translateY = 0.0F;
+        public float alpha = 1.0F;
         public float size;
         public float lineEndX = Float.MIN_VALUE;
         public float lineEndY = Float.MIN_VALUE;
         public ValueAnimator lineAnimator;
     }
 
-    public PatternView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-
-        AndroidUtilities.bind(context);
-
-        setClickable(true);
-        mPathPaint.setAntiAlias(true);
-        mPathPaint.setDither(true);
-
-        mRegularColor = 0xFFFFFFFF;
-        mErrorColor = 0xFFFF5252;
-        mSuccessColor = 0xFF388E3C;
-
-        mPathPaint.setColor(mRegularColor);
-        mPathPaint.setStyle(Paint.Style.STROKE);
-        mPathPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPathPaint.setStrokeCap(Paint.Cap.ROUND);
-
-        mPathWidth = AndroidUtilities.dp(3);
-        mPathPaint.setStrokeWidth(mPathWidth);
-        mDotSize = AndroidUtilities.dp(13);
-        mDotSizeActivated = AndroidUtilities.dp(16);
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-
-        mCellStates = new CellState[LOCK_SIZE][LOCK_SIZE];
-
-        for (int i = 0; i < LOCK_SIZE; i++) {
-            for (int j = 0; j < LOCK_SIZE; j++) {
-                mCellStates[i][j] = new CellState();
-                mCellStates[i][j].size = mDotSize;
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= 21 && !isInEditMode()) {
-            mFastOutSlowInInterpolator = AnimationUtils.loadInterpolator(context, android.R.interpolator.fast_out_slow_in);
-            mLinearOutSlowInInterpolator = AnimationUtils.loadInterpolator(context, android.R.interpolator.linear_out_slow_in);
-        }
-    }
-
     public CellState[][] getCellStates() {
         return mCellStates;
     }
 
-    public boolean isInStealthMode() {
-        return mInStealthMode;
-    }
-
-    public boolean isTactileFeedbackEnabled() {
-        return mEnableHapticFeedback;
-    }
-
-    public void setInStealthMode(boolean inStealthMode) {
-        mInStealthMode = inStealthMode;
-    }
-
-    public void setTactileFeedbackEnabled(boolean tactileFeedbackEnabled) {
-        mEnableHapticFeedback = tactileFeedbackEnabled;
-    }
-
-    public void setOnPatternListener(OnPatternListener onPatternListener) {
-        mOnPatternListener = onPatternListener;
+    public boolean isMode() {
+        return mMode;
     }
 
     @SuppressWarnings("unchecked")
@@ -261,50 +339,21 @@ public class PatternView extends View {
         return (List<Cell>) mPattern.clone();
     }
 
-    public void setPattern(DisplayMode displayMode, List<Cell> pattern) {
-        mPattern.clear();
-        mPattern.addAll(pattern);
-        clearPatternDrawLookup();
-
-        for (Cell cell : pattern) {
-            mPatternDrawLookup[cell.row][cell.column] = true;
-        }
-
-        setDisplayMode(displayMode);
-    }
-
     public DisplayMode getDisplayMode() {
         return mPatternDisplayMode;
-    }
-
-    public void setDisplayMode(DisplayMode displayMode) {
-        mPatternDisplayMode = displayMode;
-
-        if (displayMode == DisplayMode.Animate) {
-            if (mPattern.size() == 0) {
-                throw new IllegalStateException("you must have a pattern to animate if you want to set the display mode to animate");
-            }
-
-            mAnimatingPeriodStart = SystemClock.elapsedRealtime();
-            final Cell first = mPattern.get(0);
-            mInProgressX = getCenterXForColumn(first.column);
-            mInProgressY = getCenterYForRow(first.row);
-            clearPatternDrawLookup();
-        }
-        invalidate();
     }
 
     private String getSimplePattern(List<Cell> pattern) {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Cell cell : pattern) {
-            stringBuilder.append(getSipmleCellPosition(cell));
+            stringBuilder.append(getSimpleCellPosition(cell));
         }
 
         return stringBuilder.toString();
     }
 
-    private String getSipmleCellPosition(Cell cell) {
+    private String getSimpleCellPosition(Cell cell) {
         if (cell == null) {
             return "";
         }
@@ -369,35 +418,12 @@ public class PatternView extends View {
         }
     }
 
-    public void clearPattern() {
-        resetPattern();
-    }
-
-    private void resetPattern() {
-        mPattern.clear();
-        clearPatternDrawLookup();
-        mPatternDisplayMode = DisplayMode.Correct;
-        invalidate();
-    }
-
     private void clearPatternDrawLookup() {
         for (int i = 0; i < LOCK_SIZE; i++) {
             for (int j = 0; j < LOCK_SIZE; j++) {
                 mPatternDrawLookup[i][j] = false;
             }
         }
-    }
-
-    public void setEnableInput(boolean state) {
-        mInputEnabled = state;
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        final int width = w - getPaddingLeft() - getPaddingRight();
-        mSquareWidth = width / (float) LOCK_SIZE;
-        final int height = h - getPaddingTop() - getPaddingBottom();
-        mSquareHeight = height / (float) LOCK_SIZE;
     }
 
     private int resolveMeasured(int measureSpec, int desired) {
@@ -415,17 +441,8 @@ public class PatternView extends View {
             default:
                 result = specSize;
         }
-        return result;
-    }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        final int minimumWidth = getSuggestedMinimumWidth();
-        final int minimumHeight = getSuggestedMinimumHeight();
-        int viewWidth = resolveMeasured(widthMeasureSpec, minimumWidth);
-        int viewHeight = resolveMeasured(heightMeasureSpec, minimumHeight);
-        viewWidth = viewHeight = Math.min(viewWidth, viewHeight);
-        setMeasuredDimension(viewWidth, viewHeight);
+        return result;
     }
 
     private Cell detectAndAddHit(float x, float y) {
@@ -459,9 +476,8 @@ public class PatternView extends View {
 
             addCellToPattern(cell);
 
-            if (mEnableHapticFeedback) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR)
-                    performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING | HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (mVibrate) {
+                AndroidUtilities.vibrate(mVibrateDuration);
             }
 
             return cell;
@@ -474,7 +490,7 @@ public class PatternView extends View {
         mPatternDrawLookup[newCell.row][newCell.column] = true;
         mPattern.add(newCell);
 
-        if (!mInStealthMode) {
+        if (!mMode) {
             startCellActivatedAnimation(newCell);
         }
 
@@ -484,10 +500,10 @@ public class PatternView extends View {
     private void startCellActivatedAnimation(Cell cell) {
         final CellState cellState = mCellStates[cell.row][cell.column];
 
-        startSizeAnimation(mDotSize, mDotSizeActivated, 96, mLinearOutSlowInInterpolator, cellState, new Runnable() {
+        startSizeAnimation(mDotSize, mDotSizePressed, 96, mLinearOutSlowInInterpolator, cellState, new Runnable() {
             @Override
             public void run() {
-                startSizeAnimation(mDotSizeActivated, mDotSize, 192, mFastOutSlowInInterpolator, cellState, null);
+                startSizeAnimation(mDotSizePressed, mDotSize, 192, mFastOutSlowInInterpolator, cellState, null);
             }
         });
 
@@ -495,10 +511,6 @@ public class PatternView extends View {
     }
 
     private void startLineEndAnimation(final CellState state, final float startX, final float startY, final float targetX, final float targetY) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            return;
-        }
-
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -525,48 +537,27 @@ public class PatternView extends View {
     }
 
     private void startSizeAnimation(float start, float end, long duration, Interpolator interpolator, final CellState state, final Runnable endRunnable) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            FloatAnimator animator = new FloatAnimator(start, end, duration);
-
-            animator.addEventListener(new FloatAnimator.SimpleEventListener() {
-                @Override
-                public void onAnimationUpdate(FloatAnimator animator) {
-                    state.size = animator.getAnimatedValue();
-                    invalidate();
-                }
-
-                @Override
-                public void onAnimationEnd(FloatAnimator animator) {
-                    if (endRunnable != null)
-                        endRunnable.run();
-                }
-
-            });
-
-            animator.start();
-        } else {
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(start, end);
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    state.size = (Float) animation.getAnimatedValue();
-                    invalidate();
-                }
-            });
-
-            if (endRunnable != null) {
-                valueAnimator.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        endRunnable.run();
-                    }
-                });
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(start, end);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                state.size = (Float) animation.getAnimatedValue();
+                invalidate();
             }
+        });
 
-            valueAnimator.setInterpolator(interpolator);
-            valueAnimator.setDuration(duration);
-            valueAnimator.start();
+        if (endRunnable != null) {
+            valueAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    endRunnable.run();
+                }
+            });
         }
+
+        valueAnimator.setInterpolator(interpolator);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
     }
 
     private Cell checkForNewHit(float x, float y) {
@@ -619,64 +610,6 @@ public class PatternView extends View {
         }
 
         return -1;
-    }
-
-    @Override
-    public boolean onHoverEvent(MotionEvent event) {
-        if (((AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE)).isTouchExplorationEnabled()) {
-            final int action = event.getAction();
-
-            switch (action) {
-                case MotionEvent.ACTION_HOVER_ENTER:
-                    event.setAction(MotionEvent.ACTION_DOWN);
-                    break;
-                case MotionEvent.ACTION_HOVER_MOVE:
-                    event.setAction(MotionEvent.ACTION_MOVE);
-                    break;
-                case MotionEvent.ACTION_HOVER_EXIT:
-                    event.setAction(MotionEvent.ACTION_UP);
-                    break;
-            }
-
-            onTouchEvent(event);
-            event.setAction(action);
-        }
-
-        return super.onHoverEvent(event);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (!mInputEnabled || !isEnabled()) {
-            return false;
-        }
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                handleActionDown(event);
-                return true;
-            case MotionEvent.ACTION_UP:
-                handleActionUp(event);
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                handleActionMove(event);
-                return true;
-            case MotionEvent.ACTION_CANCEL:
-                mPatternInProgress = false;
-                resetPattern();
-                notifyPatternCleared();
-
-                if (PROFILE_DRAWING) {
-                    if (mDrawingProfilingStarted) {
-                        Debug.stopMethodTracing();
-                        mDrawingProfilingStarted = false;
-                    }
-                }
-
-                return true;
-        }
-
-        return false;
     }
 
     private void handleActionMove(MotionEvent event) {
@@ -779,7 +712,7 @@ public class PatternView extends View {
     }
 
     private void handleActionDown(MotionEvent event) {
-        resetPattern();
+        clearPattern();
 
         final float x = event.getX();
         final float y = event.getY();
@@ -819,6 +752,40 @@ public class PatternView extends View {
 
     private float getCenterYForRow(int row) {
         return getPaddingTop() + row * mSquareHeight + mSquareHeight / 2f;
+    }
+
+    private float calculateLastSegmentAlpha(float x, float y, float lastX, float lastY) {
+        float diffX = x - lastX;
+        float diffY = y - lastY;
+        float dist = (float) Math.sqrt(diffX * diffX + diffY * diffY);
+        float frac = dist / mSquareWidth;
+        return Math.min(1f, Math.max(0f, (frac - 0.3f) * 4f));
+    }
+
+    private int getCurrentColor(boolean partOfPattern) {
+        if (!partOfPattern || mMode || mPatternInProgress) {
+            return mRegularColor;
+        } else if (mPatternDisplayMode == DisplayMode.Wrong) {
+            return mErrorColor;
+        } else if (mPatternDisplayMode == DisplayMode.Correct || mPatternDisplayMode == DisplayMode.Animate) {
+            return mSuccessColor;
+        } else {
+            throw new IllegalStateException("unknown display mode " + mPatternDisplayMode);
+        }
+    }
+
+    private void drawCircle(Canvas canvas, float centerX, float centerY, float size, boolean partOfPattern, float alpha) {
+        mPaint.setColor(getCurrentColor(partOfPattern));
+        mPaint.setAlpha((int) (alpha * 255));
+        canvas.drawCircle(centerX, centerY, size / 2, mPaint);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        final int width = w - getPaddingLeft() - getPaddingRight();
+        mSquareWidth = width / (float) LOCK_SIZE;
+        final int height = h - getPaddingTop() - getPaddingBottom();
+        mSquareHeight = height / (float) LOCK_SIZE;
     }
 
     @Override
@@ -873,7 +840,7 @@ public class PatternView extends View {
             }
         }
 
-        final boolean drawPath = !mInStealthMode;
+        final boolean drawPath = !mMode;
 
         if (drawPath) {
             mPathPaint.setColor(getCurrentColor(true));
@@ -921,242 +888,70 @@ public class PatternView extends View {
         }
     }
 
-    private float calculateLastSegmentAlpha(float x, float y, float lastX, float lastY) {
-        float diffX = x - lastX;
-        float diffY = y - lastY;
-        float dist = (float) Math.sqrt(diffX * diffX + diffY * diffY);
-        float frac = dist / mSquareWidth;
-        return Math.min(1f, Math.max(0f, (frac - 0.3f) * 4f));
-    }
+    @Override
+    public boolean onHoverEvent(MotionEvent event) {
+        if (((AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE)).isTouchExplorationEnabled()) {
+            final int action = event.getAction();
 
-    private int getCurrentColor(boolean partOfPattern) {
-        if (!partOfPattern || mInStealthMode || mPatternInProgress) {
-            return mRegularColor;
-        } else if (mPatternDisplayMode == DisplayMode.Wrong) {
-            return mErrorColor;
-        } else if (mPatternDisplayMode == DisplayMode.Correct || mPatternDisplayMode == DisplayMode.Animate) {
-            return mSuccessColor;
-        } else {
-            throw new IllegalStateException("unknown display mode " + mPatternDisplayMode);
-        }
-    }
-
-    private void drawCircle(Canvas canvas, float centerX, float centerY, float size, boolean partOfPattern, float alpha) {
-        mPaint.setColor(getCurrentColor(partOfPattern));
-        mPaint.setAlpha((int) (alpha * 255));
-        canvas.drawCircle(centerX, centerY, size / 2, mPaint);
-    }
-
-    private static class SavedState extends BaseSavedState {
-
-        private final String mSerializedPattern;
-        private final int mDisplayMode;
-        private final boolean mInputEnabled;
-        private final boolean mInStealthMode;
-        private final boolean mTactileFeedbackEnabled;
-
-        private SavedState(Parcelable superState, String serializedPattern, int displayMode, boolean inputEnabled, boolean inStealthMode, boolean tactileFeedbackEnabled) {
-            super(superState);
-            mSerializedPattern = serializedPattern;
-            mDisplayMode = displayMode;
-            mInputEnabled = inputEnabled;
-            mInStealthMode = inStealthMode;
-            mTactileFeedbackEnabled = tactileFeedbackEnabled;
-        }
-
-        private SavedState(Parcel in) {
-            super(in);
-            mSerializedPattern = in.readString();
-            mDisplayMode = in.readInt();
-            mInputEnabled = (Boolean) in.readValue(null);
-            mInStealthMode = (Boolean) in.readValue(null);
-            mTactileFeedbackEnabled = (Boolean) in.readValue(null);
-        }
-
-        public String getSerializedPattern() {
-            return mSerializedPattern;
-        }
-
-        public int getDisplayMode() {
-            return mDisplayMode;
-        }
-
-        public boolean isInputEnabled() {
-            return mInputEnabled;
-        }
-
-        public boolean isInStealthMode() {
-            return mInStealthMode;
-        }
-
-        public boolean isTactileFeedbackEnabled() {
-            return mTactileFeedbackEnabled;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeString(mSerializedPattern);
-            dest.writeInt(mDisplayMode);
-            dest.writeValue(mInputEnabled);
-            dest.writeValue(mInStealthMode);
-            dest.writeValue(mTactileFeedbackEnabled);
-        }
-
-        @SuppressWarnings("unused")
-        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
-
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
+            switch (action) {
+                case MotionEvent.ACTION_HOVER_ENTER:
+                    event.setAction(MotionEvent.ACTION_DOWN);
+                    break;
+                case MotionEvent.ACTION_HOVER_MOVE:
+                    event.setAction(MotionEvent.ACTION_MOVE);
+                    break;
+                case MotionEvent.ACTION_HOVER_EXIT:
+                    event.setAction(MotionEvent.ACTION_UP);
+                    break;
             }
 
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
+            onTouchEvent(event);
+            event.setAction(action);
+        }
+
+        return super.onHoverEvent(event);
     }
 
-    public static class FloatAnimator {
-
-        public interface EventListener {
-
-            void onAnimationStart(@NonNull FloatAnimator animator);
-
-            void onAnimationUpdate(@NonNull FloatAnimator animator);
-
-            void onAnimationCancel(@NonNull FloatAnimator animator);
-
-            void onAnimationEnd(@NonNull FloatAnimator animator);
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (!mInputEnabled || !isEnabled()) {
+            return false;
         }
 
-        public static class SimpleEventListener implements EventListener {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                handleActionDown(event);
+                return true;
+            case MotionEvent.ACTION_UP:
+                handleActionUp(event);
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                handleActionMove(event);
+                return true;
+            case MotionEvent.ACTION_CANCEL:
+                mPatternInProgress = false;
+                clearPattern();
+                notifyPatternCleared();
 
-            @Override
-            public void onAnimationStart(@NonNull FloatAnimator animator) {}
-
-            @Override
-            public void onAnimationUpdate(@NonNull FloatAnimator animator) {}
-
-            @Override
-            public void onAnimationCancel(@NonNull FloatAnimator animator) {}
-
-            @Override
-            public void onAnimationEnd(@NonNull FloatAnimator animator) {}
-        }
-
-        private static final long ANIMATION_DELAY = 1;
-        private final float mStartValue, mEndValue;
-        private final long mDuration;
-        private float mAnimatedValue;
-        private List<EventListener> mEventListeners;
-        private Handler mHandler;
-        private long mStartTime;
-
-        public FloatAnimator(float start, float end, long duration) {
-            mStartValue = start;
-            mEndValue = end;
-            mDuration = duration;
-            mAnimatedValue = mStartValue;
-        }
-
-        public void addEventListener(@Nullable EventListener listener) {
-            if (listener == null) {
-                return;
-            }
-
-            mEventListeners.add(listener);
-        }
-
-        public float getAnimatedValue() {
-            return mAnimatedValue;
-        }
-
-        public void start() {
-            if (mHandler != null) {
-                return;
-            }
-
-            notifyAnimationStart();
-
-            mStartTime = System.currentTimeMillis();
-
-            mHandler = new Handler();
-            mHandler.post(new Runnable() {
-
-                @Override
-                public void run() {
-                    final Handler handler = mHandler;
-
-                    if (handler == null) {
-                        return;
-                    }
-
-                    final long elapsedTime = System.currentTimeMillis() - mStartTime;
-
-                    if (elapsedTime > mDuration) {
-                        mHandler = null;
-                        notifyAnimationEnd();
-                    } else {
-                        float fraction = mDuration > 0 ? (float) (elapsedTime) / mDuration : 1f;
-                        float delta = mEndValue - mStartValue;
-                        mAnimatedValue = mStartValue + delta * fraction;
-                        notifyAnimationUpdate();
-                        handler.postDelayed(this, ANIMATION_DELAY);
+                if (PROFILE_DRAWING) {
+                    if (mDrawingProfilingStarted) {
+                        Debug.stopMethodTracing();
+                        mDrawingProfilingStarted = false;
                     }
                 }
-            });
+
+                return true;
         }
 
-        public void cancel() {
-            if (mHandler == null) {
-                return;
-            }
+        return false;
+    }
 
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler = null;
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int viewWidth = resolveMeasured(widthMeasureSpec, getSuggestedMinimumWidth());
+        int viewHeight = resolveMeasured(heightMeasureSpec, getSuggestedMinimumHeight());
 
-            notifyAnimationCancel();
-            notifyAnimationEnd();
-        }
-
-        protected void notifyAnimationStart() {
-            final List<EventListener> listeners = mEventListeners;
-
-            if (listeners != null) {
-                for (EventListener listener : listeners) {
-                    listener.onAnimationStart(this);
-                }
-            }
-        }
-
-        protected void notifyAnimationUpdate() {
-            final List<EventListener> listeners = mEventListeners;
-
-            if (listeners != null) {
-                for (EventListener listener : listeners) {
-                    listener.onAnimationUpdate(this);
-                }
-            }
-        }
-
-        protected void notifyAnimationCancel() {
-            final List<EventListener> listeners = mEventListeners;
-
-            if (listeners != null) {
-                for (EventListener listener : listeners) {
-                    listener.onAnimationCancel(this);
-                }
-            }
-        }
-
-        protected void notifyAnimationEnd() {
-            final List<EventListener> listeners = mEventListeners;
-
-            if (listeners != null) {
-                for (EventListener listener : listeners) {
-                    listener.onAnimationEnd(this);
-                }
-            }
-        }
+        viewWidth = viewHeight = Math.min(viewWidth, viewHeight);
+        setMeasuredDimension(viewWidth, viewHeight);
     }
 }
