@@ -22,7 +22,6 @@ import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,7 +36,6 @@ public class CardCell extends CardView {
     private TextView mTextView3;
     private ImageView mImageView;
     private ImageView mOptionButton;
-    private FrameLayout layout;
 
     public OnCardClickListener mCardClickListener;
     public OnOptionClickListener mOptionClickListener;
@@ -47,29 +45,26 @@ public class CardCell extends CardView {
 
         AndroidUtilities.bind(context);
 
+        this.setClickable(true);
         this.setCardBackgroundColor(0xFFFFFFFF);
         this.setRadius(AndroidUtilities.dp(3.5F));
         this.setCardElevation(AndroidUtilities.dp(1.8F));
+        this.setForeground(AndroidUtilities.customSelectable());
         this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
-
-        layout = new FrameLayout(context);
-        layout.setClickable(true);
-        layout.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        layout.setOnClickListener(new OnClickListener() {
+        this.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (mCardClickListener != null) {
                     mCardClickListener.onClick();
                 }
             }
         });
-        addView(layout);
 
         mImageView = new ImageView(context);
         mImageView.setFocusable(false);
         mImageView.setScaleType(ImageView.ScaleType.CENTER);
         mImageView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 10, 0, 10, 0));
-        layout.addView(mImageView);
+        addView(mImageView);
 
         mTextView1 = new TextView(context);
         mTextView1.setTextColor(0xFF000000);
@@ -77,21 +72,21 @@ public class CardCell extends CardView {
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
-        layout.addView(mTextView1);
+        addView(mTextView1);
 
         mTextView2 = new TextView(context);
         mTextView2.setTextColor(0xFF616161);
         mTextView2.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 100, 0, 21, 0));
-        layout.addView(mTextView2);
+        addView(mTextView2);
 
         mTextView3 = new TextView(context);
         mTextView3.setTextColor(0xFF9E9E9E);
         mTextView3.setGravity(Gravity.START | Gravity.BOTTOM);
         mTextView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
-        layout.addView(mTextView3);
+        addView(mTextView3);
 
         mOptionButton = new ImageView(context);
         mOptionButton.setClickable(true);
@@ -108,7 +103,7 @@ public class CardCell extends CardView {
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
         mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
-        layout.addView(mOptionButton);
+        addView(mOptionButton);
     }
 
     public CardCell setText1(String text) {
