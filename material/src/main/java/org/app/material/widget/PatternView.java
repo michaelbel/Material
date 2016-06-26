@@ -43,7 +43,7 @@ public class PatternView extends View {
     private float DRAG_THRESHHOLD = 0.0f;
     private boolean PROFILE_DRAWING = false;
 
-    private int mVibrateDuration = 40;
+    private int mVibrateDuration = 30;
     private int mDotSize;
     private int mDotSizePressed;
     private int mPathWidth;
