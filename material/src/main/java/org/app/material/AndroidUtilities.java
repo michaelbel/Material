@@ -16,6 +16,7 @@
 
 package org.app.material;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -24,6 +25,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
@@ -55,39 +57,25 @@ public class AndroidUtilities {
 
     public static Point displaySize = new Point();
 
+    private static Vibrator vibrator;
+
     public static void bind(@NonNull Context context) {
         AndroidUtilities.context = context;
     }
 
     public static int dp (float value) {
-        if (value == 0) {
-            return 0;
-        }
-
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
     public static int dp (@NonNull Context context, float value) {
-        if (value == 0) {
-            return 0;
-        }
-
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
     public static float dpf2(float value) {
-        if (value == 0) {
-            return 0;
-        }
-
         return context.getResources().getDisplayMetrics().density * value;
     }
 
     public static float dpf2(@NonNull Context context, float value) {
-        if (value == 0) {
-            return 0;
-        }
-
         return context.getResources().getDisplayMetrics().density * value;
     }
 
@@ -101,21 +89,8 @@ public class AndroidUtilities {
         return density;
     }
 
-    public static void runOnUIThread(Runnable runnable) {
-        runOnUIThread(context, runnable, 0);
-    }
-
     public static void runOnUIThread(@NonNull Context context, Runnable runnable) {
         runOnUIThread(context, runnable, 0);
-    }
-
-    public static void runOnUIThread(Runnable runnable, long delay) {
-        if (delay == 0) {
-            applicationHandler = new Handler(context.getMainLooper());
-            applicationHandler.post(runnable);
-        } else {
-            applicationHandler.postDelayed(runnable, delay);
-        }
     }
 
     public static void runOnUIThread(@NonNull Context context, Runnable runnable, long delay) {
@@ -125,16 +100,6 @@ public class AndroidUtilities {
         } else {
             applicationHandler.postDelayed(runnable, delay);
         }
-    }
-
-    public static void cancelRunOnUIThread(Runnable runnable) {
-        applicationHandler = new Handler(context.getMainLooper());
-        applicationHandler.removeCallbacks(runnable);
-    }
-
-    public static void cancelRunOnUIThread(@NonNull Context context, Runnable runnable) {
-        applicationHandler = new Handler(context.getMainLooper());
-        applicationHandler.removeCallbacks(runnable);
     }
 
     public static boolean isPortrait() {
@@ -316,4 +281,21 @@ public class AndroidUtilities {
 
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public static void vibrate(int duration) {
+        vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        vibrator.vibrate(duration);
+    }
+
+    public static void vibrate(@NonNull Context context, int duration) {
+        vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        vibrator.vibrate(duration);
+    }
+
+    /*private boolean hasVibratePermission(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        int hasPermission = packageManager.checkPermission(android.Manifest.permission.VIBRATE, context.getPackageName());
+
+        return hasPermission == PackageManager.PERMISSION_GRANTED;
+    }*/
 }
