@@ -32,4 +32,5 @@
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/label"
         android:layout_toStartOf="@id/progress_text"/>
+
 </merge>
