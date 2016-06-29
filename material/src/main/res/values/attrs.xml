@@ -1,4 +1,19 @@
 <resources>
+    <!--Switch-->
+    <declare-styleable name="Switch">
+
+    </declare-styleable>
+
+    <!--CheckBox-->
+    <declare-styleable name="CheckBox">
+
+    </declare-styleable>
+
+    <!--RadioButton-->
+    <declare-styleable name="RadioButton">
+
+    </declare-styleable>
+
     <!--ColorPickerHolo-->
     <declare-styleable name="ColorPickerHolo">
         <attr name="color_wheel_radius" format="dimension"/>
