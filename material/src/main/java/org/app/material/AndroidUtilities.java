@@ -32,6 +32,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import java.util.Hashtable;
+import java.util.Locale;
 
 public class AndroidUtilities {
 
@@ -224,7 +225,7 @@ public class AndroidUtilities {
         return context.getDrawable(R.drawable.list_selector);
     }
 
-    public static Drawable customSelector(@NonNull Context context) {
+    public static Drawable customSelectable(@NonNull Context context) {
         return context.getDrawable(R.drawable.list_selector);
     }
 
@@ -298,4 +299,26 @@ public class AndroidUtilities {
 
         return hasPermission == PackageManager.PERMISSION_GRANTED;
     }*/
+
+    public static String formatSize(long size) {
+        if (size < 1024) {
+            return String.format(Locale.US, "%d B", size);
+        } else if (size < Math.pow(1024, 2)) {
+            return String.format(Locale.US, "%.1f KB", size / 1024.0f);
+        } else if (size < Math.pow(1024, 3)) {
+            return String.format(Locale.US, "%.1f MB", size / Math.pow(1024.0f, 2));
+        } else if (size < Math.pow(1024, 4)) {
+            return String.format(Locale.US, "%.1f GB", size / Math.pow(1024.0f, 3));
+        } else if (size < Math.pow(1024, 5)) {
+            return String.format(Locale.US, "%.1f TB", size / Math.pow(1024.0f, 4));
+        } else if (size < Math.pow(1024, 6)) {
+            return String.format(Locale.US, "%.1f PB", size / Math.pow(1024.0f, 5));
+        } else if (size < Math.pow(1024, 7)) {
+            return String.format(Locale.US, "%.1f EB", size / Math.pow(1024.0f, 6));
+        } else if (size < Math.pow(1024, 8)) {
+            return String.format(Locale.US, "%.1f ZB", size / Math.pow(1024.0f, 7));
+        } else {
+            return String.format(Locale.US, "%.1f YB", size / Math.pow(1024.0f, 8));
+        }
+    }
 }
