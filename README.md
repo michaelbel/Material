@@ -3,8 +3,8 @@ Material Design Library
 
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
 [![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Release](https://img.shields.io/badge/Release-v1.0.1-blue.svg)](https://github.com/michaelbel/material/releases)
-[![JitPack](https://img.shields.io/badge/JitPack-v1.0.1-blue.svg)](https://jitpack.io/#MichaelBel/Material/1.0.1)
+[![Release](https://img.shields.io/badge/Release-v0.0.5-blue.svg)](https://github.com/michaelbel/material/releases)
+[![JitPack](https://img.shields.io/badge/JitPack-v0.0.5-blue.svg)](https://jitpack.io/#MichaelBel/Material/0.0.5)
 
 ### Requirements
 
@@ -25,7 +25,7 @@ allprojects {
 ###### Module build.gradle
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:1.0.1'
+    compile 'com.github.michaelbel:material:0.0.5'
 }
 ```
 
