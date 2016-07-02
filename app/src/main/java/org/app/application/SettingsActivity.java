@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
@@ -27,10 +26,12 @@ public class SettingsActivity extends FragmentActivity {
                     @Override
                     public void onItemClick(int id) {
                         if (id == -1) {
-                            Toast.makeText(SettingsActivity.this, "Return to prev activity", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     }
                 });
+        actionBar.setElevation(AndroidUtilities.dp(this, 1.0F));
+
         layout.addView(actionBar);
 
         setContentView(layout);

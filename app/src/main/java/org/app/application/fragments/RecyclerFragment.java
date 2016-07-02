@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.RecyclerCell;
+import org.app.application.model.RecyclerItemModel;
 import org.app.material.widget.ItemTouchHelperClass;
 import org.app.material.widget.LayoutHelper;
 
@@ -43,56 +44,25 @@ import java.util.List;
 public class RecyclerFragment extends Fragment {
 
     private FrameLayout layout;
-    private ItemModel mRemovedItem;
+    private RecyclerItemModel mRemovedItem;
     private int mIndexOfRemovedItem;
-
-    public class ItemModel {
-
-        private int mId;
-        private int mImage;
-        private String mText1;
-        private String mText2;
-
-        public ItemModel(int id, int image, String text1, String text2) {
-            this.mId = id;
-            this.mImage = image;
-            this.mText1 = text1;
-            this.mText2 = text2;
-        }
-
-        public int getId() {
-            return mId;
-        }
-
-        public int getImage() {
-            return mImage;
-        }
-
-        public String getText1() {
-            return mText1;
-        }
-
-        public String getText2() {
-            return mText2;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = new FrameLayout(getActivity());
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        ArrayList<ItemModel> items = new ArrayList<>();
+        ArrayList<RecyclerItemModel> items = new ArrayList<>();
 
-        items.add(new ItemModel(1, R.drawable.space1, "1. Primary text", "Secondary text"));
-        items.add(new ItemModel(2, R.drawable.space2, "2. Primary text", "Secondary text"));
-        items.add(new ItemModel(3, R.drawable.space3, "3. Primary text", "Secondary text"));
-        items.add(new ItemModel(4, R.drawable.space4, "4. Primary text", "Secondary text"));
-        items.add(new ItemModel(5, R.drawable.space5, "5. Primary text", "Secondary text"));
-        items.add(new ItemModel(6, R.drawable.space6, "6. Primary text", "Secondary text"));
-        items.add(new ItemModel(7, R.drawable.space1, "7. Primary text", "Secondary text"));
-        items.add(new ItemModel(8, R.drawable.space2, "8. Primary text", "Secondary text"));
-        items.add(new ItemModel(9, R.drawable.space3, "9. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(1, R.drawable.space1, "1. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(2, R.drawable.space2, "2. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(3, R.drawable.space3, "3. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(4, R.drawable.space4, "4. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(5, R.drawable.space5, "5. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(6, R.drawable.space6, "6. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(7, R.drawable.space1, "7. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(8, R.drawable.space2, "8. Primary text", "Secondary text"));
+        items.add(new RecyclerItemModel(9, R.drawable.space3, "9. Primary text", "Secondary text"));
 
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
 
@@ -114,9 +84,9 @@ public class RecyclerFragment extends Fragment {
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperClass.ItemTouchHelperAdapter {
 
-        private List<ItemModel> items;
+        private List<RecyclerItemModel> items;
 
-        public RecyclerViewAdapter(List<ItemModel> items) {
+        public RecyclerViewAdapter(List<RecyclerItemModel> items) {
             this.items = items;
         }
 
@@ -143,7 +113,7 @@ public class RecyclerFragment extends Fragment {
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, items.size());
 
-            Snackbar.make(layout, getString(R.string.ItemRemoved), Snackbar.LENGTH_LONG).setAction(R.string.Undo, new View.OnClickListener() {
+            Snackbar.make(layout, getString(R.string.ItemRemoved), Snackbar.LENGTH_SHORT).setAction(R.string.Undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     items.add(mIndexOfRemovedItem, mRemovedItem);
@@ -172,7 +142,7 @@ public class RecyclerFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            ItemModel item = items.get(position);
+            RecyclerItemModel item = items.get(position);
             ((ItemViewHolder) viewHolder).recyclerCell
                     .setImage(item.getImage())
                     .setText1(item.getText1())
@@ -192,7 +162,7 @@ public class RecyclerFragment extends Fragment {
                 recyclerCell.setOnItemClick(new RecyclerCell.OnRecyclerClickListener() {
                     @Override
                     public void onClick() {
-                        final ItemModel item = items.get(getAdapterPosition());
+                        final RecyclerItemModel item = items.get(getAdapterPosition());
                         Toast.makeText(getActivity(), getString(R.string.ClickOnItem, item.getId()), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -207,7 +177,7 @@ public class RecyclerFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i == 0) {
-                                    final ItemModel item = items.get(getAdapterPosition());
+                                    final RecyclerItemModel item = items.get(getAdapterPosition());
                                     Toast.makeText(getActivity(), getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());

@@ -23,7 +23,7 @@ public class PatternViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pattern_fr, container, false);
+        View view = inflater.inflate(R.layout.fragment_pattern, container, false);
 
         FrameLayout layout = (FrameLayout) view.findViewById(R.id.frameLock);
         layout.setBackgroundColor(0xFF64B5F6);

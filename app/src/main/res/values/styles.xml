@@ -3,11 +3,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:divider">@color/dividerColor</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:colorControlNormal">@color/iconColor</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
 
     <style name="AppTheme.Tabs" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorAccent">@color/textColorPrimary</item>
+        <item name="colorAccent">#FFFFFFFF</item>
     </style>
 </resources>

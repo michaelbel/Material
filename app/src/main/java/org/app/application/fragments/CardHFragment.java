@@ -31,49 +31,13 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.CardCell;
+import org.app.application.model.CardModel;
 import org.app.material.widget.LayoutHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardHFragment extends Fragment {
-
-    public class CardModel {
-
-        private int mId;
-        private int mImage;
-        private String mText1;
-        private String mText2;
-        private String mText3;
-
-        public CardModel(int id, int image, String text1, String text2, String text3) {
-            this.mId = id;
-            this.mImage = image;
-            this.mText1 = text1;
-            this.mText2 = text2;
-            this.mText3 = text3;
-        }
-
-        public int getId() {
-            return mId;
-        }
-
-        public int getImage() {
-            return mImage;
-        }
-
-        public String getText1() {
-            return mText1;
-        }
-
-        public String getText2() {
-            return mText2;
-        }
-
-        public String getText3() {
-            return mText3;
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

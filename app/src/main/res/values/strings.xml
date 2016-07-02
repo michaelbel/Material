@@ -95,4 +95,5 @@
     <string name="ItemRemoved">Item Removed</string>
     <string name="PatternCorrect">Pattern is correct</string>
     <string name="PatternInvalid">Pattern is invalid</string>
+    <string name="NumberTextView">Number TextView</string>
 </resources>

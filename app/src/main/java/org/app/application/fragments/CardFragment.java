@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.CardCell;
+import org.app.application.model.CardModel;
 import org.app.material.widget.LayoutHelper;
 
 import java.util.ArrayList;
@@ -38,49 +39,12 @@ import java.util.List;
 
 public class CardFragment extends Fragment {
 
-    public class CardModel {
-
-        private int mId;
-        private int mImage;
-        private String mText1;
-        private String mText2;
-        private String mText3;
-
-        public CardModel(int id, int image, String text1, String text2, String text3) {
-            this.mId = id;
-            this.mImage = image;
-            this.mText1 = text1;
-            this.mText2 = text2;
-            this.mText3 = text3;
-        }
-
-        public int getId() {
-            return mId;
-        }
-
-        public int getImage() {
-            return mImage;
-        }
-
-        public String getText1() {
-            return mText1;
-        }
-
-        public String getText2() {
-            return mText2;
-        }
-
-        public String getText3() {
-            return mText3;
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FrameLayout layout = new FrameLayout(getActivity());
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        ArrayList<Object> items = new ArrayList<>();
+        ArrayList<CardModel> items = new ArrayList<>();
 
         items.add(new CardModel(1, R.drawable.space1, "1. Main text", "Middle text", "Small text"));
         items.add(new CardModel(2, R.drawable.space2, "2. Main text", "Middle text", "Small text"));
@@ -106,9 +70,9 @@ public class CardFragment extends Fragment {
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private List<Object> items;
+        private List<CardModel> items;
 
-        public RecyclerViewAdapter(List<Object> items) {
+        public RecyclerViewAdapter(List<CardModel> items) {
             this.items = items;
         }
 
@@ -132,7 +96,7 @@ public class CardFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            CardModel item = (CardModel) items.get(position);
+            CardModel item = items.get(position);
             ((CardViewHolder) viewHolder).cardCell
                     .setImage(item.getImage())
                     .setText1(item.getText1())
@@ -152,7 +116,7 @@ public class CardFragment extends Fragment {
                 cardCell.setOnCardClick(new CardCell.OnCardClickListener() {
                     @Override
                     public void onClick() {
-                        final CardModel item = (CardModel) items.get(getAdapterPosition());
+                        final CardModel item = items.get(getAdapterPosition());
                         Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -166,7 +130,7 @@ public class CardFragment extends Fragment {
                         }, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                final CardModel item = (CardModel) items.get(getAdapterPosition());
+                                final CardModel item = items.get(getAdapterPosition());
 
                                 if (i == 0) {
                                     Toast.makeText(getActivity(), getString(R.string.OpeningCard, item.getId()), Toast.LENGTH_SHORT).show();
