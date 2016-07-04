@@ -30,7 +30,7 @@ public class SettingsActivity extends FragmentActivity {
                         }
                     }
                 });
-        actionBar.setElevation(AndroidUtilities.dp(this, 1.0F));
+        actionBar.setElevation(AndroidUtilities.dp(2.0F));
 
         layout.addView(actionBar);
 

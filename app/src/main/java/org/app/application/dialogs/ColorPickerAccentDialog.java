@@ -36,8 +36,6 @@ public class ColorPickerAccentDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AndroidUtilities.bind(getActivity());
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         RelativeLayout layout = new RelativeLayout(getActivity());

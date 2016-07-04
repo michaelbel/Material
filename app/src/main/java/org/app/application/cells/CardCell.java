@@ -43,8 +43,6 @@ public class CardCell extends CardView {
     public CardCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         this.setClickable(true);
         this.setCardBackgroundColor(0xFFFFFFFF);
         this.setRadius(AndroidUtilities.dp(3.5F));

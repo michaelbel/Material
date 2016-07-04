@@ -34,7 +34,7 @@ public class StringPickerDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final NumberPicker picker = new NumberPicker(getActivity());
         picker.setMinValue(0);
-        picker.setmMaxValue(6);
+        picker.setMaxValue(6);
         picker.setValue(4);
         picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         picker.setFormatter(new NumberPicker.Formatter() {

@@ -52,8 +52,6 @@ public class LaunchActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        AndroidUtilities.bind(this);
-
         FrameLayout layout = (FrameLayout) findViewById(R.id.frameLayout);
         layout.setBackgroundColor(0xFFF0F0F0);
 
@@ -109,7 +107,7 @@ public class LaunchActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setBackgroundColor(AndroidUtilities.getContextColor(this, R.attr.colorPrimary));
+        tabLayout.setBackgroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

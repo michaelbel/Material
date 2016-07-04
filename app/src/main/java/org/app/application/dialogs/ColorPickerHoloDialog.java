@@ -33,16 +33,16 @@ import org.app.material.widget.LayoutHelper;
 
 public class ColorPickerHoloDialog extends DialogFragment {
 
+    private ColorPickerHolo picker;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AndroidUtilities.bind(getActivity());
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
 
-        final ColorPickerHolo picker = new ColorPickerHolo(getActivity());
+        picker = new ColorPickerHolo(getActivity());
         picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         layout.addView(picker);
         picker.setOldCenterColor(AndroidUtilities.getContextColor(R.attr.colorAccent));

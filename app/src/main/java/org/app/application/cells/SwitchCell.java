@@ -40,8 +40,6 @@ public class SwitchCell extends FrameLayout {
     public SwitchCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {

@@ -39,8 +39,6 @@ public class TextCell extends FrameLayout {
     public TextCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {

@@ -40,8 +40,6 @@ public class CheckBoxCell extends FrameLayout {
     public CheckBoxCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         if (paint == null) {
             paint = new Paint();
             paint.setColor(0xffd9d9d9);
@@ -64,7 +62,7 @@ public class CheckBoxCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 
     public CheckBoxCell setText(@StringRes int resId) {

@@ -34,8 +34,6 @@ public class EmptyCell extends FrameLayout {
     public EmptyCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         mHeadText = new TextView(context);
         mHeadText.setGravity(Gravity.START);
         mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);

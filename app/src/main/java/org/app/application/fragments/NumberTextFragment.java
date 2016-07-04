@@ -27,8 +27,6 @@ public class NumberTextFragment extends Fragment {
         FrameLayout layout = new FrameLayout(getActivity());
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        AndroidUtilities.bind(getActivity());
-
         j = 100;
 
         mCountTextView = new NumberTextView(getActivity());

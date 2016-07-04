@@ -159,8 +159,14 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
             dialog = new ItemsDialog();
             dialog.show(getFragmentManager(), "items");
         } else if (v == mButton2) {
-            dialog = new NumberPickerDialog();
-            dialog.show(getFragmentManager(), "numberPicker");
+            /*dialog = new NumberPickerDialog();
+            dialog.show(getFragmentManager(), "numberPicker");*/
+            new NumberPickerDialog.Builder()
+                    .withValue(10)
+                    .withMinValue(0)
+                    .withMaxValue(100)
+                    .create()
+                    .show(getFragmentManager(), "numberPicker");
         } else if (v == mButton3) {
             dialog = new StringPickerDialog();
             dialog.show(getFragmentManager(), "stringPicker");
@@ -180,42 +186,42 @@ public class DialogsFragment extends Fragment implements View.OnClickListener {
             dialog.show(getFragmentManager(), "pickerAccent");
         } else if (v == mButton9) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.RGB)
                     .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()
                     .show(getFragmentManager(), "dialog1");
         } else if (v == mButton10) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.ARGB)
                     .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()
                     .show(getFragmentManager(), "dialog2");
         } else if (v == mButton11) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.HSV)
                     .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog3");
         } else if (v == mButton12) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.HSL)
                     .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog4");
         } else if (v == mButton13) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.CMYK)
                     .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                     .create()
                     .show(getFragmentManager(), "dialog5");
         } else if (v == mButton14) {
             new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent))
+                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                     .colorMode(ColorView.ColorMode.CMYK255)
                     .indicatorMode(ColorView.IndicatorMode.HEX)
                     .create()

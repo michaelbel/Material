@@ -41,7 +41,7 @@ public class ColorPickerPrimaryDialog extends DialogFragment {
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24), AndroidUtilities.dp(getActivity(), 24));
+        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
 
         final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
         picker1.setColors(Palette.getBaseColors(getActivity()));

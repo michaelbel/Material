@@ -40,8 +40,6 @@ public class RadioCell extends FrameLayout {
     public RadioCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {

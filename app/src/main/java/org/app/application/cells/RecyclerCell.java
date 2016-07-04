@@ -48,8 +48,6 @@ public class RecyclerCell extends FrameLayout {
     public RecyclerCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         if (mPaint == null) {
             mPaint = new Paint();
             mPaint.setColor(0xFFD9D9D9);
@@ -147,7 +145,7 @@ public class RecyclerCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 64), MeasureSpec.EXACTLY));
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64), MeasureSpec.EXACTLY));
     }
 
     public interface OnOptionClickListener {

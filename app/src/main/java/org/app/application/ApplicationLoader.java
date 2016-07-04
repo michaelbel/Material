@@ -19,6 +19,8 @@ package org.app.application;
 import android.app.Application;
 import android.content.Context;
 
+import org.app.material.AndroidUtilities;
+
 public class ApplicationLoader extends Application {
 
     public static volatile Context applicationContext;
@@ -28,5 +30,7 @@ public class ApplicationLoader extends Application {
         super.onCreate();
 
         applicationContext = getApplicationContext();
+
+        AndroidUtilities.bind(applicationContext);
     }
 }

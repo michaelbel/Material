@@ -39,8 +39,6 @@ public class DoubleCell extends FrameLayout {
     public DoubleCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         this.setBackgroundColor(0xFFFFFFFF);
 
         if (mPaint == null) {

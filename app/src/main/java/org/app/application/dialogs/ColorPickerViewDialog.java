@@ -43,7 +43,7 @@ public class ColorPickerViewDialog extends DialogFragment {
         final ColorPickerView picker = new ColorPickerView(getActivity());
         picker.setDensity(13);
         picker.setType(ColorPickerView.CIRCLE);
-        picker.setInitialColor(AndroidUtilities.getContextColor(getActivity(), R.attr.colorAccent));
+        picker.setInitialColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
         layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
 
         builder.setView(layout);
