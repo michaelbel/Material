@@ -180,7 +180,7 @@ public class CheckBox extends View {
 
         if (progress > 0.5f) {
             int endX = (int) (AndroidUtilities.dp(7.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
-            int endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(getContext(), 5) * (1.0f - bounceProgress));
+            int endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
             drawCanvas.drawLine(AndroidUtilities.dp(7.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
             endX = (int) (AndroidUtilities.dpf2(6.5f) + AndroidUtilities.dp(9) * (1.0f - bounceProgress));
             endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(9) * (1.0f - bounceProgress));

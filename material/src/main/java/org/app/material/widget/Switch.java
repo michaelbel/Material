@@ -18,6 +18,7 @@ package org.app.material.widget;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -25,6 +26,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -36,15 +38,138 @@ import org.app.material.R;
 
 public class Switch extends CompoundButton {
 
-    private static final int trackColorOn = 0xFFEF9595;
-    private static final int thumbColorOn = 0xFFFC5050;
+    private static final int TOUCH_MODE_IDLE = 0;
+    private static final int TOUCH_MODE_DOWN = 1;
+    private static final int TOUCH_MODE_DRAGGING = 2;
 
-    private static final int trackColorOff = 0xFFC7C7C7;
-    private static final int thumbColorOff = 0xFFEDEDED;
+    private boolean isRTL;
+    private boolean mSplitTrack;
+    private int mAnimationDuration;
+    private int mSwitchPadding;
+    private int mThumbColorActivated;
+    private int mThumbColorNormal;
+    private int mTrackColorActivated;
+    private int mTrackColorNormal;
 
-    private boolean isRTL = false;
+    private Drawable mThumbDrawable;
+    private Drawable mTrackDrawable;
+
+    private ObjectAnimator mAnimator;
+
+    private Rect mTempRect = new Rect();
+
+    private ViewConfiguration mViewConfiguration;
+    private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
+
+//=================
+
+
+
+
+    private int mThumbTextPadding;
+    private int mSwitchMinWidth;
+    private boolean attachedToWindow;
+    private boolean wasLayout;
+    private int mTouchMode;
+    private int mTouchSlop;
+    private float mTouchX;
+    private float mTouchY;
+    private int mMinFlingVelocity;
+    private float thumbPosition;
+    private int mSwitchWidth;
+    private int mSwitchHeight;
+    private int mThumbWidth;
+    private int mSwitchLeft;
+    private int mSwitchTop;
+    private int mSwitchRight;
+    private int mSwitchBottom;
+    public static Insets NONE;
+
+
+
+    public Switch(Context context) {
+        this(context, null);
+    }
+
+    public Switch(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public Switch(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public Switch(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+
+        AndroidUtilities.bind(context);
+
+        this.setClickable(true);
+        this.mThumbDrawable = context.getResources().getDrawable(R.drawable.switch_thumb, null);
+        this.mTrackDrawable = context.getResources().getDrawable(R.drawable.switch_track, null);
+        this.mSwitchMinWidth = AndroidUtilities.getDensity() < 1 ? AndroidUtilities.dp(30) : 0;
+        this.mSplitTrack = false;
+        this.mSwitchPadding = 0;
+        this.mViewConfiguration = ViewConfiguration.get(context);
+
+        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.Switch, defStyleAttr, defStyleRes);
+
+        isRTL = attr.getBoolean(R.styleable.Switch_supportRTL, false);
+        mAnimationDuration = attr.getInt(R.styleable.Switch_animDuration, 250);
+        mThumbColorNormal = attr.getColor(R.styleable.Switch_thumbColorNormal, AndroidUtilities.getContextColor(R.attr.colorSwitchThumbNormal));
+        mThumbColorActivated = attr.getColor(R.styleable.Switch_thumbColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
+
+        mTrackColorActivated = attr.getColor(R.styleable.Switch_trackColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mTrackColorNormal = attr.getColor(R.styleable.Switch_trackColorNormal, AndroidUtilities.getContextColor(R.attr.colorControlActivated));
+
+        attr.recycle();
+
+        if (mThumbDrawable != null) {
+            this.mThumbDrawable.setCallback(this);
+        }
+
+        if (mTrackDrawable != null) {
+            this.mTrackDrawable.setCallback(this);
+        }
+
+
+        NONE = new Insets(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(4), 0);
+
+        mTouchSlop = mViewConfiguration.getScaledTouchSlop();
+        mMinFlingVelocity = mViewConfiguration.getScaledMinimumFlingVelocity();
+
+        refreshDrawableState();
+        setChecked(isChecked());
+    }
+
+    public Switch withRTL(boolean state) {
+        this.isRTL = state;
+        return this;
+    }
+
+    public boolean isRTL() {
+        return isRTL;
+    }
+
+    public Switch withAnimationDuration(int duration) {
+        mAnimationDuration = duration;
+        return this;
+    }
+
+    public int getAnimationDuration() {
+        return mAnimationDuration;
+    }
+
+
+
+
+
+
+
+
 
     public static class Insets {
+
         public int left;
         public int top;
         public int right;
@@ -60,77 +185,6 @@ public class Switch extends CompoundButton {
 
     public static float constrain(float amount, float low, float high) {
         return amount < low ? low : (amount > high ? high : amount);
-    }
-
-    private static final int THUMB_ANIMATION_DURATION = 250;
-
-    private static final int TOUCH_MODE_IDLE = 0;
-    private static final int TOUCH_MODE_DOWN = 1;
-    private static final int TOUCH_MODE_DRAGGING = 2;
-
-    private Drawable mThumbDrawable;
-    private Drawable mTrackDrawable;
-    private int mThumbTextPadding;
-    private int mSwitchMinWidth;
-    private int mSwitchPadding;
-    private boolean mSplitTrack;
-
-    private boolean attachedToWindow;
-    private boolean wasLayout;
-
-    private int mTouchMode;
-    private int mTouchSlop;
-    private float mTouchX;
-    private float mTouchY;
-    private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
-    private int mMinFlingVelocity;
-
-    private float thumbPosition;
-    private int mSwitchWidth;
-    private int mSwitchHeight;
-    private int mThumbWidth;
-    private int mSwitchLeft;
-    private int mSwitchTop;
-    private int mSwitchRight;
-    private int mSwitchBottom;
-    private ObjectAnimator mAnimator;
-    private final Rect mTempRect = new Rect();
-    public static Insets NONE;
-
-    public Switch(Context context) {
-        super(context);
-
-        AndroidUtilities.bind(context);
-
-        NONE = new Insets(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(4), 0);
-
-        mThumbDrawable = context.getResources().getDrawable(R.drawable.switch_thumb, null);
-
-        if (mThumbDrawable != null) {
-            mThumbDrawable.setCallback(this);
-        }
-
-        mTrackDrawable = context.getResources().getDrawable(R.drawable.switch_track, null);
-
-        if (mTrackDrawable != null) {
-            mTrackDrawable.setCallback(this);
-        }
-
-        if (AndroidUtilities.getDensity() < 1) {
-            mSwitchMinWidth = AndroidUtilities.dp(30);
-        } else {
-            mSwitchMinWidth = 0;
-        }
-
-        mSwitchPadding = 0;
-        mSplitTrack = false;
-
-        final ViewConfiguration config = ViewConfiguration.get(context);
-        mTouchSlop = config.getScaledTouchSlop();
-        mMinFlingVelocity = config.getScaledMinimumFlingVelocity();
-
-        refreshDrawableState();
-        setChecked(isChecked());
     }
 
     public void setSwitchPadding(int pixels) {
@@ -158,50 +212,6 @@ public class Switch extends CompoundButton {
 
     public int getThumbTextPadding() {
         return mThumbTextPadding;
-    }
-
-    public void setTrackDrawable(Drawable track) {
-        if (mTrackDrawable != null) {
-            mTrackDrawable.setCallback(null);
-        }
-
-        mTrackDrawable = track;
-
-        if (track != null) {
-            track.setCallback(this);
-        }
-
-        requestLayout();
-    }
-
-    public void setTrackResource(int resId) {
-        setTrackDrawable(getContext().getDrawable(resId));
-    }
-
-    public Drawable getTrackDrawable() {
-        return mTrackDrawable;
-    }
-
-    public void setThumbDrawable(Drawable thumb) {
-        if (mThumbDrawable != null) {
-            mThumbDrawable.setCallback(null);
-        }
-
-        mThumbDrawable = thumb;
-
-        if (thumb != null) {
-            thumb.setCallback(this);
-        }
-
-        requestLayout();
-    }
-
-    public void setThumbResource(int resId) {
-        setThumbDrawable(getContext().getDrawable(resId));
-    }
-
-    public Drawable getThumbDrawable() {
-        return mThumbDrawable;
     }
 
     public void setSplitTrack(boolean splitTrack) {
@@ -388,7 +398,7 @@ public class Switch extends CompoundButton {
         final float targetPosition = newCheckedState ? 1 : 0;
 
         mAnimator = ObjectAnimator.ofFloat(this, "thumbPosition", targetPosition);
-        mAnimator.setDuration(THUMB_ANIMATION_DURATION);
+        mAnimator.setDuration(mAnimationDuration);
         mAnimator.start();
     }
 
@@ -410,6 +420,40 @@ public class Switch extends CompoundButton {
     public float getThumbPosition() {
         return thumbPosition;
     }
+
+    private int getThumbOffset() {
+        final float position;
+
+        if (isRTL) {
+            position = 1 - thumbPosition;
+        } else {
+            position = thumbPosition;
+        }
+
+        return (int) (position * getThumbScrollRange() + 0.5f);
+    }
+
+    private int getThumbScrollRange() {
+        if (mTrackDrawable != null) {
+            final Rect padding = mTempRect;
+            mTrackDrawable.getPadding(padding);
+
+            final Insets insets;
+
+            if (mThumbDrawable != null) {
+                insets = NONE;
+            } else {
+                insets = NONE;
+            }
+
+            return mSwitchWidth - mThumbWidth - padding.left - padding.right - insets.left - insets.right;
+        } else {
+            return 0;
+        }
+    }
+
+
+
 
     @Override
     public void toggle() {
@@ -448,11 +492,11 @@ public class Switch extends CompoundButton {
         }
 
         if (mTrackDrawable != null) {
-            mTrackDrawable.setColorFilter(new PorterDuffColorFilter(checked ? trackColorOn : trackColorOff, PorterDuff.Mode.MULTIPLY));
+            mTrackDrawable.setColorFilter(new PorterDuffColorFilter(checked ? mTrackColorActivated : mTrackColorNormal, PorterDuff.Mode.MULTIPLY));
         }
 
         if (mThumbDrawable != null) {
-            mThumbDrawable.setColorFilter(new PorterDuffColorFilter(checked ? thumbColorOn : thumbColorOff, PorterDuff.Mode.MULTIPLY));
+            mThumbDrawable.setColorFilter(new PorterDuffColorFilter(checked ? mThumbColorActivated : mThumbColorNormal, PorterDuff.Mode.MULTIPLY));
         }
     }
 
@@ -633,37 +677,6 @@ public class Switch extends CompoundButton {
         }
 
         return super.getCompoundPaddingRight() + mSwitchWidth;
-    }
-
-    private int getThumbOffset() {
-        final float position;
-
-        if (isRTL) {
-            position = 1 - thumbPosition;
-        } else {
-            position = thumbPosition;
-        }
-
-        return (int) (position * getThumbScrollRange() + 0.5f);
-    }
-
-    private int getThumbScrollRange() {
-        if (mTrackDrawable != null) {
-            final Rect padding = mTempRect;
-            mTrackDrawable.getPadding(padding);
-
-            final Insets insets;
-
-            if (mThumbDrawable != null) {
-                insets = NONE;
-            } else {
-                insets = NONE;
-            }
-
-            return mSwitchWidth - mThumbWidth - padding.left - padding.right - insets.left - insets.right;
-        } else {
-            return 0;
-        }
     }
 
     @Override

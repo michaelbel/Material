@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ActionBar extends FrameLayout {
 
     private static boolean isTablet = false;
-    private boolean occupyStatusBar = Build.VERSION.SDK_INT >= 21;
+    private boolean occupyStatusBar = false /*Build.VERSION.SDK_INT >= 21*/;
     private boolean actionModeVisible;
     private boolean interceptTouches = true;
     private boolean allowOverlayTitle;

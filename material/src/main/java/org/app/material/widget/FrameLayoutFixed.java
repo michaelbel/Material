@@ -32,14 +32,20 @@ public class FrameLayoutFixed extends FrameLayout {
 
     public FrameLayoutFixed(Context context) {
         super(context);
+
+        AndroidUtilities.bind(context);
     }
 
     public FrameLayoutFixed(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        AndroidUtilities.bind(context);
     }
 
     public FrameLayoutFixed(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        AndroidUtilities.bind(context);
     }
 
     public final int getMeasuredStateFixed(View view) {
@@ -155,7 +161,7 @@ public class FrameLayoutFixed extends FrameLayout {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             } catch (Exception e2) {
 
-                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 10), MeasureSpec.EXACTLY));
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(10), MeasureSpec.EXACTLY));
             }
         }
     }

@@ -17,10 +17,14 @@ public class ActionBarMenu extends LinearLayout {
 
         this.setOrientation(LinearLayout.HORIZONTAL);
         parentActionBar = layer;
+
+        AndroidUtilities.bind(context);
     }
 
     public ActionBarMenu(Context context) {
         super(context);
+
+        AndroidUtilities.bind(context);
     }
 
     public View addItemResource(int id, int resourceId) {
@@ -30,7 +34,7 @@ public class ActionBarMenu extends LinearLayout {
         addView(view);
         LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
-        view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless(getContext()));
+        view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         view.setLayoutParams(layoutParams);
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -42,11 +46,11 @@ public class ActionBarMenu extends LinearLayout {
     }
 
     public ActionBarMenuItem addItem(int id, Drawable drawable) {
-        return addItem(id, 0, drawable, AndroidUtilities.dp(getContext(), 48));
+        return addItem(id, 0, drawable, AndroidUtilities.dp(48));
     }
 
     public ActionBarMenuItem addItem(int id, int icon) {
-        return addItem(id, icon, null, AndroidUtilities.dp(getContext(), 48));
+        return addItem(id, icon, null, AndroidUtilities.dp(48));
     }
 
     public ActionBarMenuItem addItemWithWidth(int id, int icon, int width) {

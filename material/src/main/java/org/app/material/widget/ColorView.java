@@ -51,6 +51,8 @@ public class ColorView extends FrameLayout {
     public ColorView(@ColorInt int initialColor, final ColorMode colorMode, IndicatorMode indicatorMode, Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         this.indicatorMode = indicatorMode;
         this.colorMode = colorMode;
         currentColor = initialColor;
@@ -88,8 +90,8 @@ public class ColorView extends FrameLayout {
         for (ChannelView c : channelViews) {
             channelContainer.addView(c);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) c.getLayoutParams();
-            params.topMargin = AndroidUtilities.dp(getContext(), 16);
-            params.bottomMargin = AndroidUtilities.dp(getContext(), 4);
+            params.topMargin = AndroidUtilities.dp(16);
+            params.bottomMargin = AndroidUtilities.dp(4);
             c.registerListener(seekBarChangeListener);
         }
     }

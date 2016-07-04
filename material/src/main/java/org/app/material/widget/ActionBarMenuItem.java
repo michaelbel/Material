@@ -83,7 +83,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
     private View selectedMenuView;
     private Runnable showMenuRunnable;
     private boolean showFromBottom;
-    private int menuHeight = AndroidUtilities.dp(getContext(), 16);
+    private int menuHeight;
     private int subMenuOpenSide = 0;
     private ActionBarMenuItemDelegate delegate;
     private boolean allowCloseAnimation = true;
@@ -97,6 +97,8 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         AndroidUtilities.bind(context);
 
         mHandler = new Handler(context.getMainLooper());
+
+        menuHeight = AndroidUtilities.dp(16);
 
         this.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
 
@@ -359,7 +361,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             popupWindow.setClippingEnabled(true);
             popupWindow.setInputMethodMode(ActionBarPopupWindow.INPUT_METHOD_NOT_NEEDED);
             popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
-            popupLayout.measure(MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(getContext(), 1000), MeasureSpec.AT_MOST));
+            popupLayout.measure(MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(1000), MeasureSpec.AT_MOST));
             popupWindow.getContentView().setFocusableInTouchMode(true);
             popupWindow.getContentView().setOnKeyListener(new OnKeyListener() {
                 @Override
@@ -460,7 +462,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             layoutParams.weight = 1;
             layoutParams.width = 0;
             layoutParams.height = LayoutHelper.MATCH_PARENT;
-            layoutParams.leftMargin = AndroidUtilities.dp(getContext(), 6);
+            layoutParams.leftMargin = AndroidUtilities.dp(6);
             searchContainer.setLayoutParams(layoutParams);
             searchContainer.setVisibility(GONE);
 

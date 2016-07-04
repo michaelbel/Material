@@ -40,7 +40,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
     private SpannableStringBuilder spannableStringBuilder;
     private Drawable leftDrawable;
     private Drawable rightDrawable;
-    private int drawablePadding = AndroidUtilities.dp(getContext(), 4);
+    private int drawablePadding;
     private int leftDrawableTopPadding;
     private int rightDrawableTopPadding;
 
@@ -59,7 +59,12 @@ public class SimpleTextView extends View implements Drawable.Callback {
 
     public SimpleTextView(Context context) {
         super(context);
+
+        AndroidUtilities.bind(context);
+
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+
+        drawablePadding = AndroidUtilities.dp(4);
     }
 
     public void setTextColor(int color) {
@@ -74,7 +79,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
     }
 
     public void setTextSize(int size) {
-        int newSize = AndroidUtilities.dp(getContext(), size);
+        int newSize = AndroidUtilities.dp(size);
         if (newSize == textPaint.getTextSize()) {
             return;
         }
@@ -121,7 +126,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
                 if (layout != null && TextUtils.equals(layout.getText(), string)) {
                     return;
                 }
-                layout = new StaticLayout(string, 0, string.length(), textPaint, width + AndroidUtilities.dp(getContext(), 8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                layout = new StaticLayout(string, 0, string.length(), textPaint, width + AndroidUtilities.dp(8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 if (layout.getLineCount() > 0) {
                     textWidth = (int) Math.ceil(layout.getLineWidth(0));

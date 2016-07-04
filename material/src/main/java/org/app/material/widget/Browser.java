@@ -32,10 +32,12 @@ import org.app.material.R;
 public class Browser {
 
     public static void openUrl(@NonNull Context context, String url) {
+        AndroidUtilities.bind(context);
+
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
-            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", AndroidUtilities.getContextColor(context, R.attr.colorPrimary));
+            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", AndroidUtilities.getContextColor(R.attr.colorPrimary));
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
             Intent actionIntent = new Intent(Intent.ACTION_SEND);
             actionIntent.setType("text/plain");

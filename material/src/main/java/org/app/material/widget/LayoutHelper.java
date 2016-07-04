@@ -64,7 +64,9 @@ public class LayoutHelper {
      * @return
      */
     private static int getSize(Context context, float size) {
-        return (int) (size < 0 ? size : AndroidUtilities.dp(context, size));
+        AndroidUtilities.bind(context);
+
+        return (int) (size < 0 ? size : AndroidUtilities.dp(size));
     }
 
     /**

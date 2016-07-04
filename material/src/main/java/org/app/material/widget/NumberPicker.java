@@ -115,7 +115,7 @@ public class NumberPicker extends LinearLayout {
 
     private void init() {
         solidColor = 0;
-        selectionDivider = new ColorDrawable(AndroidUtilities.getContextColor(getContext(), R.attr.colorPrimary));
+        selectionDivider = new ColorDrawable(AndroidUtilities.getContextColor(R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
         mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
         mMinHeight = SIZE_UNSPECIFIED;
@@ -159,6 +159,9 @@ public class NumberPicker extends LinearLayout {
 
     public NumberPicker(Context context) {
         super(context);
+
+        AndroidUtilities.bind(context);
+
         init();
     }
 
@@ -384,7 +387,7 @@ public class NumberPicker extends LinearLayout {
                 switch (event.getAction()) {
                     case KeyEvent.ACTION_DOWN:
                         if (wrapSelectorWheel || (keyCode == KeyEvent.KEYCODE_DPAD_DOWN)
-                                ? getValue() < getmMaxValue() : getValue() > getMinValue()) {
+                                ? getValue() < getMaxValue() : getValue() > getMinValue()) {
                             requestFocus();
                             lastHandledDownDpadKeyCode = keyCode;
                             removeAllCallbacks();
@@ -656,11 +659,11 @@ public class NumberPicker extends LinearLayout {
         invalidate();
     }
 
-    public int getmMaxValue() {
+    public int getMaxValue() {
         return mMaxValue;
     }
 
-    public void setmMaxValue(int mMaxValue) {
+    public void setMaxValue(int mMaxValue) {
         if (this.mMaxValue == mMaxValue) {
             return;
         }
