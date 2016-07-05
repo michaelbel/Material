@@ -15,6 +15,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -76,6 +78,8 @@ public class BottomSheet extends Dialog {
     private int revealY;
     private boolean applyTopPadding = true;
     private boolean applyBottomPadding = true;
+
+    public static volatile Handler applicationHandler = new Handler(Looper.getMainLooper());
 
     private DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
     private AccelerateInterpolator accelerateInterpolator = new AccelerateInterpolator();
@@ -524,7 +528,7 @@ public class BottomSheet extends Dialog {
         containerView.setPadding(left, (applyTopPadding ? AndroidUtilities.dp(8) : 0) + top, left, (applyBottomPadding ? AndroidUtilities.dp(isGrid ? 16 : 8) : 0));
 
         if (Build.VERSION.SDK_INT >= 21) {
-            AndroidUtilities.runOnUIThread(getContext(), new Runnable() {
+            runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
                     startOpenAnimation();
@@ -757,7 +761,8 @@ public class BottomSheet extends Dialog {
                 if (onClickListener != null) {
                     onClickListener.onClick(BottomSheet.this, item);
                 }
-                AndroidUtilities.runOnUIThread(getContext(), new Runnable() {
+
+                runOnUIThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -792,7 +797,7 @@ public class BottomSheet extends Dialog {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
 
-                    AndroidUtilities.runOnUIThread(getContext(), new Runnable() {
+                    runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -804,6 +809,22 @@ public class BottomSheet extends Dialog {
             });
             animatorSetProxy.start();
         }
+    }
+
+    public static void runOnUIThread(Runnable runnable) {
+        runOnUIThread(runnable, 0);
+    }
+
+    public static void runOnUIThread(Runnable runnable, long delay) {
+        if (delay == 0) {
+            applicationHandler.post(runnable);
+        } else {
+            applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Runnable runnable) {
+        applicationHandler.removeCallbacks(runnable);
     }
 
     public static class Builder {
