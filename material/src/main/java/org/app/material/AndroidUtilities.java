@@ -29,7 +29,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
@@ -43,6 +42,9 @@ import android.widget.TextView;
 import org.app.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 
@@ -51,9 +53,7 @@ public class AndroidUtilities {
     private static Context context;
     private static float density = 1;
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
-    private static volatile Handler applicationHandler;
     public static Point displaySize = new Point();
-    private static Vibrator vibrator;
 
     public static void bind(@NonNull Context context) {
         AndroidUtilities.context = context;
@@ -180,7 +180,7 @@ public class AndroidUtilities {
 
     /*@RequiresPermission(Manifest.permission.VIBRATE)*/
     public static void vibrate(int duration) {
-        vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vibrator.vibrate(duration);
     }
 
@@ -236,5 +236,10 @@ public class AndroidUtilities {
             mCursorDrawableRes.setAccessible(true);
             mCursorDrawableRes.setInt(editText, 0);
         } catch (Exception ignored) {}
+    }
+
+    public static String getCurrentTime(String format) {
+        DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
+        return String.valueOf(dateFormat.format(new Date()));
     }
 }
