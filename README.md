@@ -32,8 +32,8 @@ dependencies {
 ### Screenshots
 <div style="dispaly:flex;">
     <img style="margin-left:10px;" src="/screenshots/1.png" width="31%">
-    <img style="margin-left:10px;" src="/screenshots/2.png" width="31%">
-    <img style="margin-left:10px;" src="/screenshots/3.png" width="31%">
+    <img style="margin-left:20px;" src="/screenshots/2.png" width="31%">
+    <img style="margin-left:20px;" src="/screenshots/3.png" width="31%">
 </div>
 
 ### License
