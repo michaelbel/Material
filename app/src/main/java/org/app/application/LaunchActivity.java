@@ -29,7 +29,7 @@ import org.app.application.fragments.CardFragment;
 import org.app.application.fragments.DialogsFragment;
 import org.app.application.fragments.FabFragment;
 import org.app.application.fragments.ListViewFragment;
-import org.app.application.fragments.NumberTextFragment;
+import org.app.application.fragments.NumberViewFragment;
 import org.app.application.fragments.PatternViewFragment;
 import org.app.application.fragments.RecyclerFragment;
 import org.app.application.fragments.SwitchFragment;
@@ -38,7 +38,7 @@ import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
 import org.app.material.widget.ActionBarMenuItem;
 import org.app.material.widget.Browser;
-import org.app.material.widget.FragmentSet;
+import org.app.material.widget.FragmentItem;
 import org.app.material.widget.FragmentsPagerAdapter;
 
 public class LaunchActivity extends FragmentActivity {
@@ -91,15 +91,15 @@ public class LaunchActivity extends FragmentActivity {
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
         adapter.addFragments(
-            new FragmentSet(new DialogsFragment(), R.string.Dialogs),
-            new FragmentSet(new BottomsFragment(), R.string.Bottoms),
-            new FragmentSet(new ListViewFragment(), R.string.ListView),
-            new FragmentSet(new CardFragment(), R.string.CardView),
-            new FragmentSet(new RecyclerFragment(), R.string.RecyclerView),
-            new FragmentSet(new NumberTextFragment(), R.string.NumberTextView),
-            new FragmentSet(new FabFragment(), R.string.Fabs),
-            new FragmentSet(new PatternViewFragment(), R.string.Pattern),
-                new FragmentSet(new SwitchFragment(), R.string.Switch)
+            new FragmentItem(new DialogsFragment(), R.string.Dialogs),
+            new FragmentItem(new BottomsFragment(), R.string.Bottoms),
+            new FragmentItem(new ListViewFragment(), R.string.ListViewAdapter),
+            new FragmentItem(new CardFragment(), R.string.CardView),
+            new FragmentItem(new RecyclerFragment(), R.string.RecyclerView),
+            new FragmentItem(new NumberViewFragment(), R.string.NumberView),
+            new FragmentItem(new FabFragment(), R.string.Fabs),
+            new FragmentItem(new PatternViewFragment(), R.string.Pattern),
+            new FragmentItem(new SwitchFragment(), R.string.Switch)
         );
 
         viewPager.setAdapter(adapter);

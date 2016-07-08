@@ -40,6 +40,7 @@
     <string name="AccentColor">Accent Color</string>
     <string name="PrimaryColor">Primary Color</string>
     <string name="ListView">ListView</string>
+    <string name="ListViewAdapter">ListView Adapter</string>
     <string name="PlainText">Plain Text</string>
     <string name="TextAndValue">Text and Value</string>
     <string name="Position">Position = %1$s</string>

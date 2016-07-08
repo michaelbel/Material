@@ -13,29 +13,29 @@ import android.widget.FrameLayout;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
-import org.app.material.NumberTextView;
+import org.app.material.widget.NumberView;
 import org.app.material.widget.LayoutHelper;
 
-public class NumberTextFragment extends Fragment {
+public class NumberViewFragment extends Fragment {
 
     private int j;
-    private NumberTextView mCountTextView;
+    private NumberView mNumberView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FrameLayout layout = new FrameLayout(getActivity());
+        FrameLayout layout = new FrameLayout(getContext());
         layout.setBackgroundColor(0xFFF0F0F0);
 
         j = 100;
 
-        mCountTextView = new NumberTextView(getActivity());
-        mCountTextView.withTextSize(40);
-        mCountTextView.withNumber(j, false);
-        mCountTextView.withTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mCountTextView.withTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
-        mCountTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL | Gravity.CENTER));
-        layout.addView(mCountTextView);
+        mNumberView = new NumberView(getActivity());
+        mNumberView.setTextSize(30);
+        mNumberView.setNumber(j, false);
+        mNumberView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        mNumberView.setTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mNumberView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
+        layout.addView(mNumberView);
 
         FloatingActionButton fabButton1 = new FloatingActionButton(getActivity());
         fabButton1.setImageResource(R.drawable.ic_plus);
@@ -44,7 +44,7 @@ public class NumberTextFragment extends Fragment {
         fabButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCountTextView.withNumber(j = j + 1, true);
+                mNumberView.setNumber(j = j + 1, true);
             }
         });
 
@@ -55,7 +55,7 @@ public class NumberTextFragment extends Fragment {
         fabButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mCountTextView.withNumber(j = j - 1, true);
+                mNumberView.setNumber(j = j - 1, true);
             }
         });
 

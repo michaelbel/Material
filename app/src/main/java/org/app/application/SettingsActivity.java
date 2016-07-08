@@ -2,6 +2,7 @@ package org.app.application;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.widget.FrameLayout;
 
@@ -10,11 +11,14 @@ import org.app.material.widget.ActionBar;
 
 public class SettingsActivity extends FragmentActivity {
 
+    private FrameLayout layout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout layout = new FrameLayout(this);
+        layout = new FrameLayout(this);
+        layout.setId(R.id.layout);
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ActionBar actionBar = new ActionBar(this)
@@ -40,5 +44,34 @@ public class SettingsActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    public void presentFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(layout.getId(), fragment)
+                .commit();
+    }
+
+    public void presentFragment(Fragment fragment, String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(layout.getId(), fragment)
+                .addToBackStack(tag)
+                .commit();
+    }
+
+    public void presentFragment(Fragment fragment, Bundle args, String tag) {
+        fragment.setArguments(args);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(layout.getId(), fragment)
+                .addToBackStack(tag)
+                .commit();
+    }
+
+    public void finishFragment() {
+        getSupportFragmentManager().popBackStack();
     }
 }
