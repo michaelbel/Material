@@ -20,7 +20,7 @@ import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
+//import android.support.v7.widget.CardView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,60 +32,18 @@ import org.app.material.AndroidUtilities;
 
 public class LayoutHelper {
 
-    /*
-     * Includes:
-     *
-     * ScrollView
-     * SwipeRefreshLayout
-     * CoordinatorLayout
-     * FrameLayout
-     * LinearLayout
-     * RelativeLayout
-     * CardView
-     * TableRow (partially)
-     * TableLayout
-     * GridLayout (not implemented)
-     * DrawerLayout
-     */
-
-    /**
-     * The dimension to match that of the parent element.
-     */
     public static final int MATCH_PARENT = -1;
-
-    /**
-     * The dimension to the size required to fit the content of the element.
-     */
     public static final int WRAP_CONTENT = -2;
 
-    /**
-     * @param context Current context.
-     * @param size
-     * @return
-     */
     private static int getSize(Context context, float size) {
         AndroidUtilities.bind(context);
-
         return (int) (size < 0 ? size : AndroidUtilities.dp(size));
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height) {
         return new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @return
-     */
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, int gravity) {
         return new ScrollView.LayoutParams(getSize(context, width), getSize(context, height), gravity);
     }
@@ -130,12 +88,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static SwipeRefreshLayout.LayoutParams makeSwipeRefresh(Context context, int width, int height) {
         return new SwipeRefreshLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }
@@ -538,75 +490,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
-    public static CardView.LayoutParams makeCard(Context context, int width, int height) {
-        return new CardView.LayoutParams(getSize(context, width), getSize(context, height));
-    }
-
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @return
-     */
-    public static CardView.LayoutParams makeCard(Context context, int width, int height, int gravity) {
-        CardView.LayoutParams params = new CardView.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        return params;
-    }
-
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
-    public static CardView.LayoutParams makeCard(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
-        CardView.LayoutParams params = new CardView.LayoutParams(getSize(context, width), getSize(context, height));
-        params.leftMargin = getSize(context, startMargin);
-        params.topMargin = getSize(context, topMargin);
-        params.rightMargin = getSize(context, endMargin);
-        params.bottomMargin = getSize(context, bottomMargin);
-        return params;
-    }
-
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
-    public static CardView.LayoutParams makeCard(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
-        CardView.LayoutParams params = new CardView.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        params.leftMargin = getSize(context, startMargin);
-        params.topMargin = getSize(context, topMargin);
-        params.rightMargin = getSize(context, endMargin);
-        params.bottomMargin = getSize(context, bottomMargin);
-        return params;
-    }
-
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static TableRow.LayoutParams makeTableRow(Context context, int width, int height) {
         return new TableRow.LayoutParams(getSize(context, width), getSize(context, height));
     }
@@ -787,16 +670,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.leftMargin = getSize(context, startMargin);
@@ -894,16 +767,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static DrawerLayout.LayoutParams makeDrawer(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         DrawerLayout.LayoutParams params = new DrawerLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.leftMargin = getSize(context, startMargin);
@@ -913,17 +776,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static DrawerLayout.LayoutParams makeDrawer(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         DrawerLayout.LayoutParams params = new DrawerLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 24
@@ -24,10 +23,38 @@ android {
     }
 }
 
-group='com.github.michaelbel'
-
 dependencies {
     compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:recyclerview-v7:24.0.0'
 }
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'material'
+
+    publishedGroupId = 'com.github.michaelbel'
+    libraryName = 'Material'
+    artifact = 'material'
+
+    libraryDescription = 'material design library'
+
+    siteUrl = 'https://github.com/michaelbel/material'
+    gitUrl = 'https://github.com/michaelbel/material.git'
+
+    libraryVersion = '0.0.1'
+
+    developerId = 'michaelbel'
+    developerName = 'MichaelBel'
+    developerEmail = 'michael-bel@outlook.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

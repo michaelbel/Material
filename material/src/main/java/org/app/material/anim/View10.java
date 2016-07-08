@@ -30,18 +30,19 @@ import java.util.WeakHashMap;
 public class View10 extends Animation {
 
     public static boolean NEED_PROXY = Build.VERSION.SDK_INT < 11;
-
     private static final WeakHashMap<View, View10> PROXIES = new WeakHashMap<>();
 
     public static View10 wrap(View view) {
         View10 proxy = PROXIES.get(view);
         Animation animation = view.getAnimation();
+
         if (proxy == null || proxy != animation && animation != null) {
             proxy = new View10(view);
             PROXIES.put(view, proxy);
         } else if (animation == null) {
             view.setAnimation(proxy);
         }
+
         return proxy;
     }
 
@@ -173,14 +174,17 @@ public class View10 extends Animation {
 
     public int getScrollX() {
         View view = mView.get();
+
         if (view == null) {
             return 0;
         }
+
         return view.getScrollX();
     }
 
     public void setScrollX(int value) {
         View view = mView.get();
+
         if (view != null) {
             view.scrollTo(value, view.getScrollY());
         }
@@ -188,14 +192,17 @@ public class View10 extends Animation {
 
     public int getScrollY() {
         View view = mView.get();
+
         if (view == null) {
             return 0;
         }
+
         return view.getScrollY();
     }
 
     public void setScrollY(int value) {
         View view = mView.get();
+
         if (view != null) {
             view.scrollTo(view.getScrollX(), value);
         }
@@ -227,14 +234,17 @@ public class View10 extends Animation {
 
     public float getX() {
         View view = mView.get();
+
         if (view == null) {
             return 0;
         }
+
         return view.getLeft() + mTranslationX;
     }
 
     public void setX(float x) {
         View view = mView.get();
+
         if (view != null) {
             setTranslationX(x - view.getLeft());
         }
@@ -242,14 +252,17 @@ public class View10 extends Animation {
 
     public float getY() {
         View view = mView.get();
+
         if (view == null) {
             return 0;
         }
+
         return view.getTop() + mTranslationY;
     }
 
     public void setY(float y) {
         View view = mView.get();
+
         if (view != null) {
             setTranslationY(y - view.getTop());
         }
@@ -257,6 +270,7 @@ public class View10 extends Animation {
 
     private void prepareForUpdate() {
         View view = mView.get();
+
         if (view != null) {
             computeRect(mBefore, view);
         }
@@ -264,6 +278,7 @@ public class View10 extends Animation {
 
     private void invalidateAfterUpdate() {
         View view = mView.get();
+
         if (view == null || view.getParent() == null) {
             return;
         }
@@ -297,6 +312,7 @@ public class View10 extends Animation {
             r.right = r.left;
             r.left = f;
         }
+
         if (r.bottom < r.top) {
             final float f = r.top;
             r.top = r.bottom;
@@ -314,6 +330,7 @@ public class View10 extends Animation {
         final float rX = mRotationX;
         final float rY = mRotationY;
         final float rZ = mRotationZ;
+
         if ((rX != 0) || (rY != 0) || (rZ != 0)) {
             final Camera camera = mCamera;
             camera.save();
@@ -328,6 +345,7 @@ public class View10 extends Animation {
 
         final float sX = mScaleX;
         final float sY = mScaleY;
+
         if ((sX != 1.0f) || (sY != 1.0f)) {
             m.postScale(sX, sY);
             final float sPX = -(pX / w) * ((sX * w) - w);
@@ -341,6 +359,7 @@ public class View10 extends Animation {
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         View view = mView.get();
+
         if (view != null) {
             t.setAlpha(mAlpha);
             transformMatrix(t.getMatrix(), view);

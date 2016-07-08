@@ -11,7 +11,8 @@ public class Palette {
     public static int[] DEFAULT;
 
     static {
-        DEFAULT = new int[] { Color.parseColor("#b8c847"),
+        DEFAULT = new int[] {
+                Color.parseColor("#b8c847"),
                 Color.parseColor("#67bb43"), Color.parseColor("#41b691"),
                 Color.parseColor("#4182b6"), Color.parseColor("#4149b6"),
                 Color.parseColor("#7641b6"), Color.parseColor("#b741a7"),

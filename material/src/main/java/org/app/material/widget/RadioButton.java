@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
@@ -49,8 +50,23 @@ public class RadioButton extends View {
     private int size;
 
     public RadioButton(Context context) {
-        super(context);
+        this(context, null);
+    }
 
+    public RadioButton(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         AndroidUtilities.bind(context);
 
         size = AndroidUtilities.dp(22);

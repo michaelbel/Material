@@ -61,10 +61,7 @@ public class Switch extends CompoundButton {
     private ViewConfiguration mViewConfiguration;
     private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
 
-//=================
-
-
-
+//===
 
     private int mThumbTextPadding;
     private int mSwitchMinWidth;
@@ -85,8 +82,6 @@ public class Switch extends CompoundButton {
     private int mSwitchBottom;
     public static Insets NONE;
 
-
-
     public Switch(Context context) {
         this(context, null);
     }
@@ -101,7 +96,10 @@ public class Switch extends CompoundButton {
 
     public Switch(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
 
+    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         AndroidUtilities.bind(context);
 
         this.setClickable(true);
@@ -118,7 +116,6 @@ public class Switch extends CompoundButton {
         mAnimationDuration = attr.getInt(R.styleable.Switch_animDuration, 250);
         mThumbColorNormal = attr.getColor(R.styleable.Switch_thumbColorNormal, AndroidUtilities.getContextColor(R.attr.colorSwitchThumbNormal));
         mThumbColorActivated = attr.getColor(R.styleable.Switch_thumbColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
-
         mTrackColorActivated = attr.getColor(R.styleable.Switch_trackColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
         mTrackColorNormal = attr.getColor(R.styleable.Switch_trackColorNormal, AndroidUtilities.getContextColor(R.attr.colorControlActivated));
 

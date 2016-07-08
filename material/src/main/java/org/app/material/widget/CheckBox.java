@@ -25,6 +25,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
@@ -50,8 +51,23 @@ public class CheckBox extends View {
     private int colorAccent = 0xFFFF5252;
 
     public CheckBox(Context context) {
-        super(context);
+        this(context, null);
+    }
 
+    public CheckBox(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         AndroidUtilities.bind(context);
 
         if (mCheckPaint == null) {

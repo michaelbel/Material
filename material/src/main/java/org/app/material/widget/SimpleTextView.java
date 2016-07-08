@@ -80,9 +80,11 @@ public class SimpleTextView extends View implements Drawable.Callback {
 
     public void setTextSize(int size) {
         int newSize = AndroidUtilities.dp(size);
+
         if (newSize == textPaint.getTextSize()) {
             return;
         }
+
         textPaint.setTextSize(newSize);
         recreateLayoutMaybe();
     }
@@ -97,12 +99,15 @@ public class SimpleTextView extends View implements Drawable.Callback {
 
     public int getSideDrawablesSize() {
         int size = 0;
+
         if (leftDrawable != null) {
             size += leftDrawable.getIntrinsicWidth() + drawablePadding;
         }
+
         if (rightDrawable != null) {
             size += rightDrawable.getIntrinsicWidth() + drawablePadding;
         }
+
         return size;
     }
 
@@ -117,20 +122,25 @@ public class SimpleTextView extends View implements Drawable.Callback {
                     width -= leftDrawable.getIntrinsicWidth();
                     width -= drawablePadding;
                 }
+
                 if (rightDrawable != null) {
                     width -= rightDrawable.getIntrinsicWidth();
                     width -= drawablePadding;
                 }
+
                 width -= getPaddingLeft() + getPaddingRight();
                 CharSequence string = TextUtils.ellipsize(text, textPaint, width, TextUtils.TruncateAt.END);
+
                 if (layout != null && TextUtils.equals(layout.getText(), string)) {
                     return;
                 }
+
                 layout = new StaticLayout(string, 0, string.length(), textPaint, width + AndroidUtilities.dp(8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 if (layout.getLineCount() > 0) {
                     textWidth = (int) Math.ceil(layout.getLineWidth(0));
                     textHeight = layout.getLineBottom(0);
+
                     if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.LEFT) {
                         offsetX = -(int) layout.getLineLeft(0);
                     } else if (layout.getLineLeft(0) == 0) {
@@ -154,11 +164,13 @@ public class SimpleTextView extends View implements Drawable.Callback {
         createLayout(width - getPaddingLeft() - getPaddingRight());
 
         int finalHeight;
+
         if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY) {
             finalHeight = height;
         } else {
             finalHeight = textHeight;
         }
+
         setMeasuredDimension(width, finalHeight);
     }
 
@@ -197,13 +209,17 @@ public class SimpleTextView extends View implements Drawable.Callback {
         if (leftDrawable == drawable) {
             return;
         }
+
         if (leftDrawable != null) {
             leftDrawable.setCallback(null);
         }
+
         leftDrawable = drawable;
+
         if (drawable != null) {
             drawable.setCallback(this);
         }
+
         recreateLayoutMaybe();
     }
 
@@ -211,13 +227,17 @@ public class SimpleTextView extends View implements Drawable.Callback {
         if (rightDrawable == drawable) {
             return;
         }
+
         if (rightDrawable != null) {
             rightDrawable.setCallback(null);
         }
+
         rightDrawable = drawable;
+
         if (drawable != null) {
             drawable.setCallback(this);
         }
+
         recreateLayoutMaybe();
     }
 

@@ -177,6 +177,7 @@ public class Scroller  {
             currY = mFinalY;
             finished = true;
         }
+
         return true;
     }
 

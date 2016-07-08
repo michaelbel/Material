@@ -60,11 +60,13 @@ public class ActionBarMenu extends LinearLayout {
     public ActionBarMenuItem addItem(int id, int icon, Drawable drawable, int width) {
         ActionBarMenuItem menuItem = new ActionBarMenuItem(getContext(), this);
         menuItem.setTag(id);
+
         if (drawable != null) {
             menuItem.iconView.setImageDrawable(drawable);
         } else {
             menuItem.iconView.setImageResource(icon);
         }
+
         addView(menuItem);
         LayoutParams layoutParams = (LayoutParams) menuItem.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
@@ -74,6 +76,7 @@ public class ActionBarMenu extends LinearLayout {
             @Override
             public void onClick(View view) {
                 ActionBarMenuItem item = (ActionBarMenuItem) view;
+
                 if (item.hasSubMenu()) {
                     if (parentActionBar.mActionBarMenuOnItemClick.canOpenMenu()) {
                         item.toggleSubMenu();
@@ -91,6 +94,7 @@ public class ActionBarMenu extends LinearLayout {
     public void hideAllPopupMenus() {
         for (int a = 0; a < getChildCount(); a++) {
             View view = getChildAt(a);
+
             if (view instanceof ActionBarMenuItem) {
                 ((ActionBarMenuItem) view).closeSubMenu();
             }
@@ -169,6 +173,7 @@ public class ActionBarMenu extends LinearLayout {
         if (v instanceof ActionBarMenuItem) {
             return (ActionBarMenuItem) v;
         }
+
         return null;
     }
 }
