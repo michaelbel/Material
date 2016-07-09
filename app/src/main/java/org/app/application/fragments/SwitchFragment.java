@@ -57,4 +57,6 @@ public class SwitchFragment extends Fragment {
 
         return view;
     }
+
+
 }
