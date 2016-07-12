@@ -28,6 +28,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.R;
 
 import java.lang.reflect.Method;
 
@@ -39,7 +40,7 @@ public class RadioButton extends View {
     private static Paint eraser;
     private static Paint checkedPaint;
 
-    private int checkedColor = 0xFFFF5252;
+    private int colorPrimary;
     private int color = 0xFF737373;
 
     private float progress;
@@ -70,6 +71,7 @@ public class RadioButton extends View {
         AndroidUtilities.bind(context);
 
         size = AndroidUtilities.dp(22);
+        colorPrimary = AndroidUtilities.getContextColor(R.attr.colorPrimary);
 
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -114,7 +116,7 @@ public class RadioButton extends View {
 
     public void setColor(int color1, int color2) {
         color = color1;
-        checkedColor = color2;
+        colorPrimary = color2;
         invalidate();
     }
 
@@ -197,11 +199,11 @@ public class RadioButton extends View {
         } else {
             circleProgress = 2.0f - progress / 0.5f;
             int r1 = Color.red(color);
-            int rD = (int) ((Color.red(checkedColor) - r1) * (1.0f - circleProgress));
+            int rD = (int) ((Color.red(colorPrimary) - r1) * (1.0f - circleProgress));
             int g1 = Color.green(color);
-            int gD = (int) ((Color.green(checkedColor) - g1) * (1.0f - circleProgress));
+            int gD = (int) ((Color.green(colorPrimary) - g1) * (1.0f - circleProgress));
             int b1 = Color.blue(color);
-            int bD = (int) ((Color.blue(checkedColor) - b1) * (1.0f - circleProgress));
+            int bD = (int) ((Color.blue(colorPrimary) - b1) * (1.0f - circleProgress));
             int c = Color.rgb(r1 + rD, g1 + gD, b1 + bD);
             paint.setColor(c);
             checkedPaint.setColor(c);

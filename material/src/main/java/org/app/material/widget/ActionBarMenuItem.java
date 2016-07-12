@@ -221,7 +221,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
     public void setShowFromBottom(boolean value) {
         showFromBottom = value;
         if (popupLayout != null) {
-            popupLayout.setShowedFromBotton(showFromBottom);
+            popupLayout.setShowedFromBottom(showFromBottom);
         }
     }
 
@@ -295,7 +295,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             }
         }
 
-        popupLayout.setShowedFromBotton(showFromBottom);
+        popupLayout.setShowedFromBottom(showFromBottom);
         popupLayout.addView(textView);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) textView.getLayoutParams();
 

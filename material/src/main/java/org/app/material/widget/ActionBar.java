@@ -102,16 +102,7 @@ public class ActionBar extends FrameLayout {
     }
 
     public ActionBar setTitle(@StringRes int resId) {
-        if (resId != 0 && mTitleTextView == null) {
-            createTitleTextView();
-        }
-
-        if (mTitleTextView != null) {
-            mLastTitle = getResources().getString(resId);
-            mTitleTextView.setVisibility(resId != 0 && !isSearchFieldVisible ? VISIBLE : INVISIBLE);
-            mTitleTextView.setText(getResources().getString(resId));
-        }
-
+        setTitle(getContext().getString(resId));
         return this;
     }
 
@@ -129,15 +120,7 @@ public class ActionBar extends FrameLayout {
     }
 
     public ActionBar setSubtitle(@StringRes int resId) {
-        if (resId != 0 && mSubtitleTextView == null) {
-            createSubtitleTextView();
-        }
-
-        if (mSubtitleTextView != null) {
-            mSubtitleTextView.setVisibility(resId != 0 && !isSearchFieldVisible ? VISIBLE : INVISIBLE);
-            mSubtitleTextView.setText(getResources().getString(resId));
-        }
-
+        setSubtitle(getContext().getString(resId));
         return this;
     }
 
@@ -277,40 +260,6 @@ public class ActionBar extends FrameLayout {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void showActionMode() {
         if (mActionMode == null || actionModeVisible) {
             return;
@@ -325,10 +274,10 @@ public class ActionBar extends FrameLayout {
                 animators.add(ObjectAnimator.ofFloat(mActionModeTop, "alpha", 0.0f, 1.0f));
             }
 
-            AnimatorSet animatorSetProxy = new AnimatorSet();
-            animatorSetProxy.playTogether(animators);
-            animatorSetProxy.setDuration(200);
-            animatorSetProxy.addListener(new AnimatorListenerAdapter() {
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(animators);
+            animatorSet.setDuration(200);
+            animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationStart(Animator animation) {
                     mActionMode.setVisibility(VISIBLE);
@@ -353,7 +302,7 @@ public class ActionBar extends FrameLayout {
                     }
                 }
             });
-            animatorSetProxy.start();
+            animatorSet.start();
         } else {
             mActionMode.setVisibility(VISIBLE);
 
@@ -426,9 +375,11 @@ public class ActionBar extends FrameLayout {
         }
         if (mBackButtonImageView != null) {
             Drawable drawable = mBackButtonImageView.getDrawable();
+
             if (drawable instanceof BackDrawable) {
                 ((BackDrawable) drawable).setRotation(0, true);
             }
+
             mBackButtonImageView.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         }
     }
@@ -527,6 +478,7 @@ public class ActionBar extends FrameLayout {
             if (child.getVisibility() == GONE || child == mTitleTextView || child == mSubtitleTextView || child == mMenu || child == mBackButtonImageView) {
                 continue;
             }
+
             measureChildWithMargins(child, widthMeasureSpec, 0, MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY), 0);
         }
     }
@@ -558,6 +510,7 @@ public class ActionBar extends FrameLayout {
             }
             mTitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mTitleTextView.getMeasuredWidth(), additionalTop + textTop + mTitleTextView.getTextHeight());
         }
+
         if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
             int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - AndroidUtilities.dp(!isTablet && AndroidUtilities.isLandscape() ? 1 : 1);
             mSubtitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mSubtitleTextView.getMeasuredWidth(), additionalTop + textTop + mSubtitleTextView.getTextHeight());
@@ -579,6 +532,7 @@ public class ActionBar extends FrameLayout {
             int childTop;
 
             int gravity = lp.gravity;
+
             if (gravity == -1) {
                 gravity = Gravity.TOP | Gravity.START;
             }

@@ -48,16 +48,6 @@ public class LayoutHelper {
         return new ScrollView.LayoutParams(getSize(context, width), getSize(context, height), gravity);
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         ScrollView.LayoutParams params = new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
         params.leftMargin = getSize(context, startMargin);
@@ -67,17 +57,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         ScrollView.LayoutParams params = new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -92,12 +71,6 @@ public class LayoutHelper {
         return new SwipeRefreshLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height) {
         return new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }

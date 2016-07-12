@@ -29,6 +29,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.R;
 
 public class CheckBox extends View {
 
@@ -48,7 +49,7 @@ public class CheckBox extends View {
     private boolean isDisabled;
 
     private int checkColor = 0xFFFFFFFF;
-    private int colorAccent = 0xFFFF5252;
+    private int colorPrimary = 0xFFFF5252;
 
     public CheckBox(Context context) {
         this(context, null);
@@ -69,6 +70,8 @@ public class CheckBox extends View {
 
     public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         AndroidUtilities.bind(context);
+
+        colorPrimary = AndroidUtilities.getContextColor(R.attr.colorPrimary);
 
         if (mCheckPaint == null) {
             mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -105,7 +108,7 @@ public class CheckBox extends View {
     }
 
     public void setColor(int value) {
-        colorAccent = value;
+        colorPrimary = value;
     }
 
     private void cancelCheckAnimator() {
@@ -169,15 +172,15 @@ public class CheckBox extends View {
         float bounceProgress;
         if (progress <= 0.5f) {
             bounceProgress = checkProgress = progress / 0.5f;
-            int rD = (int) ((Color.red(colorAccent) - 0x73) * checkProgress);
-            int gD = (int) ((Color.green(colorAccent) - 0x73) * checkProgress);
-            int bD = (int) ((Color.blue(colorAccent) - 0x73) * checkProgress);
+            int rD = (int) ((Color.red(colorPrimary) - 0x73) * checkProgress);
+            int gD = (int) ((Color.green(colorPrimary) - 0x73) * checkProgress);
+            int bD = (int) ((Color.blue(colorPrimary) - 0x73) * checkProgress);
             int c = Color.rgb(0x73 + rD, 0x73 + gD, 0x73 + bD);
             mBackgroundPaint.setColor(c);
         } else {
             bounceProgress = 2.0f - progress / 0.5f;
             checkProgress = 1.0f;
-            mBackgroundPaint.setColor(colorAccent);
+            mBackgroundPaint.setColor(colorPrimary);
         }
         if (isDisabled) {
             mBackgroundPaint.setColor(0xffb0b0b0);

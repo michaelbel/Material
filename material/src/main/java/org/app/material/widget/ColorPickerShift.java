@@ -18,6 +18,7 @@ package org.app.material.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
@@ -33,12 +34,28 @@ public class ColorPickerShift extends View {
 
 	public static final int VERTICAL = 1;
 	public static final int HORIZONTAL = 0;
+	public static int[] DEFAULT;
+
+	static {
+		DEFAULT = new int[] {
+				Color.parseColor("#b8c847"),
+				Color.parseColor("#67bb43"),
+				Color.parseColor("#41b691"),
+				Color.parseColor("#4182b6"),
+				Color.parseColor("#4149b6"),
+				Color.parseColor("#7641b6"),
+				Color.parseColor("#b741a7"),
+				Color.parseColor("#c54657"),
+				Color.parseColor("#d1694a"),
+				Color.parseColor("#d1904a"),
+				Color.parseColor("#d1c54a")};
+	}
 
 	int[] colors;
 
 	{
         if (isInEditMode()) {
-            colors = Palette.DEFAULT;
+            colors = DEFAULT;
         } else {
             colors = new int[1];
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Bel
+ * Copyright 2015-2016 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.R;
@@ -56,11 +57,23 @@ public class Browser {
         } catch (Exception ignored) {}
     }
 
+    public static void openUrl(@NonNull Context context, @StringRes int stringId) {
+        openUrl(context, context.getString(stringId));
+    }
+
     public static void openBrowserUrl(@NonNull Context context, String url) {
         context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
-    public static void openGooglePlayApp(@NonNull Context context, String packageName) {
+    public static void openBrowserUrl(@NonNull Context context, @StringRes int stringId) {
+        openBrowserUrl(context, context.getString(stringId));
+    }
+
+    public static void openAppInGooglePlay(@NonNull Context context) {
+        openAppInGooglePlay(context, context.getPackageName());
+    }
+
+    public static void openAppInGooglePlay(@NonNull Context context, String packageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
         } catch (ActivityNotFoundException exception) {
