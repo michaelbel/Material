@@ -14,25 +14,27 @@
  * limitations under the License.
  */
 
-package org.app.application.cells;
+package org.app.application.cells.listview;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
-public class EmptyCell extends FrameLayout {
+public class EmptyCell extends BaseCell {
 
     private TextView mHeadText;
+    private boolean upperCase = false;
 
     public EmptyCell(Context context) {
         super(context);
+
+        withHeight(42);
 
         mHeadText = new TextView(context);
         mHeadText.setGravity(Gravity.START);
@@ -44,26 +46,28 @@ public class EmptyCell extends FrameLayout {
         addView(mHeadText);
     }
 
-    public EmptyCell setHeader(String text) {
-        mHeadText.setText(text);
+    public EmptyCell withHeader(String text) {
+        if (upperCase) {
+            mHeadText.setText(text.toUpperCase());
+        } else {
+            mHeadText.setText(text);
+        }
+
         return this;
     }
 
-    public EmptyCell setHeader(@StringRes int resId) {
-        mHeadText.setText(getResources().getString(resId));
+    public EmptyCell withHeader(@StringRes int resId) {
+        withHeader(getContext().getString(resId));
         return this;
     }
 
-    public EmptyCell addNote(String text) {
+    public EmptyCell withGravity(int gravity) {
+        mHeadText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, gravity | Gravity.CENTER_VERTICAL));
         return this;
     }
 
-    public EmptyCell addNote(@StringRes int resId) {
+    public EmptyCell withTextToUpperCase(boolean upper) {
+        upperCase = upper;
         return this;
-    }
-
-    @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(44), MeasureSpec.EXACTLY));
     }
 }

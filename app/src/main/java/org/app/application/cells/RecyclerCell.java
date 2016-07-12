@@ -45,6 +45,14 @@ public class RecyclerCell extends FrameLayout {
     public OnRecyclerClickListener mItemClickListener;
     public OnOptionClickListener mItemOptionClickListener;
 
+    public interface OnOptionClickListener {
+        void onClick();
+    }
+
+    public interface OnRecyclerClickListener {
+        void onClick();
+    }
+
     public RecyclerCell(Context context) {
         super(context);
 
@@ -76,7 +84,7 @@ public class RecyclerCell extends FrameLayout {
         addView(mImageView);
 
         mTextView1 = new TextView(context);
-        mTextView1.setTextColor(0xFF000000);
+        mTextView1.setTextColor(0xFF333333);
         mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -123,7 +131,7 @@ public class RecyclerCell extends FrameLayout {
         return this;
     }
 
-    public RecyclerCell setDivider(boolean divider) {
+    public RecyclerCell withDivider(boolean divider) {
         needDivider = divider;
         return this;
     }
@@ -146,13 +154,5 @@ public class RecyclerCell extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64), MeasureSpec.EXACTLY));
-    }
-
-    public interface OnOptionClickListener {
-        void onClick();
-    }
-
-    public interface OnRecyclerClickListener {
-        void onClick();
     }
 }

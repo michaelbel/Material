@@ -14,42 +14,29 @@
  * limitations under the License.
  */
 
-package org.app.application.cells;
+package org.app.application.cells.listview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
-public class TextCell extends FrameLayout {
+public class TextCell extends BaseCell {
 
     private TextView mTextView;
     private TextView mValueView;
 
-    private static Paint mPaint;
-    private boolean needDivider = false;
-
     public TextCell(Context context) {
         super(context);
 
-        this.setBackgroundColor(0xFFFFFFFF);
-
-        if (mPaint == null) {
-            mPaint = new Paint();
-            mPaint.setColor(0xffd9d9d9);
-            mPaint.setStrokeWidth(1);
-        }
+        withBackgroundColor(0xFFFFFFFF);
 
         mTextView = new TextView(context);
-        mTextView.setTextColor(0xFF000000);
-        mTextView.setText("Row primary text");
+        mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
@@ -65,35 +52,23 @@ public class TextCell extends FrameLayout {
         addView(mValueView);
     }
 
-    public TextCell setText(@StringRes int resId) {
-        mTextView.setText(getResources().getString(resId));
+    public TextCell withText(String text) {
+        mTextView.setText(text);
         return this;
     }
 
-    public TextCell setValue(@StringRes int resId) {
-        mValueView.setText(getResources().getString(resId));
+    public TextCell withText(@StringRes int resId) {
+        withText(getContext().getString(resId));
         return this;
     }
 
-    public TextCell setValue(String value) {
+    public TextCell withValue(String value) {
         mValueView.setText(value);
         return this;
     }
 
-    public TextCell setDivider(boolean divider) {
-        needDivider = divider;
+    public TextCell withValue(@StringRes int resId) {
+        withValue(getContext().getString(resId));
         return this;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (needDivider) {
-            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, mPaint);
-        }
-    }
-
-    @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 }

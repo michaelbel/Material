@@ -28,12 +28,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import org.app.application.R;
-import org.app.application.cells.CheckBoxCell;
-import org.app.application.cells.DoubleCell;
-import org.app.application.cells.EmptyCell;
-import org.app.application.cells.RadioCell;
-import org.app.application.cells.SwitchCell;
-import org.app.application.cells.TextCell;
+import org.app.application.cells.listview.CheckBoxCell;
+import org.app.application.cells.listview.DoubleCell;
+import org.app.application.cells.listview.EmptyCell;
+import org.app.application.cells.listview.RadioCell;
+import org.app.application.cells.listview.SwitchCell;
+import org.app.application.cells.listview.TextCell;
 import org.app.material.widget.LayoutHelper;
 
 public class ListViewFragment extends Fragment {
@@ -46,12 +46,7 @@ public class ListViewFragment extends Fragment {
     private int checkBoxRow;
     private int doubleTextRow;
     private int radioRow;
-    private int headerRow1;
-    private int headerRow2;
-    private int headerRow3;
-    private int headerRow4;
-    private int headerRow5;
-    private int headerRow6;
+    private int headerRow;
 
     private boolean switchParam = true;
     private boolean checkBoxParam = true;
@@ -60,21 +55,15 @@ public class ListViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         FrameLayout layout = new FrameLayout(getActivity());
-        layout.setBackgroundColor(0xFFF0F0F0);
 
         rowCount = 0;
-        headerRow1 = rowCount++;
+        headerRow = rowCount++;
         textRow = rowCount++;
-        headerRow2 = rowCount++;
         textValueRow1 = rowCount++;
         textValueRow2 = rowCount++;
-        headerRow4 = rowCount++;
         doubleTextRow = rowCount++;
-        headerRow3 = rowCount++;
         switchRow = rowCount++;
-        headerRow5 = rowCount++;
         checkBoxRow = rowCount++;
-        headerRow6 = rowCount++;
         radioRow = rowCount++;
 
         ListView listView = new ListView(getActivity());
@@ -90,17 +79,17 @@ public class ListViewFragment extends Fragment {
                 } else if (i == switchRow) {
                     switchParam = !switchParam;
                     if (view instanceof SwitchCell) {
-                        ((SwitchCell) view).setChecked(switchParam);
+                        ((SwitchCell) view).withChecked(switchParam);
                     }
                 } else if (i == checkBoxRow) {
                     checkBoxParam = !checkBoxParam;
                     if (view instanceof CheckBoxCell) {
-                        ((CheckBoxCell) view).setChecked(checkBoxParam, true);
+                        ((CheckBoxCell) view).withChecked(checkBoxParam, true);
                     }
                 } else if (i == radioRow) {
                     radioParam = !radioParam;
                     if (view instanceof RadioCell) {
-                        ((RadioCell) view).setChecked(radioParam, true);
+                        ((RadioCell) view).withChecked(radioParam, true);
                     }
                 }
             }
@@ -114,8 +103,13 @@ public class ListViewFragment extends Fragment {
 
         @Override
         public boolean isEnabled(int i) {
-            return i == textRow || i == textValueRow1 || i == textValueRow2 || i == switchRow ||
-                   i == doubleTextRow || i == checkBoxRow || i == radioRow;
+            return i == textRow ||
+                   i == textValueRow1 ||
+                   i == textValueRow2 ||
+                   i == switchRow ||
+                   i == doubleTextRow ||
+                   i == checkBoxRow ||
+                   i == radioRow;
         }
 
         @Override
@@ -145,11 +139,11 @@ public class ListViewFragment extends Fragment {
                 TextCell cell = (TextCell) view;
 
                 if (i == textRow) {
-                    cell.setText(R.string.SomeTitleText);
+                    cell.withText(R.string.SomeTitleText).withDivider(true);
                 } else if (i == textValueRow1) {
-                    cell.setText(R.string.TextLock).setValue(R.string.TextDisabled).setDivider(true);
+                    cell.withText(R.string.TextLock).withValue(R.string.TextDisabled).withDivider(true);
                 } else if (i == textValueRow2) {
-                    cell.setText(R.string.Size).setValue(String.valueOf(16));
+                    cell.withText(R.string.Size).withValue(String.valueOf(16)).withDivider(true);
                 }
             } else if (type == 1) {
                 if (view == null) {
@@ -158,18 +152,8 @@ public class ListViewFragment extends Fragment {
 
                 EmptyCell cell = (EmptyCell) view;
 
-                if (i == headerRow1) {
-                    cell.setHeader(R.string.PlainText);
-                } else if (i == headerRow2) {
-                    cell.setHeader(R.string.TextAndValue);
-                } else if (i == headerRow3) {
-                    cell.setHeader(R.string.Switch);
-                } else if (i == headerRow4) {
-                    cell.setHeader(R.string.DoubleText);
-                } else if (i == headerRow5) {
-                    cell.setHeader(R.string.CheckBox);
-                } else if (i == headerRow6) {
-                    cell.setHeader(R.string.RadioButton);
+                if (i == headerRow) {
+                    cell.withHeader("Header text");
                 }
             } else if (type == 2) {
                 if (view == null) {
@@ -179,7 +163,7 @@ public class ListViewFragment extends Fragment {
                 SwitchCell cell = (SwitchCell) view;
 
                 if (i == switchRow) {
-                    cell.setText(R.string.EnableMode).setChecked(switchParam);
+                    cell.withText(R.string.EnableMode).withChecked(switchParam).withDivider(true);
                 }
             } else if (type == 3) {
                 if (view == null) {
@@ -189,7 +173,7 @@ public class ListViewFragment extends Fragment {
                 DoubleCell cell = (DoubleCell) view;
 
                 if (i == doubleTextRow) {
-                    cell.setText(R.string.FirstLine).setValue(R.string.SecondLine);
+                    cell.withText(R.string.FirstLine).withValue(R.string.SecondLine).withDivider(true);
                 }
             } else if (type == 4) {
                 if (view == null) {
@@ -199,7 +183,7 @@ public class ListViewFragment extends Fragment {
                 CheckBoxCell cell = (CheckBoxCell) view;
 
                 if (i == checkBoxRow) {
-                    cell.setText(R.string.Notifications).setChecked(checkBoxParam, false);
+                    cell.withText(R.string.Notifications).withChecked(checkBoxParam, false).withDivider(true);
                 }
             } else if (type == 5) {
                 if (view == null) {
@@ -209,7 +193,7 @@ public class ListViewFragment extends Fragment {
                 RadioCell cell = (RadioCell) view;
 
                 if (i == radioRow) {
-                    cell.setText(R.string.Select).setChecked(radioParam, false);
+                    cell.withText(R.string.Select).withChecked(radioParam, false);
                 }
             }
 
@@ -220,7 +204,7 @@ public class ListViewFragment extends Fragment {
         public int getItemViewType(int i) {
             if (i == textRow || i == textValueRow1 || i == textValueRow2) {
                 return 0;
-            } else if (i == headerRow1 || i == headerRow2 || i == headerRow3 || i == headerRow4 || i == headerRow5 || i == headerRow6) {
+            } else if (i == headerRow) {
                 return 1;
             } else if (i == switchRow) {
                 return 2;
@@ -232,7 +216,7 @@ public class ListViewFragment extends Fragment {
                 return 5;
             }
 
-            return 0;
+            return -1;
         }
 
         @Override

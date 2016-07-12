@@ -14,41 +14,29 @@
  * limitations under the License.
  */
 
-package org.app.application.cells;
+package org.app.application.cells.listview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
-public class DoubleCell extends FrameLayout {
+public class DoubleCell extends BaseCell {
 
     private TextView mTextView;
     private TextView mValueView;
 
-    private static Paint mPaint;
-    private boolean needDivider = false;
-
     public DoubleCell(Context context) {
         super(context);
 
-        this.setBackgroundColor(0xFFFFFFFF);
-
-        if (mPaint == null) {
-            mPaint = new Paint();
-            mPaint.setColor(0xffd9d9d9);
-            mPaint.setStrokeWidth(1);
-        }
+        withHeight(62);
+        withBackgroundColor(0xFFFFFFFF);
 
         mTextView = new TextView(context);
-        mTextView.setTextColor(0xFF000000);
+        mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.TOP);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
@@ -62,30 +50,13 @@ public class DoubleCell extends FrameLayout {
         addView(mValueView);
     }
 
-    public DoubleCell setText(@StringRes int resId) {
+    public DoubleCell withText(@StringRes int resId) {
         mTextView.setText(getResources().getString(resId));
         return this;
     }
 
-    public DoubleCell setValue(@StringRes int resId) {
+    public DoubleCell withValue(@StringRes int resId) {
         mValueView.setText(getResources().getString(resId));
         return this;
-    }
-
-    public DoubleCell setDivider(boolean divider) {
-        needDivider = divider;
-        return this;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (needDivider) {
-            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, mPaint);
-        }
-    }
-
-    @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(60 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 }

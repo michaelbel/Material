@@ -14,42 +14,30 @@
  * limitations under the License.
  */
 
-package org.app.application.cells;
+package org.app.application.cells.listview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.Switch;
 
-public class SwitchCell extends FrameLayout {
+public class SwitchCell extends BaseCell {
 
     private Switch mSwitch;
     private TextView mTextView;
 
-    private static Paint mPaint;
-    private boolean needDivider = false;
-
     public SwitchCell(Context context) {
         super(context);
 
-        this.setBackgroundColor(0xFFFFFFFF);
-
-        if (mPaint == null) {
-            mPaint = new Paint();
-            mPaint.setColor(0xffd9d9d9);
-            mPaint.setStrokeWidth(1);
-        }
+        withBackgroundColor(0xFFFFFFFF);
 
         mTextView = new TextView(context);
-        mTextView.setTextColor(0xFF000000);
+        mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
@@ -60,35 +48,19 @@ public class SwitchCell extends FrameLayout {
         mSwitch.setFocusable(false);
         mSwitch.setClickable(false);
         mSwitch.setFocusableInTouchMode(false);
+        mSwitch.withTrackColorActivated(0xFF77C2BB);
         mSwitch.setDuplicateParentStateEnabled(false);
         mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mSwitch);
     }
 
-    public SwitchCell setText(@StringRes int resId) {
+    public SwitchCell withText(@StringRes int resId) {
         mTextView.setText(getResources().getString(resId));
         return this;
     }
 
-    public SwitchCell setChecked(boolean checked) {
+    public SwitchCell withChecked(boolean checked) {
         mSwitch.setChecked(checked);
         return this;
-    }
-
-    public SwitchCell setDivider(boolean divider) {
-        needDivider = divider;
-        return this;
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (needDivider) {
-            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, mPaint);
-        }
-    }
-
-    @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 }

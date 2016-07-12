@@ -147,7 +147,7 @@ public class RecyclerFragment extends Fragment {
                     .setImage(item.getImage())
                     .setText1(item.getText1())
                     .setText2(item.getText2())
-                    .setDivider(true);
+                    .withDivider(true);
         }
 
         public class ItemViewHolder extends RecyclerView.ViewHolder {

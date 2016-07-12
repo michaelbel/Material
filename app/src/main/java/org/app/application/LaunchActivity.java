@@ -32,7 +32,7 @@ import org.app.application.fragments.ListViewFragment;
 import org.app.application.fragments.NumberViewFragment;
 import org.app.application.fragments.PatternViewFragment;
 import org.app.application.fragments.RecyclerFragment;
-import org.app.application.fragments.SwitchFragment;
+import org.app.application.fragments.SwitchesFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
@@ -66,9 +66,10 @@ public class LaunchActivity extends FragmentActivity {
                         if (id == -1) {
                             Toast.makeText(LaunchActivity.this, "Drawer is not implemented", Toast.LENGTH_SHORT).show();
                         } else if (id == github) {
-                            Browser.openUrl(LaunchActivity.this, getString(R.string.GithubURL));
+                            Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                         } else if (id == settings) {
-                            startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
+                            //startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
+                            startActivity(new Intent(LaunchActivity.this, TestFabSheet.class));
                         } else if (id == adding) {
                             Toast.makeText(LaunchActivity.this, "Adding is not implemented", Toast.LENGTH_SHORT).show();
                         }
@@ -92,14 +93,14 @@ public class LaunchActivity extends FragmentActivity {
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
         adapter.addFragments(
             new FragmentItem(new DialogsFragment(), R.string.Dialogs),
-            new FragmentItem(new BottomsFragment(), R.string.Bottoms),
+            new FragmentItem(new BottomsFragment(), R.string.Dialogs),
             new FragmentItem(new ListViewFragment(), R.string.ListViewAdapter),
             new FragmentItem(new CardFragment(), R.string.CardView),
             new FragmentItem(new RecyclerFragment(), R.string.RecyclerView),
             new FragmentItem(new NumberViewFragment(), R.string.NumberView),
             new FragmentItem(new FabFragment(), R.string.Fabs),
             new FragmentItem(new PatternViewFragment(), R.string.Pattern),
-            new FragmentItem(new SwitchFragment(), R.string.Switch)
+            new FragmentItem(new SwitchesFragment(), R.string.Switch)
         );
 
         viewPager.setAdapter(adapter);

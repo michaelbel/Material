@@ -14,42 +14,30 @@
  * limitations under the License.
  */
 
-package org.app.application.cells;
+package org.app.application.cells.listview;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.RadioButton;
 
-public class RadioCell extends FrameLayout {
+public class RadioCell extends BaseCell {
 
-    private RadioButton mRadioButton;
     private TextView mTextView;
-
-    private static Paint mPaint;
-    private boolean needDivider = false;
+    private RadioButton mRadioButton;
 
     public RadioCell(Context context) {
         super(context);
 
-        this.setBackgroundColor(0xFFFFFFFF);
-
-        if (mPaint == null) {
-            mPaint = new Paint();
-            mPaint.setColor(0xffd9d9d9);
-            mPaint.setStrokeWidth(1);
-        }
+        withBackgroundColor(0xFFFFFFFF);
 
         mTextView = new TextView(context);
-        mTextView.setTextColor(0xFF000000);
+        mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
@@ -61,30 +49,13 @@ public class RadioCell extends FrameLayout {
         addView(mRadioButton);
     }
 
-    public RadioCell setText(@StringRes int resId) {
+    public RadioCell withText(@StringRes int resId) {
         mTextView.setText(getResources().getString(resId));
         return this;
     }
 
-    public RadioCell setChecked(boolean checked, boolean animated) {
+    public RadioCell withChecked(boolean checked, boolean animated) {
         mRadioButton.setChecked(checked, animated);
         return this;
-    }
-
-    public RadioCell setDivider(boolean divider) {
-        needDivider = divider;
-        return this;
-    }
-
-    @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54 + (needDivider ? 1 : 0)), MeasureSpec.EXACTLY));
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (needDivider) {
-            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, mPaint);
-        }
     }
 }

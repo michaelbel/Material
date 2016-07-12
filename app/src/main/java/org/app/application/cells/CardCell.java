@@ -65,7 +65,7 @@ public class CardCell extends CardView {
         addView(mImageView);
 
         mTextView1 = new TextView(context);
-        mTextView1.setTextColor(0xFF000000);
+        mTextView1.setTextColor(0xFF333333);
         mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
