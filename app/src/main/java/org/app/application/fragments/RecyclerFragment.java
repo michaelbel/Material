@@ -16,11 +16,9 @@
 
 package org.app.application.fragments;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.RecyclerCell;
@@ -159,15 +156,15 @@ public class RecyclerFragment extends Fragment {
 
                 recyclerCell = (RecyclerCell) itemView;
 
-                recyclerCell.setOnItemClick(new RecyclerCell.OnRecyclerClickListener() {
+                /*recyclerCell.setOnItemClick(new RecyclerCell.OnRecyclerClickListener() {
                     @Override
                     public void onClick() {
                         final RecyclerItemModel item = items.get(getAdapterPosition());
                         Toast.makeText(getActivity(), getString(R.string.ClickOnItem, item.getId()), Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
 
-                recyclerCell.setOnOptionsClick(new RecyclerCell.OnOptionClickListener() {
+                /*recyclerCell.setOnOptionsClick(new RecyclerCell.OnOptionClickListener() {
                     @Override
                     public void onClick() {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -188,7 +185,7 @@ public class RecyclerFragment extends Fragment {
                         });
                         builder.show();
                     }
-                });
+                });*/
             }
         }
     }

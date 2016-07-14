@@ -24,7 +24,6 @@ import android.support.v4.view.ViewPager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import org.app.application.fragments.BottomsFragment;
 import org.app.application.fragments.CardFragment;
 import org.app.application.fragments.DialogsFragment;
 import org.app.application.fragments.FabFragment;
@@ -32,6 +31,7 @@ import org.app.application.fragments.ListViewFragment;
 import org.app.application.fragments.NumberViewFragment;
 import org.app.application.fragments.PatternViewFragment;
 import org.app.application.fragments.RecyclerFragment;
+import org.app.application.fragments.RecyclerFragment2;
 import org.app.application.fragments.SwitchesFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
@@ -45,7 +45,6 @@ public class LaunchActivity extends FragmentActivity {
 
     private static final int github = 1;
     private static final int settings = 2;
-    private static final int adding = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,8 @@ public class LaunchActivity extends FragmentActivity {
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                         } else if (id == settings) {
-                            //startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
-                            startActivity(new Intent(LaunchActivity.this, TestFabSheet.class));
-                        } else if (id == adding) {
-                            Toast.makeText(LaunchActivity.this, "Adding is not implemented", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
+                            //startActivity(new Intent(LaunchActivity.this, TestFabSheet.class));
                         }
                     }
                 });
@@ -93,10 +90,10 @@ public class LaunchActivity extends FragmentActivity {
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
         adapter.addFragments(
             new FragmentItem(new DialogsFragment(), R.string.Dialogs),
-            new FragmentItem(new BottomsFragment(), R.string.Dialogs),
             new FragmentItem(new ListViewFragment(), R.string.ListViewAdapter),
             new FragmentItem(new CardFragment(), R.string.CardView),
             new FragmentItem(new RecyclerFragment(), R.string.RecyclerView),
+            new FragmentItem(new RecyclerFragment2(), R.string.RecyclerView),
             new FragmentItem(new NumberViewFragment(), R.string.NumberView),
             new FragmentItem(new FabFragment(), R.string.Fabs),
             new FragmentItem(new PatternViewFragment(), R.string.Pattern),

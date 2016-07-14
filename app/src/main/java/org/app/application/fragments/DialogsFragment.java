@@ -16,216 +16,737 @@
 
 package org.app.application.fragments;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import org.app.application.LaunchActivity;
 import org.app.application.R;
-import org.app.application.dialogs.ColorPickerAccentDialog;
+import org.app.application.cells.listview.EmptyCell;
+import org.app.application.cells.listview.TextCell;
 import org.app.application.dialogs.ColorPickerDialog;
-import org.app.application.dialogs.ColorPickerHoloDialog;
-import org.app.application.dialogs.ColorPickerPrimaryDialog;
-import org.app.application.dialogs.ColorPickerViewDialog;
-import org.app.application.dialogs.ItemsDialog;
-import org.app.application.dialogs.NumberPickerDialog;
-import org.app.application.dialogs.StringPickerDialog;
 import org.app.material.AndroidUtilities;
+import org.app.material.timepicker.date.DatePickerDialog;
+import org.app.material.timepicker.time.RadialPickerLayout;
+import org.app.material.timepicker.time.TimePickerDialog;
+import org.app.material.widget.ColorPickerHolo;
+import org.app.material.widget.ColorPickerShift;
+import org.app.material.widget.ColorPickerView;
 import org.app.material.widget.ColorView;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.NumberPicker;
+import org.app.material.widget.Palette;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class DialogsFragment extends Fragment implements View.OnClickListener {
+public class DialogsFragment extends Fragment implements
+        TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    private Button mButton1;
-    private Button mButton2;
-    private Button mButton3;
-    private Button mButton4;
-    private Button mButton5;
-    private Button mButton6;
-    private Button mButton7;
-    private Button mButton8;
-    private Button mButton9;
-    private Button mButton10;
-    private Button mButton11;
-    private Button mButton12;
-    private Button mButton13;
-    private Button mButton14;
-
-    private List<Button> buttons = new ArrayList<>();
+    private ArrayList<ListItem> dialogs;
+    private LaunchActivity mActivity;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ScrollView sView = new ScrollView(getActivity());
-
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setBackgroundColor(0xFFF0F0F0);
-
-        sView.addView(layout);
-
-        mButton1 = new Button(getActivity());
-        mButton1.setText(R.string.Strings);
-        layout.addView(mButton1);
-
-        mButton2 = new Button(getActivity());
-        mButton2.setText(R.string.NumberPicker);
-        layout.addView(mButton2);
-
-        mButton3 = new Button(getActivity());
-        mButton3.setText(R.string.StringPicker);
-        layout.addView(mButton3);
-
-        mButton4 = new Button(getActivity());
-        mButton4.setText("");
-        //layout.addView(mButton4);
-
-        mButton5 = new Button(getActivity());
-        mButton5.setText(R.string.ColorPickerHolo);
-        layout.addView(mButton5);
-
-        mButton6 = new Button(getActivity());
-        mButton6.setText(R.string.ColorPickerView);
-        layout.addView(mButton6);
-
-        mButton7 = new Button(getActivity());
-        mButton7.setText(R.string.ColorPickerPrimary);
-        layout.addView(mButton7);
-
-        mButton8 = new Button(getActivity());
-        mButton8.setText(R.string.ColorPickerAccent);
-        layout.addView(mButton8);
-
-        mButton9 = new Button(getActivity());
-        mButton9.setText(R.string.ColorPickerRGB);
-        layout.addView(mButton9);
-
-        mButton10 = new Button(getActivity());
-        mButton10.setText(R.string.ColorPickerARGB);
-        layout.addView(mButton10);
-
-        mButton11 = new Button(getActivity());
-        mButton11.setText(R.string.ColorPickerHSV);
-        layout.addView(mButton11);
-
-        mButton12 = new Button(getActivity());
-        mButton12.setText(R.string.ColorPickerHSL);
-        layout.addView(mButton12);
-
-        mButton13 = new Button(getActivity());
-        mButton13.setText(R.string.ColorPickerCMYK);
-        layout.addView(mButton13);
-
-        mButton14 = new Button(getActivity());
-        mButton14.setText(R.string.ColorPickerCMYK255);
-        layout.addView(mButton14);
-
-        buttons.add(mButton1);
-        buttons.add(mButton2);
-        buttons.add(mButton3);
-        buttons.add(mButton4);
-        buttons.add(mButton5);
-        buttons.add(mButton6);
-        buttons.add(mButton7);
-        buttons.add(mButton8);
-        buttons.add(mButton9);
-        buttons.add(mButton10);
-        buttons.add(mButton11);
-        buttons.add(mButton12);
-        buttons.add(mButton13);
-        buttons.add(mButton14);
-
-        for (Button button : buttons) {
-            button.setOnClickListener(this);
-            button.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
-        }
-
-        return sView;
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+        //dateTextView.setText(date);
     }
 
     @Override
-    public void onClick(View v) {
-        DialogFragment dialog;
+    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+        String minuteString = minute < 10 ? "0"+minute : ""+minute;
+        String secondString = second < 10 ? "0"+second : ""+second;
+        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+        //timeTextView.setText(time);
+    }
 
-        if (v == mButton1) {
-            dialog = new ItemsDialog();
-            dialog.show(getFragmentManager(), "items");
-        } else if (v == mButton2) {
-            /*dialog = new NumberPickerDialog();
-            dialog.show(getFragmentManager(), "numberPicker");*/
-            new NumberPickerDialog.Builder()
-                    .withValue(10)
-                    .withMinValue(0)
-                    .withMaxValue(100)
-                    .create()
-                    .show(getFragmentManager(), "numberPicker");
-        } else if (v == mButton3) {
-            dialog = new StringPickerDialog();
-            dialog.show(getFragmentManager(), "stringPicker");
-        } else if (v == mButton4) {
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        } else if (v == mButton5) {
-            dialog = new ColorPickerHoloDialog();
-            dialog.show(getFragmentManager(), "pickerHolo");
-        } else if (v == mButton6) {
-            dialog = new ColorPickerViewDialog();
-            dialog.show(getFragmentManager(), "pickerView");
-        } else if (v == mButton7) {
-            dialog = new ColorPickerPrimaryDialog();
-            dialog.show(getFragmentManager(), "pickerPrimary");
-        } else if (v == mButton8) {
-            dialog = new ColorPickerAccentDialog();
-            dialog.show(getFragmentManager(), "pickerAccent");
-        } else if (v == mButton9) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.RGB)
-                    .indicatorMode(ColorView.IndicatorMode.HEX)
-                    .create()
-                    .show(getFragmentManager(), "dialog1");
-        } else if (v == mButton10) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.ARGB)
-                    .indicatorMode(ColorView.IndicatorMode.HEX)
-                    .create()
-                    .show(getFragmentManager(), "dialog2");
-        } else if (v == mButton11) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.HSV)
-                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
-                    .create()
-                    .show(getFragmentManager(), "dialog3");
-        } else if (v == mButton12) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.HSL)
-                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
-                    .create()
-                    .show(getFragmentManager(), "dialog4");
-        } else if (v == mButton13) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.CMYK)
-                    .indicatorMode(ColorView.IndicatorMode.DECIMAL)
-                    .create()
-                    .show(getFragmentManager(), "dialog5");
-        } else if (v == mButton14) {
-            new ColorPickerDialog.Builder()
-                    .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
-                    .colorMode(ColorView.ColorMode.CMYK255)
-                    .indicatorMode(ColorView.IndicatorMode.HEX)
-                    .create()
-                    .show(getFragmentManager(), "dialog6");
+        //TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog");
+        //DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
+
+        //if(tpd != null) tpd.setOnTimeSetListener(this);
+        //if(dpd != null) dpd.setOnDateSetListener(this);
+    }
+
+    public class ListItem {
+
+        private String dialogTitle;
+        private String headerTitle;
+
+        public ListItem() {}
+
+        public ListItem setTitle(String title) {
+            this.dialogTitle = title;
+            return this;
+        }
+
+        public ListItem setHeader(String header) {
+            this.headerTitle = header;
+            return this;
+        }
+
+        public String getHeaderTitle() {
+            return headerTitle;
+        }
+
+        public String getDialogTitle() {
+            return dialogTitle;
+        }
+
+        public boolean isNotTitle() {
+            return getDialogTitle() != null;
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FrameLayout layout = new FrameLayout(getActivity());
+        layout.setBackgroundColor(0xFFF4F4F4);
+
+        mActivity = (LaunchActivity) getActivity();
+
+        dialogs = new ArrayList<>();
+        dialogs.add(new ListItem().setHeader("Simple pickers"));
+        dialogs.add(new ListItem().setTitle("Message"));
+        dialogs.add(new ListItem().setTitle("Strings"));
+        dialogs.add(new ListItem().setTitle("Single Item"));
+        dialogs.add(new ListItem().setTitle("Multi Items"));
+        dialogs.add(new ListItem().setHeader("Ringtone pickers"));
+        dialogs.add(new ListItem().setTitle("Ringtone"));
+        dialogs.add(new ListItem().setHeader("Number Pickers"));
+        dialogs.add(new ListItem().setTitle("Number Picker"));
+        dialogs.add(new ListItem().setTitle("Number Picker Strings"));
+        dialogs.add(new ListItem().setHeader("Color pickers"));
+        dialogs.add(new ListItem().setTitle("Color Accent"));
+        dialogs.add(new ListItem().setTitle("Color Primary"));
+        dialogs.add(new ListItem().setTitle("Color Holo"));
+        dialogs.add(new ListItem().setTitle("Color View"));
+        dialogs.add(new ListItem().setTitle("Color Picker RGB"));
+        dialogs.add(new ListItem().setTitle("Color Picker ARGB"));
+        dialogs.add(new ListItem().setTitle("Color Picker HSV"));
+        dialogs.add(new ListItem().setTitle("Color Picker HSL"));
+        dialogs.add(new ListItem().setTitle("Color Picker CMYK"));
+        dialogs.add(new ListItem().setTitle("Color Picker CMYK255"));
+        dialogs.add(new ListItem().setHeader("Voice speak"));
+        dialogs.add(new ListItem().setTitle("Voice"));
+        dialogs.add(new ListItem().setHeader("Date and Time Pickers"));
+        dialogs.add(new ListItem().setTitle("Time Picker"));
+        dialogs.add(new ListItem().setTitle("Date Picker"));
+
+        //dialogs.add(new ListItem().setHeader("EditText pickers"));
+
+        //dialogs.add(new ListItem().setHeader("Bottom Sheet"));
+        //dialogs.add(new ListItem().setTitle("Bottom Sheet Dialog 1"));
+        //dialogs.add(new ListItem().setHeader("Color Pickers"));
+        //dialogs.add(new ListItem().setTitle("Bottom Sheet Dialog 2"));
+
+        ListView listView = new ListView(getActivity());
+        listView.setDividerHeight(0);
+        listView.setDrawSelectorOnTop(true);
+        listView.setAdapter(new ListViewAdapter());
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
+                if (i == 1) {
+                    SimpleMessageDialog dialog = new SimpleMessageDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 2) {
+                    ItemsDialog dialog = new ItemsDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 3) {
+                    SingleChoiceDialog dialog = new SingleChoiceDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 4) {
+                    MultiChoiceDialog dialog = new MultiChoiceDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 6) {
+                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    startActivityForResult(intent, 0);
+                } else if (i == 8) {
+                    NumberPickerDialog dialog = new NumberPickerDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 9) {
+                    NumberPickerStringDialog dialog = new NumberPickerStringDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 11) {
+                    ColorPickerAccentDialog dialog = new ColorPickerAccentDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 12) {
+                    ColorPickerPrimaryDialog dialog = new ColorPickerPrimaryDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 13) {
+                    ColorPickerHoloDialog dialog = new ColorPickerHoloDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 14) {
+                    ColorPickerViewDialog dialog = new ColorPickerViewDialog();
+                    dialog.show(getFragmentManager(), "dialog");
+                } else if (i == 15) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.RGB)
+                            .indicatorMode(ColorView.IndicatorMode.HEX)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 16) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.ARGB)
+                            .indicatorMode(ColorView.IndicatorMode.HEX)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 17) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.HSV)
+                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 18) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.HSL)
+                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 19 ) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.CMYK)
+                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 20) {
+                    new ColorPickerDialog.Builder()
+                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .colorMode(ColorView.ColorMode.CMYK255)
+                            .indicatorMode(ColorView.IndicatorMode.HEX)
+                            .create()
+                            .show(getFragmentManager(), "dialog");
+                } else if (i == 21) {
+                    /*Calendar now = Calendar.getInstance();
+                    TimePickerDialog tpd = TimePickerDialog.newInstance(
+                            this,
+                            now.get(Calendar.HOUR_OF_DAY),
+                            now.get(Calendar.MINUTE),
+                            true
+                    );
+                    tpd.setThemeDark(false);
+                    tpd.vibrate(false);
+                    tpd.dismissOnPause(false);
+                    tpd.enableSeconds(false);
+                    //tpd.setAccentColor(Color.parseColor("#9C27B0"));
+                    //tpd.setTitle("TimePicker Title");
+                    //tpd.setTimeInterval(2, 5, 10);
+                    tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialogInterface) {
+                            Log.d("TimePicker", "Dialog was cancelled");
+                        }
+                    });
+                    tpd.show(getFragmentManager(), "Timepickerdialog");
+                    tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                            String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
+                            String minuteString = minute < 10 ? "0"+minute : ""+minute;
+                            String secondString = second < 10 ? "0"+second : ""+second;
+                            String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
+                            //timeTextView.setText(time);
+                        }
+                    });*/
+                } else if (i == 21) {
+                    /*Calendar now = Calendar.getInstance();
+                    DatePickerDialog dpd = DatePickerDialog.newInstance(
+                            getContext(),
+                            now.get(Calendar.YEAR),
+                            now.get(Calendar.MONTH),
+                            now.get(Calendar.DAY_OF_MONTH)
+                    );
+                    //dpd.setThemeDark(modeDarkDate.isChecked());
+                    //dpd.vibrate(vibrateDate.isChecked());
+                    //dpd.dismissOnPause(dismissDate.isChecked());
+                    //dpd.showYearPickerFirst(showYearFirst.isChecked());
+                    *//*if (modeCustomAccentDate.isChecked()) {
+                        dpd.setAccentColor(Color.parseColor("#9C27B0"));
+                    }*//*
+                    *//*if (titleDate.isChecked()) {
+                        dpd.setTitle("DatePicker Title");
+                    }*//*
+                    *//*if (limitDates.isChecked()) {
+                        Calendar[] dates = new Calendar[13];
+                        for(int i = -6; i <= 6; i++) {
+                            Calendar date = Calendar.getInstance();
+                            date.add(Calendar.MONTH, i);
+                            dates[i+6] = date;
+                        }
+                        dpd.setSelectableDays(dates);
+                    }*//*
+                    *//*if (highlightDates.isChecked()) {
+                        Calendar[] dates = new Calendar[13];
+                        for(int i = -6; i <= 6; i++) {
+                            Calendar date = Calendar.getInstance();
+                            date.add(Calendar.WEEK_OF_YEAR, i);
+                            dates[i+6] = date;
+                        }
+                        dpd.setHighlightedDays(dates);
+                    }*//*
+                    dpd.show(getFragmentManager(), "Datepickerdialog");
+                    dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                            String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+                        }
+                    });*/
+                }
+            }
+        });
+        layout.addView(listView);
+
+        return layout;
+    }
+
+    public class ListViewAdapter extends BaseAdapter {
+
+        @Override
+        public boolean isEnabled(int i) {
+            ListItem item = dialogs.get(i);
+
+            return item.isNotTitle();
+        }
+
+        @Override
+        public int getCount() {
+            return dialogs.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            int type = getItemViewType(i);
+
+            ListItem item = dialogs.get(i);
+
+            if (type == 0) {
+                if (view == null) {
+                    view = new TextCell(getActivity());
+                }
+
+                TextCell cell = (TextCell) view;
+                cell.withText(item.getDialogTitle()).withDivider(true);
+
+            } else if (type == 1) {
+                if (view == null) {
+                    view = new EmptyCell(getActivity());
+                }
+
+                EmptyCell cell = (EmptyCell) view;
+                cell.withGravity(Gravity.CENTER_HORIZONTAL);
+                cell.withTextToUpperCase(true);
+                cell.withHeader(item.getHeaderTitle());
+            }
+
+            return view;
+        }
+
+        @Override
+        public int getItemViewType(int i) {
+            ListItem item = dialogs.get(i);
+
+            if (item.isNotTitle()) {
+                return 0;
+            } else if (!item.isNotTitle()) {
+                return 1;
+            }
+
+            return -1;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+    }
+
+    public static class SimpleMessageDialog extends DialogFragment {
+
+        private String message = "Simple message text";
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.AppName);
+            builder.setMessage(message);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+                }
+            });
+            return builder.create();
+        }
+    }
+
+    public static class ItemsDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setItems(new CharSequence[]{
+                    getString(R.string.Winter),
+                    getString(R.string.Spring),
+                    getString(R.string.Summer),
+                    getString(R.string.Autumn)
+            }, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == 0) {
+                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
+                    } else if (i == 1) {
+                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
+                    } else if (i == 2) {
+                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
+                    } else if (i == 3) {
+                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class SingleChoiceDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setSingleChoiceItems(new CharSequence[]{
+                    getString(R.string.Winter),
+                    getString(R.string.Spring),
+                    getString(R.string.Summer),
+                    getString(R.string.Autumn)
+            }, 0, null);
+            builder.setPositiveButton("Choice", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == 0) {
+                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
+                    } else if (i == 1) {
+                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
+                    } else if (i == 2) {
+                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
+                    } else if (i == 3) {
+                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class MultiChoiceDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMultiChoiceItems(new CharSequence[]{
+                    getString(R.string.Winter),
+                    getString(R.string.Spring),
+                    getString(R.string.Summer),
+                    getString(R.string.Autumn)
+            }, null, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+
+                }
+            });
+            builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (i == 0) {
+                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
+                    } else if (i == 1) {
+                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
+                    } else if (i == 2) {
+                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
+                    } else if (i == 3) {
+                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class NumberPickerDialog extends DialogFragment {
+
+        @NonNull @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            final NumberPicker picker = new NumberPicker(getActivity());
+            picker.setMinValue(0);
+            picker.setMaxValue(100);
+            picker.setValue(25);
+            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+            builder.setView(picker);
+            builder.setTitle(R.string.NumberPicker);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), getString(R.string.Value, picker.getValue()), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class NumberPickerStringDialog extends DialogFragment {
+
+        @NonNull @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final NumberPicker picker = new NumberPicker(getActivity());
+            picker.setMinValue(0);
+            picker.setMaxValue(6);
+            picker.setValue(4);
+            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+            picker.setFormatter(new NumberPicker.Formatter() {
+                @Override
+                public String format(int value) {
+                    if (value == 0) {
+                        return getString(R.string.Monday);
+                    } else if (value == 1) {
+                        return getString(R.string.Tuesday);
+                    } else if (value == 2) {
+                        return getString(R.string.Wednesday);
+                    } else if (value == 3) {
+                        return getString(R.string.Thursday);
+                    } else if (value == 4) {
+                        return getString(R.string.Friday);
+                    } else if (value == 5) {
+                        return getString(R.string.Saturday);
+                    } else if (value == 6) {
+                        return getString(R.string.Sunday);
+                    }
+
+                    return "";
+                }
+            });
+
+            builder.setView(picker);
+            builder.setTitle(R.string.StringPicker);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    which = picker.getValue();
+
+                    if (which == 0) {
+                        Toast.makeText(getActivity(), getString(R.string.Monday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 1) {
+                        Toast.makeText(getActivity(), getString(R.string.Tuesday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 2) {
+                        Toast.makeText(getActivity(), getString(R.string.Wednesday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 3) {
+                        Toast.makeText(getActivity(), getString(R.string.Thursday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 4) {
+                        Toast.makeText(getActivity(), getString(R.string.Friday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 5) {
+                        Toast.makeText(getActivity(), getString(R.string.Saturday), Toast.LENGTH_SHORT).show();
+                    } else if (which == 6) {
+                        Toast.makeText(getActivity(), getString(R.string.Sunday), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class ColorPickerAccentDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            RelativeLayout layout = new RelativeLayout(getActivity());
+            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
+
+            final ColorPickerShift picker = new ColorPickerShift(getActivity());
+            picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            picker.setSelectedColorPosition(0);
+            picker.setColors(Palette.AccentColors(getActivity()));
+            picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.accent_red));
+            layout.addView(picker);
+
+            builder.setView(layout);
+            builder.setTitle(R.string.AccentColor);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class ColorPickerPrimaryDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            LinearLayout layout = new LinearLayout(getActivity());
+            layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
+
+            final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
+            picker1.setColors(Palette.AccentColors(getActivity()));
+            picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            layout.addView(picker1);
+
+            final ColorPickerShift picker2 = new ColorPickerShift(getActivity());
+            picker2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
+
+            for (int i : picker1.getColors()) {
+                for (int i2 : Palette.PrimaryColors(getActivity(), i)) {
+                    if (i2 == 0xff4CaF50) {
+                        picker1.setSelectedColor(i);
+                        picker2.setColors(Palette.PrimaryColors(getActivity(), i));
+                        picker2.setSelectedColor(i2);
+                        break;
+                    }
+                }
+            }
+            layout.addView(picker2);
+
+            picker1.setOnColorChangedListener(new ColorPickerShift.OnColorChangedListener() {
+                @Override
+                public void onColorChanged(int c) {
+                    picker2.setColors(Palette.PrimaryColors(getActivity(), picker1.getColor()));
+                    picker2.setSelectedColor(picker1.getColor());
+                }
+            });
+
+            builder.setView(layout);
+            builder.setTitle(R.string.PrimaryColor);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), Integer.toHexString(picker2.getColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class ColorPickerHoloDialog extends DialogFragment {
+
+        private ColorPickerHolo picker;
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LinearLayout layout = new LinearLayout(getActivity());
+            layout.setOrientation(LinearLayout.VERTICAL);
+
+            picker = new ColorPickerHolo(getActivity());
+            picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+            layout.addView(picker);
+            picker.setOldCenterColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
+
+            builder.setView(layout);
+            builder.setTitle(R.string.ColorPickerHolo);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return builder.create();
+        }
+    }
+
+    public static class ColorPickerViewDialog extends DialogFragment {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LinearLayout layout = new LinearLayout(getActivity());
+            layout.setOrientation(LinearLayout.VERTICAL);
+
+            final ColorPickerView picker = new ColorPickerView(getActivity());
+            picker.setDensity(12);
+            picker.setType(ColorPickerView.CIRCLE);
+            picker.setInitialColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
+            layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+
+            builder.setView(layout);
+            builder.setTitle(R.string.ColorPickerView);
+            builder.setNegativeButton(R.string.Cancel, null);
+            builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return builder.create();
         }
     }
 }

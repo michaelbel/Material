@@ -19,10 +19,12 @@ package org.app.application.cells;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,49 +44,27 @@ public class RecyclerCell extends FrameLayout {
     private static Paint mPaint;
     private boolean needDivider = false;
 
-    public OnRecyclerClickListener mItemClickListener;
-    public OnOptionClickListener mItemOptionClickListener;
-
-    public interface OnOptionClickListener {
-        void onClick();
-    }
-
-    public interface OnRecyclerClickListener {
-        void onClick();
-    }
+    private Rect rect = new Rect();
 
     public RecyclerCell(Context context) {
         super(context);
 
+        AndroidUtilities.bind(context);
+
         if (mPaint == null) {
             mPaint = new Paint();
             mPaint.setColor(0xFFD9D9D9);
-            mPaint.setStrokeWidth(1);
         }
-
-        this.setClickable(true);
-        this.setBackgroundColor(0xFFFFFFFF);
-        this.setElevation(AndroidUtilities.dp(0.5F));
-        this.setForeground(AndroidUtilities.customSelectable());
-        this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 64));
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mItemClickListener != null) {
-                    mItemClickListener.onClick();
-                }
-            }
-        });
 
         mImageView = new AvatarImageView(context);
         mImageView.setFocusable(false);
         mImageView.setScaleType(ImageView.ScaleType.CENTER);
         mImageView.setShapeDrawable(AvatarImageView.CIRCLE);
-        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 46, 46, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mImageView);
 
         mTextView1 = new TextView(context);
-        mTextView1.setTextColor(0xFF333333);
+        mTextView1.setTextColor(0xFF212121);
         mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
@@ -92,24 +72,15 @@ public class RecyclerCell extends FrameLayout {
         addView(mTextView1);
 
         mTextView2 = new TextView(context);
-        mTextView2.setTextColor(0xFF616161);
+        mTextView2.setTextColor(0xFF8A8A8A);
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView2.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
         addView(mTextView2);
 
         mOptionButton = new ImageView(context);
-        mOptionButton.setClickable(true);
         mOptionButton.setFocusable(false);
         mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
-        mOptionButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mItemOptionClickListener != null) {
-                    mItemOptionClickListener.onClick();
-                }
-            }
-        });
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
         mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
@@ -136,13 +107,17 @@ public class RecyclerCell extends FrameLayout {
         return this;
     }
 
-    public void setOnOptionsClick(OnOptionClickListener listener) {
+    /*public void setOnOptionsClick(OnOptionClickListener listener) {
         this.mItemOptionClickListener = listener;
+    }*/
+
+    public void setOnOptionsClick(OnClickListener listener) {
+        mOptionButton.setOnClickListener(listener);
     }
 
-    public void setOnItemClick(OnRecyclerClickListener listener) {
+    /*public void setOnItemClick(OnRecyclerClickListener listener) {
         this.mItemClickListener = listener;
-    }
+    }*/
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -153,6 +128,20 @@ public class RecyclerCell extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64), MeasureSpec.EXACTLY));
+        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
+            mOptionButton.getHitRect(rect);
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return true;
+            }
+            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+                getBackground().setHotspot(event.getX(), event.getY());
+            }
+        }
+        return super.onTouchEvent(event);
     }
 }
