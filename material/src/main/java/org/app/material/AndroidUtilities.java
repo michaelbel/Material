@@ -63,6 +63,10 @@ public class AndroidUtilities {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
+    public static int dp (@NonNull Context context,  float value) {
+        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
+    }
+
     public static float dpf2(float value) {
         return context.getResources().getDisplayMetrics().density * value;
     }
@@ -81,10 +85,15 @@ public class AndroidUtilities {
     }
 
     public static Drawable getIcon(@DrawableRes int resource, int colorFilter) {
+        return getIcon(resource, colorFilter, PorterDuff.Mode.MULTIPLY);
+    }
+
+    public static Drawable getIcon(@DrawableRes int resource, int colorFilter, PorterDuff.Mode mode) {
         Drawable iconDrawable = context.getResources().getDrawable(resource, null);
 
         if (iconDrawable != null) {
-            iconDrawable.mutate().setColorFilter(colorFilter, PorterDuff.Mode.MULTIPLY);
+            iconDrawable.clearColorFilter();
+            iconDrawable.mutate().setColorFilter(colorFilter, mode);
         }
 
         return iconDrawable;
@@ -107,14 +116,19 @@ public class AndroidUtilities {
 
     public static int getContextColor(@AttrRes int androidAttr) {
         TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[]{androidAttr});
-        int color = a.getColor(0, 0);
-        a.recycle();
+        TypedArray typedArray = context.obtainStyledAttributes(typedValue.data, new int[] {
+                androidAttr
+        });
+        int color = typedArray.getColor(0, 0);
+        typedArray.recycle();
+
         return color;
     }
 
     public static int selectableItemBackground() {
-        int[] attrs = new int[]{org.app.material.R.attr.selectableItemBackground};
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackground
+        };
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
         typedArray.recycle();
@@ -123,16 +137,14 @@ public class AndroidUtilities {
     }
 
     public static int selectableItemBackgroundBorderless() {
-        int[] attrs = new int[]{R.attr.selectableItemBackgroundBorderless};
+        int[] attrs = new int[]{
+                R.attr.selectableItemBackgroundBorderless
+        };
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
         typedArray.recycle();
 
         return backgroundResource;
-    }
-
-    public static Drawable customSelectable() {
-        return context.getDrawable(R.drawable.list_selector);
     }
 
     public static int getStatusBarHeight() {
@@ -146,13 +158,9 @@ public class AndroidUtilities {
         return result ;
     }
 
-    public static void showKeyboard(View view) {
-        if (view == null) {
-            return;
-        }
-
-        InputMethodManager inputManager = (InputMethodManager)view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    public static void showKeyboard() {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     public static boolean isKeyboardShowed(View view) {
@@ -160,8 +168,8 @@ public class AndroidUtilities {
             return false;
         }
 
-        InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        return inputManager.isActive(view);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm.isActive(view);
     }
 
     public static void hideKeyboard(View view) {
@@ -169,13 +177,8 @@ public class AndroidUtilities {
             return;
         }
 
-        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (!imm.isActive()) {
-            return;
-        }
-
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
     /*@RequiresPermission(Manifest.permission.VIBRATE)*/
