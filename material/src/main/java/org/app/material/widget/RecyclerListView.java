@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
+import org.app.material.Logger;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -147,7 +149,9 @@ public class RecyclerListView extends RecyclerView {
                     if (event != null) {
                         mGestureDetector.onTouchEvent(event);
                     }
-                } catch (Exception e) {}
+                } catch (Exception e) {
+                    Logger.e("message", e);
+                }
             }
 
             if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
@@ -232,7 +236,9 @@ public class RecyclerListView extends RecyclerView {
             if (f != null) {
                 return (int[]) f.get(null);
             }
-        } catch (Throwable ignored) {}
+        } catch (Throwable e) {
+            Logger.e("message", e);
+        }
 
         return null;
     }
@@ -250,7 +256,9 @@ public class RecyclerListView extends RecyclerView {
             Method initializeScrollbars = android.view.View.class.getDeclaredMethod("initializeScrollbars", TypedArray.class);
             initializeScrollbars.invoke(this, a);
             a.recycle();
-        } catch (Throwable ignored) {}
+        } catch (Throwable e) {
+            Logger.e("message", e);
+        }
 
         super.addOnScrollListener(new OnScrollListener() {
             @Override
@@ -264,7 +272,9 @@ public class RecyclerListView extends RecyclerView {
                     MotionEvent event = MotionEvent.obtain(0, 0, MotionEvent.ACTION_CANCEL, 0, 0, 0);
                     try {
                         mGestureDetector.onTouchEvent(event);
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) {
+                        Logger.e("message", e);
+                    }
 
                     currentChildView.onTouchEvent(event);
                     event.recycle();
@@ -380,11 +390,7 @@ public class RecyclerListView extends RecyclerView {
         try {
             super.stopScroll();
         } catch (NullPointerException exception) {
-            /**
-             *  The mLayout has been disposed of before the
-             *  RecyclerView and this stops the application
-             *  from crashing.
-             */
+            Logger.e("message", exception);
         }
     }
 

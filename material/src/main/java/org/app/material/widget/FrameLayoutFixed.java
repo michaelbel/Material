@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 
 import java.util.ArrayList;
 
@@ -156,12 +157,13 @@ public class FrameLayoutFixed extends FrameLayout {
                 }
             }
         } catch (Exception e) {
+            Logger.e("message", e);
 
             try {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             } catch (Exception e2) {
-
                 setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(10), MeasureSpec.EXACTLY));
+                Logger.e("message", e2);
             }
         }
     }

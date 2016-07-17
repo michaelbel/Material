@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 
 public class SimpleTextView extends View implements Drawable.Callback {
 
@@ -149,7 +150,9 @@ public class SimpleTextView extends View implements Drawable.Callback {
                         offsetX = 0;
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                Logger.e("message", e);
+            }
         } else {
             layout = null;
             textWidth = 0;

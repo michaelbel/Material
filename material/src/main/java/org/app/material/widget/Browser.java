@@ -28,6 +28,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 import org.app.material.R;
 
 public class Browser {
@@ -54,7 +55,9 @@ public class Browser {
             intent.putExtra("android.support.customtabs.extra.TINT_ACTION_BUTTON", false);
             intent.putExtra(android.provider.Browser.EXTRA_APPLICATION_ID, context.getPackageName());
             context.startActivity(intent);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            Logger.e("message", e);
+        }
     }
 
     public static void openUrl(@NonNull Context context, @StringRes int stringId) {
@@ -76,8 +79,9 @@ public class Browser {
     public static void openAppInGooglePlay(@NonNull Context context, String packageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
-        } catch (ActivityNotFoundException exception) {
+        } catch (ActivityNotFoundException e) {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+            Logger.e("message", e);
         }
     }
 }

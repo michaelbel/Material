@@ -41,6 +41,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
 
@@ -416,7 +417,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             searchField.requestFocus();
 
             if (openKeyboard) {
-                AndroidUtilities.showKeyboard(searchField);
+                AndroidUtilities.showKeyboard();
             }
 
             if (listener != null) {
@@ -537,7 +538,9 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                 Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
                 mCursorDrawableRes.setAccessible(true);
                 mCursorDrawableRes.set(searchField, R.drawable.search_carret);
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                Logger.e("message", e);
+            }
 
             if (Build.VERSION.SDK_INT >= 11) {
                 searchField.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_ACTION_SEARCH);
@@ -562,7 +565,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                     @Override
                     public void onClick(View v) {
                         searchField.setText("");
-                        AndroidUtilities.showKeyboard(searchField);
+                        AndroidUtilities.showKeyboard();
                     }
                 });
                 searchContainer.addView(clearButton);

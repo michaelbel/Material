@@ -75,27 +75,12 @@ public class LayoutHelper {
         return new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height, int gravity) {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param anhorGravity
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height, int gravity, int anhorGravity) {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -103,16 +88,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.leftMargin = getSize(context, startMargin);
@@ -122,17 +97,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -143,18 +107,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param anhorGravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, int gravity, int anhorGravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -166,12 +118,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static FrameLayout.LayoutParams makeFrame(Context context, int width, int height) {
         return new FrameLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }

@@ -36,6 +36,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 import org.app.material.R;
 
 import java.lang.reflect.Field;
@@ -55,7 +56,9 @@ public class ActionBarPopupWindow extends PopupWindow {
         try {
             f = PopupWindow.class.getDeclaredField("mOnScrollChangedListener");
             f.setAccessible(true);
-        } catch (NoSuchFieldException ignored) {}
+        } catch (NoSuchFieldException e) {
+            Logger.e("message", e);
+        }
 
         superListenerField = f;
     }
@@ -102,7 +105,9 @@ public class ActionBarPopupWindow extends PopupWindow {
                 scrollView = new ScrollView(context);
                 scrollView.setVerticalScrollBarEnabled(false);
                 addView(scrollView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
-            } catch (Throwable ignored) {}
+            } catch (Throwable e) {
+                Logger.e("message", e);
+            }
 
             linearLayout = new LinearLayout(context);
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -286,6 +291,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                 superListenerField.set(this, NOP);
             } catch (Exception e) {
                 mSuperScrollListener = null;
+                Logger.e("message", e);
             }
         }
     }
@@ -318,7 +324,9 @@ public class ActionBarPopupWindow extends PopupWindow {
         try {
             super.showAsDropDown(anchor, xoff, yoff);
             registerListener(anchor);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            Logger.e("message", e);
+        }
     }
 
     public void startAnimation() {
@@ -425,7 +433,9 @@ public class ActionBarPopupWindow extends PopupWindow {
                     setFocusable(false);
                     try {
                         ActionBarPopupWindow.super.dismiss();
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) {
+                        Logger.e("message", e);
+                    }
                     unregisterListener();
                 }
 
@@ -441,7 +451,9 @@ public class ActionBarPopupWindow extends PopupWindow {
         } else {
             try {
                 super.dismiss();
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                Logger.e("message", e);
+            }
             unregisterListener();
         }
     }

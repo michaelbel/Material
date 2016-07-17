@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
 
@@ -137,7 +138,7 @@ public class BottomSheet extends Dialog {
 
             isGrid = type == 1;
 
-            this.setBackground(AndroidUtilities.customSelectable());
+            this.setBackgroundResource(R.drawable.list_selector);
 
             if (type != 1) {
                 setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
@@ -562,6 +563,7 @@ public class BottomSheet extends Dialog {
     protected void setRevealRadius(float radius) {
         revealRadius = radius;
         delegate.onRevealAnimationProgress(!dismissed, radius, revealX, revealY);
+
         if (Build.VERSION.SDK_INT <= 19) {
             containerView.invalidate();
         }
@@ -591,6 +593,7 @@ public class BottomSheet extends Dialog {
 
             revealX = coords[0] + view.getMeasuredWidth() / 2;
             revealY = (int) (coords[1] + view.getMeasuredHeight() / 2 - top);
+
             if (Build.VERSION.SDK_INT <= 19) {
                 revealY -= AndroidUtilities.getStatusBarHeight();
             }
@@ -620,7 +623,9 @@ public class BottomSheet extends Dialog {
             containerView.setElevation(AndroidUtilities.dp(10));
             try {
                 animators.add(ViewAnimationUtils.createCircularReveal(containerView, finalRevealX, revealY, open ? 0 : finalRevealRadius, open ? finalRevealRadius : 0));
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                Logger.e("message", e);
+            }
 
             animatorSet.setDuration(300);
         } else {
@@ -666,7 +671,9 @@ public class BottomSheet extends Dialog {
                     containerView.setVisibility(View.INVISIBLE);
                     try {
                         BottomSheet.super.dismiss();
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) {
+                        Logger.e("message", e);
+                    }
                 }
             }
         });
@@ -767,7 +774,9 @@ public class BottomSheet extends Dialog {
                     public void run() {
                         try {
                             BottomSheet.super.dismiss();
-                        } catch (Exception ignored) {}
+                        } catch (Exception e) {
+                            Logger.e("message", e);
+                        }
                     }
                 });
             }
@@ -802,7 +811,9 @@ public class BottomSheet extends Dialog {
                         public void run() {
                             try {
                                 BottomSheet.super.dismiss();
-                            } catch (Exception ignored) {}
+                            } catch (Exception e) {
+                                Logger.e("message", e);
+                            }
                         }
                     });
                 }

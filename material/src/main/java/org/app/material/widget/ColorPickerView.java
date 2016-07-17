@@ -17,6 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import org.app.material.Logger;
 import org.app.material.R;
 
 import java.util.ArrayList;
@@ -220,7 +222,9 @@ public class ColorPickerView extends View {
 					for (OnColorSelectedListener listener : mListeners) {
 						try {
 							listener.onColorSelected(selectedColor);
-						} catch (Exception ignored) {}
+						} catch (Exception e) {
+							Logger.e("message", e);
+						}
 					}
 				}
 

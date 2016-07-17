@@ -28,6 +28,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 import org.app.material.R;
 
 import java.lang.reflect.Method;
@@ -91,7 +92,9 @@ public class RadioButton extends View {
             }
 
             bitmapCanvas = new Canvas(bitmap);
-        } catch (Throwable ignored) {}
+        } catch (Throwable e) {
+            Logger.e("message", e);
+        }
     }
 
     public void setProgress(float value) {
@@ -187,7 +190,9 @@ public class RadioButton extends View {
                 }
 
                 bitmapCanvas = new Canvas(bitmap);
-            } catch (Throwable ignored) {}
+            } catch (Throwable e) {
+                Logger.e("message", e);
+            }
         }
 
         float circleProgress;
@@ -243,6 +248,7 @@ public class RadioButton extends View {
                     Object res = trackAllocation.invoke(runtime, size);
                     return (res instanceof Boolean) ? (Boolean) res : true;
                 } catch (Exception e) {
+                    Logger.e("message", e);
                     return false;
                 }
             }
@@ -256,6 +262,7 @@ public class RadioButton extends View {
                     Object res = trackFree.invoke(runtime, size);
                     return (res instanceof Boolean) ? (Boolean) res : true;
                 } catch (Exception e) {
+                    Logger.e("message", e);
                     return false;
                 }
             }

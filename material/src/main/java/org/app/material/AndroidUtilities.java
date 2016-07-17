@@ -106,6 +106,7 @@ public class AndroidUtilities {
                     Typeface t = Typeface.createFromAsset(context.getAssets(), assetPath);
                     typefaceCache.put(assetPath, t);
                 } catch (Exception e) {
+                    Logger.e("message", e);
                     return null;
                 }
             }
@@ -238,7 +239,9 @@ public class AndroidUtilities {
             Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
             mCursorDrawableRes.setAccessible(true);
             mCursorDrawableRes.setInt(editText, 0);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            Logger.e("message", e);
+        }
     }
 
     public static String getCurrentTime(String format) {
