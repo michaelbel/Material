@@ -68,7 +68,6 @@ public class LaunchActivity extends FragmentActivity {
                             Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                         } else if (id == settings) {
                             startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
-                            //startActivity(new Intent(LaunchActivity.this, TestFabSheet.class));
                         }
                     }
                 });

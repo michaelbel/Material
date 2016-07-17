@@ -44,9 +44,6 @@ import org.app.application.cells.listview.EmptyCell;
 import org.app.application.cells.listview.TextCell;
 import org.app.application.dialogs.ColorPickerDialog;
 import org.app.material.AndroidUtilities;
-import org.app.material.timepicker.date.DatePickerDialog;
-import org.app.material.timepicker.time.RadialPickerLayout;
-import org.app.material.timepicker.time.TimePickerDialog;
 import org.app.material.widget.ColorPickerHolo;
 import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.ColorPickerView;
@@ -57,36 +54,14 @@ import org.app.material.widget.Palette;
 
 import java.util.ArrayList;
 
-public class DialogsFragment extends Fragment implements
-        TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+public class DialogsFragment extends Fragment {
 
     private ArrayList<ListItem> dialogs;
     private LaunchActivity mActivity;
 
     @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-        //dateTextView.setText(date);
-    }
-
-    @Override
-    public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-        String minuteString = minute < 10 ? "0"+minute : ""+minute;
-        String secondString = second < 10 ? "0"+second : ""+second;
-        String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
-        //timeTextView.setText(time);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
-
-        //TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog");
-        //DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
-
-        //if(tpd != null) tpd.setOnTimeSetListener(this);
-        //if(dpd != null) dpd.setOnDateSetListener(this);
     }
 
     public class ListItem {
@@ -121,8 +96,8 @@ public class DialogsFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FrameLayout layout = new FrameLayout(getActivity());
-        layout.setBackgroundColor(0xFFF4F4F4);
+        FrameLayout fragmentView = new FrameLayout(getActivity());
+        fragmentView.setBackgroundColor(0xFFF0F0F0);
 
         mActivity = (LaunchActivity) getActivity();
 
@@ -153,9 +128,7 @@ public class DialogsFragment extends Fragment implements
         dialogs.add(new ListItem().setHeader("Date and Time Pickers"));
         dialogs.add(new ListItem().setTitle("Time Picker"));
         dialogs.add(new ListItem().setTitle("Date Picker"));
-
         //dialogs.add(new ListItem().setHeader("EditText pickers"));
-
         //dialogs.add(new ListItem().setHeader("Bottom Sheet"));
         //dialogs.add(new ListItem().setTitle("Bottom Sheet Dialog 1"));
         //dialogs.add(new ListItem().setHeader("Color Pickers"));
@@ -248,86 +221,15 @@ public class DialogsFragment extends Fragment implements
                             .create()
                             .show(getFragmentManager(), "dialog");
                 } else if (i == 21) {
-                    /*Calendar now = Calendar.getInstance();
-                    TimePickerDialog tpd = TimePickerDialog.newInstance(
-                            this,
-                            now.get(Calendar.HOUR_OF_DAY),
-                            now.get(Calendar.MINUTE),
-                            true
-                    );
-                    tpd.setThemeDark(false);
-                    tpd.vibrate(false);
-                    tpd.dismissOnPause(false);
-                    tpd.enableSeconds(false);
-                    //tpd.setAccentColor(Color.parseColor("#9C27B0"));
-                    //tpd.setTitle("TimePicker Title");
-                    //tpd.setTimeInterval(2, 5, 10);
-                    tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                        @Override
-                        public void onCancel(DialogInterface dialogInterface) {
-                            Log.d("TimePicker", "Dialog was cancelled");
-                        }
-                    });
-                    tpd.show(getFragmentManager(), "Timepickerdialog");
-                    tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-                            String hourString = hourOfDay < 10 ? "0"+hourOfDay : ""+hourOfDay;
-                            String minuteString = minute < 10 ? "0"+minute : ""+minute;
-                            String secondString = second < 10 ? "0"+second : ""+second;
-                            String time = "You picked the following time: "+hourString+"h"+minuteString+"m"+secondString+"s";
-                            //timeTextView.setText(time);
-                        }
-                    });*/
+
                 } else if (i == 21) {
-                    /*Calendar now = Calendar.getInstance();
-                    DatePickerDialog dpd = DatePickerDialog.newInstance(
-                            getContext(),
-                            now.get(Calendar.YEAR),
-                            now.get(Calendar.MONTH),
-                            now.get(Calendar.DAY_OF_MONTH)
-                    );
-                    //dpd.setThemeDark(modeDarkDate.isChecked());
-                    //dpd.vibrate(vibrateDate.isChecked());
-                    //dpd.dismissOnPause(dismissDate.isChecked());
-                    //dpd.showYearPickerFirst(showYearFirst.isChecked());
-                    *//*if (modeCustomAccentDate.isChecked()) {
-                        dpd.setAccentColor(Color.parseColor("#9C27B0"));
-                    }*//*
-                    *//*if (titleDate.isChecked()) {
-                        dpd.setTitle("DatePicker Title");
-                    }*//*
-                    *//*if (limitDates.isChecked()) {
-                        Calendar[] dates = new Calendar[13];
-                        for(int i = -6; i <= 6; i++) {
-                            Calendar date = Calendar.getInstance();
-                            date.add(Calendar.MONTH, i);
-                            dates[i+6] = date;
-                        }
-                        dpd.setSelectableDays(dates);
-                    }*//*
-                    *//*if (highlightDates.isChecked()) {
-                        Calendar[] dates = new Calendar[13];
-                        for(int i = -6; i <= 6; i++) {
-                            Calendar date = Calendar.getInstance();
-                            date.add(Calendar.WEEK_OF_YEAR, i);
-                            dates[i+6] = date;
-                        }
-                        dpd.setHighlightedDays(dates);
-                    }*//*
-                    dpd.show(getFragmentManager(), "Datepickerdialog");
-                    dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                            String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-                        }
-                    });*/
+
                 }
             }
         });
-        layout.addView(listView);
+        fragmentView.addView(listView);
 
-        return layout;
+        return fragmentView;
     }
 
     public class ListViewAdapter extends BaseAdapter {

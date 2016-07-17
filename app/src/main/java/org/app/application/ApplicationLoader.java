@@ -20,6 +20,7 @@ import android.app.Application;
 import android.content.Context;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.Logger;
 
 public class ApplicationLoader extends Application {
 
@@ -32,5 +33,6 @@ public class ApplicationLoader extends Application {
         applicationContext = getApplicationContext();
 
         AndroidUtilities.bind(applicationContext);
+        Logger.bind(applicationContext);
     }
 }

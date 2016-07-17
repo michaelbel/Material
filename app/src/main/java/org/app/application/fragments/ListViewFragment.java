@@ -54,7 +54,8 @@ public class ListViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FrameLayout layout = new FrameLayout(getActivity());
+        FrameLayout fragmentView = new FrameLayout(getActivity());
+        fragmentView.setBackgroundColor(0xFFF0F0F0);
 
         rowCount = 0;
         headerRow = rowCount++;
@@ -95,8 +96,8 @@ public class ListViewFragment extends Fragment {
             }
         });
 
-        layout.addView(listView);
-        return layout;
+        fragmentView.addView(listView);
+        return fragmentView;
     }
 
     public class ListViewAdapter extends BaseAdapter {
@@ -163,7 +164,7 @@ public class ListViewFragment extends Fragment {
                 SwitchCell cell = (SwitchCell) view;
 
                 if (i == switchRow) {
-                    cell.withText(R.string.EnableMode).withChecked(switchParam).withDivider(true);
+                    cell.withText("Switch").withChecked(switchParam).withDivider(true);
                 }
             } else if (type == 3) {
                 if (view == null) {
@@ -183,7 +184,7 @@ public class ListViewFragment extends Fragment {
                 CheckBoxCell cell = (CheckBoxCell) view;
 
                 if (i == checkBoxRow) {
-                    cell.withText(R.string.Notifications).withChecked(checkBoxParam, false).withDivider(true);
+                    cell.withText("CheckBox").withChecked(checkBoxParam, false).withDivider(true);
                 }
             } else if (type == 5) {
                 if (view == null) {
@@ -193,7 +194,7 @@ public class ListViewFragment extends Fragment {
                 RadioCell cell = (RadioCell) view;
 
                 if (i == radioRow) {
-                    cell.withText(R.string.Select).withChecked(radioParam, false);
+                    cell.withText("RadioButton").withChecked(radioParam, false);
                 }
             }
 

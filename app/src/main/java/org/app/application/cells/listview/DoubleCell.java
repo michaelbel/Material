@@ -38,14 +38,12 @@ public class DoubleCell extends BaseCell {
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setGravity(Gravity.START | Gravity.TOP);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(mTextView);
 
         mValueView = new TextView(context);
         mValueView.setTextColor(0xFF757575);
         mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mValueView.setGravity(Gravity.START | Gravity.BOTTOM);
         mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 0, 16, 10));
         addView(mValueView);
     }

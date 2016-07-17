@@ -23,7 +23,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
 public class EmptyCell extends BaseCell {
@@ -40,9 +39,7 @@ public class EmptyCell extends BaseCell {
         mHeadText.setGravity(Gravity.START);
         mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mHeadText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mHeadText.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
-        mHeadText.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+        mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mHeadText);
     }
 

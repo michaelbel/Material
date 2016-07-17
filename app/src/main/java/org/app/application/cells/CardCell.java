@@ -17,11 +17,13 @@
 package org.app.application.cells;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,26 +39,10 @@ public class CardCell extends CardView {
     private ImageView mImageView;
     private ImageView mOptionButton;
 
-    public OnCardClickListener mCardClickListener;
-    public OnOptionClickListener mOptionClickListener;
+    private Rect rect = new Rect();
 
     public CardCell(Context context) {
         super(context);
-
-        this.setClickable(true);
-        this.setCardBackgroundColor(0xFFFFFFFF);
-        this.setRadius(AndroidUtilities.dp(3.5F));
-        this.setCardElevation(AndroidUtilities.dp(1.8F));
-        this.setForeground(AndroidUtilities.customSelectable());
-        this.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
-        this.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCardClickListener != null) {
-                    mCardClickListener.onClick();
-                }
-            }
-        });
 
         mImageView = new ImageView(context);
         mImageView.setFocusable(false);
@@ -66,7 +52,6 @@ public class CardCell extends CardView {
 
         mTextView1 = new TextView(context);
         mTextView1.setTextColor(0xFF333333);
-        mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
@@ -74,30 +59,19 @@ public class CardCell extends CardView {
 
         mTextView2 = new TextView(context);
         mTextView2.setTextColor(0xFF616161);
-        mTextView2.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 100, 0, 21, 0));
         addView(mTextView2);
 
         mTextView3 = new TextView(context);
         mTextView3.setTextColor(0xFF9E9E9E);
-        mTextView3.setGravity(Gravity.START | Gravity.BOTTOM);
         mTextView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
         addView(mTextView3);
 
         mOptionButton = new ImageView(context);
-        mOptionButton.setClickable(true);
         mOptionButton.setFocusable(false);
         mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
-        mOptionButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOptionClickListener != null) {
-                    mOptionClickListener.onClick();
-                }
-            }
-        });
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
         mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
@@ -124,24 +98,27 @@ public class CardCell extends CardView {
         return this;
     }
 
-    public void setOnOptionsClick(OnOptionClickListener listener) {
-        this.mOptionClickListener = listener;
-    }
-
-    public void setOnCardClick(OnCardClickListener listener) {
-        this.mCardClickListener = listener;
+    public void setOnOptionsClick(OnClickListener listener) {
+        mOptionButton.setOnClickListener(listener);
     }
 
     @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(110), MeasureSpec.EXACTLY));
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(100), MeasureSpec.EXACTLY));
     }
 
-    public interface OnOptionClickListener {
-        void onClick();
-    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return true;
+            }
 
-    public interface OnCardClickListener {
-        void onClick();
+            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+                getBackground().setHotspot(event.getX(), event.getY());
+            }
+        }
+
+        return super.onTouchEvent(event);
     }
 }

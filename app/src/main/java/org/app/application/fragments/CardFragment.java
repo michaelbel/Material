@@ -31,54 +31,69 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.CardCell;
-import org.app.application.model.CardModel;
+import org.app.application.model.Card;
+import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.RecyclerListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CardFragment extends Fragment {
 
+    private ArrayList<Card> items;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FrameLayout layout = new FrameLayout(getActivity());
-        layout.setBackgroundColor(0xFFF0F0F0);
+        FrameLayout fragmentView = new FrameLayout(getActivity());
+        fragmentView.setBackgroundColor(0xFFF0F0F0);
 
-        ArrayList<CardModel> items = new ArrayList<>();
+        items = new ArrayList<>();
+        items.add(new Card(1, R.drawable.space1, "1. Main text", "Middle text", "Small text"));
+        items.add(new Card(2, R.drawable.space2, "2. Main text", "Middle text", "Small text"));
+        items.add(new Card(3, R.drawable.space3, "3. Main text", "Middle text", "Small text"));
+        items.add(new Card(4, R.drawable.space4, "4. Main text", "Middle text", "Small text"));
+        items.add(new Card(5, R.drawable.space5, "5. Main text", "Middle text", "Small text"));
+        items.add(new Card(6, R.drawable.space6, "6. Main text", "Middle text", "Small text"));
+        items.add(new Card(7, R.drawable.space1, "7. Main text", "Middle text", "Small text"));
+        items.add(new Card(8, R.drawable.space2, "8. Main text", "Middle text", "Small text"));
+        items.add(new Card(9, R.drawable.space3, "9. Main text", "Middle text", "Small text"));
 
-        items.add(new CardModel(1, R.drawable.space1, "1. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(2, R.drawable.space2, "2. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(3, R.drawable.space3, "3. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(4, R.drawable.space4, "4. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(5, R.drawable.space5, "5. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(6, R.drawable.space6, "6. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(7, R.drawable.space1, "7. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(8, R.drawable.space2, "8. Main text", "Middle text", "Small text"));
-        items.add(new CardModel(9, R.drawable.space3, "9. Main text", "Middle text", "Small text"));
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
-
-        RecyclerView recyclerView = new RecyclerView(getActivity());
+        RecyclerListView recyclerView = new RecyclerListView(getActivity());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setInstantClick(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Card item = items.get(position);
+                Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
+            }
+        });
+        recyclerView.setOnItemLongClickListener(new RecyclerListView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position) {
+                Card item = items.get(position);
+                Toast.makeText(getActivity(), getString(R.string.LongClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
-        layout.addView(recyclerView);
-        return layout;
+        fragmentView.addView(recyclerView);
+
+        return fragmentView;
     }
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private List<CardModel> items;
-
-        public RecyclerViewAdapter(List<CardModel> items) {
-            this.items = items;
-        }
+        public RecyclerViewAdapter() {}
 
         @Override
         public int getItemCount() {
-            return this.items.size();
+            return items.size();
         }
 
         @Override
@@ -96,7 +111,7 @@ public class CardFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            CardModel item = items.get(position);
+            Card item = items.get(position);
             ((CardViewHolder) viewHolder).cardCell
                     .setImage(item.getImage())
                     .setText1(item.getText1())
@@ -112,25 +127,22 @@ public class CardFragment extends Fragment {
                 super(itemView);
 
                 cardCell = (CardCell) itemView;
+                cardCell.setRadius(AndroidUtilities.dp(3.5F));
+                cardCell.setCardElevation(AndroidUtilities.dp(1.8F));
+                cardCell.setCardBackgroundColor(0xFFFFFFFF);
+                cardCell.setBackgroundResource(R.drawable.list_selector_white);
+                cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
 
-                cardCell.setOnCardClick(new CardCell.OnCardClickListener() {
+                cardCell.setOnOptionsClick(new View.OnClickListener() {
                     @Override
-                    public void onClick() {
-                        final CardModel item = items.get(getAdapterPosition());
-                        Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                cardCell.setOnOptionsClick(new CardCell.OnOptionClickListener() {
-                    @Override
-                    public void onClick() {
+                    public void onClick(View view) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle(R.string.Options);
                         builder.setItems(new CharSequence[]{getString(R.string.Open), getString(R.string.Remove)
                         }, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                final CardModel item = items.get(getAdapterPosition());
+                                final Card item = items.get(getAdapterPosition());
 
                                 if (i == 0) {
                                     Toast.makeText(getActivity(), getString(R.string.OpeningCard, item.getId()), Toast.LENGTH_SHORT).show();

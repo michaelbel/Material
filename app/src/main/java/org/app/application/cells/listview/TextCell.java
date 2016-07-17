@@ -22,7 +22,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
 public class TextCell extends BaseCell {
@@ -38,17 +37,13 @@ public class TextCell extends BaseCell {
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mTextView);
 
         mValueView = new TextView(context);
         mValueView.setTextColor(0xFF757575);
         mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mValueView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mValueView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL));
+        mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mValueView);
     }
 

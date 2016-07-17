@@ -16,9 +16,12 @@
 
 package org.app.application.fragments;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Canvas;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,68 +30,165 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.application.cells.RecyclerCell;
-import org.app.application.model.RecyclerItemModel;
-import org.app.material.widget.ItemTouchHelperClass;
+import org.app.application.model.RecItem;
 import org.app.material.widget.LayoutHelper;
+import org.app.material.widget.RecyclerListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class RecyclerFragment extends Fragment {
 
-    private FrameLayout layout;
-    private RecyclerItemModel mRemovedItem;
+    private RecItem mRemovedItem;
     private int mIndexOfRemovedItem;
+    private RecyclerListView recyclerView;
+    private RecyclerViewAdapter adapter;
+    private ArrayList<RecItem> items;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layout = new FrameLayout(getActivity());
-        layout.setBackgroundColor(0xFFF0F0F0);
+    public class TouchHelperCallback extends ItemTouchHelper.Callback {
 
-        ArrayList<RecyclerItemModel> items = new ArrayList<>();
+        public static final float ALPHA_FULL = 1.0f;
 
-        items.add(new RecyclerItemModel(1, R.drawable.space1, "1. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(2, R.drawable.space2, "2. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(3, R.drawable.space3, "3. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(4, R.drawable.space4, "4. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(5, R.drawable.space5, "5. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(6, R.drawable.space6, "6. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(7, R.drawable.space1, "7. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(8, R.drawable.space2, "8. Primary text", "Secondary text"));
-        items.add(new RecyclerItemModel(9, R.drawable.space3, "9. Primary text", "Secondary text"));
-
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(items);
-
-        RecyclerView recyclerView = new RecyclerView(getActivity());
-
-        ItemTouchHelper.Callback callback = new ItemTouchHelperClass(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-
-        layout.addView(recyclerView);
-
-        return layout;
-    }
-
-    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperClass.ItemTouchHelperAdapter {
-
-        private List<RecyclerItemModel> items;
-
-        public RecyclerViewAdapter(List<RecyclerItemModel> items) {
-            this.items = items;
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return true;
         }
 
         @Override
-        public void onItemMoved(int fromPosition, int toPosition) {
+        public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            if (viewHolder.getItemViewType() != 0) {
+                return makeMovementFlags(0, 0);
+            }
+
+            return makeMovementFlags(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0);
+        }
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
+            if (source.getItemViewType() != target.getItemViewType()) {
+                return false;
+            }
+
+            adapter.swapElements(source.getAdapterPosition(), target.getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+
+        @Override
+        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                recyclerView.cancelClickRunnables(false);
+                viewHolder.itemView.setPressed(true);
+            }
+
+            super.onSelectedChanged(viewHolder, actionState);
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+            viewHolder.itemView.setPressed(false);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        FrameLayout fragmentView = new FrameLayout(getActivity());
+        fragmentView.setBackgroundColor(0xFFF0F0F0);
+
+        items = new ArrayList<>();
+        items.add(new RecItem(1, R.drawable.space1, "1. Primary text", "Secondary text"));
+        items.add(new RecItem(2, R.drawable.space2, "2. Primary text", "Secondary text"));
+        items.add(new RecItem(3, R.drawable.space3, "3. Primary text", "Secondary text"));
+        items.add(new RecItem(4, R.drawable.space4, "4. Primary text", "Secondary text"));
+        items.add(new RecItem(5, R.drawable.space5, "5. Primary text", "Secondary text"));
+        items.add(new RecItem(6, R.drawable.space6, "6. Primary text", "Secondary text"));
+        items.add(new RecItem(7, R.drawable.space1, "7. Primary text", "Secondary text"));
+        items.add(new RecItem(8, R.drawable.space2, "8. Primary text", "Secondary text"));
+        items.add(new RecItem(9, R.drawable.space3, "9. Primary text", "Secondary text"));
+
+        adapter = new RecyclerViewAdapter(getContext());
+
+        recyclerView = new RecyclerListView(getActivity());
+        recyclerView.setFocusable(true);
+        recyclerView.setTag(7);
+        recyclerView.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new TouchHelperCallback());
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RecItem item = items.get(position);
+                Toast.makeText(getContext(), "Item = " + item.getId(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fragmentView.addView(recyclerView);
+
+        return fragmentView;
+    }
+
+    public class RecyclerViewAdapter extends RecyclerListView.Adapter {
+        private Context mContext;
+
+        public RecyclerViewAdapter(Context context) {
+            this.mContext = context;
+        }
+
+        private class Holder extends RecyclerView.ViewHolder {
+
+            public Holder(View view) {
+                super(view);
+
+                ((RecyclerCell) view).setOnOptionsClick(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setTitle(R.string.Options);
+                        builder.setItems(new CharSequence[]{
+                                getString(R.string.Open),
+                                getString(R.string.Remove)
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (i == 0) {
+                                    final RecItem item = items.get(getAdapterPosition());
+                                    Toast.makeText(mContext, getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
+                                } else if (i == 1) {
+                                    items.remove(getAdapterPosition());
+                                    notifyItemRemoved(getAdapterPosition());
+                                    notifyItemRangeChanged(getAdapterPosition(), items.size());
+                                }
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+            }
+        }
+
+        public void swapElements(int fromPosition, int toPosition) {
             if (fromPosition<toPosition){
                 for (int i = fromPosition; i < toPosition; i++){
                     Collections.swap(items, i, i + 1);
@@ -103,25 +203,8 @@ public class RecyclerFragment extends Fragment {
         }
 
         @Override
-        public void onItemRemoved(final int position) {
-            mRemovedItem =  items.remove(position);
-            mIndexOfRemovedItem = position;
-
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, items.size());
-
-            Snackbar.make(layout, getString(R.string.ItemRemoved), Snackbar.LENGTH_SHORT).setAction(R.string.Undo, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    items.add(mIndexOfRemovedItem, mRemovedItem);
-                    notifyItemInserted(mIndexOfRemovedItem);
-                }
-            }).show();
-        }
-
-        @Override
         public int getItemCount() {
-            return this.items.size();
+            return items.size();
         }
 
         @Override
@@ -130,63 +213,28 @@ public class RecyclerFragment extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-            RecyclerView.ViewHolder viewHolder;
-            viewHolder = new ItemViewHolder(new RecyclerCell(getContext()));
+        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
+            View view;
 
-            return viewHolder;
+            view = new RecyclerCell(mContext);
+            view.setBackgroundColor(0xFFFFFFFF);
+            //view.setClickable(true);
+            //view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+            view.setBackgroundResource(R.drawable.list_selector_white);
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+
+            return new Holder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            RecyclerItemModel item = items.get(position);
-            ((ItemViewHolder) viewHolder).recyclerCell
+            RecItem item = items.get(position);
+
+            ((RecyclerCell) viewHolder.itemView)
                     .setImage(item.getImage())
                     .setText1(item.getText1())
                     .setText2(item.getText2())
                     .withDivider(true);
-        }
-
-        public class ItemViewHolder extends RecyclerView.ViewHolder {
-
-            private RecyclerCell recyclerCell;
-
-            public ItemViewHolder(final View itemView) {
-                super(itemView);
-
-                recyclerCell = (RecyclerCell) itemView;
-
-                /*recyclerCell.setOnItemClick(new RecyclerCell.OnRecyclerClickListener() {
-                    @Override
-                    public void onClick() {
-                        final RecyclerItemModel item = items.get(getAdapterPosition());
-                        Toast.makeText(getActivity(), getString(R.string.ClickOnItem, item.getId()), Toast.LENGTH_SHORT).show();
-                    }
-                });*/
-
-                /*recyclerCell.setOnOptionsClick(new RecyclerCell.OnOptionClickListener() {
-                    @Override
-                    public void onClick() {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(R.string.Options);
-                        builder.setItems(new CharSequence[]{getString(R.string.Open), getString(R.string.Remove)
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                if (i == 0) {
-                                    final RecyclerItemModel item = items.get(getAdapterPosition());
-                                    Toast.makeText(getActivity(), getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
-                                } else if (i == 1) {
-                                    items.remove(getAdapterPosition());
-                                    notifyItemRemoved(getAdapterPosition());
-                                    notifyItemRangeChanged(getAdapterPosition(), items.size());
-                                }
-                            }
-                        });
-                        builder.show();
-                    }
-                });*/
-            }
         }
     }
 }

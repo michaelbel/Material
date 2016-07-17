@@ -1,6 +1,6 @@
 package org.app.application.model;
 
-public class CardModel {
+public class Card {
 
     private int mId;
     private int mImage;
@@ -8,7 +8,7 @@ public class CardModel {
     private String mText2;
     private String mText3;
 
-    public CardModel(int id, int image, String text1, String text2, String text3) {
+    public Card(int id, int image, String text1, String text2, String text3) {
         this.mId = id;
         this.mImage = image;
         this.mText1 = text1;

@@ -22,7 +22,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.RadioButton;
 
@@ -36,21 +35,24 @@ public class RadioCell extends BaseCell {
 
         withBackgroundColor(0xFFFFFFFF);
 
+        mRadioButton = new RadioButton(context);
+        mRadioButton.setLayoutParams(LayoutHelper.makeFrame(context, 22, 22, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        addView(mRadioButton);
+
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-        mTextView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL));
+        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 54, 0, 0, 0));
         addView(mTextView);
-
-        mRadioButton = new RadioButton(context);
-        mRadioButton.setLayoutParams(LayoutHelper.makeFrame(context, 22, 22, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mRadioButton);
     }
 
-    public RadioCell withText(@StringRes int resId) {
-        mTextView.setText(getResources().getString(resId));
+    public RadioCell withText(String text) {
+        mTextView.setText(text);
+        return this;
+    }
+
+    public RadioCell withText(@StringRes int stringId) {
+        withText(getResources().getString(stringId));
         return this;
     }
 

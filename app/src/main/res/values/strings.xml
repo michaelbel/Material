@@ -45,6 +45,7 @@
     <string name="TextAndValue">Text and Value</string>
     <string name="Position">Position = %1$s</string>
     <string name="ClickOnCard">Click on card %1$s</string>
+    <string name="LongClickOnCard">Long Click on card %1$s</string>
     <string name="ClickOnItem">Click on item %1$s</string>
     <string name="OpeningCard">Opening card %1$s</string>
     <string name="OpeningItem">Opening item %1$s</string>

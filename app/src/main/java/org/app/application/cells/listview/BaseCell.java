@@ -19,7 +19,6 @@ public class BaseCell extends FrameLayout {
         if (paint == null) {
             paint = new Paint();
             paint.setColor(0xffd9d9d9);
-            paint.setStrokeWidth(1);
         }
     }
 
@@ -39,8 +38,8 @@ public class BaseCell extends FrameLayout {
     }
 
     @Override
-    protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(mHeight + (divider ? 1 : 0)), MeasureSpec.EXACTLY));
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(mHeight + (divider ? 1 : 0)), MeasureSpec.EXACTLY));
     }
 
     @Override

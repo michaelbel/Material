@@ -49,8 +49,6 @@ public class RecyclerCell extends FrameLayout {
     public RecyclerCell(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
-
         if (mPaint == null) {
             mPaint = new Paint();
             mPaint.setColor(0xFFD9D9D9);
@@ -65,7 +63,6 @@ public class RecyclerCell extends FrameLayout {
 
         mTextView1 = new TextView(context);
         mTextView1.setTextColor(0xFF212121);
-        mTextView1.setGravity(Gravity.START | Gravity.TOP);
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 80, 10, 21, 0));
@@ -74,7 +71,6 @@ public class RecyclerCell extends FrameLayout {
         mTextView2 = new TextView(context);
         mTextView2.setTextColor(0xFF8A8A8A);
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView2.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
         mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
         addView(mTextView2);
 
@@ -107,17 +103,9 @@ public class RecyclerCell extends FrameLayout {
         return this;
     }
 
-    /*public void setOnOptionsClick(OnOptionClickListener listener) {
-        this.mItemOptionClickListener = listener;
-    }*/
-
     public void setOnOptionsClick(OnClickListener listener) {
         mOptionButton.setOnClickListener(listener);
     }
-
-    /*public void setOnItemClick(OnRecyclerClickListener listener) {
-        this.mItemClickListener = listener;
-    }*/
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -135,13 +123,16 @@ public class RecyclerCell extends FrameLayout {
     public boolean onTouchEvent(MotionEvent event) {
         if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
             mOptionButton.getHitRect(rect);
+
             if (rect.contains((int) event.getX(), (int) event.getY())) {
                 return true;
             }
+
             if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
                 getBackground().setHotspot(event.getX(), event.getY());
             }
         }
+
         return super.onTouchEvent(event);
     }
 }
