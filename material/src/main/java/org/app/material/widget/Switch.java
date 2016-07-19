@@ -61,8 +61,6 @@ public class Switch extends CompoundButton {
     private ViewConfiguration mViewConfiguration;
     private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
 
-//===
-
     private int mThumbTextPadding;
     private int mSwitchMinWidth;
     private boolean attachedToWindow;
@@ -111,14 +109,12 @@ public class Switch extends CompoundButton {
         this.mViewConfiguration = ViewConfiguration.get(context);
 
         TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.Switch, defStyleAttr, defStyleRes);
-
         isRTL = attr.getBoolean(R.styleable.Switch_supportRTL, false);
         mAnimationDuration = attr.getInt(R.styleable.Switch_animDuration, 250);
         mThumbColorNormal = attr.getColor(R.styleable.Switch_thumbColorNormal, 0xFFF1F1F1);
         mThumbColorActivated = attr.getColor(R.styleable.Switch_thumbColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
         mTrackColorNormal = attr.getColor(R.styleable.Switch_trackColorNormal, 0xFFB0AFAF);
         mTrackColorActivated = attr.getColor(R.styleable.Switch_trackColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
-
         attr.recycle();
 
         if (mThumbDrawable != null) {
@@ -157,9 +153,6 @@ public class Switch extends CompoundButton {
         return mAnimationDuration;
     }
 
-    /**
-     * Crutch
-     */
     public Switch withThumbColorNormal(int color) {
         mThumbColorNormal = color;
         return this;
@@ -185,13 +178,6 @@ public class Switch extends CompoundButton {
         requestLayout();
         return this;
     }
-
-
-
-
-
-
-
 
     public static class Insets {
 

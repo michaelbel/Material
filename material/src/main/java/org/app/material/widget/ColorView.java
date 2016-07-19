@@ -19,18 +19,16 @@ package org.app.material.widget;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import org.app.material.R;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,7 @@ public class ColorView extends FrameLayout {
     private final ColorMode colorMode;
     private IndicatorMode indicatorMode;
     private @ColorInt static int currentColor;
-    public final static int DEFAULT_COLOR = 0xFFFF5252;
+    public static int DEFAULT_COLOR;
     public final static ColorMode DEFAULT_MODE = ColorMode.RGB;
     public final static IndicatorMode DEFAULT_INDICATOR = IndicatorMode.DECIMAL;
 
@@ -56,6 +54,8 @@ public class ColorView extends FrameLayout {
         this.indicatorMode = indicatorMode;
         this.colorMode = colorMode;
         currentColor = initialColor;
+
+        DEFAULT_COLOR = AndroidUtilities.getContextColor(R.attr.colorAccent);
 
         inflate(getContext(), R.layout.views, this);
         setClipToPadding(false);
@@ -497,6 +497,7 @@ public class ColorView extends FrameLayout {
     }
 
     public static final class Channel {
+
         private final int mMin;
         private final int mMax;
         private int mProgress = 0;
@@ -545,44 +546,5 @@ public class ColorView extends FrameLayout {
 
     public enum IndicatorMode {
         DECIMAL, HEX
-    }
-
-
-
-
-
-
-    public class ColorViewCell extends FrameLayout {
-
-        private View mColorView;
-        private ScrollView mScrollView;
-        private LinearLayout mLinearLayout;
-
-        public ColorViewCell(Context context) {
-            super(context);
-
-            mColorView = new View(context);
-            mColorView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, 80, Gravity.TOP));
-            addView(mColorView);
-
-            mScrollView = new ScrollView(context);
-            mScrollView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 80, 0, 0));
-            addView(mScrollView);
-
-            mLinearLayout = new LinearLayout(context);
-            mLinearLayout.setOrientation(LinearLayout.VERTICAL);
-            mLinearLayout.setLayoutParams(LayoutHelper.makeScroll(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-            mScrollView.addView(mLinearLayout);
-        }
-
-        public ColorViewCell setColor(int color) {
-            mColorView.setBackgroundColor(color);
-            return this;
-        }
-
-        public ColorViewCell addViewsToLinear(View view) {
-            mLinearLayout.addView(view);
-            return this;
-        }
     }
 }
