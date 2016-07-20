@@ -35,7 +35,7 @@ public class Scroller  {
     private int mMaxY;
     private int mCurrY;
     private int mDuration;
-    private long startTime;
+    private long mStartTime;
     private float durationReciprocal;
     private float velocity;
     private float deltaY;
@@ -134,7 +134,7 @@ public class Scroller  {
             return false;
         }
 
-        int timePassed = (int)(AnimationUtils.currentAnimationTimeMillis() - startTime);
+        int timePassed = (int)(AnimationUtils.currentAnimationTimeMillis() - mStartTime);
         int mCurrX;
 
         if (timePassed < mDuration) {
@@ -185,7 +185,7 @@ public class Scroller  {
         mMode = SCROLL_MODE;
         finished = false;
         this.mDuration = duration;
-        startTime = AnimationUtils.currentAnimationTimeMillis();
+        mStartTime = AnimationUtils.currentAnimationTimeMillis();
         this.mStartX = startX;
         this.mStartY = startY;
         mFinalX = startX + dx;
@@ -222,7 +222,7 @@ public class Scroller  {
         final double l = Math.log(START_TENSION * velocity / ALPHA);
 
         mDuration = (int) (1000.0 * Math.exp(l / (DECELERATION_RATE - 1.0)));
-        startTime = AnimationUtils.currentAnimationTimeMillis();
+        mStartTime = AnimationUtils.currentAnimationTimeMillis();
 
         this.mStartX = startX;
         this.mStartY = startY;
@@ -261,6 +261,6 @@ public class Scroller  {
     }
 
     public int timePassed() {
-        return (int)(AnimationUtils.currentAnimationTimeMillis() - startTime);
+        return (int)(AnimationUtils.currentAnimationTimeMillis() - mStartTime);
     }
 }
