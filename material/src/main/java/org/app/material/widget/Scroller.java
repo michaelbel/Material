@@ -36,7 +36,7 @@ public class Scroller  {
     private int mCurrY;
     private int mDuration;
     private long mStartTime;
-    private float durationReciprocal;
+    private float mDurationReciprocal;
     private float velocity;
     private float deltaY;
     private float deceleration;
@@ -140,7 +140,7 @@ public class Scroller  {
         if (timePassed < mDuration) {
             switch (mMode) {
             case SCROLL_MODE:
-                float x = timePassed * durationReciprocal;
+                float x = timePassed * mDurationReciprocal;
     
                 if (interpolator == null) {
                     x = viscousFluid(x);
@@ -191,7 +191,7 @@ public class Scroller  {
         mFinalX = startX + dx;
         mFinalY = startY + dy;
         deltaY = dy;
-        durationReciprocal = 1.0f / (float) this.mDuration;
+        mDurationReciprocal = 1.0f / (float) this.mDuration;
     }
 
     public void fling(int startX, int startY, int velocityX, int velocityY, int minX, int maxX, int minY, int maxY) {
