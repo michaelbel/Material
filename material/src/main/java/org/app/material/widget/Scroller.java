@@ -37,9 +37,9 @@ public class Scroller  {
     private int mDuration;
     private long mStartTime;
     private float mDurationReciprocal;
-    private float velocity;
-    private float deltaY;
-    private float deceleration;
+    private float mVelocity;
+    private float mDeltaY;
+    private float mDeceleration;
     private boolean finished;
     private boolean flywheel;
     private final float ppi;
@@ -97,7 +97,7 @@ public class Scroller  {
         finished = true;
         this.interpolator = interpolator;
         ppi = context.getResources().getDisplayMetrics().density * 160.0f;
-        deceleration = computeDeceleration(ViewConfiguration.getScrollFriction());
+        mDeceleration = computeDeceleration(ViewConfiguration.getScrollFriction());
         this.flywheel = flywheel;
     }
     
@@ -118,7 +118,7 @@ public class Scroller  {
     }
 
     public float getCurrVelocity() {
-        return velocity - deceleration * timePassed() / 2000.0f;
+        return mVelocity - mDeceleration * timePassed() / 2000.0f;
     }
 
     public final int getStartY() {
@@ -148,7 +148,7 @@ public class Scroller  {
                     x = interpolator.getInterpolation(x);
                 }
 
-                mCurrY = mStartY + Math.round(x * deltaY);
+                mCurrY = mStartY + Math.round(x * mDeltaY);
                 break;
             case FLING_MODE:
                 final float t = (float) timePassed / mDuration;
@@ -190,7 +190,7 @@ public class Scroller  {
         this.mStartY = startY;
         mFinalX = startX + dx;
         mFinalY = startY + dy;
-        deltaY = dy;
+        mDeltaY = dy;
         mDurationReciprocal = 1.0f / (float) this.mDuration;
     }
 
@@ -217,7 +217,7 @@ public class Scroller  {
         mMode = FLING_MODE;
         finished = false;
         float velocity = (float) Math.sqrt(velocityX * velocityX + velocityY * velocityY);
-        this.velocity = velocity;
+        this.mVelocity = velocity;
         float ALPHA = 800;
         final double l = Math.log(START_TENSION * velocity / ALPHA);
 
