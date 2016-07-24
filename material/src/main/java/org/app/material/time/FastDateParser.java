@@ -63,7 +63,8 @@ public class FastDateParser implements DateParser, Serializable {
         this(pattern, timeZone, locale, null);
     }
 
-    protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
+    protected FastDateParser(final String pattern, final TimeZone timeZone, final Locale locale,
+                             final Date centuryStart) {
         this.pattern = pattern;
         this.timeZone = timeZone;
         this.locale = locale;
@@ -94,7 +95,7 @@ public class FastDateParser implements DateParser, Serializable {
         final Matcher patternMatcher = formatPattern.matcher(pattern);
         if (!patternMatcher.lookingAt()) {
             throw new IllegalArgumentException(
-                    "Illegal pattern character '" + pattern.charAt(patternMatcher.regionStart()) + "'");
+                    "Illegal pattern char '" + pattern.charAt(patternMatcher.regionStart()) + "'");
         }
 
         currentFormatField = patternMatcher.group();
@@ -113,12 +114,16 @@ public class FastDateParser implements DateParser, Serializable {
             currentFormatField = nextFormatField;
             currentStrategy = nextStrategy;
         }
+
         if (patternMatcher.regionStart() != patternMatcher.regionEnd()) {
-            throw new IllegalArgumentException("Failed to parse \"" + pattern + "\" ; gave up at index " + patternMatcher.regionStart());
+            throw new IllegalArgumentException("Failed to parse \"" + pattern +
+                    "\" ; gave up at index " + patternMatcher.regionStart());
         }
+
         if (currentStrategy.addRegex(this, regex)) {
             collector.add(currentStrategy);
         }
+
         currentFormatField = null;
         strategies = collector.toArray(new Strategy[collector.size()]);
         parsePattern = Pattern.compile(regex.toString());
@@ -212,36 +217,37 @@ public class FastDateParser implements DateParser, Serializable {
     @Override
     public Date parse(final String source) throws ParseException {
         final Date date = parse(source, new ParsePosition(0));
+
         if (date == null) {
             // Add a note re supported date range
             if (locale.equals(JAPANESE_IMPERIAL)) {
                 throw new ParseException(
                         "(The " + locale + " locale does not support dates before 1868 AD)\n" +
-                                "Unparseable date: \"" + source + "\" does not match " + parsePattern.pattern(), 0);
+                                "Unparseable date: \"" + source + "\" does not match " +
+                                parsePattern.pattern(), 0);
             }
-            throw new ParseException("Unparseable date: \"" + source + "\" does not match " + parsePattern.pattern(), 0);
+
+            throw new ParseException("Unparseable date: \"" + source + "\" does not match " +
+                    parsePattern.pattern(), 0);
         }
+
         return date;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.commons.lang3.time.DateParser#parseObject(java.lang.String, java.text.ParsePosition)
-     */
     @Override
     public Object parseObject(final String source, final ParsePosition pos) {
         return parse(source, pos);
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.commons.lang3.time.DateParser#parse(java.lang.String, java.text.ParsePosition)
-     */
     @Override
     public Date parse(final String source, final ParsePosition pos) {
         final int offset = pos.getIndex();
         final Matcher matcher = parsePattern.matcher(source.substring(offset));
+
         if (!matcher.lookingAt()) {
             return null;
         }
+
         // timing tests indicate getting new instance is 19% faster than cloning
         final Calendar cal = Calendar.getInstance(timeZone, locale);
         cal.clear();
@@ -250,11 +256,13 @@ public class FastDateParser implements DateParser, Serializable {
             final Strategy strategy = strategies[i++];
             strategy.setCalendar(this, cal, matcher.group(i));
         }
+
         pos.setIndex(offset + matcher.end());
         return cal.getTime();
     }
 
-    private static StringBuilder escapeRegex(final StringBuilder regex, final String value, final boolean unquote) {
+    private static StringBuilder escapeRegex(
+            final StringBuilder regex, final String value, final boolean unquote) {
         regex.append("\\Q");
         for (int i = 0; i < value.length(); ++i) {
             char c = value.charAt(i);
@@ -271,8 +279,10 @@ public class FastDateParser implements DateParser, Serializable {
                     if (++i == value.length()) {
                         break;
                     }
+
                     regex.append(c); // we always want the original \
                     c = value.charAt(i); // Is it followed by E ?
+
                     if (c == 'E') { // \E detected
                         regex.append("E\\\\E\\"); // see comment above
                         c = 'Q'; // appended below
@@ -320,7 +330,8 @@ public class FastDateParser implements DateParser, Serializable {
         return result.isEmpty() ? null : result;
     }
 
-    private static Map<String, Integer> getDisplayNames(final int field, final Calendar definingCalendar, final Locale locale) {
+    private static Map<String, Integer> getDisplayNames(
+            final int field, final Calendar definingCalendar, final Locale locale) {
         return getDisplayNames(field, locale);
     }
 
@@ -372,7 +383,8 @@ public class FastDateParser implements DateParser, Serializable {
             case 'K':
                 return HOUR_STRATEGY;
             case 'M':
-                return formatField.length() >= 3 ? getLocaleSpecificStrategy(Calendar.MONTH, definingCalendar) : NUMBER_MONTH_STRATEGY;
+                return formatField.length() >= 3 ?
+                        getLocaleSpecificStrategy(Calendar.MONTH, definingCalendar) : NUMBER_MONTH_STRATEGY;
             case 'S':
                 return MILLISECOND_STRATEGY;
             case 'W':

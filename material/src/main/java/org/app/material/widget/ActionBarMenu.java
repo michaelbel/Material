@@ -88,6 +88,7 @@ public class ActionBarMenu extends LinearLayout {
                 }
             }
         });
+
         return menuItem;
     }
 
@@ -159,6 +160,7 @@ public class ActionBarMenu extends LinearLayout {
                     if (toggle) {
                         parentActionBar.onSearchFieldVisibilityChanged(item.toggleSearch(true));
                     }
+
                     item.getSearchField().setText(text);
                     item.getSearchField().setSelection(text.length());
                     break;

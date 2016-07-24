@@ -148,7 +148,8 @@ public class ActionBar extends FrameLayout {
         mTitleTextView.setGravity(Gravity.START);
         mTitleTextView.setTextColor(0xFFFFFFFF);
         mTitleTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        addView(mTitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
+        addView(mTitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
     }
 
     private void createBackButtonImage() {
@@ -183,7 +184,8 @@ public class ActionBar extends FrameLayout {
         mSubtitleTextView = new SimpleTextView(getContext());
         mSubtitleTextView.setGravity(Gravity.START);
         mSubtitleTextView.setTextColor(0xFFFFFFFF);
-        addView(mSubtitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
+        addView(mSubtitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
     }
 
     public String getTitle() {
@@ -223,7 +225,7 @@ public class ActionBar extends FrameLayout {
         }
 
         mActionMode = new ActionBarMenu(getContext(), this);
-        mActionMode.setBackgroundColor(0xffffffff);
+        mActionMode.setBackgroundColor(0xFFFFFFFF);
         addView(mActionMode, indexOfChild(mBackButtonImageView));
 
         mActionMode.setPadding(0, occupyStatusBar ? AndroidUtilities.getStatusBarHeight() : 0, 0, 0);
@@ -264,6 +266,7 @@ public class ActionBar extends FrameLayout {
         if (mActionMode == null || actionModeVisible) {
             return;
         }
+
         actionModeVisible = true;
 
         if (Build.VERSION.SDK_INT >= 14) {
@@ -367,12 +370,15 @@ public class ActionBar extends FrameLayout {
         if (mTitleTextView != null) {
             mTitleTextView.setVisibility(VISIBLE);
         }
+
         if (mSubtitleTextView != null) {
             mSubtitleTextView.setVisibility(VISIBLE);
         }
+
         if (mMenu != null) {
             mMenu.setVisibility(VISIBLE);
         }
+
         if (mBackButtonImageView != null) {
             Drawable drawable = mBackButtonImageView.getDrawable();
 
@@ -403,13 +409,17 @@ public class ActionBar extends FrameLayout {
 
     protected void onSearchFieldVisibilityChanged(boolean visible) {
         isSearchFieldVisible = visible;
+
         if (mTitleTextView != null) {
             mTitleTextView.setVisibility(visible ? INVISIBLE : VISIBLE);
         }
+
         if (mSubtitleTextView != null) {
             mSubtitleTextView.setVisibility(visible ? INVISIBLE : VISIBLE);
         }
+
         Drawable drawable = mBackButtonImageView.getDrawable();
+
         if (drawable != null && drawable instanceof MenuDrawable) {
             ((MenuDrawable) drawable).setRotation(visible ? 1 : 0, true);
         }
@@ -419,6 +429,7 @@ public class ActionBar extends FrameLayout {
         if (!isSearchFieldVisible || mMenu == null) {
             return;
         }
+
         mMenu.closeSearchField();
     }
 
@@ -426,6 +437,7 @@ public class ActionBar extends FrameLayout {
         if (mMenu == null || text == null) {
             return;
         }
+
         mMenu.openSearchField(!isSearchFieldVisible, text);
     }
 
@@ -520,6 +532,7 @@ public class ActionBar extends FrameLayout {
 
         for (int i = 0; i < childCount; i++) {
             View child = getChildAt(i);
+
             if (child.getVisibility() == GONE || child == mTitleTextView || child == mSubtitleTextView || child == mMenu || child == mBackButtonImageView) {
                 continue;
             }
@@ -565,6 +578,7 @@ public class ActionBar extends FrameLayout {
                 default:
                     childTop = lp.topMargin;
             }
+
             child.layout(childLeft, childTop, childLeft + width, childTop + height);
         }
     }

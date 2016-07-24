@@ -41,7 +41,8 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
 
     private static final FormatCache<FastDateFormat> cache = new FormatCache<FastDateFormat>() {
         @Override
-        protected FastDateFormat createInstance(final String pattern, final TimeZone timeZone, final Locale locale) {
+        protected FastDateFormat createInstance(
+                final String pattern, final TimeZone timeZone, final Locale locale) {
             return new FastDateFormat(pattern, timeZone, locale);
         }
     };
@@ -65,7 +66,8 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
         return cache.getInstance(pattern, null, locale);
     }
 
-    public static FastDateFormat getInstance(final String pattern, final TimeZone timeZone, final Locale locale) {
+    public static FastDateFormat getInstance(
+            final String pattern, final TimeZone timeZone, final Locale locale) {
         return cache.getInstance(pattern, timeZone, locale);
     }
 
@@ -81,7 +83,8 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
         return cache.getDateInstance(style, timeZone, null);
     }
 
-    public static FastDateFormat getDateInstance(final int style, final TimeZone timeZone, final Locale locale) {
+    public static FastDateFormat getDateInstance(final int style, final TimeZone timeZone,
+                                                 final Locale locale) {
         return cache.getDateInstance(style, timeZone, locale);
     }
 
@@ -97,7 +100,8 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
         return cache.getTimeInstance(style, timeZone, null);
     }
 
-    public static FastDateFormat getTimeInstance(final int style, final TimeZone timeZone, final Locale locale) {
+    public static FastDateFormat getTimeInstance(
+            final int style, final TimeZone timeZone, final Locale locale) {
         return cache.getTimeInstance(style, timeZone, locale);
     }
 
@@ -105,11 +109,13 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
         return cache.getDateTimeInstance(dateStyle, timeStyle, null, null);
     }
 
-    public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle, final Locale locale) {
+    public static FastDateFormat getDateTimeInstance(
+            final int dateStyle, final int timeStyle, final Locale locale) {
         return cache.getDateTimeInstance(dateStyle, timeStyle, null, locale);
     }
 
-    public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle, final TimeZone timeZone) {
+    public static FastDateFormat getDateTimeInstance(
+            final int dateStyle, final int timeStyle, final TimeZone timeZone) {
         return getDateTimeInstance(dateStyle, timeStyle, timeZone, null);
     }
 
@@ -122,13 +128,15 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
         this(pattern, timeZone, locale, null);
     }
 
-    protected FastDateFormat(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
+    protected FastDateFormat(final String pattern, final TimeZone timeZone,
+                             final Locale locale, final Date centuryStart) {
         printer = new FastDatePrinter(pattern, timeZone, locale);
         parser = new FastDateParser(pattern, timeZone, locale, centuryStart);
     }
 
     @Override
-    public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
+    public StringBuffer format(
+            final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
         return printer.format(obj, toAppendTo, pos);
     }
 
@@ -213,7 +221,8 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
 
     @Override
     public String toString() {
-        return "FastDateFormat[" + printer.getPattern() + "," + printer.getLocale() + "," + printer.getTimeZone().getID() + "]";
+        return "FastDateFormat[" + printer.getPattern() + "," + printer.getLocale() + "," +
+                printer.getTimeZone().getID() + "]";
     }
 
     protected StringBuffer applyRules(final Calendar calendar, final StringBuffer buf) {
