@@ -32,8 +32,6 @@ public class TextCell extends BaseCell {
     public TextCell(Context context) {
         super(context);
 
-        withBackgroundColor(0xFFFFFFFF);
-
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
@@ -45,6 +43,12 @@ public class TextCell extends BaseCell {
         mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mValueView);
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        color = 0xFFFFFFFF;
+        super.setBackgroundColor(color);
     }
 
     public TextCell withText(String text) {

@@ -17,8 +17,6 @@ public class CheckBoxCell extends BaseCell {
     public CheckBoxCell(Context context) {
         super(context);
 
-        withBackgroundColor(0xFFFFFFFF);
-
         mCheckBox = new CheckBox(context);
         mCheckBox.setLayoutParams(LayoutHelper.makeFrame(context, 20, 20, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mCheckBox);
@@ -28,6 +26,12 @@ public class CheckBoxCell extends BaseCell {
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 52, 0, 0, 0));
         addView(mTextView);
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        color = 0xFFFFFFFF;
+        super.setBackgroundColor(color);
     }
 
     public CheckBoxCell withText(String text) {

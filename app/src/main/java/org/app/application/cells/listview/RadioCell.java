@@ -33,8 +33,6 @@ public class RadioCell extends BaseCell {
     public RadioCell(Context context) {
         super(context);
 
-        withBackgroundColor(0xFFFFFFFF);
-
         mRadioButton = new RadioButton(context);
         mRadioButton.setLayoutParams(LayoutHelper.makeFrame(context, 22, 22, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mRadioButton);
@@ -44,6 +42,12 @@ public class RadioCell extends BaseCell {
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 54, 0, 0, 0));
         addView(mTextView);
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        color = 0xFFFFFFFF;
+        super.setBackgroundColor(color);
     }
 
     public RadioCell withText(String text) {

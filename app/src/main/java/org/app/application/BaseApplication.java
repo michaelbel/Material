@@ -22,7 +22,7 @@ import android.content.Context;
 import org.app.material.AndroidUtilities;
 import org.app.material.Logger;
 
-public class ApplicationLoader extends Application {
+public class BaseApplication extends Application {
 
     public static volatile Context applicationContext;
 

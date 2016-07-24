@@ -33,7 +33,6 @@ public class DoubleCell extends BaseCell {
         super(context);
 
         withHeight(62);
-        withBackgroundColor(0xFFFFFFFF);
 
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
@@ -46,6 +45,12 @@ public class DoubleCell extends BaseCell {
         mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 0, 16, 10));
         addView(mValueView);
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        color = 0xFFFFFFFF;
+        super.setBackgroundColor(color);
     }
 
     public DoubleCell withText(@StringRes int resId) {

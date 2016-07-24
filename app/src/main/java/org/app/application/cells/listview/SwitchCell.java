@@ -33,8 +33,6 @@ public class SwitchCell extends BaseCell {
     public SwitchCell(Context context) {
         super(context);
 
-        withBackgroundColor(0xFFFFFFFF);
-
         mTextView = new TextView(context);
         mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
@@ -49,6 +47,12 @@ public class SwitchCell extends BaseCell {
         mSwitch.setDuplicateParentStateEnabled(false);
         mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mSwitch);
+    }
+
+    @Override
+    public void setBackgroundColor(int color) {
+        color = 0xFFFFFFFF;
+        super.setBackgroundColor(color);
     }
 
     public SwitchCell withText(String text) {

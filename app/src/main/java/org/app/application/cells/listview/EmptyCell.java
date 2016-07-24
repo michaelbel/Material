@@ -37,7 +37,7 @@ public class EmptyCell extends BaseCell {
 
         mHeadText = new TextView(context);
         mHeadText.setGravity(Gravity.START);
-        mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mHeadText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mHeadText);
