@@ -1,0 +1,12 @@
+<resources>
+    <dimen name="color_wheel_radius">111dp</dimen>
+    <dimen name="color_wheel_thickness">6dp</dimen>
+    <dimen name="color_wheel_pointer_radius">19dp</dimen>
+    <dimen name="color_wheel_pointer_shadow_radius">23dp</dimen>
+    <dimen name="color_history_radius">46dp</dimen>
+
+    <dimen name="color_slider_length">210dp</dimen>
+    <dimen name="color_slider_thickness">5dp</dimen>
+    <dimen name="color_slider_pointer_radius">11dp</dimen>
+    <dimen name="color_slider_pointer_shadow_radius">14dp</dimen>
+</resources>

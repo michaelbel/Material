@@ -1,28 +1,16 @@
 <resources>
+
     <!--Switch-->
     <declare-styleable name="Switch">
-
+        <attr name="supportRTL" format="boolean"/>
+        <attr name="animDuration" format="integer"/>
+        <attr name="thumbColorNormal" format="color"/>
+        <attr name="thumbColorActivated" format="color"/>
+        <attr name="trackColorNormal" format="color"/>
+        <attr name="trackColorActivated" format="color"/>
     </declare-styleable>
 
-    <!--CheckBox-->
-    <declare-styleable name="CheckBox">
 
-    </declare-styleable>
-
-    <!--RadioButton-->
-    <declare-styleable name="RadioButton">
-
-    </declare-styleable>
-
-    <!--ColorPickerHolo-->
-    <declare-styleable name="ColorPickerHolo">
-        <attr name="color_wheel_radius" format="dimension"/>
-        <attr name="color_wheel_thickness" format="dimension"/>
-        <attr name="color_center_radius" format="dimension"/>
-        <attr name="color_center_halo_radius" format="dimension"/>
-        <attr name="color_pointer_radius" format="dimension"/>
-        <attr name="color_pointer_halo_radius" format="dimension"/>
-    </declare-styleable>
 
     <!--ColorPickerView-->
     <declare-styleable name="ColorPickerView">
@@ -47,5 +35,25 @@
         </attr>
         <attr name="colors" format="reference"/>
         <attr name="selectedColorIndex" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="LobsterPicker">
+        <attr name="color_wheel_thickness" format="dimension" />
+        <attr name="color_wheel_radius" format="dimension" />
+        <attr name="color_wheel_pointer_radius" format="dimension" />
+        <attr name="color_wheel_pointer_shadow_radius" format="dimension"/>
+        <attr name="color_wheel_pointer_shadow" format="color"/>
+        <attr name="color_wheel_scheme" format="reference" />
+        <attr name="color_history_enabled" format="boolean"/>
+        <attr name="color_history_radius" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="LobsterSlider">
+        <attr name="color_slider_thickness" format="dimension" />
+        <attr name="color_slider_length" format="dimension" />
+        <attr name="color_slider_pointer_radius" format="dimension" />
+        <attr name="color_slider_pointer_shadow_radius" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="LobsterShadeSlider">
+        <attr name="color_slider_scheme" format="reference"/>
     </declare-styleable>
 </resources>
