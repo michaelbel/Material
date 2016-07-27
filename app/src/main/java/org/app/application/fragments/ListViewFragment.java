@@ -53,7 +53,7 @@ public class ListViewFragment extends Fragment {
     private boolean radioParam = true;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -71,7 +71,8 @@ public class ListViewFragment extends Fragment {
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
         listView.setAdapter(new ListViewAdapter());
-        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT,
+                LayoutHelper.MATCH_PARENT));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {

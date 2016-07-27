@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -47,34 +48,40 @@ public class CardCell extends CardView {
         mImageView = new ImageView(context);
         mImageView.setFocusable(false);
         mImageView.setScaleType(ImageView.ScaleType.CENTER);
-        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 10, 0, 10, 0));
+        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 10, 0, 10, 0));
         addView(mImageView);
 
         mTextView1 = new TextView(context);
-        mTextView1.setTextColor(0xFF333333);
+        mTextView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
+        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
         addView(mTextView1);
 
         mTextView2 = new TextView(context);
-        mTextView2.setTextColor(0xFF616161);
+        mTextView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 100, 0, 21, 0));
+        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 100, 0, 21, 0));
         addView(mTextView2);
 
         mTextView3 = new TextView(context);
-        mTextView3.setTextColor(0xFF9E9E9E);
+        mTextView3.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLight));
         mTextView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
+        mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
         addView(mTextView3);
 
         mOptionButton = new ImageView(context);
         mOptionButton.setFocusable(false);
         mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
-        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
+        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+                ContextCompat.getColor(context, R.color.textColorSecondary)));
+        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
         addView(mOptionButton);
     }
 
@@ -104,7 +111,9 @@ public class CardCell extends CardView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(100), MeasureSpec.EXACTLY));
+        super.onMeasure(MeasureSpec.makeMeasureSpec(
+                MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(100), MeasureSpec.EXACTLY));
     }
 
     @Override
@@ -114,7 +123,8 @@ public class CardCell extends CardView {
                 return true;
             }
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN ||
+                    event.getAction() == MotionEvent.ACTION_MOVE) {
                 getBackground().setHotspot(event.getX(), event.getY());
             }
         }

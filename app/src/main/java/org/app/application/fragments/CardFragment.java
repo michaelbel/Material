@@ -43,7 +43,7 @@ public class CardFragment extends Fragment {
     private ArrayList<Card> items;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -65,19 +65,22 @@ public class CardFragment extends Fragment {
         recyclerView.setInstantClick(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT,
+                LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Card item = items.get(position);
-                Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()),
+                        Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setOnItemLongClickListener(new RecyclerListView.OnItemLongClickListener() {
             @Override
             public boolean onItemClick(View view, int position) {
                 Card item = items.get(position);
-                Toast.makeText(getActivity(), getString(R.string.LongClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.LongClickOnCard, item.getId()),
+                        Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -127,11 +130,12 @@ public class CardFragment extends Fragment {
                 super(itemView);
 
                 cardCell = (CardCell) itemView;
+                cardCell.setCardBackgroundColor(0xFFFFFFFF);
                 cardCell.setRadius(AndroidUtilities.dp(3.5F));
                 cardCell.setCardElevation(AndroidUtilities.dp(1.8F));
-                cardCell.setCardBackgroundColor(0xFFFFFFFF);
                 cardCell.setBackgroundResource(R.drawable.list_selector_white);
-                cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
+                cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(),
+                        LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
 
                 cardCell.setOnOptionsClick(new View.OnClickListener() {
                     @Override
@@ -145,7 +149,8 @@ public class CardFragment extends Fragment {
                                 final Card item = items.get(getAdapterPosition());
 
                                 if (i == 0) {
-                                    Toast.makeText(getActivity(), getString(R.string.OpeningCard, item.getId()), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.OpeningCard,
+                                            item.getId()), Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());

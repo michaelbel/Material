@@ -18,10 +18,12 @@ package org.app.application.cells.listview;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 
+import org.app.application.R;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.Switch;
 
@@ -33,26 +35,24 @@ public class SwitchCell extends BaseCell {
     public SwitchCell(Context context) {
         super(context);
 
+        setBackgroundColor(0xFFFFFFFF);
+
         mTextView = new TextView(context);
-        mTextView.setTextColor(0xFF333333);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        mTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mTextView);
 
         mSwitch = new Switch(context);
         mSwitch.setFocusable(false);
         mSwitch.setClickable(false);
         mSwitch.setFocusableInTouchMode(false);
-        mSwitch.withTrackColorActivated(0xFF77C2BB);
         mSwitch.setDuplicateParentStateEnabled(false);
-        mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        mSwitch.withTrackColorActivated(ContextCompat.getColor(getContext(), R.color.md_blue_200));
+        mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mSwitch);
-    }
-
-    @Override
-    public void setBackgroundColor(int color) {
-        color = 0xFFFFFFFF;
-        super.setBackgroundColor(color);
     }
 
     public SwitchCell withText(String text) {

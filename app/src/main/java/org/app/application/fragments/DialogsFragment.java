@@ -95,7 +95,7 @@ public class DialogsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -138,7 +138,8 @@ public class DialogsFragment extends Fragment {
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
         listView.setAdapter(new ListViewAdapter());
-        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(),
+                LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
@@ -156,9 +157,11 @@ public class DialogsFragment extends Fragment {
                     dialog.show(getFragmentManager(), "dialog");
                 } else if (i == 6) {
                     Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
+                            RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     startActivityForResult(intent, 0);
                 } else if (i == 8) {
                     NumberPickerDialog dialog = new NumberPickerDialog();
@@ -439,7 +442,8 @@ public class DialogsFragment extends Fragment {
             builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), getString(R.string.Value, picker.getValue()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.Value, picker.getValue()),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -518,10 +522,12 @@ public class DialogsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             RelativeLayout layout = new RelativeLayout(getActivity());
-            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
+            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24),
+                    AndroidUtilities.dp(24), AndroidUtilities.dp(24));
 
             final ColorPickerShift picker = new ColorPickerShift(getActivity());
-            picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(),
+                    LayoutHelper.MATCH_PARENT, 60));
             picker.setSelectedColorPosition(0);
             picker.setColors(Palette.AccentColors(getActivity()));
             picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.accent_red));
@@ -532,7 +538,8 @@ public class DialogsFragment extends Fragment {
             builder.setNegativeButton(R.string.Cancel, null);
             builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), Integer.toHexString(picker.getColor()),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -548,17 +555,21 @@ public class DialogsFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
             LinearLayout layout = new LinearLayout(getActivity());
-            layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+            layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
+                    LayoutHelper.WRAP_CONTENT));
             layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24));
+            layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24),
+                    AndroidUtilities.dp(24), AndroidUtilities.dp(24));
 
             final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
             picker1.setColors(Palette.AccentColors(getActivity()));
-            picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 60));
+            picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(),
+                    LayoutHelper.MATCH_PARENT, 60));
             layout.addView(picker1);
 
             final ColorPickerShift picker2 = new ColorPickerShift(getActivity());
-            picker2.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
+            picker2.setLayoutParams(LayoutHelper.makeLinear(getActivity(),
+                    LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
 
             for (int i : picker1.getColors()) {
                 for (int i2 : Palette.PrimaryColors(getActivity(), i)) {
@@ -585,7 +596,8 @@ public class DialogsFragment extends Fragment {
             builder.setNegativeButton(R.string.Cancel, null);
             builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), Integer.toHexString(picker2.getColor()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), Integer.toHexString(picker2.getColor()),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -605,7 +617,8 @@ public class DialogsFragment extends Fragment {
             layout.setOrientation(LinearLayout.VERTICAL);
 
             picker = new ColorPickerHolo(getActivity());
-            picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+            picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
+                    LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             layout.addView(picker);
             picker.setOldCenterColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
 
@@ -615,7 +628,8 @@ public class DialogsFragment extends Fragment {
             builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -636,7 +650,8 @@ public class DialogsFragment extends Fragment {
             picker.setDensity(12);
             picker.setType(ColorPickerView.CIRCLE);
             picker.setInitialColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
-            layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+            layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
+                    LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
 
             builder.setView(layout);
             builder.setTitle(R.string.ColorPickerView);
@@ -644,7 +659,8 @@ public class DialogsFragment extends Fragment {
             builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()),
+                            Toast.LENGTH_SHORT).show();
                 }
             });
 

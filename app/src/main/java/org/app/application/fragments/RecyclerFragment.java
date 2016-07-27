@@ -68,7 +68,8 @@ public class RecyclerFragment extends Fragment {
         }
 
         @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source, RecyclerView.ViewHolder target) {
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder source,
+                              RecyclerView.ViewHolder target) {
             if (source.getItemViewType() != target.getItemViewType()) {
                 return false;
             }
@@ -78,7 +79,9 @@ public class RecyclerFragment extends Fragment {
         }
 
         @Override
-        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+        public void onChildDraw(Canvas c, RecyclerView recyclerView,
+                                RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                int actionState, boolean isCurrentlyActive) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
 
@@ -105,7 +108,7 @@ public class RecyclerFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -135,7 +138,8 @@ public class RecyclerFragment extends Fragment {
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT,
+                LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -174,7 +178,8 @@ public class RecyclerFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i == 0) {
                                     final RecItem item = items.get(getAdapterPosition());
-                                    Toast.makeText(mContext, getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, getString(R.string.OpeningItem, item.getId()),
+                                            Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
@@ -213,7 +218,7 @@ public class RecyclerFragment extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup group, final int type) {
             View view;
 
             view = new RecyclerCell(mContext);
@@ -221,7 +226,8 @@ public class RecyclerFragment extends Fragment {
             //view.setClickable(true);
             //view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
             view.setBackgroundResource(R.drawable.list_selector_white);
-            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                    RecyclerView.LayoutParams.WRAP_CONTENT));
 
             return new Holder(view);
         }

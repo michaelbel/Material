@@ -42,7 +42,7 @@ public class RecyclerFragment2 extends Fragment {
     private ArrayList<RecItem> items;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -77,7 +77,8 @@ public class RecyclerFragment2 extends Fragment {
         recyclerView.setItemAnimator(null);
         recyclerView.setInstantClick(true);
         recyclerView.setLayoutAnimation(null);
-        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT,
+                LayoutHelper.MATCH_PARENT));
         recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -124,7 +125,8 @@ public class RecyclerFragment2 extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (i == 0) {
                                     final RecItem item = items.get(getAdapterPosition());
-                                    Toast.makeText(mContext, getString(R.string.OpeningItem, item.getId()), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, getString(R.string.OpeningItem, item.getId()),
+                                            Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
@@ -149,13 +151,14 @@ public class RecyclerFragment2 extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup viewGroup, final int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup group, final int type) {
             View view;
 
             view = new RecyclerCell(mContext);
             view.setBackgroundColor(0xFFFFFFFF);
             view.setBackgroundResource(R.drawable.list_selector_white);
-            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                    RecyclerView.LayoutParams.WRAP_CONTENT));
 
             return new Holder(view);
         }

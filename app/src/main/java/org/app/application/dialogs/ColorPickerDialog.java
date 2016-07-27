@@ -36,13 +36,16 @@ public class ColorPickerDialog extends DialogFragment {
 
     private ColorView mColorView;
 
-    private static ColorPickerDialog newInstance(@ColorInt int initialColor, ColorView.ColorMode colorMode, ColorView.IndicatorMode indicatorMode) {
+    private static ColorPickerDialog newInstance(@ColorInt int initialColor,
+                                                 ColorView.ColorMode colorMode,
+                                                 ColorView.IndicatorMode indicatorMode) {
         ColorPickerDialog fragment = new ColorPickerDialog();
         fragment.setArguments(makeArgs(initialColor, colorMode, indicatorMode));
         return fragment;
     }
 
-    private static Bundle makeArgs(@ColorInt int initialColor, ColorView.ColorMode colorMode, ColorView.IndicatorMode indicatorMode) {
+    private static Bundle makeArgs(@ColorInt int initialColor, ColorView.ColorMode colorMode,
+                                   ColorView.IndicatorMode indicatorMode) {
         Bundle args = new Bundle();
         args.putInt(ARG_INITIAL_COLOR, initialColor);
         args.putInt(ARG_COLOR_MODE_ID, colorMode.ordinal());
@@ -52,7 +55,8 @@ public class ColorPickerDialog extends DialogFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putAll(makeArgs(ColorView.getCurrentColor(), mColorView.getColorMode(), mColorView.getIndicatorMode()));
+        outState.putAll(makeArgs(ColorView.getCurrentColor(), mColorView.getColorMode(),
+                mColorView.getIndicatorMode()));
         super.onSaveInstanceState(outState);
     }
 
@@ -105,7 +109,8 @@ public class ColorPickerDialog extends DialogFragment {
         builder.setNegativeButton(R.string.Cancel, null);
         builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getActivity(), Integer.toHexString(ColorView.getCurrentColor()), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), Integer.toHexString(ColorView.getCurrentColor()),
+                        Toast.LENGTH_SHORT).show();
             }
         });
 

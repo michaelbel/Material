@@ -43,7 +43,7 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     private Drawable plusToClose;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getActivity());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
@@ -52,7 +52,8 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         mFabPlus = new FloatingActionButton(getActivity());
         mFabPlus.setOnClickListener(this);
         mFabPlus.setImageDrawable(plusToClose);
-        mFabPlus.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 16, 16));
+        mFabPlus.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 16, 16));
         fragmentView.addView(mFabPlus);
 
         mMediaControl = new MediaControlDrawable.Builder(getActivity())
@@ -62,7 +63,8 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         mFabMedia = new FloatingActionButton(getActivity());
         mFabMedia.setOnClickListener(this);
         mFabMedia.setImageDrawable(mMediaControl);
-        mFabMedia.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 84, 16));
+        mFabMedia.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 0, 0, 84, 16));
         fragmentView.addView(mFabMedia);
 
         return fragmentView;
@@ -71,7 +73,8 @@ public class FabFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view == mFabPlus) {
-            ObjectAnimator.ofFloat(mFabPlus, "rotation", isFabPlusState ? 0F : 135F, isFabPlusState ? 135F : 0).setDuration(250).start();
+            ObjectAnimator.ofFloat(mFabPlus, "rotation", isFabPlusState ? 0F : 135F,
+                    isFabPlusState ? 135F : 0).setDuration(250).start();
             isFabPlusState = !isFabPlusState;
         } else if (view == mFabMedia) {
             mMediaControl.setMediaControlState(getNextState(mMediaControl.getMediaControlState()));
@@ -82,11 +85,17 @@ public class FabFragment extends Fragment implements View.OnClickListener {
         switch (state) {
             case PLAY:
                 isFabMediaState = !isFabMediaState;
-                return isFabMediaState ? MediaControlDrawable.State.PAUSE : MediaControlDrawable.State.STOP;
+                return isFabMediaState ?
+                        MediaControlDrawable.State.PAUSE :
+                        MediaControlDrawable.State.STOP;
             case STOP:
-                return isFabMediaState ? MediaControlDrawable.State.PLAY : MediaControlDrawable.State.PAUSE;
+                return isFabMediaState ?
+                        MediaControlDrawable.State.PLAY :
+                        MediaControlDrawable.State.PAUSE;
             case PAUSE:
-                return isFabMediaState ? MediaControlDrawable.State.STOP : MediaControlDrawable.State.PLAY;
+                return isFabMediaState ?
+                        MediaControlDrawable.State.STOP :
+                        MediaControlDrawable.State.PLAY;
         }
 
         return null;

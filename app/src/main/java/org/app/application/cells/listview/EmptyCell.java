@@ -39,7 +39,8 @@ public class EmptyCell extends BaseCell {
         mHeadText.setGravity(Gravity.START);
         mHeadText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
         mHeadText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        mHeadText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mHeadText);
     }
 
@@ -59,7 +60,8 @@ public class EmptyCell extends BaseCell {
     }
 
     public EmptyCell withGravity(int gravity) {
-        mHeadText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, gravity | Gravity.CENTER_VERTICAL));
+        mHeadText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, gravity | Gravity.CENTER_VERTICAL));
         return this;
     }
 

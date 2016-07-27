@@ -38,7 +38,6 @@ import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
 import org.app.material.widget.ActionBarMenuItem;
 import org.app.material.widget.Browser;
-import org.app.material.widget.FragmentItem;
 import org.app.material.widget.FragmentsPagerAdapter;
 
 public class LaunchActivity extends FragmentActivity {
@@ -63,7 +62,8 @@ public class LaunchActivity extends FragmentActivity {
                     @Override
                     public void onItemClick(int id) {
                         if (id == -1) {
-                            Toast.makeText(LaunchActivity.this, "Drawer is not implemented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LaunchActivity.this, "Drawer is not implemented",
+                                    Toast.LENGTH_SHORT).show();
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                         } else if (id == settings) {
@@ -83,22 +83,20 @@ public class LaunchActivity extends FragmentActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         FrameLayout.LayoutParams viewPagerParams = (FrameLayout.LayoutParams) viewPager.getLayoutParams();
-        viewPagerParams.setMargins(0, AndroidUtilities.isLandscape() ? AndroidUtilities.dp(96) : AndroidUtilities.dp(104), 0, 0);
+        viewPagerParams.setMargins(0, AndroidUtilities.isLandscape() ?
+                AndroidUtilities.dp(96) : AndroidUtilities.dp(104), 0, 0);
         viewPager.setLayoutParams(viewPagerParams);
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());
-        adapter.addFragments(
-            new FragmentItem(new DialogsFragment(), R.string.Dialogs),
-            new FragmentItem(new ListViewFragment(), R.string.ListViewAdapter),
-            new FragmentItem(new CardFragment(), R.string.CardView),
-            new FragmentItem(new RecyclerFragment(), R.string.RecyclerView),
-            new FragmentItem(new RecyclerFragment2(), R.string.RecyclerView),
-            new FragmentItem(new NumberViewFragment(), R.string.NumberView),
-            new FragmentItem(new FabFragment(), R.string.Fabs),
-            new FragmentItem(new PatternViewFragment(), R.string.Pattern),
-            new FragmentItem(new SwitchesFragment(), R.string.Switch)
-        );
-
+        adapter.addFragment(new DialogsFragment(), R.string.Dialogs);
+        adapter.addFragment(new ListViewFragment(), R.string.ListViewAdapter);
+        adapter.addFragment(new CardFragment(), R.string.CardView);
+        adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
+        adapter.addFragment(new RecyclerFragment2(), R.string.RecyclerView);
+        adapter.addFragment(new NumberViewFragment(), R.string.NumberView);
+        adapter.addFragment(new FabFragment(), R.string.Fabs);
+        adapter.addFragment(new PatternViewFragment(), R.string.Pattern);
+        adapter.addFragment(new SwitchesFragment(), R.string.Switch);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -119,7 +117,8 @@ public class LaunchActivity extends FragmentActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();
+        FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams)
+                tabLayout.getLayoutParams();
         tabLayoutParams.setMargins(0, ActionBar.getCurrentActionBarHeight(), 0, 0);
         tabLayout.setLayoutParams(tabLayoutParams);
     }

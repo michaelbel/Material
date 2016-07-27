@@ -16,7 +16,7 @@
         switch:animDuration="220"
         switch:thumbColorNormal="#F1F1F1"
         switch:trackColorNormal="#B0AFAF"
-        switch:thumbColorActivated="#009688"
-        switch:trackColorActivated="#77C2BB"/>
+        switch:thumbColorActivated="@color/colorPrimary"
+        switch:trackColorActivated="@color/md_blue_200"/>
 
 </FrameLayout>

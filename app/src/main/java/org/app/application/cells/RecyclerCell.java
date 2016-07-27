@@ -22,6 +22,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -58,28 +59,33 @@ public class RecyclerCell extends FrameLayout {
         mImageView.setFocusable(false);
         mImageView.setScaleType(ImageView.ScaleType.CENTER);
         mImageView.setShapeDrawable(AvatarImageView.CIRCLE);
-        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
+        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START |
+                Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mImageView);
 
         mTextView1 = new TextView(context);
-        mTextView1.setTextColor(0xFF212121);
+        mTextView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
         mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 80, 10, 21, 0));
+        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 80, 10, 21, 0));
         addView(mTextView1);
 
         mTextView2 = new TextView(context);
-        mTextView2.setTextColor(0xFF8A8A8A);
+        mTextView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
         mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
+        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
         addView(mTextView2);
 
         mOptionButton = new ImageView(context);
         mOptionButton.setFocusable(false);
         mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
         mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu, 0xFF757575));
-        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
+        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+                ContextCompat.getColor(context, R.color.textColorSecondary)));
+        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
         addView(mOptionButton);
     }
 
@@ -110,13 +116,17 @@ public class RecyclerCell extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         if (needDivider) {
-            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(), getHeight() - 1, mPaint);
+            canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(),
+                    getHeight() - 1, mPaint);
         }
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
+        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
+                MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0),
+                        MeasureSpec.EXACTLY));
     }
 
     @Override
@@ -128,7 +138,8 @@ public class RecyclerCell extends FrameLayout {
                 return true;
             }
 
-            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() ==
+                    MotionEvent.ACTION_MOVE) {
                 getBackground().setHotspot(event.getX(), event.getY());
             }
         }
