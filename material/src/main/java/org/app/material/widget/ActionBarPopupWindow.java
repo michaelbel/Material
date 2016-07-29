@@ -25,6 +25,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,10 +96,11 @@ public class ActionBarPopupWindow extends PopupWindow {
             AndroidUtilities.bind(context);
 
             if (backgroundDrawable == null) {
-                backgroundDrawable = getResources().getDrawable(R.drawable.popup_fixed, null);
+                //backgroundDrawable = getResources().getDrawable(R.drawable.popup_fixed, null);
+                backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.popup_fixed);
             }
 
-            setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8));
+            this.setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8));
             setWillNotDraw(false);
 
             try {
@@ -113,9 +115,11 @@ public class ActionBarPopupWindow extends PopupWindow {
             linearLayout.setOrientation(LinearLayout.VERTICAL);
 
             if (scrollView != null) {
-                scrollView.addView(linearLayout, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                scrollView.addView(linearLayout, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
             } else {
-                addView(linearLayout, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT));
+                addView(linearLayout, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+                        LayoutHelper.WRAP_CONTENT));
             }
         }
 
@@ -160,7 +164,8 @@ public class ActionBarPopupWindow extends PopupWindow {
                             continue;
                         }
                         Integer position = positions.get(child);
-                        if (position != null && height - (position * AndroidUtilities.dp(48) + AndroidUtilities.dp(32)) > value * height) {
+                        if (position != null && height - (position * AndroidUtilities.dp(48) +
+                                AndroidUtilities.dp(32)) > value * height) {
                             break;
                         }
                         lastStartedChild = a - 1;

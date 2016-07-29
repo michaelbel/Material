@@ -137,7 +137,29 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
+    public static int selectableItemBackground(Context context) {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackground
+        };
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
     public static int selectableItemBackgroundBorderless() {
+        int[] attrs = new int[]{
+                R.attr.selectableItemBackgroundBorderless
+        };
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+    public static int selectableItemBackgroundBorderless(Context context) {
         int[] attrs = new int[]{
                 R.attr.selectableItemBackgroundBorderless
         };

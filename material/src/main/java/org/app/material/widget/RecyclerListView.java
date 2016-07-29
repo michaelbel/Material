@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -38,8 +39,72 @@ public class RecyclerListView extends RecyclerView {
 
     private static int[] attributes;
     private static boolean gotAttributes;
+    private static volatile Handler applicationHandler = new Handler(Looper.getMainLooper());
 
-    public static volatile Handler applicationHandler = new Handler(Looper.getMainLooper());
+    public RecyclerListView(Context context) {
+        this(context, null);
+    }
+
+    public RecyclerListView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public RecyclerListView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initialization(context, attrs, defStyle);
+    }
+
+    private void initialization(Context context, AttributeSet attrs, int defStyle) {
+        try {
+            if (!gotAttributes) {
+                attributes = getResourceDeclareStyleableIntArray("com.android.internal", "View");
+                gotAttributes = true;
+            }
+
+            TypedArray a = context.getTheme().obtainStyledAttributes(attributes);
+            Method initializeScrollbars = android.view.View.class.getDeclaredMethod("initializeScrollbars", TypedArray.class);
+            initializeScrollbars.invoke(this, a);
+            a.recycle();
+        } catch (Throwable e) {
+            Logger.e("message", e);
+        }
+
+        super.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState != SCROLL_STATE_IDLE && currentChildView != null) {
+                    if (selectChildRunnable != null) {
+                        cancelRunOnUIThread(selectChildRunnable);
+                        selectChildRunnable = null;
+                    }
+
+                    MotionEvent event = MotionEvent.obtain(0, 0, MotionEvent.ACTION_CANCEL, 0, 0, 0);
+                    try {
+                        mGestureDetector.onTouchEvent(event);
+                    } catch (Exception e) {
+                        Logger.e("message", e);
+                    }
+
+                    currentChildView.onTouchEvent(event);
+                    event.recycle();
+                    currentChildView.setPressed(false);
+                    currentChildView = null;
+                    interceptedByChild = false;
+                }
+                if (onScrollListener != null) {
+                    onScrollListener.onScrollStateChanged(recyclerView, newState);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (onScrollListener != null) {
+                    onScrollListener.onScrolled(recyclerView, dx, dy);
+                }
+            }
+        });
+        addOnItemTouchListener(new RecyclerListViewItemClickListener(context));
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -241,60 +306,6 @@ public class RecyclerListView extends RecyclerView {
         }
 
         return null;
-    }
-
-    public RecyclerListView(Context context) {
-        super(context);
-
-        try {
-            if (!gotAttributes) {
-                attributes = getResourceDeclareStyleableIntArray("com.android.internal", "View");
-                gotAttributes = true;
-            }
-
-            TypedArray a = context.getTheme().obtainStyledAttributes(attributes);
-            Method initializeScrollbars = android.view.View.class.getDeclaredMethod("initializeScrollbars", TypedArray.class);
-            initializeScrollbars.invoke(this, a);
-            a.recycle();
-        } catch (Throwable e) {
-            Logger.e("message", e);
-        }
-
-        super.addOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState != SCROLL_STATE_IDLE && currentChildView != null) {
-                    if (selectChildRunnable != null) {
-                        cancelRunOnUIThread(selectChildRunnable);
-                        selectChildRunnable = null;
-                    }
-
-                    MotionEvent event = MotionEvent.obtain(0, 0, MotionEvent.ACTION_CANCEL, 0, 0, 0);
-                    try {
-                        mGestureDetector.onTouchEvent(event);
-                    } catch (Exception e) {
-                        Logger.e("message", e);
-                    }
-
-                    currentChildView.onTouchEvent(event);
-                    event.recycle();
-                    currentChildView.setPressed(false);
-                    currentChildView = null;
-                    interceptedByChild = false;
-                }
-                if (onScrollListener != null) {
-                    onScrollListener.onScrollStateChanged(recyclerView, newState);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (onScrollListener != null) {
-                    onScrollListener.onScrolled(recyclerView, dx, dy);
-                }
-            }
-        });
-        addOnItemTouchListener(new RecyclerListViewItemClickListener(context));
     }
 
     @Override

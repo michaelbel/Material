@@ -9,6 +9,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.StringRes;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,7 +54,21 @@ public class ActionBar extends FrameLayout {
 
     public ActionBar(Context context) {
         super(context);
+        AndroidUtilities.bind(context);
+    }
 
+    public ActionBar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        AndroidUtilities.bind(context);
+    }
+
+    public ActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        AndroidUtilities.bind(context);
+    }
+
+    public ActionBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         AndroidUtilities.bind(context);
     }
 
