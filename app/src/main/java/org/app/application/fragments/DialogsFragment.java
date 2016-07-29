@@ -56,6 +56,8 @@ import java.util.ArrayList;
 
 public class DialogsFragment extends Fragment {
 
+    private final String TAG = DialogsFragment.class.getSimpleName();
+
     private ArrayList<ListItem> dialogs;
     private LaunchActivity mActivity;
 
@@ -144,17 +146,13 @@ public class DialogsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == 1) {
-                    SimpleMessageDialog dialog = new SimpleMessageDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new SimpleMessageDialog().show(getFragmentManager(), TAG);
                 } else if (i == 2) {
-                    ItemsDialog dialog = new ItemsDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new ItemsDialog().show(getFragmentManager(), TAG);
                 } else if (i == 3) {
-                    SingleChoiceDialog dialog = new SingleChoiceDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new SingleChoiceDialog().show(getFragmentManager(), TAG);
                 } else if (i == 4) {
-                    MultiChoiceDialog dialog = new MultiChoiceDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new MultiChoiceDialog().show(getFragmentManager(), TAG);
                 } else if (i == 6) {
                     Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
@@ -165,64 +163,59 @@ public class DialogsFragment extends Fragment {
                     startActivityForResult(intent, 0);
                 } else if (i == 8) {
                     NumberPickerDialog dialog = new NumberPickerDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    dialog.show(getFragmentManager(), TAG);
                 } else if (i == 9) {
-                    NumberPickerStringDialog dialog = new NumberPickerStringDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new NumberPickerStringDialog().show(getFragmentManager(), TAG);
                 } else if (i == 11) {
-                    ColorPickerAccentDialog dialog = new ColorPickerAccentDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new ColorPickerAccentDialog().show(getFragmentManager(), TAG);
                 } else if (i == 12) {
-                    ColorPickerPrimaryDialog dialog = new ColorPickerPrimaryDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new ColorPickerPrimaryDialog().show(getFragmentManager(), TAG);
                 } else if (i == 13) {
-                    ColorPickerHoloDialog dialog = new ColorPickerHoloDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new ColorPickerHoloDialog().show(getFragmentManager(), TAG);
                 } else if (i == 14) {
-                    ColorPickerViewDialog dialog = new ColorPickerViewDialog();
-                    dialog.show(getFragmentManager(), "dialog");
+                    new ColorPickerViewDialog().show(getFragmentManager(), TAG);
                 } else if (i == 15) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.RGB)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 16) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.ARGB)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 17) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.HSV)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 18) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.HSL)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 19 ) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.CMYK)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 20) {
                     new ColorPickerDialog.Builder()
                             .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.CMYK255)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
-                            .show(getFragmentManager(), "dialog");
+                            .show(getFragmentManager(), TAG);
                 } else if (i == 21) {
 
                 } else if (i == 21) {
@@ -530,7 +523,7 @@ public class DialogsFragment extends Fragment {
                     LayoutHelper.MATCH_PARENT, 60));
             picker.setSelectedColorPosition(0);
             picker.setColors(Palette.AccentColors(getActivity()));
-            picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.accent_red));
+            picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.primary_red));
             layout.addView(picker);
 
             builder.setView(layout);
