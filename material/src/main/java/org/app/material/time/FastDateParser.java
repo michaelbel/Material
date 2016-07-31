@@ -147,24 +147,10 @@ public class FastDateParser implements DateParser, Serializable {
         return locale;
     }
 
-    /**
-     * Returns the generated pattern (for testing purposes).
-     *
-     * @return the generated pattern
-     */
     Pattern getParsePattern() {
         return parsePattern;
     }
 
-    // Basics
-    //-----------------------------------------------------------------------
-
-    /**
-     * <p>Compare another object for equality with this object.</p>
-     *
-     * @param obj the object to compare to
-     * @return <code>true</code>if equal to this instance
-     */
     @Override
     public boolean equals(final Object obj) {
         if (!(obj instanceof FastDateParser)) {
@@ -176,21 +162,11 @@ public class FastDateParser implements DateParser, Serializable {
                 && locale.equals(other.locale);
     }
 
-    /**
-     * <p>Return a hashcode compatible with equals.</p>
-     *
-     * @return a hashcode compatible with equals
-     */
     @Override
     public int hashCode() {
         return pattern.hashCode() + 13 * (timeZone.hashCode() + 13 * locale.hashCode());
     }
 
-    /**
-     * <p>Get a string version of this formatter.</p>
-     *
-     * @return a debugging string
-     */
     @Override
     public String toString() {
         return "FastDateParser[" + pattern + "," + locale + "," + timeZone.getID() + "]";
