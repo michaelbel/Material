@@ -97,6 +97,7 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragment(new FabFragment(), R.string.Fabs);
         adapter.addFragment(new PatternViewFragment(), R.string.Pattern);
         adapter.addFragment(new SwitchesFragment(), R.string.Switch);
+        adapter.addFragment(new Fr(), R.string.Switch);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
