@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public final class Preferences {
+public class Preferences {
 
     /*
     Initialization:
@@ -29,18 +29,6 @@ public final class Preferences {
     private static final String DEFAULT_SUFFIX = "_preferences";
     private static final String LENGTH = "#LENGTH";
     private static SharedPreferences mPrefs;
-
-    /**
-     * Initialize the Prefs helper class to keep a reference to the SharedPreference for this
-     * application the SharedPreference will use the package name of the application as the Key.
-     * This method is deprecated please us the new builder.
-     *
-     * @param context the Application context.
-     */
-    @Deprecated
-    public static void initPrefs(Context context) {
-        new Builder().setContext(context).build();
-    }
 
     private static void initPrefs(Context context, String prefsName, int mode) {
         mPrefs = context.getSharedPreferences(prefsName, mode);
@@ -58,7 +46,8 @@ public final class Preferences {
         }
 
         throw new RuntimeException(
-                "Prefs class not correctly instantiated. Please call Builder.setContext().build() in the Application class onCreate.");
+                "Prefs class not correctly instantiated. Please call Builder.setContext().build() " +
+                        "in the Application class onCreate.");
     }
 
     /**
@@ -76,8 +65,7 @@ public final class Preferences {
      * @param key      The name of the preference to retrieve.
      * @param defValue Value to return if this preference does not exist.
      * @return Returns the preference value if it exists, or defValue.
-     * @throws ClassCastException if there is a preference with this name that is not
-     *                            an int.
+     * @throws ClassCastException if there is a preference with this name that is not an int.
      * @see SharedPreferences#getInt(String, int)
      */
     public static int getInt(final String key, final int defValue) {

@@ -28,8 +28,8 @@ dependencies {
     compile 'org.jetbrains:annotations-java5:15.0'
 }
 
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
+apply plugin: 'com.github.dcendents.android-maven'
 
 ext {
     bintrayRepo = 'maven'
@@ -39,12 +39,12 @@ ext {
     libraryName = 'Material'
     artifact = 'material'
 
-    libraryDescription = 'material design library'
+    libraryDescription = 'Material Design Library'
 
     siteUrl = 'https://github.com/michaelbel/material'
     gitUrl = 'https://github.com/michaelbel/material.git'
 
-    libraryVersion = '0.0.2'
+    libraryVersion = '0.0.6'
 
     developerId = 'michaelbel'
     developerName = 'MichaelBel'
