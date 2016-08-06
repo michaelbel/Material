@@ -10,6 +10,31 @@
         <attr name="trackColorActivated" format="color"/>
     </declare-styleable>
 
+    <!--ActionBar-->
+    <declare-styleable name="ActionBar">
+        <attr name="titleTextColor" format="color"/>
+        <attr name="backIcon" format="reference"/>
+    </declare-styleable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <!--ColorPickerView-->

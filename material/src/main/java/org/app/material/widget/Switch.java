@@ -113,7 +113,7 @@ public class Switch extends CompoundButton {
         mAnimationDuration = attr.getInt(R.styleable.Switch_animDuration, 250);
         mThumbColorNormal = attr.getColor(R.styleable.Switch_thumbColorNormal, 0xFFF1F1F1);
         mThumbColorActivated = attr.getColor(R.styleable.Switch_thumbColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
-        mTrackColorNormal = attr.getColor(R.styleable.Switch_trackColorNormal, 0xFFB0AFAF);
+        mTrackColorNormal = attr.getColor(R.styleable.Switch_trackColorNormal, 0xFFC5C5C5);
         mTrackColorActivated = attr.getColor(R.styleable.Switch_trackColorActivated, AndroidUtilities.getContextColor(R.attr.colorPrimary));
         attr.recycle();
 
@@ -125,7 +125,6 @@ public class Switch extends CompoundButton {
             this.mTrackDrawable.setCallback(this);
         }
 
-
         NONE = new Insets(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(4), 0);
 
         mTouchSlop = mViewConfiguration.getScaledTouchSlop();
@@ -135,7 +134,7 @@ public class Switch extends CompoundButton {
         setChecked(isChecked());
     }
 
-    public Switch withRTL(boolean state) {
+    public Switch setRTL(boolean state) {
         this.isRTL = state;
         return this;
     }
@@ -144,7 +143,7 @@ public class Switch extends CompoundButton {
         return isRTL;
     }
 
-    public Switch withAnimationDuration(int duration) {
+    public Switch setAnimationDuration(int duration) {
         mAnimationDuration = duration;
         return this;
     }
@@ -153,29 +152,23 @@ public class Switch extends CompoundButton {
         return mAnimationDuration;
     }
 
-    public Switch withThumbColorNormal(int color) {
+    public Switch setThumbColorNormal(int color) {
         mThumbColorNormal = color;
         return this;
     }
 
-    public Switch withThumbColorActivated(int color) {
+    public Switch setThumbColorActivated(int color) {
         mThumbColorActivated = color;
         return this;
     }
 
-    public Switch withTrackColorNormal(int color) {
+    public Switch setTrackColorNormal(int color) {
         mTrackColorNormal = color;
         return this;
     }
 
-    public Switch withTrackColorActivated(int color) {
+    public Switch setTrackColorActivated(int color) {
         mTrackColorActivated = color;
-        return this;
-    }
-
-    public Switch withSwitchPadding(int pixels) {
-        mSwitchPadding = pixels;
-        requestLayout();
         return this;
     }
 
@@ -292,10 +285,6 @@ public class Switch extends CompoundButton {
         invalidate();
     }
 
-    public float getThumbPosition() {
-        return thumbPosition;
-    }
-
     private int getThumbOffset() {
         final float position;
 
@@ -325,10 +314,6 @@ public class Switch extends CompoundButton {
         } else {
             return 0;
         }
-    }
-
-    public void resetLayout() {
-        wasLayout = false;
     }
 
     @Override

@@ -32,6 +32,8 @@ import org.app.material.AndroidUtilities;
 
 public class LayoutHelper {
 
+    // ScrollView and CardView extended FrameLayout
+
     public static final int MATCH_PARENT = -1;
     public static final int WRAP_CONTENT = -2;
 
@@ -439,14 +441,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param weight
-     * @return
-     */
     public static TableRow.LayoutParams makeTableRow(Context context, int width, int height, int gravity, float weight) {
         TableRow.LayoutParams params = new TableRow.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -473,17 +467,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableRow.LayoutParams makeTableRow(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableRow.LayoutParams params = new TableRow.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -494,17 +477,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param weight
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableRow.LayoutParams makeTableRow(Context context, int width, int height, float weight, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableRow.LayoutParams params = new TableRow.LayoutParams(getSize(context, width), getSize(context, height));
         params.weight = weight;
@@ -515,18 +487,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param weight
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableRow.LayoutParams makeTableRow(Context context, int width, int height, int gravity, float weight, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableRow.LayoutParams params = new TableRow.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -538,50 +498,23 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
+
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height) {
         return new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param gravity
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, int gravity) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param weight
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, float weight) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.weight = weight;
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param gravity
-     * @param weight
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, int gravity, float weight) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -598,17 +531,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context
-     * @param width
-     * @param height
-     * @param gravity
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -619,17 +541,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param weight
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, float weight, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.weight = weight;
@@ -640,18 +551,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @param gravity
-     * @param weight
-     * @param startMargin
-     * @param topMargin
-     * @param endMargin
-     * @param bottomMargin
-     * @return
-     */
     public static TableLayout.LayoutParams makeTable(Context context, int width, int height, int gravity, float weight, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
@@ -663,12 +562,6 @@ public class LayoutHelper {
         return params;
     }
 
-    /**
-     * @param context Current context.
-     * @param width
-     * @param height
-     * @return
-     */
     public static DrawerLayout.LayoutParams makeDrawer(Context context, int width, int height) {
         return new DrawerLayout.LayoutParams(getSize(context, width), getSize(context, height));
     }

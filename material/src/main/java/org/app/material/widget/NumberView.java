@@ -75,8 +75,6 @@ public class NumberView extends View {
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    //super.onAnimationEnd(animation);
-
                     animator = null;
                     oldLetters.clear();
                 }

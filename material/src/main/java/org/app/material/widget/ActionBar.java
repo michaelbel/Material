@@ -5,9 +5,12 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -17,13 +20,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import org.app.material.AndroidUtilities;
+import org.app.material.R;
 
 import java.util.ArrayList;
 
 public class ActionBar extends FrameLayout {
 
+    private @ColorInt int titleTextColor;
+    private @DrawableRes int backIcon;
+
     private static boolean isTablet = false;
-    private boolean occupyStatusBar = false /*Build.VERSION.SDK_INT >= 21*/;
+    private boolean occupyStatusBar = false;
     private boolean actionModeVisible;
     private boolean interceptTouches = true;
     private boolean allowOverlayTitle;
@@ -53,37 +60,45 @@ public class ActionBar extends FrameLayout {
     }
 
     public ActionBar(Context context) {
-        super(context);
-        AndroidUtilities.bind(context);
+        this(context, null);
     }
 
     public ActionBar(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        AndroidUtilities.bind(context);
+        this(context, attrs, 0);
     }
 
     public ActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        AndroidUtilities.bind(context);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public ActionBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        AndroidUtilities.bind(context);
+        init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public ActionBar setBackGroundColor(int color) {
+    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        AndroidUtilities.bind(context);
+
+        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ActionBar, defStyleAttr, defStyleRes);
+        titleTextColor = attr.getColor(R.styleable.ActionBar_titleTextColor, 0xFFFFFFFF);
+        backIcon = attr.getResourceId(R.styleable.ActionBar_backIcon, 0);
+        attr.recycle();
+    }
+
+    public ActionBar setToolbarColor(int color) {
         this.setBackgroundColor(color);
         return this;
     }
 
-    public ActionBar setBackButtonImage(int resource) {
+    public ActionBar setBackButtonIcon(int res) {
         if (mBackButtonImageView == null) {
             createBackButtonImage();
         }
 
-        mBackButtonImageView.setVisibility(resource == 0 ? GONE : VISIBLE);
-        mBackButtonImageView.setImageResource(resource);
+        mBackButtonImageView.setVisibility(res == 0 ? GONE : VISIBLE);
+        backIcon = res;
+
+        mBackButtonImageView.setImageResource(backIcon);
         return this;
     }
 
@@ -161,7 +176,7 @@ public class ActionBar extends FrameLayout {
 
         mTitleTextView = new SimpleTextView(getContext());
         mTitleTextView.setGravity(Gravity.START);
-        mTitleTextView.setTextColor(0xFFFFFFFF);
+        mTitleTextView.setTextColor(titleTextColor);
         mTitleTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         addView(mTitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));

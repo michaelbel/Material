@@ -7,7 +7,6 @@ import org.app.material.R;
 
 public class Palette {
 
-    @org.jetbrains.annotations.Contract("_ -> !null")
     public static int[] AccentColors(Context context){
         return new int[]{
                 ContextCompat.getColor(context, R.color.primary_red),
