@@ -24,6 +24,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
@@ -33,6 +34,11 @@ import android.os.Vibrator;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.TypefaceSpan;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -44,6 +50,7 @@ import org.app.material.anim.ViewProxy;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
@@ -269,5 +276,81 @@ public class AndroidUtilities {
     public static String getCurrentTime(String format) {
         DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
         return String.valueOf(dateFormat.format(new Date()));
+    }
+
+    public static final int FLAG_TAG_BR = 1;
+    public static final int FLAG_TAG_BOLD = 2;
+    public static final int FLAG_TAG_COLOR = 4;
+    public static final int FLAG_TAG_ALL = FLAG_TAG_BR | FLAG_TAG_BOLD | FLAG_TAG_COLOR;
+
+    public SpannableStringBuilder replaceTags(Context context, @StringRes int stringId) {
+        return replaceTags(context.getString(stringId), FLAG_TAG_ALL);
+    }
+
+    public SpannableStringBuilder replaceTags(String str, int flag) {
+        try {
+            int start;
+            int end;
+            StringBuilder stringBuilder = new StringBuilder(str);
+
+            if ((flag & FLAG_TAG_BR) != 0) {
+                while ((start = stringBuilder.indexOf("<br>")) != -1) {
+                    stringBuilder.replace(start, start + 4, "\n");
+                }
+
+                while ((start = stringBuilder.indexOf("<br/>")) != -1) {
+                    stringBuilder.replace(start, start + 5, "\n");
+                }
+            }
+
+            ArrayList<Integer> bolds = new ArrayList<>();
+
+            if ((flag & FLAG_TAG_BOLD) != 0) {
+                while ((start = stringBuilder.indexOf("<b>")) != -1) {
+                    stringBuilder.replace(start, start + 3, "");
+                    end = stringBuilder.indexOf("</b>");
+
+                    if (end == -1) {
+                        end = stringBuilder.indexOf("<b>");
+                    }
+
+                    stringBuilder.replace(end, end + 4, "");
+                    bolds.add(start);
+                    bolds.add(end);
+                }
+            }
+
+            ArrayList<Integer> colors = new ArrayList<>();
+
+            if ((flag & FLAG_TAG_COLOR) != 0) {
+                while ((start = stringBuilder.indexOf("<c#")) != -1) {
+                    stringBuilder.replace(start, start + 2, "");
+                    end = stringBuilder.indexOf(">", start);
+                    int color = Color.parseColor(stringBuilder.substring(start, end));
+                    stringBuilder.replace(start, end + 1, "");
+                    end = stringBuilder.indexOf("</c>");
+                    stringBuilder.replace(end, end + 4, "");
+                    colors.add(start);
+                    colors.add(end);
+                    colors.add(color);
+                }
+            }
+
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(stringBuilder);
+
+            for (int a = 0; a < bolds.size() / 2; a++) {
+                spannableStringBuilder.setSpan(new TypefaceSpan("sans-serif-medium"), bolds.get(a * 2), bolds.get(a * 2 + 1), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            for (int a = 0; a < colors.size() / 3; a++) {
+                spannableStringBuilder.setSpan(new ForegroundColorSpan(colors.get(a * 3 + 2)), colors.get(a * 3), colors.get(a * 3 + 1), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+
+            return spannableStringBuilder;
+        } catch (Exception e) {
+            Logger.e("message", e);
+        }
+
+        return new SpannableStringBuilder(str);
     }
 }
