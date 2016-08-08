@@ -49,7 +49,7 @@ public class SwitchCell extends BaseCell {
         mSwitch.setClickable(false);
         mSwitch.setFocusableInTouchMode(false);
         mSwitch.setDuplicateParentStateEnabled(false);
-        mSwitch.withTrackColorActivated(ContextCompat.getColor(getContext(), R.color.md_blue_200));
+        mSwitch.setTrackColorActivated(ContextCompat.getColor(getContext(), R.color.md_blue_200));
         mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(mSwitch);

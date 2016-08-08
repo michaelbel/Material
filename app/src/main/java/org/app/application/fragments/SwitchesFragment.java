@@ -20,13 +20,13 @@ public class SwitchesFragment extends Fragment {
     private Switch switch2;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup vGroup, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_switches, vGroup, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
+        View fragmentView = inflater.inflate(R.layout.fragment_switches, view, false);
 
-        FrameLayout layout = (FrameLayout) view.findViewById(R.id.frameLock);
+        FrameLayout layout = (FrameLayout) fragmentView.findViewById(R.id.frameLock);
         layout.setBackgroundColor(0xFFF0F0F0);
 
-        switch1 = (Switch) view.findViewById(R.id.m_switch);
+        switch1 = (Switch) fragmentView.findViewById(R.id.m_switch);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -35,12 +35,12 @@ public class SwitchesFragment extends Fragment {
         });
 
         switch2 = new Switch(getContext());
-        switch2.withRTL(false);
-        switch2.withAnimationDuration(220);
-        switch2.withThumbColorNormal(0xFFF1F1F1);
-        switch2.withTrackColorNormal(0xFFB0AFAF);
-        switch2.withThumbColorActivated(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        switch2.withTrackColorActivated(ContextCompat.getColor(getContext(), R.color.md_blue_200));
+        switch2.setRTL(false);
+        switch2.setAnimationDuration(220);
+        switch2.setThumbColorNormal(0xFFF1F1F1);
+        switch2.setTrackColorNormal(0xFFB0AFAF);
+        switch2.setThumbColorActivated(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        switch2.setTrackColorActivated(ContextCompat.getColor(getContext(), R.color.md_blue_200));
         switch2.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 0, 50, 100, 0));
         switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -51,6 +51,6 @@ public class SwitchesFragment extends Fragment {
         });
         layout.addView(switch2);
 
-        return view;
+        return fragmentView;
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import org.app.material.AndroidUtilities;
@@ -23,10 +24,9 @@ public class SettingsActivity extends FragmentActivity {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ActionBar actionBar = new ActionBar(this)
-                .setBackGroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
-                .setBackButtonImage(R.drawable.ic_arrow_back)
+                .setToolbarColor(ContextCompat.getColor(this, R.color.md_white))
+                .setBackButtonIcon(R.drawable.ic_arrow_back)
                 .setTitle(R.string.Settings)
-                .setOccupyStatusBar(false)
                 .setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
                     @Override
                     public void onItemClick(int id) {

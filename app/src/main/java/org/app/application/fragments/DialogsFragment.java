@@ -44,6 +44,9 @@ import org.app.application.cells.listview.EmptyCell;
 import org.app.application.cells.listview.TextCell;
 import org.app.application.dialogs.ColorPickerDialog;
 import org.app.material.AndroidUtilities;
+import org.app.material.picker.date.DatePickerDialog;
+import org.app.material.picker.time.RadialPickerLayout;
+import org.app.material.picker.time.TimePickerDialog;
 import org.app.material.widget.ColorPickerHolo;
 import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.ColorPickerView;
@@ -53,6 +56,7 @@ import org.app.material.widget.NumberPicker;
 import org.app.material.widget.Palette;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class DialogsFragment extends Fragment {
 
@@ -60,11 +64,6 @@ public class DialogsFragment extends Fragment {
 
     private ArrayList<ListItem> dialogs;
     private LaunchActivity mActivity;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     public class ListItem {
 
@@ -128,8 +127,8 @@ public class DialogsFragment extends Fragment {
         dialogs.add(new ListItem().setHeader("Voice speak"));
         dialogs.add(new ListItem().setTitle("Voice"));
         dialogs.add(new ListItem().setHeader("Date and Time Pickers"));
-        dialogs.add(new ListItem().setTitle("Time Picker"));
         dialogs.add(new ListItem().setTitle("Date Picker"));
+        dialogs.add(new ListItem().setTitle("Time Picker"));
         //dialogs.add(new ListItem().setHeader("EditText pickers"));
         //dialogs.add(new ListItem().setHeader("Bottom Sheet"));
         //dialogs.add(new ListItem().setTitle("Bottom Sheet Dialog 1"));
@@ -216,16 +215,85 @@ public class DialogsFragment extends Fragment {
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
                             .show(getFragmentManager(), TAG);
-                } else if (i == 21) {
+                } else if (i == 24) {
+                    Calendar now = Calendar.getInstance();
 
-                } else if (i == 21) {
+                    DatePickerDialog dpd = DatePickerDialog.newInstance(
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                                    String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+                                    Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            now.get(Calendar.YEAR),
+                            now.get(Calendar.MONTH),
+                            now.get(Calendar.DAY_OF_MONTH)
+                    );
+                    dpd.setOkText("Set");
+                    dpd.setAccentColor(0xFFFF5252);
+                    dpd.setCancelText("Cancel");
+                    dpd.setThemeDark(true);
+                    dpd.show(getActivity().getFragmentManager(), "Date");
+                } else if (i == 25) {
+                    Calendar now = Calendar.getInstance();
 
+                    TimePickerDialog time = TimePickerDialog.newInstance(
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                                    String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+                                    String minuteString = minute < 10 ? "0" + minute : "" + minute;
+                                    String secondString = second < 10 ? "0" + second : "" + second;
+                                    String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
+
+                                    Toast.makeText(getActivity(), time1, Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            now.get(Calendar.HOUR_OF_DAY),
+                            now.get(Calendar.MINUTE),
+                            true
+                    );
+                    time.setOkText("Set");
+                    time.setAccentColor(0xFFFF5252);
+                    time.setCancelText("Cancel");
+                    time.setThemeDark(true);
+                    time.show(getActivity().getFragmentManager(), "Time");
                 }
             }
         });
         fragmentView.addView(listView);
 
         return fragmentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        TimePickerDialog tpd = (TimePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Time");
+        DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Date");
+
+        if (tpd != null)
+            tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+                String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
+                String minuteString = minute < 10 ? "0" + minute : "" + minute;
+                String secondString = second < 10 ? "0" + second : "" + second;
+                String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
+
+                Toast.makeText(getActivity(), time1, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        if (dpd != null)
+            dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+                Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public class ListViewAdapter extends BaseAdapter {

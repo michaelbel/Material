@@ -54,10 +54,9 @@ public class LaunchActivity extends FragmentActivity {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ActionBar actionBar = new ActionBar(this)
-                .setBackGroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
-                .setBackButtonImage(R.drawable.ic_menu)
+                .setToolbarColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
+                .setBackButtonIcon(R.drawable.ic_menu)
                 .setTitle(R.string.MaterialDemo)
-                .setOccupyStatusBar(false)
                 .setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
                     @Override
                     public void onItemClick(int id) {
@@ -97,7 +96,6 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragment(new FabFragment(), R.string.Fabs);
         adapter.addFragment(new PatternViewFragment(), R.string.Pattern);
         adapter.addFragment(new SwitchesFragment(), R.string.Switch);
-        adapter.addFragment(new Fr(), R.string.Switch);
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
