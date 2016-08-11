@@ -283,11 +283,11 @@ public class AndroidUtilities {
     public static final int FLAG_TAG_COLOR = 4;
     public static final int FLAG_TAG_ALL = FLAG_TAG_BR | FLAG_TAG_BOLD | FLAG_TAG_COLOR;
 
-    public SpannableStringBuilder replaceTags(Context context, @StringRes int stringId) {
+    public static SpannableStringBuilder replaceTags(Context context, @StringRes int stringId) {
         return replaceTags(context.getString(stringId), FLAG_TAG_ALL);
     }
 
-    public SpannableStringBuilder replaceTags(String str, int flag) {
+    public static SpannableStringBuilder replaceTags(String str, int flag) {
         try {
             int start;
             int end;

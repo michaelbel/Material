@@ -131,6 +131,12 @@ public class ActionBar extends FrameLayout {
         return this;
     }
 
+    public ActionBar setTitleTextColor(int color) {
+        titleTextColor = color;
+        mTitleTextView.setTextColor(titleTextColor);
+        return this;
+    }
+
     public ActionBar setTitle(@StringRes int resId) {
         setTitle(getContext().getString(resId));
         return this;

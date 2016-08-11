@@ -36,7 +36,6 @@ public class ActionBarMenu extends LinearLayout {
         LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
 
-        //RippleSupport.setSelectableItemBackgroundBorderless(getContext(), view);
         view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
 
         view.setLayoutParams(layoutParams);

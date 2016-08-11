@@ -153,6 +153,10 @@ public class RadioButton extends View {
         }
     }
 
+    public void setChecked(boolean checked) {
+        setChecked(checked, true);
+    }
+
     public void setChecked(boolean checked, boolean animated) {
         if (checked == isChecked) {
             return;

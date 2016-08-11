@@ -43,7 +43,6 @@ import android.widget.TextView;
 import org.app.material.AndroidUtilities;
 import org.app.material.Logger;
 import org.app.material.R;
-import org.app.material.RippleSupport;
 import org.app.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
@@ -101,8 +100,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         mHandler = new Handler(context.getMainLooper());
         menuHeight = AndroidUtilities.dp(16);
 
-        //this.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        RippleSupport.setSelectableItemBackgroundBorderless(context, this);
+        this.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
 
         parentMenu = menu;
 
@@ -667,6 +665,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
 
     public void hideSubItem(int id) {
         View view = popupLayout.findViewWithTag(id);
+
         if (view != null) {
             view.setVisibility(GONE);
         }
@@ -674,6 +673,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
 
     public void showSubItem(int id) {
         View view = popupLayout.findViewWithTag(id);
+
         if (view != null) {
             view.setVisibility(VISIBLE);
         }

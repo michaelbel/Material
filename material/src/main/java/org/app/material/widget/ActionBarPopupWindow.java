@@ -96,7 +96,6 @@ public class ActionBarPopupWindow extends PopupWindow {
             AndroidUtilities.bind(context);
 
             if (backgroundDrawable == null) {
-                //backgroundDrawable = getResources().getDrawable(R.drawable.popup_fixed, null);
                 backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.popup_fixed);
             }
 
@@ -459,6 +458,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             } catch (Exception e) {
                 Logger.e("message", e);
             }
+
             unregisterListener();
         }
     }

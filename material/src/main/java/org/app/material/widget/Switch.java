@@ -276,6 +276,20 @@ public class Switch extends CompoundButton {
         }
     }
 
+    public float getThumbPosition() {
+        return thumbPosition;
+    }
+
+    public void resetLayout() {
+        wasLayout = false;
+    }
+
+    public Switch withSwitchPadding(int pixels) {
+        mSwitchPadding = pixels;
+        requestLayout();
+        return this;
+    }
+
     private boolean getTargetCheckedState() {
         return thumbPosition > 0.5f;
     }

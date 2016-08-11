@@ -43,7 +43,7 @@ ext {
     siteUrl = 'https://github.com/michaelbel/material'
     gitUrl = 'https://github.com/michaelbel/material.git'
 
-    libraryVersion = '0.0.9'
+    libraryVersion = '0.1.0'
 
     developerId = 'michaelbel'
     developerName = 'MichaelBel'
