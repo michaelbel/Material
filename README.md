@@ -14,7 +14,7 @@ Material Design Library
 ### Import
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:0.1.1'
+    compile 'com.github.michaelbel:material:0.1.2'
 }
 ```
 
