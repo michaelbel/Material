@@ -16,7 +16,6 @@
 
 package org.app.application;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
@@ -66,7 +65,7 @@ public class LaunchActivity extends FragmentActivity {
                         } else if (id == github) {
                             Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                         } else if (id == settings) {
-                            startActivity(new Intent(LaunchActivity.this, SettingsActivity.class));
+
                         }
                     }
                 });

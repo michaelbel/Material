@@ -32,7 +32,7 @@ public class BaseApplication extends Application {
 
         applicationContext = getApplicationContext();
 
-        AndroidUtilities.bind(applicationContext);
-        Logger.bind(applicationContext);
+        AndroidUtilities.bind(getApplicationContext());
+        Logger.bind(getApplicationContext());
     }
 }

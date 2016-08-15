@@ -12,11 +12,7 @@
         android:layout_gravity="start|top"
         android:layout_marginTop="50dp"
         android:layout_marginStart="100dp"
-        switch:supportRTL="false"
-        switch:animDuration="220"
-        switch:thumbColorNormal="#F1F1F1"
-        switch:trackColorNormal="#B0AFAF"
-        switch:thumbColorActivated="@color/colorPrimary"
-        switch:trackColorActivated="@color/md_blue_200"/>
+        switch:switch_darkTheme="true"
+        />
 
 </FrameLayout>

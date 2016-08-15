@@ -590,7 +590,7 @@ public class DialogsFragment extends Fragment {
             picker.setLayoutParams(LayoutHelper.makeRelative(getActivity(),
                     LayoutHelper.MATCH_PARENT, 60));
             picker.setSelectedColorPosition(0);
-            picker.setColors(Palette.AccentColors(getActivity()));
+            picker.setColors(Palette.PrimaryColors(getActivity()));
             picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.primary_red));
             layout.addView(picker);
 
@@ -623,7 +623,7 @@ public class DialogsFragment extends Fragment {
                     AndroidUtilities.dp(24), AndroidUtilities.dp(24));
 
             final ColorPickerShift picker1 = new ColorPickerShift(getActivity());
-            picker1.setColors(Palette.AccentColors(getActivity()));
+            picker1.setColors(Palette.PrimaryColors(getActivity()));
             picker1.setLayoutParams(LayoutHelper.makeLinear(getActivity(),
                     LayoutHelper.MATCH_PARENT, 60));
             layout.addView(picker1);
@@ -633,10 +633,10 @@ public class DialogsFragment extends Fragment {
                     LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
 
             for (int i : picker1.getColors()) {
-                for (int i2 : Palette.PrimaryColors(getActivity(), i)) {
+                for (int i2 : Palette.MaterialColors(getActivity(), i)) {
                     if (i2 == 0xff4CaF50) {
                         picker1.setSelectedColor(i);
-                        picker2.setColors(Palette.PrimaryColors(getActivity(), i));
+                        picker2.setColors(Palette.MaterialColors(getActivity(), i));
                         picker2.setSelectedColor(i2);
                         break;
                     }
@@ -647,7 +647,7 @@ public class DialogsFragment extends Fragment {
             picker1.setOnColorChangedListener(new ColorPickerShift.OnColorChangedListener() {
                 @Override
                 public void onColorChanged(int c) {
-                    picker2.setColors(Palette.PrimaryColors(getActivity(), picker1.getColor()));
+                    picker2.setColors(Palette.MaterialColors(getActivity(), picker1.getColor()));
                     picker2.setSelectedColor(picker1.getColor());
                 }
             });

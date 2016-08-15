@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import org.app.application.R;
 import org.app.material.AndroidUtilities;
+import org.app.material.IconicsDrawable;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.NumberView;
 
@@ -45,11 +46,18 @@ public class NumberViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mNumberView.setNumber(j = j + 1, true);
+                //Toast.makeText(getContext(), SwitchPalette.getColor200(getContext(), AndroidUtilities.getContextColor(R.attr.colorAccent)), Toast.LENGTH_LONG).show();
             }
         });
 
+        IconicsDrawable icon = new IconicsDrawable()
+                .with(getContext())
+                .icon(R.drawable.ic_remove)
+                .color(0xFF424242)
+                .sizeDp(56);
+
         FloatingActionButton fabButton2 = new FloatingActionButton(getActivity());
-        fabButton2.setImageResource(R.drawable.ic_remove);
+        fabButton2.setImageDrawable(icon);
         fabButton2.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.END, 16, 16, 16, 88));
         fragmentView.addView(fabButton2);
@@ -57,6 +65,7 @@ public class NumberViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mNumberView.setNumber(j = j - 1, true);
+                //Toast.makeText(getContext(), SwitchPalette.getColor500(getContext(), AndroidUtilities.getContextColor(R.attr.colorAccent)), Toast.LENGTH_LONG).show();
             }
         });
 
