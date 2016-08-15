@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Bel
+ * Copyright 2015-2016 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,38 +27,36 @@ import java.util.List;
 
 public class FragmentsPagerAdapter extends FragmentPagerAdapter {
 
-    private Context context;
-    private final List<Fragment> fragments = new ArrayList<>();
-    private final List<CharSequence> titles = new ArrayList<>();
+    private Context mContext;
+    private final List<Fragment> mFragments = new ArrayList<>();
+    private final List<CharSequence> mTitles = new ArrayList<>();
 
-    public FragmentsPagerAdapter(Context context, FragmentManager manager) {
-        super(manager);
+    public FragmentsPagerAdapter(Context context, FragmentManager fragmentManager) {
+        super(fragmentManager);
+        mContext = context;
+    }
 
-        this.context = context;
+    public void addFragment(Fragment fragment, CharSequence title) {
+        mFragments.add(fragment);
+        mTitles.add(title);
+    }
+
+    public void addFragment(Fragment fragment, @StringRes int stringId) {
+        addFragment(fragment, mContext.getText(stringId));
     }
 
     @Override
     public Fragment getItem(int position) {
-        return fragments.get(position);
+        return mFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return fragments.size();
-    }
-
-    public void addFragment(Fragment fragment, String title) {
-        fragments.add(fragment);
-        titles.add(title);
-    }
-
-    public void addFragment(Fragment fragment, @StringRes int resId) {
-        fragments.add(fragment);
-        titles.add(context.getResources().getString(resId));
+        return mFragments.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+        return mTitles.get(position);
     }
 }

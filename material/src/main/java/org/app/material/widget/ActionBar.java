@@ -60,33 +60,33 @@ public class ActionBar extends FrameLayout {
     }
 
     public ActionBar(Context context) {
-        this(context, null);
+        super(context);
+        initialize(context, null, 0);
     }
 
     public ActionBar(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initialize(context, attrs, 0);
     }
 
     public ActionBar(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initialize(context, attrs, defStyleAttr);
     }
 
-    public ActionBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
         AndroidUtilities.bind(context);
 
-        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ActionBar, defStyleAttr, defStyleRes);
+        TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ActionBar, defStyleAttr, 0);
         titleTextColor = attr.getColor(R.styleable.ActionBar_titleTextColor, 0xFFFFFFFF);
         backIcon = attr.getResourceId(R.styleable.ActionBar_backIcon, 0);
         attr.recycle();
+
+        setBackgroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
     }
 
     public ActionBar setToolbarColor(int color) {
-        this.setBackgroundColor(color);
+        setBackgroundColor(color);
         return this;
     }
 

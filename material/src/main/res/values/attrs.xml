@@ -2,40 +2,43 @@
 
     <!--Switch-->
     <declare-styleable name="Switch">
-        <attr name="supportRTL" format="boolean"/>
-        <attr name="animDuration" format="integer"/>
-        <attr name="thumbColorNormal" format="color"/>
-        <attr name="thumbColorActivated" format="color"/>
-        <attr name="trackColorNormal" format="color"/>
-        <attr name="trackColorActivated" format="color"/>
+        <attr name="switch_thumbOn" format="color"/>
+        <attr name="switch_trackOn" format="color"/>
+        <attr name="switch_darkTheme" format="boolean"/>
+        <attr name="switch_supportRTL" format="boolean"/>
     </declare-styleable>
+
+    <!--CheckBox-->
+    <declare-styleable name="CheckBox">
+        <attr name="checkBox_darkTheme" format="boolean"/>
+        <attr name="checkBox_accentColor" format="color"/>
+    </declare-styleable>
+
+    <!--RadioButton-->
+    <declare-styleable name="RadioButton">
+        <attr name="radioButton_darkTheme" format="boolean"/>
+        <attr name="radioButton_accentColor" format="color"/>
+    </declare-styleable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--ActionBar-->
     <declare-styleable name="ActionBar">
         <attr name="titleTextColor" format="color"/>
         <attr name="backIcon" format="reference"/>
     </declare-styleable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!--ColorPickerView-->
     <declare-styleable name="ColorPickerView">

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Bel
+ * Copyright 2015-2016 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,32 +28,31 @@ import java.util.List;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
-    private Context context;
-    private List<CharSequence> titles = new ArrayList<>();
-    private List<View> layouts = new ArrayList<>();
+    private Context mContext;
+    private List<View> mViews = new ArrayList<>();
+    private List<CharSequence> mTitles = new ArrayList<>();
 
     public ViewPagerAdapter(Context context) {
-        this.context = context;
+        mContext = context;
     }
 
-    public void addLayout(View viewLayout, String title) {
-        layouts.add(viewLayout);
-        titles.add(title);
+    public void addView(View view, CharSequence title) {
+        mViews.add(view);
+        mTitles.add(title);
     }
 
-    public void addLayout(View viewLayout, @StringRes int resId) {
-        layouts.add(viewLayout);
-        titles.add(context.getResources().getString(resId));
+    public void addLayout(View view, @StringRes int stringId) {
+        addView(view, mContext.getText(stringId));
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+        return mTitles.get(position);
     }
 
     @Override
     public int getCount() {
-        return layouts.size();
+        return mViews.size();
     }
 
     @Override
@@ -63,8 +62,8 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        FrameLayout layout = new FrameLayout(context);
-        layout.addView(layouts.get(position));
+        FrameLayout layout = new FrameLayout(mContext);
+        layout.addView(mViews.get(position));
 
         container.addView(layout);
 

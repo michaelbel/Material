@@ -12,8 +12,6 @@ import org.app.material.AndroidUtilities;
 
 public class LayoutHelper {
 
-    // ScrollView and CardView extended FrameLayout
-
     public static final int MATCH_PARENT = -1;
     public static final int WRAP_CONTENT = -2;
 

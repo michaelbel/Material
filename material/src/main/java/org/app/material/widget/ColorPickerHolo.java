@@ -39,9 +39,17 @@ public class ColorPickerHolo extends View {
 	private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
 	/**
-	 * Used material colors.
+	 * Used material design colors.
 	 */
-	private int[] COLORS = new int[] { 0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336 };
+	private final int[] COLORS = new int[] {
+			0xFFF44336,
+			0xFF9C27B0,
+			0xFF2196F3,
+			0xFF00BCD4,
+			0xFF4CAF50,
+			0xFFFFEB3B,
+			0xFFF44336
+	};
 
 	private Paint mColorWheelPaint;
 	private Paint mPointerHaloPaint;
@@ -56,8 +64,10 @@ public class ColorPickerHolo extends View {
 	private int mPreferredColorCenterHaloRadius;
 	private int mColorPointerRadius;
 	private int mColorPointerHaloRadius;
+
 	private RectF mColorWheelRectangle = new RectF();
 	private RectF mCenterRectangle = new RectF();
+
 	private boolean mUserIsMovingPointer = false;
 	private int mCenterOldColor;
 	private boolean mShowCenterOldColor;
@@ -66,10 +76,13 @@ public class ColorPickerHolo extends View {
 	private float mSlopX;
 	private float mSlopY;
 	private float mAngle;
+
 	private Paint mCenterOldPaint;
 	private Paint mCenterNewPaint;
 	private Paint mCenterHaloPaint;
+
 	private boolean mTouchAnywhereOnColorWheelEnabled = true;
+
 	private OnColorChangedListener onColorChangedListener;
 	private OnColorSelectedListener onColorSelectedListener;
 
@@ -78,23 +91,22 @@ public class ColorPickerHolo extends View {
 
 	public ColorPickerHolo(Context context) {
 		super(context);
-
-        AndroidUtilities.bind(context);
-
-		init(null, 0);
+		initialize(context, null, 0);
 	}
 
 	public ColorPickerHolo(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(attrs, 0);
+		initialize(context, attrs, 0);
 	}
 
 	public ColorPickerHolo(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(attrs, defStyle);
+		initialize(context, attrs, defStyle);
 	}
 
-	private void init(AttributeSet attrs, int defStyle) {
+	private void initialize(Context context, AttributeSet attrs, int defStyle) {
+		AndroidUtilities.bind(context);
+
 		mColorWheelThickness = AndroidUtilities.dp(9);
 		mColorWheelRadius = AndroidUtilities.dp(124);
 		mPreferredColorWheelRadius = mColorWheelRadius;

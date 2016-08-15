@@ -52,21 +52,21 @@ public class ColorPickerView extends View {
 
 	public ColorPickerView(Context context) {
 		super(context);
-		init(context, null);
+		initialize(context, null, 0);
 	}
 
 	public ColorPickerView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context, attrs);
+		initialize(context, attrs, 0);
 	}
 
 	public ColorPickerView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
-		init(context, attrs);
+		initialize(context, attrs, 0);
 	}
 
-	private void init(Context context, AttributeSet attrs) {
-		final TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerView);
+	private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
+		TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerView);
 		mDensity = attr.getInt(R.styleable.ColorPickerView_density, 10);
 		mInitialColor = attr.getInt(R.styleable.ColorPickerView_initialColor, 0xFFFFFFFF);
 		WHEEL_TYPE wheelType = WHEEL_TYPE.indexOf(attr.getInt(R.styleable.ColorPickerView_wheelType, 0));
