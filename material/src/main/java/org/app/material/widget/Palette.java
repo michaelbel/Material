@@ -7,8 +7,8 @@ import org.app.material.R;
 
 public class Palette {
 
-    public static int[] AccentColors(Context context){
-        return new int[]{
+    public static int[] PrimaryColors(Context context) {
+        return new int[] {
                 ContextCompat.getColor(context, R.color.primary_red),
                 ContextCompat.getColor(context, R.color.primary_pink),
                 ContextCompat.getColor(context, R.color.primary_purple),
@@ -31,8 +31,101 @@ public class Palette {
         };
     }
 
-    public static int[] PrimaryColors(Context context, int c) {
-        if (c == ContextCompat.getColor(context, R.color.primary_red)) {
+    public static int[] PrimaryDarkColors(Context context) {
+        return new int[] {
+                ContextCompat.getColor(context, R.color.primary_dark_red),
+                ContextCompat.getColor(context, R.color.primary_dark_pink),
+                ContextCompat.getColor(context, R.color.primary_dark_purple),
+                ContextCompat.getColor(context, R.color.primary_dark_deep_purple),
+                ContextCompat.getColor(context, R.color.primary_dark_indigo),
+                ContextCompat.getColor(context, R.color.primary_dark_blue),
+                ContextCompat.getColor(context, R.color.primary_dark_light_blue),
+                ContextCompat.getColor(context, R.color.primary_dark_cyan),
+                ContextCompat.getColor(context, R.color.primary_dark_teal),
+                ContextCompat.getColor(context, R.color.primary_dark_green),
+                ContextCompat.getColor(context, R.color.primary_dark_light_green),
+                ContextCompat.getColor(context, R.color.primary_dark_lime),
+                ContextCompat.getColor(context, R.color.primary_dark_yellow),
+                ContextCompat.getColor(context, R.color.primary_dark_amber),
+                ContextCompat.getColor(context, R.color.primary_dark_orange),
+                ContextCompat.getColor(context, R.color.primary_dark_deep_orange),
+                ContextCompat.getColor(context, R.color.primary_dark_brown),
+                ContextCompat.getColor(context, R.color.primary_dark_grey),
+                ContextCompat.getColor(context, R.color.primary_dark_blue_grey)
+        };
+    }
+
+    public static int[] PrimaryLightColors(Context context) {
+        return new int[] {
+                ContextCompat.getColor(context, R.color.primaryLight_red),
+                ContextCompat.getColor(context, R.color.primaryLight_pink),
+                ContextCompat.getColor(context, R.color.primaryLight_purple),
+                ContextCompat.getColor(context, R.color.primaryLight_deep_purple),
+                ContextCompat.getColor(context, R.color.primaryLight_indigo),
+                ContextCompat.getColor(context, R.color.primaryLight_blue),
+                ContextCompat.getColor(context, R.color.primaryLight_light_blue),
+                ContextCompat.getColor(context, R.color.primaryLight_cyan),
+                ContextCompat.getColor(context, R.color.primaryLight_teal),
+                ContextCompat.getColor(context, R.color.primaryLight_green),
+                ContextCompat.getColor(context, R.color.primaryLight_light_green),
+                ContextCompat.getColor(context, R.color.primaryLight_lime),
+                ContextCompat.getColor(context, R.color.primaryLight_yellow),
+                ContextCompat.getColor(context, R.color.primaryLight_amber),
+                ContextCompat.getColor(context, R.color.primaryLight_orange),
+                ContextCompat.getColor(context, R.color.primaryLight_deep_orange),
+                ContextCompat.getColor(context, R.color.primaryLight_brown),
+                ContextCompat.getColor(context, R.color.primaryLight_grey),
+                ContextCompat.getColor(context, R.color.primaryLight_blue_grey)
+        };
+    }
+
+    public static int[] PrimaryColors200(Context context) {
+        return new int[] {
+                ContextCompat.getColor(context, R.color.primary200_red),
+                ContextCompat.getColor(context, R.color.primary200_pink),
+                ContextCompat.getColor(context, R.color.primary200_purple),
+                ContextCompat.getColor(context, R.color.primary200_deep_purple),
+                ContextCompat.getColor(context, R.color.primary200_indigo),
+                ContextCompat.getColor(context, R.color.primary200_blue),
+                ContextCompat.getColor(context, R.color.primary200_light_blue),
+                ContextCompat.getColor(context, R.color.primary200_cyan),
+                ContextCompat.getColor(context, R.color.primary200_teal),
+                ContextCompat.getColor(context, R.color.primary200_green),
+                ContextCompat.getColor(context, R.color.primary200_light_green),
+                ContextCompat.getColor(context, R.color.primary200_lime),
+                ContextCompat.getColor(context, R.color.primary200_yellow),
+                ContextCompat.getColor(context, R.color.primary200_amber),
+                ContextCompat.getColor(context, R.color.primary200_orange),
+                ContextCompat.getColor(context, R.color.primary200_deep_orange),
+                ContextCompat.getColor(context, R.color.primary200_brown),
+                ContextCompat.getColor(context, R.color.primary200_grey),
+                ContextCompat.getColor(context, R.color.primary200_blue_grey)
+        };
+    }
+
+    public static int[] AccentColors(Context context) {
+        return new int[] {
+                ContextCompat.getColor(context, R.color.accent_red),
+                ContextCompat.getColor(context, R.color.accent_pink),
+                ContextCompat.getColor(context, R.color.accent_purple),
+                ContextCompat.getColor(context, R.color.accent_deep_purple),
+                ContextCompat.getColor(context, R.color.accent_indigo),
+                ContextCompat.getColor(context, R.color.accent_blue),
+                ContextCompat.getColor(context, R.color.accent_light_blue),
+                ContextCompat.getColor(context, R.color.accent_cyan),
+                ContextCompat.getColor(context, R.color.accent_teal),
+                ContextCompat.getColor(context, R.color.accent_green),
+                ContextCompat.getColor(context, R.color.accent_light_green),
+                ContextCompat.getColor(context, R.color.accent_lime),
+                ContextCompat.getColor(context, R.color.accent_yellow),
+                ContextCompat.getColor(context, R.color.accent_amber),
+                ContextCompat.getColor(context, R.color.accent_orange),
+                ContextCompat.getColor(context, R.color.accent_deep_orange)
+        };
+    }
+
+    public static int[] MaterialColors(Context context, int color) {
+        if (color == ContextCompat.getColor(context, R.color.primary_red)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_red_100),
                     ContextCompat.getColor(context, R.color.md_red_200),
@@ -44,7 +137,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_red_800),
                     ContextCompat.getColor(context, R.color.md_red_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_pink)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_pink)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_pink_100),
                     ContextCompat.getColor(context, R.color.md_pink_200),
@@ -56,7 +149,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_pink_800),
                     ContextCompat.getColor(context, R.color.md_pink_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_purple)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_purple)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_purple_100),
                     ContextCompat.getColor(context, R.color.md_purple_200),
@@ -68,7 +161,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_purple_800),
                     ContextCompat.getColor(context, R.color.md_purple_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_deep_purple)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_deep_purple)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_deep_purple_100),
                     ContextCompat.getColor(context, R.color.md_deep_purple_200),
@@ -80,7 +173,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_deep_purple_800),
                     ContextCompat.getColor(context, R.color.md_deep_purple_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_indigo)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_indigo)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_indigo_100),
                     ContextCompat.getColor(context, R.color.md_indigo_200),
@@ -92,7 +185,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_indigo_800),
                     ContextCompat.getColor(context, R.color.md_indigo_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_blue)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_blue)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_blue_100),
                     ContextCompat.getColor(context, R.color.md_blue_200),
@@ -104,7 +197,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_blue_800),
                     ContextCompat.getColor(context, R.color.md_blue_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_light_blue)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_light_blue)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_light_blue_100),
                     ContextCompat.getColor(context, R.color.md_light_blue_200),
@@ -116,7 +209,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_light_blue_800),
                     ContextCompat.getColor(context, R.color.md_light_blue_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_cyan)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_cyan)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_cyan_100),
                     ContextCompat.getColor(context, R.color.md_cyan_200),
@@ -128,7 +221,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_cyan_800),
                     ContextCompat.getColor(context, R.color.md_cyan_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_teal)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_teal)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_teal_100),
                     ContextCompat.getColor(context, R.color.md_teal_200),
@@ -140,7 +233,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_teal_800),
                     ContextCompat.getColor(context, R.color.md_teal_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_green)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_green)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_green_100),
                     ContextCompat.getColor(context, R.color.md_green_200),
@@ -152,7 +245,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_green_800),
                     ContextCompat.getColor(context, R.color.md_green_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_light_green)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_light_green)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_light_green_100),
                     ContextCompat.getColor(context, R.color.md_light_green_200),
@@ -164,7 +257,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_light_green_800),
                     ContextCompat.getColor(context, R.color.md_light_green_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_lime)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_lime)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_lime_100),
                     ContextCompat.getColor(context, R.color.md_lime_200),
@@ -176,7 +269,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_lime_800),
                     ContextCompat.getColor(context, R.color.md_lime_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_yellow)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_yellow)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_yellow_100),
                     ContextCompat.getColor(context, R.color.md_yellow_200),
@@ -188,7 +281,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_yellow_800),
                     ContextCompat.getColor(context, R.color.md_yellow_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_amber)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_amber)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_amber_100),
                     ContextCompat.getColor(context, R.color.md_amber_200),
@@ -200,7 +293,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_amber_800),
                     ContextCompat.getColor(context, R.color.md_amber_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_orange)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_orange)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_orange_100),
                     ContextCompat.getColor(context, R.color.md_orange_200),
@@ -212,7 +305,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_orange_800),
                     ContextCompat.getColor(context, R.color.md_orange_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_deep_orange)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_deep_orange)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_deep_orange_100),
                     ContextCompat.getColor(context, R.color.md_deep_orange_200),
@@ -224,7 +317,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_deep_orange_800),
                     ContextCompat.getColor(context, R.color.md_deep_orange_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_brown)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_brown)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_brown_100),
                     ContextCompat.getColor(context, R.color.md_brown_200),
@@ -236,7 +329,7 @@ public class Palette {
                     ContextCompat.getColor(context, R.color.md_brown_800),
                     ContextCompat.getColor(context, R.color.md_brown_900)
             };
-        } else if (c == ContextCompat.getColor(context, R.color.primary_grey)) {
+        } else if (color == ContextCompat.getColor(context, R.color.primary_grey)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_grey_100),
                     ContextCompat.getColor(context, R.color.md_grey_200),

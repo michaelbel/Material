@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Michael Bel
+ * Copyright 2015-2016 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,10 +48,7 @@ import android.widget.TextView;
 import org.app.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Locale;
 
@@ -62,6 +59,11 @@ public class AndroidUtilities {
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
     public static Point displaySize = new Point();
 
+    /**
+     * Set context for all methods of the class.
+     *
+     * @param context Current context.
+     */
     public static void bind(@NonNull Context context) {
         AndroidUtilities.context = context;
     }
@@ -273,9 +275,17 @@ public class AndroidUtilities {
         }
     }
 
-    public static String getCurrentTime(String format) {
-        DateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
-        return String.valueOf(dateFormat.format(new Date()));
+    /**
+     * @param color Current color
+     * @param mAlpha Alpha value from 0.0 to 1.0
+     * @return new color with alpha.
+     */
+    public static int setColorWithAlpha(int color, float mAlpha) {
+        int alpha = Math.round(Color.alpha(color) * mAlpha);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        return Color.argb(alpha, red, green, blue);
     }
 
     public static final int FLAG_TAG_BR = 1;

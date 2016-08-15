@@ -18,6 +18,7 @@ package org.app.material.widget;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -34,45 +35,51 @@ import org.app.material.R;
 import java.lang.reflect.Method;
 
 public class RadioButton extends View {
+    private static final int ANIMATION_DURATION = 200;
+
+    private int mAccentColor;
+    private int mBorderColor;
+    private int mDisabledColor;
 
     private Bitmap bitmap;
     private Canvas bitmapCanvas;
     private static Paint paint;
     private static Paint eraser;
     private static Paint checkedPaint;
-
-    private int colorPrimary;
-    private int color = 0xFF737373;
-
     private float progress;
     private ObjectAnimator mAnimator;
-
     private boolean attachedToWindow;
     private boolean isChecked;
     private int size;
 
+    private boolean darkTheme;
+
     public RadioButton(Context context) {
-        this(context, null);
+        super(context);
+        initialize(context, null, 0);
     }
 
     public RadioButton(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initialize(context, attrs, 0);
     }
 
     public RadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initialize(context, attrs, defStyleAttr);
     }
 
-    public RadioButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
         AndroidUtilities.bind(context);
 
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
+        darkTheme = a.getBoolean(R.styleable.RadioButton_radioButton_darkTheme, false);
+        mAccentColor = a.getColor(R.styleable.RadioButton_radioButton_accentColor, 0xFF009688);
+        mBorderColor =  darkTheme ? 0xB3FFFFFF : 0x8A000000;
+        mDisabledColor =  darkTheme ? 0x4DFFFFFF : 0x42000000;
+        a.recycle();
+
         size = AndroidUtilities.dp(22);
-        colorPrimary = AndroidUtilities.getContextColor(R.attr.colorPrimary);
 
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -101,6 +108,7 @@ public class RadioButton extends View {
         if (progress == value) {
             return;
         }
+
         progress = value;
         invalidate();
     }
@@ -118,8 +126,6 @@ public class RadioButton extends View {
     }
 
     public void setColor(int color1, int color2) {
-        color = color1;
-        colorPrimary = color2;
         invalidate();
     }
 
@@ -131,7 +137,7 @@ public class RadioButton extends View {
 
     private void animateToCheckedState(boolean newCheckedState) {
         mAnimator = ObjectAnimator.ofFloat(this, "progress", newCheckedState ? 1 : 0);
-        mAnimator.setDuration(200);
+        mAnimator.setDuration(ANIMATION_DURATION);
         mAnimator.start();
     }
 
@@ -202,17 +208,17 @@ public class RadioButton extends View {
         float circleProgress;
 
         if (progress <= 0.5f) {
-            paint.setColor(color);
-            checkedPaint.setColor(color);
+            paint.setColor(mBorderColor);
+            checkedPaint.setColor(mBorderColor);
             circleProgress = progress / 0.5f;
         } else {
             circleProgress = 2.0f - progress / 0.5f;
-            int r1 = Color.red(color);
-            int rD = (int) ((Color.red(colorPrimary) - r1) * (1.0f - circleProgress));
-            int g1 = Color.green(color);
-            int gD = (int) ((Color.green(colorPrimary) - g1) * (1.0f - circleProgress));
-            int b1 = Color.blue(color);
-            int bD = (int) ((Color.blue(colorPrimary) - b1) * (1.0f - circleProgress));
+            int r1 = Color.red(mBorderColor);
+            int rD = (int) ((Color.red(mAccentColor) - r1) * (1.0f - circleProgress));
+            int g1 = Color.green(mBorderColor);
+            int gD = (int) ((Color.green(mAccentColor) - g1) * (1.0f - circleProgress));
+            int b1 = Color.blue(mBorderColor);
+            int bD = (int) ((Color.blue(mAccentColor) - b1) * (1.0f - circleProgress));
             int c = Color.rgb(r1 + rD, g1 + gD, b1 + bD);
             paint.setColor(c);
             checkedPaint.setColor(c);

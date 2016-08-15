@@ -17,6 +17,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.ColorInt;
+import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -63,7 +66,7 @@ public class BottomSheet extends Dialog {
     private CharSequence title;
     private boolean fullWidth;
     private boolean isGrid;
-    private ColorDrawable backgroundDrawable = new ColorDrawable(0xff000000);
+    private ColorDrawable backgroundDrawable = new ColorDrawable(0xFF000000);
 
     private boolean focusable;
 
@@ -90,6 +93,7 @@ public class BottomSheet extends Dialog {
     private BottomSheetDelegateInterface delegate;
 
     public interface BottomSheetDelegateInterface {
+
         void onOpenAnimationStart();
 
         void onOpenAnimationEnd();
@@ -133,7 +137,6 @@ public class BottomSheet extends Dialog {
 
         public BottomSheetCell(Context context, int type) {
             super(context);
-
             AndroidUtilities.bind(context);
 
             isGrid = type == 1;
@@ -146,10 +149,13 @@ public class BottomSheet extends Dialog {
 
             imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.CENTER);
+
             if (type == 1) {
-                addView(imageView, LayoutHelper.makeFrame(context, 48, 48, Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 8, 0, 0));
+                addView(imageView, LayoutHelper.makeFrame(context, 48, 48,
+                        Gravity.CENTER_HORIZONTAL | Gravity.TOP, 0, 8, 0, 0));
             } else {
-                addView(imageView, LayoutHelper.makeFrame(context, 24, 24, Gravity.CENTER_VERTICAL | (isRTL ? Gravity.END : Gravity.START)));
+                addView(imageView, LayoutHelper.makeFrame(context, 24, 24,
+                        Gravity.CENTER_VERTICAL | (isRTL ? Gravity.END : Gravity.START)));
             }
 
             textView = new TextView(context);
@@ -159,16 +165,16 @@ public class BottomSheet extends Dialog {
             textView.setEllipsize(TextUtils.TruncateAt.END);
 
             if (type == 1) {
-                textView.setTextColor(0xff757575);
+                textView.setTextColor(0xFF757575);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
                 addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 0, 60, 0, 0));
             } else if (type == 0) {
-                textView.setTextColor(0xff212121);
+                textView.setTextColor(0xFF212121);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
                 addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, (isRTL ? Gravity.END : Gravity.START) | Gravity.CENTER_VERTICAL));
             } else if (type == 2) {
                 textView.setGravity(Gravity.CENTER);
-                textView.setTextColor(0xff212121);
+                textView.setTextColor(0xFF212121);
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
                 textView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
                 addView(textView, LayoutHelper.makeFrame(context, LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
@@ -177,7 +183,10 @@ public class BottomSheet extends Dialog {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(isGrid ? MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(96), MeasureSpec.EXACTLY) : widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(isGrid ? 80 : 48), MeasureSpec.EXACTLY));
+            super.onMeasure(isGrid ? MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(96),
+                    MeasureSpec.EXACTLY) : widthMeasureSpec,
+                    MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(isGrid ? 80 : 48),
+                            MeasureSpec.EXACTLY));
         }
 
         public void setTextColor(int color) {
@@ -190,16 +199,23 @@ public class BottomSheet extends Dialog {
 
         public void setTextAndIcon(CharSequence text, int icon) {
             textView.setText(text);
+
             if (icon != 0) {
                 imageView.setImageResource(icon);
                 imageView.setVisibility(VISIBLE);
+
                 if (!isGrid) {
-                    textView.setPadding(isRTL ? 0 : AndroidUtilities.dp(56), 0, isRTL ? AndroidUtilities.dp(56) : 0, 0);
+                    textView.setPadding(isRTL ? 0 : AndroidUtilities.dp(56), 0,
+                            isRTL ? AndroidUtilities.dp(56) : 0, 0);
                 }
             } else {
                 imageView.setVisibility(INVISIBLE);
                 textView.setPadding(0, 0, 0, 0);
             }
+        }
+
+        public void setTextAndIcon(@StringRes int stringId, int icon) {
+            setTextAndIcon(getContext().getString(stringId), icon);
         }
     }
 
@@ -211,10 +227,12 @@ public class BottomSheet extends Dialog {
         }
 
         Rect padding = new Rect();
-        shadowDrawable = context.getResources().getDrawable(R.drawable.sheet_shadow);
+        shadowDrawable = ContextCompat.getDrawable(context, R.drawable.sheet_shadow);
+
         if (shadowDrawable != null) {
             shadowDrawable.getPadding(padding);
         }
+
         backgroundPaddingLeft = padding.left;
         backgroundPaddingTop = padding.top;
 
@@ -224,6 +242,7 @@ public class BottomSheet extends Dialog {
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 int width = MeasureSpec.getSize(widthMeasureSpec);
                 int height = MeasureSpec.getSize(heightMeasureSpec);
+
                 if (lastInsets != null && Build.VERSION.SDK_INT >= 21) {
                     width -= lastInsets.getSystemWindowInsetRight() + lastInsets.getSystemWindowInsetLeft();
                 }
@@ -253,6 +272,7 @@ public class BottomSheet extends Dialog {
                         containerView.measure(MeasureSpec.makeMeasureSpec(width + left * 2, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
                     }
                 }
+
                 int childCount = getChildCount();
 
                 for (int i = 0; i < childCount; i++) {
@@ -339,6 +359,7 @@ public class BottomSheet extends Dialog {
                 }
             }
         };
+
         container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -372,7 +393,7 @@ public class BottomSheet extends Dialog {
         window.setWindowAnimations(R.style.DialogNoAnimation);
         setContentView(container, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        ciclePaint.setColor(0xffffffff);
+        ciclePaint.setColor(0xFFFFFFFF);
 
         containerView = new LinearLayout(getContext()) {
 
@@ -409,7 +430,7 @@ public class BottomSheet extends Dialog {
             titleView.setLines(1);
             titleView.setSingleLine(true);
             titleView.setText(title);
-            titleView.setTextColor(0xff757575);
+            titleView.setTextColor(0xFF757575);
             titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             titleView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
             titleView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), AndroidUtilities.dp(8));
@@ -440,7 +461,7 @@ public class BottomSheet extends Dialog {
                 containerView.addView(frameLayout);
 
                 View lineView = new View(getContext());
-                lineView.setBackgroundColor(0xffd2d2d2);
+                lineView.setBackgroundColor(0xFFD2D2D2);
                 lineView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
                 frameLayout.addView(lineView);
             }
@@ -454,6 +475,7 @@ public class BottomSheet extends Dialog {
 
                 if (isGrid) {
                     int row = a / 3;
+
                     if (rowLayout == null || lastRowLayoutNum != row) {
                         rowLayout = new FrameLayout(getContext());
                         lastRowLayoutNum = row;
@@ -466,6 +488,7 @@ public class BottomSheet extends Dialog {
                             }
                         });
                     }
+
                     int col = a % 3;
                     int gravity;
 
@@ -502,6 +525,7 @@ public class BottomSheet extends Dialog {
         if (!focusable) {
             params.flags |= WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
         }
+
         if (Build.VERSION.SDK_INT < 21) {
             params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         }
@@ -619,6 +643,7 @@ public class BottomSheet extends Dialog {
         ArrayList<Animator> animators = new ArrayList<>(3);
         animators.add(ObjectAnimator.ofFloat(this, "revealRadius", open ? 0 : finalRevealRadius, open ? finalRevealRadius : 0));
         animators.add(ObjectAnimator.ofInt(backgroundDrawable, "alpha", open ? 51 : 0));
+
         if (Build.VERSION.SDK_INT >= 21) {
             containerView.setElevation(AndroidUtilities.dp(10));
             try {
@@ -714,6 +739,7 @@ public class BottomSheet extends Dialog {
                     if (delegate != null) {
                         delegate.onOpenAnimationEnd();
                     }
+
                     if (Build.VERSION.SDK_INT >= 11) {
                         container.setLayerType(View.LAYER_TYPE_NONE, null);
                     }
@@ -840,13 +866,16 @@ public class BottomSheet extends Dialog {
 
     public static class Builder {
 
+        private Context context;
         private BottomSheet bottomSheet;
 
         public Builder(Context context) {
+            this.context = context;
             bottomSheet = new BottomSheet(context, false);
         }
 
         public Builder(Context context, boolean needFocus) {
+            this.context = context;
             bottomSheet = new BottomSheet(context, needFocus);
         }
 
@@ -870,6 +899,23 @@ public class BottomSheet extends Dialog {
 
         public Builder setTitle(CharSequence title) {
             bottomSheet.title = title;
+            return this;
+        }
+
+        public Builder setTitle(@StringRes int stringId) {
+            setTitle(context.getString(stringId));
+            return this;
+        }
+
+        public Builder setBackgroundColor(@ColorInt int color) {
+            return this;
+        }
+
+        public Builder setTitleColor(@ColorInt int color) {
+            return this;
+        }
+
+        public Builder setTextColor(@ColorInt int color) {
             return this;
         }
 
@@ -899,7 +945,7 @@ public class BottomSheet extends Dialog {
             return this;
         }
 
-        public Builder setIsGrid(boolean value) {
+        public Builder setGrid(boolean value) {
             bottomSheet.isGrid = value;
             return this;
         }

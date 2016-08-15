@@ -18,6 +18,7 @@ package org.app.material.widget;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -32,50 +33,58 @@ import org.app.material.AndroidUtilities;
 import org.app.material.R;
 
 public class CheckBox extends View {
+    private static final int ANIMATION_DURATION = 300;
 
+    private float progress;
     private static Paint mEraser;
     private static Paint mCheckPaint;
     private static Paint mBackgroundPaint;
     private static RectF mRectF;
-
     private Bitmap drawBitmap;
     private Canvas drawCanvas;
-
-    private float progress;
-    private ObjectAnimator checkAnimator;
-
+    private ObjectAnimator animator;
     private boolean attachedToWindow;
     private boolean isChecked;
     private boolean isDisabled;
 
-    private int checkColor = 0xFFFFFFFF;
-    private int colorPrimary = 0xFFFF5252;
+    private int mAccentColor;
+    private int mBorderColor;
+    private int mCheckColor;
+    private int mDisabledColor;
+    private boolean darkTheme;
+
+    //private int mCheckColor = 0xFFFFFFFF;
 
     public CheckBox(Context context) {
-        this(context, null);
+        super(context);
+        initialize(context, null, 0);
     }
 
     public CheckBox(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initialize(context, attrs, 0);
     }
 
     public CheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        initialize(context, attrs, defStyleAttr);
     }
 
-    public CheckBox(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
         AndroidUtilities.bind(context);
 
-        colorPrimary = AndroidUtilities.getContextColor(R.attr.colorPrimary);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
+        darkTheme = a.getBoolean(R.styleable.CheckBox_checkBox_darkTheme, false);
+        mAccentColor = a.getColor(R.styleable.CheckBox_checkBox_accentColor, 0xFF009688);
+        a.recycle();
+
+        mCheckColor = darkTheme ? 0xFF424242 : 0xFFFFFFFF;
+        mBorderColor = darkTheme ? 0xB3FFFFFF : 0x8A000000;
+        mDisabledColor = darkTheme ? 0x4DFFFFFF : 0x42000000;
 
         if (mCheckPaint == null) {
             mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mCheckPaint.setColor(checkColor);
+            mCheckPaint.setColor(mCheckColor);
             mCheckPaint.setStyle(Paint.Style.STROKE);
             mCheckPaint.setStrokeWidth(AndroidUtilities.dp(2));
             mEraser = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -107,20 +116,16 @@ public class CheckBox extends View {
         return progress;
     }
 
-    public void setColor(int value) {
-        colorPrimary = value;
-    }
-
     private void cancelCheckAnimator() {
-        if (checkAnimator != null) {
-            checkAnimator.cancel();
+        if (animator != null) {
+            animator.cancel();
         }
     }
 
     private void animateToCheckedState(boolean newCheckedState) {
-        checkAnimator = ObjectAnimator.ofFloat(this, "progress", newCheckedState ? 1 : 0);
-        checkAnimator.setDuration(300);
-        checkAnimator.start();
+        animator = ObjectAnimator.ofFloat(this, "progress", newCheckedState ? 1 : 0);
+        animator.setDuration(ANIMATION_DURATION);
+        animator.start();
     }
 
     @Override
@@ -144,13 +149,19 @@ public class CheckBox extends View {
         if (checked == isChecked) {
             return;
         }
+
         isChecked = checked;
+
         if (attachedToWindow && animated) {
             animateToCheckedState(checked);
         } else {
             cancelCheckAnimator();
             setProgress(checked ? 1.0f : 0.0f);
         }
+    }
+
+    public void setChecked(boolean checked) {
+        setChecked(checked, true);
     }
 
     public void setDisabled(boolean disabled) {
@@ -170,21 +181,24 @@ public class CheckBox extends View {
 
         float checkProgress;
         float bounceProgress;
+
         if (progress <= 0.5f) {
             bounceProgress = checkProgress = progress / 0.5f;
-            int rD = (int) ((Color.red(colorPrimary) - 0x73) * checkProgress);
-            int gD = (int) ((Color.green(colorPrimary) - 0x73) * checkProgress);
-            int bD = (int) ((Color.blue(colorPrimary) - 0x73) * checkProgress);
+            int rD = (int) ((Color.red(mAccentColor) - 0x73) * checkProgress);
+            int gD = (int) ((Color.green(mAccentColor) - 0x73) * checkProgress);
+            int bD = (int) ((Color.blue(mAccentColor) - 0x73) * checkProgress);
             int c = Color.rgb(0x73 + rD, 0x73 + gD, 0x73 + bD);
             mBackgroundPaint.setColor(c);
         } else {
             bounceProgress = 2.0f - progress / 0.5f;
             checkProgress = 1.0f;
-            mBackgroundPaint.setColor(colorPrimary);
+            mBackgroundPaint.setColor(mAccentColor);
         }
+
         if (isDisabled) {
-            mBackgroundPaint.setColor(0xffb0b0b0);
+            mBackgroundPaint.setColor(mBorderColor);
         }
+
         float bounce = AndroidUtilities.dp(1) * bounceProgress;
         mRectF.set(bounce, bounce, AndroidUtilities.dp(18) - bounce, AndroidUtilities.dp(18) - bounce);
 
@@ -205,6 +219,7 @@ public class CheckBox extends View {
             endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(9) * (1.0f - bounceProgress));
             drawCanvas.drawLine((int) AndroidUtilities.dpf2(6.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
         }
+
         canvas.drawBitmap(drawBitmap, 0, 0, null);
     }
 }

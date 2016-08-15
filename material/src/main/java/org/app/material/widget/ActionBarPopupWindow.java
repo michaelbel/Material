@@ -64,7 +64,8 @@ public class ActionBarPopupWindow extends PopupWindow {
         superListenerField = f;
     }
 
-    private static final ViewTreeObserver.OnScrollChangedListener NOP = new ViewTreeObserver.OnScrollChangedListener() {
+    private static final ViewTreeObserver.OnScrollChangedListener NOP =
+            new ViewTreeObserver.OnScrollChangedListener() {
         @Override
         public void onScrollChanged() {}
     };
@@ -84,7 +85,7 @@ public class ActionBarPopupWindow extends PopupWindow {
         private float backScaleY = 1;
         private int backAlpha = 255;
         private int lastStartedChild = 0;
-        private boolean showedFromBotton;
+        private boolean showedFromBottom;
         private HashMap<View, Integer> positions = new HashMap<>();
 
         private ScrollView scrollView;
@@ -100,7 +101,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             }
 
             this.setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8));
-            setWillNotDraw(false);
+            this.setWillNotDraw(false);
 
             try {
                 scrollView = new ScrollView(context);
@@ -123,7 +124,7 @@ public class ActionBarPopupWindow extends PopupWindow {
         }
 
         public void setShowedFromBottom(boolean value) {
-            showedFromBotton = value;
+            showedFromBottom = value;
         }
 
         public void setDispatchKeyEventListener(OnDispatchKeyEventListener listener) {
@@ -156,7 +157,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                 int height = getMeasuredHeight() - AndroidUtilities.dp(16);
 
-                if (showedFromBotton) {
+                if (showedFromBottom) {
                     for (int a = lastStartedChild; a >= 0; a--) {
                         View child = getItemAt(a);
                         if (child.getVisibility() != VISIBLE) {
@@ -198,7 +199,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                 animatorSet.playTogether(
                         ObjectAnimator.ofFloat(child, "alpha", 0.0f, 1.0f),
-                        ObjectAnimator.ofFloat(child, "translationY", AndroidUtilities.dp(showedFromBotton ? 6 : -6), 0));
+                        ObjectAnimator.ofFloat(child, "translationY", AndroidUtilities.dp(showedFromBottom ? 6 : -6), 0));
 
                 animatorSet.setDuration(180);
                 animatorSet.setInterpolator(decelerateInterpolator);
@@ -233,7 +234,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             if (backgroundDrawable != null) {
                 backgroundDrawable.setAlpha(backAlpha);
 
-                if (showedFromBotton) {
+                if (showedFromBottom) {
                     backgroundDrawable.setBounds(0, (int) (getMeasuredHeight() * (1.0f - backScaleY)), (int) (getMeasuredWidth() * backScaleX), getMeasuredHeight());
                 } else {
                     backgroundDrawable.setBounds(0, 0, (int) (getMeasuredWidth() * backScaleX), (int) (getMeasuredHeight() * backScaleY));
@@ -291,7 +292,8 @@ public class ActionBarPopupWindow extends PopupWindow {
     private void init() {
         if (superListenerField != null) {
             try {
-                mSuperScrollListener = (ViewTreeObserver.OnScrollChangedListener) superListenerField.get(this);
+                mSuperScrollListener = (ViewTreeObserver.OnScrollChangedListener)
+                        superListenerField.get(this);
                 superListenerField.set(this, NOP);
             } catch (Exception e) {
                 mSuperScrollListener = null;
@@ -305,6 +307,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             if (mViewTreeObserver.isAlive()) {
                 mViewTreeObserver.removeOnScrollChangedListener(mSuperScrollListener);
             }
+
             mViewTreeObserver = null;
         }
     }
@@ -312,10 +315,13 @@ public class ActionBarPopupWindow extends PopupWindow {
     private void registerListener(View anchor) {
         if (mSuperScrollListener != null) {
             ViewTreeObserver vto = (anchor.getWindowToken() != null) ? anchor.getViewTreeObserver() : null;
+
             if (vto != mViewTreeObserver) {
+
                 if (mViewTreeObserver != null && mViewTreeObserver.isAlive()) {
                     mViewTreeObserver.removeOnScrollChangedListener(mSuperScrollListener);
                 }
+
                 if ((mViewTreeObserver = vto) != null) {
                     vto.addOnScrollChangedListener(mSuperScrollListener);
                 }
@@ -357,7 +363,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                 child.setAlpha(0.0f);
                 visibleCount++;
             }
-            if (content.showedFromBotton) {
+            if (content.showedFromBottom) {
                 content.lastStartedChild = count - 1;
             } else {
                 content.lastStartedChild = 0;
@@ -424,7 +430,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             ActionBarPopupWindowLayout content = (ActionBarPopupWindowLayout) getContentView();
             windowAnimatorSet = new AnimatorSet();
             windowAnimatorSet.playTogether(
-                    ObjectAnimator.ofFloat(content, "translationY", AndroidUtilities.dp(content.showedFromBotton ? 5 : -5)),
+                    ObjectAnimator.ofFloat(content, "translationY", AndroidUtilities.dp(content.showedFromBottom ? 5 : -5)),
                     ObjectAnimator.ofFloat(content, "alpha", 0.0f));
             windowAnimatorSet.setDuration(150);
             windowAnimatorSet.addListener(new Animator.AnimatorListener() {
@@ -435,11 +441,13 @@ public class ActionBarPopupWindow extends PopupWindow {
                 public void onAnimationEnd(Animator animation) {
                     windowAnimatorSet = null;
                     setFocusable(false);
+
                     try {
                         ActionBarPopupWindow.super.dismiss();
                     } catch (Exception e) {
                         Logger.e("message", e);
                     }
+
                     unregisterListener();
                 }
 
