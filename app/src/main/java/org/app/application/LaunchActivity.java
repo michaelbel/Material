@@ -30,7 +30,6 @@ import org.app.application.fragments.ListViewFragment;
 import org.app.application.fragments.NumberViewFragment;
 import org.app.application.fragments.PatternViewFragment;
 import org.app.application.fragments.RecyclerFragment;
-import org.app.application.fragments.RecyclerFragment2;
 import org.app.application.fragments.SwitchesFragment;
 import org.app.material.AndroidUtilities;
 import org.app.material.widget.ActionBar;
@@ -53,7 +52,7 @@ public class LaunchActivity extends FragmentActivity {
         layout.setBackgroundColor(0xFFF0F0F0);
 
         ActionBar actionBar = new ActionBar(this)
-                .setToolbarColor(AndroidUtilities.getContextColor(R.attr.colorPrimary))
+                .setToolbarColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary))
                 .setBackButtonIcon(R.drawable.ic_menu)
                 .setTitle(R.string.MaterialDemo)
                 .setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
@@ -90,7 +89,6 @@ public class LaunchActivity extends FragmentActivity {
         adapter.addFragment(new ListViewFragment(), R.string.ListViewAdapter);
         adapter.addFragment(new CardFragment(), R.string.CardView);
         adapter.addFragment(new RecyclerFragment(), R.string.RecyclerView);
-        adapter.addFragment(new RecyclerFragment2(), R.string.RecyclerView);
         adapter.addFragment(new NumberViewFragment(), R.string.NumberView);
         adapter.addFragment(new FabFragment(), R.string.Fabs);
         adapter.addFragment(new PatternViewFragment(), R.string.Pattern);
@@ -100,7 +98,7 @@ public class LaunchActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setBackgroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        tabLayout.setBackgroundColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

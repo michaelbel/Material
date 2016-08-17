@@ -26,12 +26,12 @@ import android.widget.Toast;
 import org.app.application.R;
 import org.app.material.widget.BottomSheet;
 
-public class BottomSheetDialog extends DialogFragment {
+public class BottomSheetDialog1 extends DialogFragment {
 
     @NonNull @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         BottomSheet.Builder builder = new BottomSheet.Builder(getActivity());
-        builder.setTitle("Select day");
+        builder.setTitle("Title");
         builder.setItems(new CharSequence[]{ getString(R.string.Monday), getString(R.string.Tuesday), getString(R.string.Wednesday), getString(R.string.Thursday) },
                 new DialogInterface.OnClickListener() {
             @Override

@@ -42,12 +42,13 @@ import org.app.application.LaunchActivity;
 import org.app.application.R;
 import org.app.application.cells.listview.EmptyCell;
 import org.app.application.cells.listview.TextCell;
+import org.app.application.dialogs.BottomSheetDialog1;
 import org.app.application.dialogs.ColorPickerDialog;
 import org.app.material.AndroidUtilities;
 import org.app.material.picker.date.DatePickerDialog;
 import org.app.material.picker.time.RadialPickerLayout;
 import org.app.material.picker.time.TimePickerDialog;
-import org.app.material.widget.ColorPickerHolo;
+import org.app.material.widget.HoloColorPicker;
 import org.app.material.widget.ColorPickerShift;
 import org.app.material.widget.ColorPickerView;
 import org.app.material.widget.ColorView;
@@ -145,9 +146,10 @@ public class DialogsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == 1) {
-                    new SimpleMessageDialog().show(getFragmentManager(), TAG);
+
                 } else if (i == 2) {
-                    new ItemsDialog().show(getFragmentManager(), TAG);
+                    BottomSheetDialog1 dialog = new BottomSheetDialog1();
+                    dialog.show(getFragmentManager(), TAG);
                 } else if (i == 3) {
                     new SingleChoiceDialog().show(getFragmentManager(), TAG);
                 } else if (i == 4) {
@@ -175,42 +177,42 @@ public class DialogsFragment extends Fragment {
                     new ColorPickerViewDialog().show(getFragmentManager(), TAG);
                 } else if (i == 15) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.RGB)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 16) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.ARGB)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 17) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.HSV)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 18) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.HSL)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 19 ) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.CMYK)
                             .indicatorMode(ColorView.IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 20) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getContextColor(R.attr.colorAccent))
+                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
                             .colorMode(ColorView.ColorMode.CMYK255)
                             .indicatorMode(ColorView.IndicatorMode.HEX)
                             .create()
@@ -364,57 +366,6 @@ public class DialogsFragment extends Fragment {
         @Override
         public int getViewTypeCount() {
             return 2;
-        }
-    }
-
-    public static class SimpleMessageDialog extends DialogFragment {
-
-        private String message = "Simple message text";
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.AppName);
-            builder.setMessage(message);
-            builder.setNegativeButton(R.string.Cancel, null);
-            builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                }
-            });
-            return builder.create();
-        }
-    }
-
-    public static class ItemsDialog extends DialogFragment {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setItems(new CharSequence[]{
-                    getString(R.string.Winter),
-                    getString(R.string.Spring),
-                    getString(R.string.Summer),
-                    getString(R.string.Autumn)
-            }, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if (i == 0) {
-                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
-                    } else if (i == 1) {
-                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
-                    } else if (i == 2) {
-                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
-                    } else if (i == 3) {
-                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            return builder.create();
         }
     }
 
@@ -668,7 +619,7 @@ public class DialogsFragment extends Fragment {
 
     public static class ColorPickerHoloDialog extends DialogFragment {
 
-        private ColorPickerHolo picker;
+        private HoloColorPicker picker;
 
         @NonNull
         @Override
@@ -677,11 +628,11 @@ public class DialogsFragment extends Fragment {
             LinearLayout layout = new LinearLayout(getActivity());
             layout.setOrientation(LinearLayout.VERTICAL);
 
-            picker = new ColorPickerHolo(getActivity());
+            picker = new HoloColorPicker(getActivity());
             picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
                     LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
             layout.addView(picker);
-            picker.setOldCenterColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
+            picker.setOldCenterColor(AndroidUtilities.getThemeColor(R.attr.colorAccent));
 
             builder.setView(layout);
             builder.setTitle(R.string.ColorPickerHolo);
@@ -710,7 +661,7 @@ public class DialogsFragment extends Fragment {
             final ColorPickerView picker = new ColorPickerView(getActivity());
             picker.setDensity(12);
             picker.setType(ColorPickerView.CIRCLE);
-            picker.setInitialColor(AndroidUtilities.getContextColor(R.attr.colorAccent));
+            picker.setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent));
             layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
                     LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
 
