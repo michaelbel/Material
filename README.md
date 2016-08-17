@@ -1,9 +1,10 @@
 ## Material
 Material Design Library
 
+[![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://github.com/michaelbel/material)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
 [![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Release](https://img.shields.io/badge/Release-v0.0.1-blue.svg)](https://github.com/michaelbel/material/release)
+[![Download](https://api.bintray.com/packages/michael-bel/maven/material/images/download.svg) ](https://bintray.com/michael-bel/maven/material/_latestVersion)
 
 ### Requirements
 
@@ -13,7 +14,7 @@ Material Design Library
 ### Import
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:0.1.1'
+    compile 'com.github.michaelbel:material:0.1.2'
 }
 ```
 
