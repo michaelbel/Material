@@ -82,7 +82,7 @@ public class ActionBar extends FrameLayout {
         backIcon = attr.getResourceId(R.styleable.ActionBar_backIcon, 0);
         attr.recycle();
 
-        setBackgroundColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        setBackgroundColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
     }
 
     public ActionBar setToolbarColor(int color) {

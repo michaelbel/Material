@@ -23,7 +23,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.TypefaceSpan;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -38,13 +38,15 @@ import java.util.Locale;
 
 public class AndroidUtilities {
 
+    private static final String TAG = AndroidUtilities.class.getSimpleName();
+
     private static Context context;
     private static float density = 1;
     private static final Hashtable<String, Typeface> typefaceCache = new Hashtable<>();
     public static Point displaySize = new Point();
 
     /**
-     * Set context for all methods of the class.
+     * Bind context for all methods of the class.
      *
      * @param context Current context.
      */
@@ -99,7 +101,7 @@ public class AndroidUtilities {
                     Typeface t = Typeface.createFromAsset(context.getAssets(), assetPath);
                     typefaceCache.put(assetPath, t);
                 } catch (Exception e) {
-                    Logger.e("message", e);
+                    Log.e(TAG, e.getMessage());
                     return null;
                 }
             }
@@ -108,11 +110,12 @@ public class AndroidUtilities {
         }
     }
 
-    public static int getContextColor(@AttrRes int androidAttr) {
-        TypedValue typedValue = new TypedValue();
-        TypedArray typedArray = context.obtainStyledAttributes(typedValue.data, new int[] {
-                androidAttr
-        });
+    public static int getThemeColor(@AttrRes int colorAttr) {
+        int[] attrs = new int[] {
+                colorAttr
+        };
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int color = typedArray.getColor(0, 0);
         typedArray.recycle();
 
@@ -123,17 +126,7 @@ public class AndroidUtilities {
         int[] attrs = new int[] {
                 R.attr.selectableItemBackground
         };
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-        typedArray.recycle();
 
-        return backgroundResource;
-    }
-
-    public static int selectableItemBackground(Context context) {
-        int[] attrs = new int[] {
-                R.attr.selectableItemBackground
-        };
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
         typedArray.recycle();
@@ -142,9 +135,10 @@ public class AndroidUtilities {
     }
 
     public static int selectableItemBackgroundBorderless() {
-        int[] attrs = new int[]{
+        int[] attrs = new int[] {
                 R.attr.selectableItemBackgroundBorderless
         };
+
         TypedArray typedArray = context.obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
         typedArray.recycle();
@@ -152,15 +146,28 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
-    public static int selectableItemBackgroundBorderless(Context context) {
-        int[] attrs = new int[]{
-                R.attr.selectableItemBackgroundBorderless
+    public static Drawable selectableItemBackgroundDrawable() {
+        int[] attrs = new int[] {
+                android.R.attr.selectableItemBackground
         };
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-        typedArray.recycle();
 
-        return backgroundResource;
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = ta.getDrawable(0);
+        ta.recycle();
+
+        return drawableFromTheme;
+    }
+
+    public static Drawable selectableItemBackgroundBorderlessDrawable() {
+        int[] attrs = new int[] {
+                android.R.attr.selectableItemBackgroundBorderless
+        };
+
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = ta.getDrawable(0);
+        ta.recycle();
+
+        return drawableFromTheme;
     }
 
     public static int getStatusBarHeight() {
@@ -255,7 +262,7 @@ public class AndroidUtilities {
             mCursorDrawableRes.setAccessible(true);
             mCursorDrawableRes.setInt(editText, 0);
         } catch (Exception e) {
-            Logger.e("message", e);
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -342,7 +349,7 @@ public class AndroidUtilities {
 
             return spannableStringBuilder;
         } catch (Exception e) {
-            Logger.e("message", e);
+            Log.e(TAG, e.getMessage());
         }
 
         return new SpannableStringBuilder(str);

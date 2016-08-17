@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.util.AttributeSet;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
@@ -17,17 +18,33 @@ import org.app.material.AndroidUtilities;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class NumberView extends View {
+public class NumberTextView extends View {
 
+    private int currentNumber = 1;
+    private float progress = 0.0f;
+
+    private ObjectAnimator animator;
     private ArrayList<StaticLayout> letters = new ArrayList<>();
     private ArrayList<StaticLayout> oldLetters = new ArrayList<>();
     private TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-    private ObjectAnimator animator;
-    private float progress = 0.0f;
-    private int currentNumber = 1;
 
-    public NumberView(Context context) {
+    public NumberTextView(Context context) {
         super(context);
+        initialize(context, null, 0);
+    }
+
+    public NumberTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initialize(context, attrs, 0);
+    }
+
+    public NumberTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initialize(context, attrs, defStyleAttr);
+    }
+
+    private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
+
     }
 
     public void setProgress(float value) {
@@ -40,6 +57,10 @@ public class NumberView extends View {
 
     public float getProgress() {
         return progress;
+    }
+
+    public void setNumber(int number) {
+        setNumber(number, true);
     }
 
     public void setNumber(int number, boolean animated) {
@@ -108,6 +129,7 @@ public class NumberView extends View {
         if (letters.isEmpty()) {
             return;
         }
+
         float height = letters.get(0).getHeight();
         canvas.save();
         canvas.translate(getPaddingLeft(), (getMeasuredHeight() - height) / 2);

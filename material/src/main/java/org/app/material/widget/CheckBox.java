@@ -17,6 +17,7 @@ import org.app.material.AndroidUtilities;
 import org.app.material.R;
 
 public class CheckBox extends View {
+
     private static final int ANIMATION_DURATION = 300;
 
     private float progress;

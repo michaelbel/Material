@@ -14,7 +14,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.Logger;
+import org.app.material.logger.Logger;
 
 public class SimpleTextView extends View implements Drawable.Callback {
 

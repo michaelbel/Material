@@ -31,10 +31,10 @@ import android.view.View;
 
 import org.app.material.AndroidUtilities;
 
-public class ColorPickerHolo extends View {
+public class HoloColorPicker extends View {
 
-	private static final String STATE_PARENT = "parent";
 	private static final String STATE_ANGLE = "angle";
+	private static final String STATE_PARENT = "parent";
 	private static final String STATE_OLD_COLOR = "color";
 	private static final String STATE_SHOW_OLD_COLOR = "showColor";
 
@@ -51,9 +51,9 @@ public class ColorPickerHolo extends View {
 			0xFFF44336
 	};
 
+    private Paint mPointerColor;
 	private Paint mColorWheelPaint;
 	private Paint mPointerHaloPaint;
-	private Paint mPointerColor;
 
 	private int mColorWheelThickness;
 	private int mColorWheelRadius;
@@ -89,17 +89,17 @@ public class ColorPickerHolo extends View {
 	private int oldChangedListenerColor;
 	private int oldSelectedListenerColor;
 
-	public ColorPickerHolo(Context context) {
+	public HoloColorPicker(Context context) {
 		super(context);
 		initialize(context, null, 0);
 	}
 
-	public ColorPickerHolo(Context context, AttributeSet attrs) {
+	public HoloColorPicker(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize(context, attrs, 0);
 	}
 
-	public ColorPickerHolo(Context context, AttributeSet attrs, int defStyle) {
+	public HoloColorPicker(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		initialize(context, attrs, defStyle);
 	}
@@ -150,7 +150,7 @@ public class ColorPickerHolo extends View {
 		mShowCenterOldColor = true;
 	}
 
-	public ColorPickerHolo setNewCenterColor(int color) {
+	public HoloColorPicker setNewCenterColor(int color) {
 		mCenterNewColor = color;
 		mCenterNewPaint.setColor(color);
 
@@ -168,20 +168,20 @@ public class ColorPickerHolo extends View {
 		return this;
 	}
 
-	public ColorPickerHolo setOldCenterColor(int color) {
+	public HoloColorPicker setOldCenterColor(int color) {
 		mCenterOldColor = color;
 		mCenterOldPaint.setColor(color);
 		invalidate();
 		return this;
 	}
 
-	public ColorPickerHolo setShowOldCenterColor(boolean show) {
+	public HoloColorPicker setShowOldCenterColor(boolean show) {
 		mShowCenterOldColor = show;
 		invalidate();
 		return this;
 	}
 
-	public ColorPickerHolo setColor(int color) {
+	public HoloColorPicker setColor(int color) {
 		mAngle = colorToAngle(color);
 		mPointerColor.setColor(calculateColor(mAngle));
 		setNewCenterColor(color);

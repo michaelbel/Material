@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.Logger;
+import org.app.material.logger.Logger;
 import org.app.material.R;
 
 public class Browser {
@@ -23,7 +23,7 @@ public class Browser {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
-            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", AndroidUtilities.getContextColor(R.attr.colorPrimary));
+            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", AndroidUtilities.getThemeColor(R.attr.colorPrimary));
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
             Intent actionIntent = new Intent(Intent.ACTION_SEND);
             actionIntent.setType("text/plain");

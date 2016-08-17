@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 Michael Bel
+ * Copyright 2014 Pixplicity (http://pixplicity.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.app.material;
+package org.app.material.preferences;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -31,23 +31,12 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class Preferences {
 
-    /*
-    Initialization:
-
-    new Preferences.Builder()
-            .setContext(baseContext)
-            .setPreferencesName("prefsname")
-            .setUseDefaultSharedPreference(true)
-            .setMode(ContextWrapper.MODE_PRIVATE)
-            .build();
-    */
-
+    private static SharedPreferences sharedPreferences;
     private static final String DEFAULT_SUFFIX = "_preferences";
     private static final String LENGTH = "#LENGTH";
-    private static SharedPreferences mPrefs;
 
     private static void initPrefs(Context context, String prefsName, int mode) {
-        mPrefs = context.getSharedPreferences(prefsName, mode);
+        sharedPreferences = context.getSharedPreferences(prefsName, mode);
     }
 
     /**
@@ -57,8 +46,8 @@ public class Preferences {
      * @throws RuntimeException if SharedPreference instance has not been instantiated yet.
      */
     public static SharedPreferences getPreferences() {
-        if (mPrefs != null) {
-            return mPrefs;
+        if (sharedPreferences != null) {
+            return sharedPreferences;
         }
 
         throw new RuntimeException(
@@ -283,8 +272,8 @@ public class Preferences {
         final Editor editor = getPreferences().edit();
         int stringSetLength = 0;
 
-        if (mPrefs.contains(key + LENGTH)) {
-            stringSetLength = mPrefs.getInt(key + LENGTH, -1);
+        if (sharedPreferences.contains(key + LENGTH)) {
+            stringSetLength = sharedPreferences.getInt(key + LENGTH, -1);
         }
 
         editor.putInt(key + LENGTH, value.size());

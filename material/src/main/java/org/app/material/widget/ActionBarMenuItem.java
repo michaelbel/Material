@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.app.material.AndroidUtilities;
-import org.app.material.Logger;
+import org.app.material.logger.Logger;
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
 

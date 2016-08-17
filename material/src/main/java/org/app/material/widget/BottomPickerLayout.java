@@ -14,7 +14,6 @@ import org.app.material.R;
 
 public class BottomPickerLayout extends FrameLayout {
 
-    private int mPickerColor;
     private int mPickerHeight;
     private float mPickerElevation;
     private TextView mNegativeButton;
@@ -33,17 +32,16 @@ public class BottomPickerLayout extends FrameLayout {
 
         mPickerHeight = 48;
         mPickerElevation = 8;
-        mPickerColor = 0xFFFFFFFF;
 
         this.setElevation(AndroidUtilities.dp(mPickerElevation));
-        this.setBackgroundColor(mPickerColor);
+        /*this.setBackgroundColor(mPickerColor);*/
 
         mNegativeButton = new TextView(context);
         mNegativeButton.setClickable(true);
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mNegativeButton.setTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mNegativeButton.setTextColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
         mNegativeButton.setPadding(AndroidUtilities.dp(32), 0, AndroidUtilities.dp(32), 0);
         mNegativeButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
@@ -54,7 +52,7 @@ public class BottomPickerLayout extends FrameLayout {
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mPositiveButton.setTextColor(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        mPositiveButton.setTextColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
         mPositiveButton.setPadding(AndroidUtilities.dp(32), 0, AndroidUtilities.dp(32), 0);
         mPositiveButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
         mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
@@ -110,11 +108,6 @@ public class BottomPickerLayout extends FrameLayout {
 
     public BottomPickerLayout setElevation(int elevation) {
         this.mPickerElevation = elevation;
-        return this;
-    }
-
-    public BottomPickerLayout setPickerColor(int color) {
-        this.mPickerColor = color;
         return this;
     }
 

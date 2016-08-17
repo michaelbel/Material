@@ -99,7 +99,7 @@ public class NumberPicker extends LinearLayout {
 
     private void init() {
         solidColor = 0;
-        selectionDivider = new ColorDrawable(AndroidUtilities.getContextColor(R.attr.colorPrimary));
+        selectionDivider = new ColorDrawable(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
         mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
         mMinHeight = SIZE_UNSPECIFIED;

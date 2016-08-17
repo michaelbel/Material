@@ -39,7 +39,7 @@ public class ColorView extends FrameLayout {
         this.colorMode = colorMode;
         currentColor = initialColor;
 
-        DEFAULT_COLOR = AndroidUtilities.getContextColor(R.attr.colorAccent);
+        DEFAULT_COLOR = AndroidUtilities.getThemeColor(R.attr.colorAccent);
 
         inflate(getContext(), R.layout.views, this);
         setClipToPadding(false);
