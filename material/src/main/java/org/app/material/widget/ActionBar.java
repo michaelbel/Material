@@ -90,30 +90,27 @@ public class ActionBar extends FrameLayout {
         return this;
     }
 
-    public ActionBar setBackButtonIcon(int res) {
+    public ActionBar setNavigationIcon(@DrawableRes int resId) {
         if (mBackButtonImageView == null) {
             createBackButtonImage();
         }
 
-        mBackButtonImageView.setVisibility(res == 0 ? GONE : VISIBLE);
-        backIcon = res;
+        mBackButtonImageView.setVisibility(resId == 0 ? GONE : VISIBLE);
+        backIcon = resId;
 
         mBackButtonImageView.setImageResource(backIcon);
         return this;
     }
 
-    public ActionBar setBackButtonDrawable(Drawable drawable) {
+    public ActionBar setBackButtonDrawable(@DrawableRes Drawable resId) {
         if (mBackButtonImageView == null) {
             createBackButtonImage();
         }
 
-        mBackButtonImageView.setVisibility(drawable == null ? GONE : VISIBLE);
-        mBackButtonImageView.setImageDrawable(drawable);
+        mBackButtonImageView.setVisibility(resId == null ? GONE : VISIBLE);
+        //backIcon = resId;
 
-        if (drawable instanceof BackDrawable) {
-            ((BackDrawable) drawable).setRotation(isActionModeShowed() ? 1 : 0, false);
-        }
-
+        mBackButtonImageView.setImageDrawable(resId);
         return this;
     }
 
