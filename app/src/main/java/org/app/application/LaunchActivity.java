@@ -53,7 +53,7 @@ public class LaunchActivity extends FragmentActivity {
 
         ActionBar actionBar = new ActionBar(this)
                 .setToolbarColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary))
-                .setBackButtonIcon(R.drawable.ic_menu)
+                .setNavigationIcon(R.drawable.ic_menu)
                 .setTitle(R.string.MaterialDemo)
                 .setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
                     @Override
