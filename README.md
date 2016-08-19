@@ -6,15 +6,10 @@ Material Design Library
 [![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/michael-bel/maven/material/images/download.svg) ](https://bintray.com/michael-bel/maven/material/_latestVersion)
 
-### Requirements
-
-* Android 5.0
-* Android Studio 2.1.2
-
 ### Import
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:0.1.2'
+    compile 'com.github.michaelbel:material:0.1.3'
 }
 ```
 
