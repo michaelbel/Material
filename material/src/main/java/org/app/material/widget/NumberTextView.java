@@ -20,6 +20,8 @@ import java.util.Locale;
 
 public class NumberTextView extends View {
 
+    private static final int ANIMATION_DURATION = 150;
+
     private int currentNumber = 1;
     private float progress = 0.0f;
 
@@ -51,6 +53,7 @@ public class NumberTextView extends View {
         if (progress == value) {
             return;
         }
+
         progress = value;
         invalidate();
     }
@@ -67,10 +70,12 @@ public class NumberTextView extends View {
         if (currentNumber == number && animated) {
             return;
         }
+
         if (animator != null) {
             animator.cancel();
             animator = null;
         }
+
         oldLetters.clear();
         oldLetters.addAll(letters);
         letters.clear();
@@ -79,9 +84,11 @@ public class NumberTextView extends View {
         boolean forwardAnimation = number > currentNumber;
         currentNumber = number;
         progress = 0;
+
         for (int a = 0; a < text.length(); a++) {
             String ch = text.substring(a, a + 1);
             String oldCh = !oldLetters.isEmpty() && a < oldText.length() ? oldText.substring(a, a + 1) : null;
+
             if (oldCh != null && oldCh.equals(ch)) {
                 letters.add(oldLetters.get(a));
                 oldLetters.set(a, null);
@@ -90,9 +97,10 @@ public class NumberTextView extends View {
                 letters.add(layout);
             }
         }
+
         if (animated && !oldLetters.isEmpty()) {
             animator = ObjectAnimator.ofFloat(this, "progress", forwardAnimation ? -1 : 1, 0);
-            animator.setDuration(150);
+            animator.setDuration(ANIMATION_DURATION);
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -134,10 +142,12 @@ public class NumberTextView extends View {
         canvas.save();
         canvas.translate(getPaddingLeft(), (getMeasuredHeight() - height) / 2);
         int count = Math.max(letters.size(), oldLetters.size());
+
         for (int a = 0; a < count; a++) {
             canvas.save();
             StaticLayout old = a < oldLetters.size() ? oldLetters.get(a) : null;
             StaticLayout layout = a < letters.size() ? letters.get(a) : null;
+
             if (progress > 0) {
                 if (old != null) {
                     textPaint.setAlpha((int) (255 * progress));
@@ -160,6 +170,7 @@ public class NumberTextView extends View {
                     old.draw(canvas);
                     canvas.restore();
                 }
+
                 if (layout != null) {
                     if (a == count - 1 || old != null) {
                         textPaint.setAlpha((int) (255 * (1.0f + progress)));
@@ -171,12 +182,15 @@ public class NumberTextView extends View {
             } else if (layout != null) {
                 textPaint.setAlpha(255);
             }
+
             if (layout != null) {
                 layout.draw(canvas);
             }
+
             canvas.restore();
             canvas.translate(layout != null ? layout.getLineWidth(0) : old.getLineWidth(0) + AndroidUtilities.dp(1), 0);
         }
+
         canvas.restore();
     }
 }
