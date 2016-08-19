@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: "com.jfrog.bintray"
-//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 24
@@ -13,10 +13,10 @@ android {
         versionCode 13
     }
 
-    /*compileOptions {
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
-    }*/
+    }
 
     buildTypes {
         release {
@@ -25,9 +25,9 @@ android {
         }
     }
 
-    /*lintOptions {
+    lintOptions {
         abortOnError false
-    }*/
+    }
 }
 
 dependencies {
