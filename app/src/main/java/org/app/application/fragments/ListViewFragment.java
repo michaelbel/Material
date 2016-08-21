@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Michael Bel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.app.application.fragments;
 
 import android.os.Bundle;
@@ -81,17 +65,17 @@ public class ListViewFragment extends Fragment {
                 } else if (i == switchRow) {
                     switchParam = !switchParam;
                     if (view instanceof SwitchCell) {
-                        ((SwitchCell) view).withChecked(switchParam);
+                        ((SwitchCell) view).setChecked(switchParam);
                     }
                 } else if (i == checkBoxRow) {
                     checkBoxParam = !checkBoxParam;
                     if (view instanceof CheckBoxCell) {
-                        ((CheckBoxCell) view).withChecked(checkBoxParam, true);
+                        ((CheckBoxCell) view).setChecked(checkBoxParam, true);
                     }
                 } else if (i == radioRow) {
                     radioParam = !radioParam;
                     if (view instanceof RadioCell) {
-                        ((RadioCell) view).withChecked(radioParam, true);
+                        ((RadioCell) view).setChecked(radioParam, true);
                     }
                 }
             }
@@ -141,11 +125,11 @@ public class ListViewFragment extends Fragment {
                 TextCell cell = (TextCell) view;
 
                 if (i == textRow) {
-                    cell.withText(R.string.SomeTitleText).withDivider(true);
+                    cell.setText(R.string.SomeTitleText).setDivider(true);
                 } else if (i == textValueRow1) {
-                    cell.withText(R.string.TextLock).withValue(R.string.TextDisabled).withDivider(true);
+                    cell.setText(R.string.TextLock).setValue(R.string.TextDisabled).setDivider(true);
                 } else if (i == textValueRow2) {
-                    cell.withText(R.string.Size).withValue(String.valueOf(16)).withDivider(true);
+                    cell.setText(R.string.Size).setValue(String.valueOf(16)).setDivider(true);
                 }
             } else if (type == 1) {
                 if (view == null) {
@@ -155,7 +139,7 @@ public class ListViewFragment extends Fragment {
                 EmptyCell cell = (EmptyCell) view;
 
                 if (i == headerRow) {
-                    cell.withHeader("Header text");
+                    cell.setHeader("Header text");
                 }
             } else if (type == 2) {
                 if (view == null) {
@@ -165,7 +149,7 @@ public class ListViewFragment extends Fragment {
                 SwitchCell cell = (SwitchCell) view;
 
                 if (i == switchRow) {
-                    cell.withText("Switch").withChecked(switchParam).withDivider(true);
+                    cell.setText("Switch").setChecked(switchParam).setDivider(true);
                 }
             } else if (type == 3) {
                 if (view == null) {
@@ -175,7 +159,7 @@ public class ListViewFragment extends Fragment {
                 DoubleCell cell = (DoubleCell) view;
 
                 if (i == doubleTextRow) {
-                    cell.withText(R.string.FirstLine).withValue(R.string.SecondLine).withDivider(true);
+                    cell.setText(R.string.FirstLine).setValue(R.string.SecondLine).setDivider(true);
                 }
             } else if (type == 4) {
                 if (view == null) {
@@ -185,7 +169,7 @@ public class ListViewFragment extends Fragment {
                 CheckBoxCell cell = (CheckBoxCell) view;
 
                 if (i == checkBoxRow) {
-                    cell.withText("CheckBox").withChecked(checkBoxParam, false).withDivider(true);
+                    cell.setText("CheckBox").setChecked(checkBoxParam, false).setDivider(true);
                 }
             } else if (type == 5) {
                 if (view == null) {
@@ -195,7 +179,7 @@ public class ListViewFragment extends Fragment {
                 RadioCell cell = (RadioCell) view;
 
                 if (i == radioRow) {
-                    cell.withText("RadioButton").withChecked(radioParam, false);
+                    cell.setText("RadioButton").setChecked(radioParam, false);
                 }
             }
 

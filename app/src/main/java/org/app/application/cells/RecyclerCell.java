@@ -21,87 +21,87 @@ import org.app.material.widget.LayoutHelper;
 
 public class RecyclerCell extends FrameLayout {
 
-    private TextView mTextView1;
-    private TextView mTextView2;
-    private ImageView mOptionButton;
-    private AvatarImageView mImageView;
+    private TextView textView1;
+    private TextView textView2;
+    private ImageView optionButton;
+    private AvatarImageView imageView;
 
-    private static Paint mPaint;
-    private boolean needDivider = false;
+    private Paint paint;
+    private boolean divider = false;
 
     private Rect rect = new Rect();
 
     public RecyclerCell(Context context) {
         super(context);
 
-        if (mPaint == null) {
-            mPaint = new Paint();
-            mPaint.setColor(0xFFD9D9D9);
+        if (paint == null) {
+            paint = new Paint();
+            paint.setColor(0xFFD9D9D9);
         }
 
-        mImageView = new AvatarImageView(context);
-        mImageView.setFocusable(false);
-        mImageView.setScaleType(ImageView.ScaleType.CENTER);
-        mImageView.setShapeDrawable(AvatarImageView.CIRCLE);
-        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START |
+        imageView = new AvatarImageView(context);
+        imageView.setFocusable(false);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setShapeDrawable(AvatarImageView.CIRCLE);
+        imageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START |
                 Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mImageView);
+        addView(imageView);
 
-        mTextView1 = new TextView(context);
-        mTextView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView1 = new TextView(context);
+        textView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        textView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        textView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 80, 10, 21, 0));
-        addView(mTextView1);
+        addView(textView1);
 
-        mTextView2 = new TextView(context);
-        mTextView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
-        mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView2 = new TextView(context);
+        textView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        textView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 80, 0, 21, 10));
-        addView(mTextView2);
+        addView(textView2);
 
-        mOptionButton = new ImageView(context);
-        mOptionButton.setFocusable(false);
-        mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
-        mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+        optionButton = new ImageView(context);
+        optionButton.setFocusable(false);
+        optionButton.setScaleType(ImageView.ScaleType.CENTER);
+        optionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        optionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
                 ContextCompat.getColor(context, R.color.textColorSecondary)));
-        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        optionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
-        addView(mOptionButton);
+        addView(optionButton);
     }
 
     public RecyclerCell setImage(int image) {
-        mImageView.setImageResource(image);
+        imageView.setImageResource(image);
         return this;
     }
 
     public RecyclerCell setText1(String text) {
-        mTextView1.setText(text);
+        textView1.setText(text);
         return this;
     }
 
     public RecyclerCell setText2 (String text) {
-        mTextView2.setText(text);
+        textView2.setText(text);
         return this;
     }
 
-    public RecyclerCell withDivider(boolean divider) {
-        needDivider = divider;
+    public RecyclerCell setDivider(boolean divider) {
+        this.divider = divider;
         return this;
     }
 
     public void setOnOptionsClick(OnClickListener listener) {
-        mOptionButton.setOnClickListener(listener);
+        optionButton.setOnClickListener(listener);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (needDivider) {
+        if (divider) {
             canvas.drawLine(getPaddingLeft(), getHeight() - 1, getWidth() - getPaddingRight(),
-                    getHeight() - 1, mPaint);
+                    getHeight() - 1, paint);
         }
     }
 
@@ -109,14 +109,14 @@ public class RecyclerCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0),
+                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (divider ? 1 : 0),
                         MeasureSpec.EXACTLY));
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (Build.VERSION.SDK_INT >= 21 && getBackground() != null) {
-            mOptionButton.getHitRect(rect);
+            optionButton.getHitRect(rect);
 
             if (rect.contains((int) event.getX(), (int) event.getY())) {
                 return true;

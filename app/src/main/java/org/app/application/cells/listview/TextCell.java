@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Michael Bel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.app.application.cells.listview;
 
 import android.content.Context;
@@ -28,46 +12,46 @@ import org.app.material.widget.LayoutHelper;
 
 public class TextCell extends BaseCell {
 
-    private TextView mTextView;
-    private TextView mValueView;
+    private TextView textView;
+    private TextView valueView;
 
     public TextCell(Context context) {
         super(context);
 
         setBackgroundColor(0xFFFFFFFF);
 
-        mTextView = new TextView(context);
-        mTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView = new TextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mTextView);
+        addView(textView);
 
-        mValueView = new TextView(context);
-        mValueView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
-        mValueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mValueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        valueView = new TextView(context);
+        valueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        valueView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
+        valueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mValueView);
+        addView(valueView);
     }
 
-    public TextCell withText(String text) {
-        mTextView.setText(text);
+    public TextCell setText(String text) {
+        textView.setText(text);
         return this;
     }
 
-    public TextCell withText(@StringRes int resId) {
-        withText(getContext().getString(resId));
+    public TextCell setText(@StringRes int stringId) {
+        textView.setText(getContext().getText(stringId));
         return this;
     }
 
-    public TextCell withValue(String value) {
-        mValueView.setText(value);
+    public TextCell setValue(String value) {
+        valueView.setText(value);
         return this;
     }
 
-    public TextCell withValue(@StringRes int resId) {
-        withValue(getContext().getString(resId));
+    public TextCell setValue(@StringRes int stringId) {
+        valueView.setText(getContext().getText(stringId));
         return this;
     }
 }

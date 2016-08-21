@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Michael Bel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.app.application.cells.listview;
 
 import android.content.Context;
@@ -29,39 +13,39 @@ import org.app.material.widget.RadioButton;
 
 public class RadioCell extends BaseCell {
 
-    private TextView mTextView;
-    private RadioButton mRadioButton;
+    private TextView textView;
+    private RadioButton radioButton;
 
     public RadioCell(Context context) {
         super(context);
 
         setBackgroundColor(0xFFFFFFFF);
 
-        mRadioButton = new RadioButton(context);
-        mRadioButton.setLayoutParams(LayoutHelper.makeFrame(context, 22, 22, Gravity.START |
+        radioButton = new RadioButton(context);
+        radioButton.setLayoutParams(LayoutHelper.makeFrame(context, 22, 22, Gravity.START |
                 Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mRadioButton);
+        addView(radioButton);
 
-        mTextView = new TextView(context);
-        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView = new TextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 54, 0, 0, 0));
-        addView(mTextView);
+        addView(textView);
     }
 
-    public RadioCell withText(String text) {
-        mTextView.setText(text);
+    public RadioCell setText(String text) {
+        textView.setText(text);
         return this;
     }
 
-    public RadioCell withText(@StringRes int stringId) {
-        withText(getResources().getString(stringId));
+    public RadioCell setText(@StringRes int stringId) {
+        textView.setText(getContext().getText(stringId));
         return this;
     }
 
-    public RadioCell withChecked(boolean checked, boolean animated) {
-        mRadioButton.setChecked(checked, animated);
+    public RadioCell setChecked(boolean checked, boolean animated) {
+        radioButton.setChecked(checked, animated);
         return this;
     }
 }

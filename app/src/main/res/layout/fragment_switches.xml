@@ -12,7 +12,6 @@
         android:layout_gravity="start|top"
         android:layout_marginTop="50dp"
         android:layout_marginStart="100dp"
-        switch:switch_darkTheme="true"
-        />
+        switch:switch_darkTheme="true"/>
 
 </FrameLayout>

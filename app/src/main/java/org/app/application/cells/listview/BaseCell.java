@@ -13,7 +13,7 @@ public class BaseCell extends FrameLayout {
 
     private boolean divider;
     private int mHeight = 52;
-    private static Paint paint;
+    private Paint paint;
 
     public BaseCell(Context context) {
         super(context);
@@ -24,12 +24,12 @@ public class BaseCell extends FrameLayout {
         }
     }
 
-    public BaseCell withDivider(boolean divider) {
+    public BaseCell setDivider(boolean divider) {
         this.divider = divider;
         return this;
     }
 
-    public BaseCell withHeight(int height) {
+    public BaseCell setHeight(int height) {
         this.mHeight = height;
         return this;
     }

@@ -13,39 +13,39 @@ import org.app.material.widget.LayoutHelper;
 
 public class CheckBoxCell extends BaseCell {
 
-    private TextView mTextView;
-    private CheckBox mCheckBox;
+    private TextView textView;
+    private CheckBox checkBox;
 
     public CheckBoxCell(Context context) {
         super(context);
 
         setBackgroundColor(0xFFFFFFFF);
 
-        mCheckBox = new CheckBox(context);
-        mCheckBox.setLayoutParams(LayoutHelper.makeFrame(context, 20, 20, Gravity.START |
+        checkBox = new CheckBox(context);
+        checkBox.setLayoutParams(LayoutHelper.makeFrame(context, 20, 20, Gravity.START |
                 Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mCheckBox);
+        addView(checkBox);
 
-        mTextView = new TextView(context);
-        mTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        mTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView = new TextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 52, 0, 0, 0));
-        addView(mTextView);
+        addView(textView);
     }
 
-    public CheckBoxCell withText(String text) {
-        mTextView.setText(text);
+    public CheckBoxCell setText(String text) {
+        textView.setText(text);
         return this;
     }
 
-    public CheckBoxCell withText(@StringRes int stringId) {
-        withText(getResources().getString(stringId));
+    public CheckBoxCell setText(@StringRes int stringId) {
+        textView.setText(getContext().getText(stringId));
         return this;
     }
 
-    public CheckBoxCell withChecked(boolean checked, boolean animated) {
-        mCheckBox.setChecked(checked, animated);
+    public CheckBoxCell setChecked(boolean checked, boolean animated) {
+        checkBox.setChecked(checked, animated);
         return this;
     }
 }

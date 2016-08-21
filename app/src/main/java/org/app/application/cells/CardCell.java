@@ -1,19 +1,3 @@
-/*
- * Copyright 2015 Michael Bel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package org.app.application.cells;
 
 import android.content.Context;
@@ -34,79 +18,79 @@ import org.app.material.widget.LayoutHelper;
 
 public class CardCell extends CardView {
 
-    private TextView mTextView1;
-    private TextView mTextView2;
-    private TextView mTextView3;
-    private ImageView mImageView;
-    private ImageView mOptionButton;
+    private TextView textView1;
+    private TextView textView2;
+    private TextView textView3;
+    private ImageView imageView;
+    private ImageView optionButton;
 
     private Rect rect = new Rect();
 
     public CardCell(Context context) {
         super(context);
 
-        mImageView = new ImageView(context);
-        mImageView.setFocusable(false);
-        mImageView.setScaleType(ImageView.ScaleType.CENTER);
-        mImageView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        imageView = new ImageView(context);
+        imageView.setFocusable(false);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        imageView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 10, 0, 10, 0));
-        addView(mImageView);
+        addView(imageView);
 
-        mTextView1 = new TextView(context);
-        mTextView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        mTextView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mTextView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView1 = new TextView(context);
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        textView1.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        textView1.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        textView1.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 100, 17, 21, 0));
-        addView(mTextView1);
+        addView(textView1);
 
-        mTextView2 = new TextView(context);
-        mTextView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
-        mTextView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        mTextView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView2 = new TextView(context);
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        textView2.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
+        textView2.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 100, 0, 21, 0));
-        addView(mTextView2);
+        addView(textView2);
 
-        mTextView3 = new TextView(context);
-        mTextView3.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLight));
-        mTextView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mTextView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        textView3 = new TextView(context);
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        textView3.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLight));
+        textView3.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 100, 0, 21, 17));
-        addView(mTextView3);
+        addView(textView3);
 
-        mOptionButton = new ImageView(context);
-        mOptionButton.setFocusable(false);
-        mOptionButton.setScaleType(ImageView.ScaleType.CENTER);
-        mOptionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        mOptionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+        optionButton = new ImageView(context);
+        optionButton.setFocusable(false);
+        optionButton.setScaleType(ImageView.ScaleType.CENTER);
+        optionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        optionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
                 ContextCompat.getColor(context, R.color.textColorSecondary)));
-        mOptionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        optionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
-        addView(mOptionButton);
+        addView(optionButton);
     }
 
     public CardCell setText1(String text) {
-        mTextView1.setText(text);
+        textView1.setText(text);
         return this;
     }
 
     public CardCell setText2 (String text) {
-        mTextView2.setText(text);
+        textView2.setText(text);
         return this;
     }
 
     public CardCell setText3 (String text) {
-        mTextView3.setText(text);
+        textView3.setText(text);
         return this;
     }
 
     public CardCell setImage(int image) {
-        mImageView.setImageResource(image);
+        imageView.setImageResource(image);
         return this;
     }
 
     public void setOnOptionsClick(OnClickListener listener) {
-        mOptionButton.setOnClickListener(listener);
+        optionButton.setOnClickListener(listener);
     }
 
     @Override
