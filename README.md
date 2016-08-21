@@ -6,7 +6,7 @@ Material Design Library
 [![Licence](https://img.shields.io/badge/License-Apache_v2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/michael-bel/maven/material/images/download.svg) ](https://bintray.com/michael-bel/maven/material/_latestVersion)
 
-### Import
+### Download
 ```gradle
 dependencies {
     compile 'com.github.michaelbel:material:0.1.3'
