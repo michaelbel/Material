@@ -7,10 +7,10 @@ import java.util.Hashtable;
 
 public class Typeface {
 
-    private static final StringUtils TAG = Typeface.class.getSimpleName();
-    private static final Hashtable<StringUtils, android.graphics.Typeface> typefaceCache = new Hashtable<>();
+    private static final String TAG = Typeface.class.getSimpleName();
+    private static final Hashtable<String, android.graphics.Typeface> typefaceCache = new Hashtable<>();
 
-    public static android.graphics.Typeface getTypeface(Context context, StringUtils assetPath) {
+    public static android.graphics.Typeface getTypeface(Context context, String assetPath) {
         synchronized (typefaceCache) {
             if (!typefaceCache.containsKey(assetPath)) {
                 try {
