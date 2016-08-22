@@ -288,11 +288,11 @@ public class ActionBar extends FrameLayout {
 
     public int getCurrentActionBarHeight() {
         if (isTablet) {
-            return 64;
+            return AndroidUtilities.dp(64);
         } else if (Screen.isLandscape(getContext())) {
-            return 48;
+            return AndroidUtilities.dp(48);
         } else {
-            return 56;
+            return AndroidUtilities.dp(56);
         }
     }
 
