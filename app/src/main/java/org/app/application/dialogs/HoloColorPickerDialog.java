@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.app.application.R;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 
 public class HoloColorPickerDialog extends DialogFragment {

@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import org.app.application.R;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 public class BaseCell extends FrameLayout {
 

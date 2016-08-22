@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.app.application.R;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.NumberTextView;
 

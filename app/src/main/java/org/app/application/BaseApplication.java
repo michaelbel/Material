@@ -3,7 +3,7 @@ package org.app.application;
 import android.app.Application;
 import android.content.Context;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.logger.Logger;
 
 public class BaseApplication extends Application {

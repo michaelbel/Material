@@ -16,7 +16,7 @@ import android.widget.Toast;
 import org.app.application.R;
 import org.app.application.cells.CardCell;
 import org.app.application.model.Card;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.RecyclerListView;
 

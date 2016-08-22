@@ -35,7 +35,7 @@ import org.app.application.dialogs.shift.MaterialColorDialog;
 import org.app.application.dialogs.shift.PrimaryColorDialog;
 import org.app.application.dialogs.shift.PrimaryDarkColorDialog;
 import org.app.application.model.DialogItem;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.picker.date.DatePickerDialog;
 import org.app.material.picker.time.RadialPickerLayout;
 import org.app.material.picker.time.TimePickerDialog;

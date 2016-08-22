@@ -15,7 +15,8 @@ import org.app.application.fragments.NumberViewFragment;
 import org.app.application.fragments.PatternViewFragment;
 import org.app.application.fragments.RecyclerFragment;
 import org.app.application.fragments.SwitchesFragment;
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
+import org.app.material.utils.Screen;
 import org.app.material.widget.ActionBar;
 import org.app.material.widget.ActionBarMenu;
 import org.app.material.widget.ActionBarMenuItem;
@@ -64,7 +65,7 @@ public class LaunchActivity extends FragmentActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         FrameLayout.LayoutParams viewPagerParams = (FrameLayout.LayoutParams) viewPager.getLayoutParams();
-        viewPagerParams.setMargins(0, AndroidUtilities.isLandscape() ?
+        viewPagerParams.setMargins(0, Screen.isLandscape(this) ?
                 AndroidUtilities.dp(96) : AndroidUtilities.dp(104), 0, 0);
         viewPager.setLayoutParams(viewPagerParams);
 
@@ -99,7 +100,7 @@ public class LaunchActivity extends FragmentActivity {
 
         FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams)
                 tabLayout.getLayoutParams();
-        tabLayoutParams.setMargins(0, ActionBar.getCurrentActionBarHeight(), 0, 0);
+        tabLayoutParams.setMargins(0, actionBar.getCurrentActionBarHeight(), 0, 0);
         tabLayout.setLayoutParams(tabLayoutParams);
     }
 
