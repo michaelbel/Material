@@ -13,7 +13,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.logger.Logger;
 
 public class SimpleTextView extends View implements Drawable.Callback {

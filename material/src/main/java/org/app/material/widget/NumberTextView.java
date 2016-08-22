@@ -13,7 +13,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 import java.util.ArrayList;
 import java.util.Locale;

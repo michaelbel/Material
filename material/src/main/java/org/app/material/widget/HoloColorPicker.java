@@ -29,7 +29,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 public class HoloColorPicker extends View {
 

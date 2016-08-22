@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 public class ActionBarMenu extends LinearLayout {
 

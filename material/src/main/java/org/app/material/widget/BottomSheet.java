@@ -37,10 +37,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.logger.Logger;
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
+import org.app.material.utils.Screen;
 
 import java.util.ArrayList;
 
@@ -610,7 +611,7 @@ public class BottomSheet extends Dialog {
             float top;
 
             if (Build.VERSION.SDK_INT <= 19) {
-                top = AndroidUtilities.displaySize.y - containerView.getMeasuredHeight() - AndroidUtilities.getStatusBarHeight();
+                top = AndroidUtilities.displaySize.y - containerView.getMeasuredHeight() - Screen.getStatusBarHeight(getContext());
             } else {
                 top = containerView.getY();
             }
@@ -619,7 +620,7 @@ public class BottomSheet extends Dialog {
             revealY = (int) (coords[1] + view.getMeasuredHeight() / 2 - top);
 
             if (Build.VERSION.SDK_INT <= 19) {
-                revealY -= AndroidUtilities.getStatusBarHeight();
+                revealY -= Screen.getStatusBarHeight(getContext());
             }
         } else {
             revealX = AndroidUtilities.displaySize.x / 2 + backgroundPaddingLeft;

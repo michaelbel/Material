@@ -24,10 +24,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.app.material.AndroidUtilities;
-import org.app.material.logger.Logger;
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
+import org.app.material.logger.Logger;
+import org.app.material.utils.AndroidUtilities;
+import org.app.material.utils.Screen;
 
 import java.lang.reflect.Field;
 
@@ -592,7 +593,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         int offsetY;
         if (showFromBottom) {
             getLocationOnScreen(location);
-            int diff = location[1] - AndroidUtilities.getStatusBarHeight() + getMeasuredHeight() - menuHeight;
+            int diff = location[1] - Screen.getStatusBarHeight(getContext()) + getMeasuredHeight() - menuHeight;
             offsetY = -menuHeight;
             if (diff < 0) {
                 offsetY -= diff;

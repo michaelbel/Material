@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 public class LayoutHelper {
 

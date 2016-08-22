@@ -8,7 +8,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.view.animation.DecelerateInterpolator;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 
 public class MenuDrawable extends Drawable {
 

@@ -19,8 +19,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import org.app.material.AndroidUtilities;
+import org.app.material.utils.AndroidUtilities;
 import org.app.material.R;
+import org.app.material.utils.Screen;
 
 import java.util.ArrayList;
 
@@ -166,7 +167,7 @@ public class ActionBar extends FrameLayout {
         occupyStatusBar = value;
 
         if (mActionMode != null) {
-            mActionMode.setPadding(0, occupyStatusBar ? AndroidUtilities.getStatusBarHeight() : 0, 0, 0);
+            mActionMode.setPadding(0, occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0, 0, 0);
         }
 
         return this;
@@ -261,7 +262,7 @@ public class ActionBar extends FrameLayout {
         mActionMode.setBackgroundColor(0xFFFFFFFF);
         addView(mActionMode, indexOfChild(mBackButtonImageView));
 
-        mActionMode.setPadding(0, occupyStatusBar ? AndroidUtilities.getStatusBarHeight() : 0, 0, 0);
+        mActionMode.setPadding(0, occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0, 0, 0);
 
         LayoutParams layoutParams = (LayoutParams) mActionMode.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
@@ -275,7 +276,7 @@ public class ActionBar extends FrameLayout {
             mActionModeTop.setBackgroundColor(0x99000000);
             addView(mActionModeTop);
             layoutParams = (LayoutParams) mActionModeTop.getLayoutParams();
-            layoutParams.height = AndroidUtilities.getStatusBarHeight();
+            layoutParams.height = Screen.getStatusBarHeight(getContext());
             layoutParams.width = LayoutHelper.MATCH_PARENT;
             layoutParams.gravity = Gravity.TOP | Gravity.START;
             mActionModeTop.setLayoutParams(layoutParams);
@@ -285,13 +286,13 @@ public class ActionBar extends FrameLayout {
         return mActionMode;
     }
 
-    public static int getCurrentActionBarHeight() {
+    public int getCurrentActionBarHeight() {
         if (isTablet) {
-            return AndroidUtilities.dp(64);
-        } else if (AndroidUtilities.isLandscape()) {
-            return AndroidUtilities.dp(48);
+            return 64;
+        } else if (Screen.isLandscape(getContext())) {
+            return 48;
         } else {
-            return AndroidUtilities.dp(56);
+            return 56;
         }
     }
 
@@ -429,7 +430,7 @@ public class ActionBar extends FrameLayout {
             mActionModeTop.setBackgroundColor(0x99000000);
             addView(mActionModeTop);
             LayoutParams layoutParams = (LayoutParams) mActionModeTop.getLayoutParams();
-            layoutParams.height = AndroidUtilities.getStatusBarHeight();
+            layoutParams.height = Screen.getStatusBarHeight(getContext());
             layoutParams.width = LayoutHelper.MATCH_PARENT;
             layoutParams.gravity = Gravity.TOP | Gravity.START;
             mActionModeTop.setLayoutParams(layoutParams);
@@ -481,7 +482,7 @@ public class ActionBar extends FrameLayout {
         int actionBarHeight = getCurrentActionBarHeight();
         int actionBarHeightSpec = MeasureSpec.makeMeasureSpec(actionBarHeight, MeasureSpec.EXACTLY);
 
-        setMeasuredDimension(width, actionBarHeight + (occupyStatusBar ? AndroidUtilities.getStatusBarHeight() : 0));
+        setMeasuredDimension(width, actionBarHeight + (occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0));
 
         int textLeft;
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
@@ -505,12 +506,12 @@ public class ActionBar extends FrameLayout {
             int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - AndroidUtilities.dp(16) - textLeft;
 
             if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
-                mTitleTextView.setTextSize(!isTablet && AndroidUtilities.isLandscape() ? 18 : 20);
+                mTitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 18 : 20);
                 mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(24), MeasureSpec.AT_MOST));
 
             }
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                mSubtitleTextView.setTextSize(!isTablet && AndroidUtilities.isLandscape() ? 12 : 14);
+                mSubtitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 12 : 14);
                 mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(20), MeasureSpec.AT_MOST));
             }
         }
@@ -530,7 +531,7 @@ public class ActionBar extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int additionalTop = occupyStatusBar ? AndroidUtilities.getStatusBarHeight() : 0;
+        int additionalTop = occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0;
 
         int textLeft;
 
@@ -549,7 +550,7 @@ public class ActionBar extends FrameLayout {
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
             int textTop;
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                textTop = (getCurrentActionBarHeight() / 2 - mTitleTextView.getTextHeight()) / 2 + AndroidUtilities.dp(!isTablet && AndroidUtilities.isLandscape() ? 2 : 3);
+                textTop = (getCurrentActionBarHeight() / 2 - mTitleTextView.getTextHeight()) / 2 + AndroidUtilities.dp(!isTablet && Screen.isLandscape(getContext()) ? 2 : 3);
             } else {
                 textTop = (getCurrentActionBarHeight() - mTitleTextView.getTextHeight()) / 2;
             }
@@ -557,7 +558,7 @@ public class ActionBar extends FrameLayout {
         }
 
         if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-            int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - AndroidUtilities.dp(!isTablet && AndroidUtilities.isLandscape() ? 1 : 1);
+            int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - AndroidUtilities.dp(!isTablet && Screen.isLandscape(getContext()) ? 1 : 1);
             mSubtitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mSubtitleTextView.getMeasuredWidth(), additionalTop + textTop + mSubtitleTextView.getTextHeight());
         }
 
