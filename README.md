@@ -9,7 +9,7 @@ Material Design Library
 ## Download
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:0.1.3'
+    compile 'com.github.michaelbel:material:0.1.5'
 }
 ```
 
