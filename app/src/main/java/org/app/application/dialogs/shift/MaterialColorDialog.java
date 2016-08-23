@@ -11,14 +11,14 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.utils.AndroidUtilities;
-import org.app.material.widget.ColorPickerShift;
+import org.app.material.widget.ShiftColorPicker;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.Palette;
 
 public class MaterialColorDialog extends DialogFragment {
 
-    private ColorPickerShift picker1;
-    private ColorPickerShift picker2;
+    private ShiftColorPicker picker1;
+    private ShiftColorPicker picker2;
 
     public static MaterialColorDialog newInstance() {
         return new MaterialColorDialog();
@@ -33,14 +33,15 @@ public class MaterialColorDialog extends DialogFragment {
         layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
                 LayoutHelper.WRAP_CONTENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), 0);
+        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24),
+                AndroidUtilities.dp(24));
 
-        picker1 = new ColorPickerShift(getContext());
+        picker1 = new ShiftColorPicker(getContext());
         picker1.setColors(Palette.PrimaryColors(getContext()));
         picker1.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 60));
         layout.addView(picker1);
 
-        picker2 = new ColorPickerShift(getContext());
+        picker2 = new ShiftColorPicker(getContext());
         picker2.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
 
         for (int i : picker1.getColors()) {
@@ -55,7 +56,7 @@ public class MaterialColorDialog extends DialogFragment {
         }
         layout.addView(picker2);
 
-        picker1.setOnColorChangedListener(new ColorPickerShift.OnColorChangedListener() {
+        picker1.setOnColorChangedListener(new ShiftColorPicker.OnColorChangedListener() {
             @Override
             public void onColorChanged(int c) {
                 picker2.setColors(Palette.MaterialColors(getContext(), picker1.getColor()));
@@ -64,7 +65,7 @@ public class MaterialColorDialog extends DialogFragment {
         });
 
         builder.setView(layout);
-        builder.setTitle(R.string.PrimaryColor);
+        builder.setTitle("Material Color");
         builder.setNegativeButton(R.string.Cancel, null);
         builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

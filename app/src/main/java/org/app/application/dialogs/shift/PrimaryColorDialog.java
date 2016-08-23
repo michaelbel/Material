@@ -12,13 +12,13 @@ import android.widget.Toast;
 
 import org.app.application.R;
 import org.app.material.utils.AndroidUtilities;
-import org.app.material.widget.ColorPickerShift;
+import org.app.material.widget.ShiftColorPicker;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.Palette;
 
 public class PrimaryColorDialog extends DialogFragment {
 
-    private ColorPickerShift picker;
+    private ShiftColorPicker picker;
 
     public static PrimaryColorDialog newInstance() {
         return new PrimaryColorDialog();
@@ -30,16 +30,17 @@ public class PrimaryColorDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         RelativeLayout layout = new RelativeLayout(getContext());
-        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24), 0);
+        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24),
+                AndroidUtilities.dp(24));
 
-        picker = new ColorPickerShift(getContext());
+        picker = new ShiftColorPicker(getContext());
         picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
         picker.setColors(Palette.PrimaryColors(getContext()));
         picker.setSelectedColor(ContextCompat.getColor(getContext(), R.color.primary_red));
         layout.addView(picker);
 
         builder.setView(layout);
-        builder.setTitle(R.string.AccentColor);
+        builder.setTitle("Primary Color");
         builder.setNegativeButton(R.string.Cancel, null);
         builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

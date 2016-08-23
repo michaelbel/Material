@@ -13,7 +13,7 @@ import org.app.material.widget.Switch;
 
 public class SwitchCell extends BaseCell {
 
-    private Switch mSwitch;
+    private Switch switchView;
     private TextView textView;
 
     public SwitchCell(Context context) {
@@ -28,11 +28,11 @@ public class SwitchCell extends BaseCell {
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
 
-        mSwitch = new Switch(context);
-        mSwitch.setClickable(false);
-        mSwitch.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        switchView = new Switch(context);
+        switchView.setClickable(false);
+        switchView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(mSwitch);
+        addView(switchView);
     }
 
     public SwitchCell setText(String text) {
@@ -46,7 +46,7 @@ public class SwitchCell extends BaseCell {
     }
 
     public SwitchCell setChecked(boolean checked) {
-        mSwitch.setChecked(checked);
+        switchView.setChecked(checked);
         return this;
     }
 }

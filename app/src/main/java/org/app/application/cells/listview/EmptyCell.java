@@ -11,7 +11,7 @@ import org.app.material.widget.LayoutHelper;
 
 public class EmptyCell extends BaseCell {
 
-    private TextView headerText;
+    private TextView headerTextView;
     private boolean upperCase = false;
 
     public EmptyCell(Context context) {
@@ -19,20 +19,20 @@ public class EmptyCell extends BaseCell {
 
         setHeight(42);
 
-        headerText = new TextView(context);
-        headerText.setGravity(Gravity.START);
-        headerText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-        headerText.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        headerText.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        headerTextView = new TextView(context);
+        headerTextView.setGravity(Gravity.START);
+        headerTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
+        headerTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+        headerTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(headerText);
+        addView(headerTextView);
     }
 
     public EmptyCell setHeader(String text) {
         if (upperCase) {
-            headerText.setText(text.toUpperCase());
+            headerTextView.setText(text.toUpperCase());
         } else {
-            headerText.setText(text);
+            headerTextView.setText(text);
         }
 
         return this;
@@ -44,7 +44,7 @@ public class EmptyCell extends BaseCell {
     }
 
     public EmptyCell setGravity(int gravity) {
-        headerText.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
+        headerTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, gravity | Gravity.CENTER_VERTICAL));
         return this;
     }

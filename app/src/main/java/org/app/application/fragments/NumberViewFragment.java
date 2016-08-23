@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.FrameLayout;
 
 import org.app.application.R;
 import org.app.material.utils.AndroidUtilities;
+import org.app.material.utils.DateUtils;
 import org.app.material.widget.LayoutHelper;
 import org.app.material.widget.NumberTextView;
 
@@ -45,6 +47,7 @@ public class NumberViewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 numberTextView.setNumber(j = j + 1);
+                test();
             }
         });
 
@@ -61,5 +64,21 @@ public class NumberViewFragment extends Fragment {
         });
 
         return fragmentView;
+    }
+
+    private void test() {
+        String yesterday = null;
+        String today = null;
+        String todorrow = null;
+
+        yesterday = DateUtils.getYesterdayDate();
+        today = DateUtils.getTodayDate();
+        todorrow = DateUtils.getTomorrowDate();
+        Log.e("gogo", yesterday + "\n" + today + "\n" + todorrow);
+
+        yesterday = DateUtils.getYesterdayDate("d MMMM");
+        today = DateUtils.getTodayDate("d MMMM");
+        todorrow = DateUtils.getTomorrowDate("d MMMM");
+        Log.e("gogo", yesterday + "\n" + today + "\n" + todorrow);
     }
 }

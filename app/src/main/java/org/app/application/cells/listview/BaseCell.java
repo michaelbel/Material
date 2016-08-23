@@ -12,7 +12,7 @@ import org.app.material.utils.AndroidUtilities;
 public class BaseCell extends FrameLayout {
 
     private boolean divider;
-    private int mHeight = 52;
+    private int height = 52;
     private Paint paint;
 
     public BaseCell(Context context) {
@@ -24,13 +24,13 @@ public class BaseCell extends FrameLayout {
         }
     }
 
-    public BaseCell setDivider(boolean divider) {
-        this.divider = divider;
+    public BaseCell setDivider(boolean d) {
+        divider = d;
         return this;
     }
 
-    public BaseCell setHeight(int height) {
-        this.mHeight = height;
+    public BaseCell setHeight(int h) {
+        height = h;
         return this;
     }
 
@@ -38,7 +38,7 @@ public class BaseCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(mHeight + (divider ? 1 : 0)),
+                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(height + (divider ? 1 : 0)),
                         MeasureSpec.EXACTLY));
     }
 

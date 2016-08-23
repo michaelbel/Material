@@ -13,7 +13,7 @@ import org.app.material.widget.LayoutHelper;
 public class TextCell extends BaseCell {
 
     private TextView textView;
-    private TextView valueView;
+    private TextView valueTextView;
 
     public TextCell(Context context) {
         super(context);
@@ -27,12 +27,12 @@ public class TextCell extends BaseCell {
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(textView);
 
-        valueView = new TextView(context);
-        valueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        valueView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
-        valueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        valueTextView = new TextView(context);
+        valueTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        valueTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
+        valueTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
-        addView(valueView);
+        addView(valueTextView);
     }
 
     public TextCell setText(String text) {
@@ -46,12 +46,12 @@ public class TextCell extends BaseCell {
     }
 
     public TextCell setValue(String value) {
-        valueView.setText(value);
+        valueTextView.setText(value);
         return this;
     }
 
     public TextCell setValue(@StringRes int stringId) {
-        valueView.setText(getContext().getText(stringId));
+        valueTextView.setText(getContext().getText(stringId));
         return this;
     }
 }

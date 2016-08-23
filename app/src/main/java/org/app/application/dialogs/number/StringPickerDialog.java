@@ -13,6 +13,8 @@ import org.app.material.widget.NumberPicker;
 
 public class StringPickerDialog extends DialogFragment {
 
+    private NumberPicker picker;
+
     public static StringPickerDialog newInstance() {
         return new StringPickerDialog();
     }
@@ -20,13 +22,12 @@ public class StringPickerDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        final NumberPicker picker = new NumberPicker(getActivity());
+        picker = new NumberPicker(getContext());
         picker.setMinValue(0);
         picker.setMaxValue(6);
         picker.setValue(4);
-        picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         picker.setFormatter(new NumberPicker.Formatter() {
             @Override
             public String format(int value) {
@@ -46,12 +47,12 @@ public class StringPickerDialog extends DialogFragment {
                     return getString(R.string.Sunday);
                 }
 
-                return "";
+                return null;
             }
         });
 
         builder.setView(picker);
-        builder.setTitle(R.string.StringPicker);
+        builder.setTitle("String Piker");
         builder.setNegativeButton(R.string.Cancel, null);
         builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
             @Override
@@ -59,19 +60,19 @@ public class StringPickerDialog extends DialogFragment {
                 which = picker.getValue();
 
                 if (which == 0) {
-                    Toast.makeText(getActivity(), getString(R.string.Monday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Monday), Toast.LENGTH_SHORT).show();
                 } else if (which == 1) {
-                    Toast.makeText(getActivity(), getString(R.string.Tuesday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Tuesday), Toast.LENGTH_SHORT).show();
                 } else if (which == 2) {
-                    Toast.makeText(getActivity(), getString(R.string.Wednesday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Wednesday), Toast.LENGTH_SHORT).show();
                 } else if (which == 3) {
-                    Toast.makeText(getActivity(), getString(R.string.Thursday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Thursday), Toast.LENGTH_SHORT).show();
                 } else if (which == 4) {
-                    Toast.makeText(getActivity(), getString(R.string.Friday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Friday), Toast.LENGTH_SHORT).show();
                 } else if (which == 5) {
-                    Toast.makeText(getActivity(), getString(R.string.Saturday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Saturday), Toast.LENGTH_SHORT).show();
                 } else if (which == 6) {
-                    Toast.makeText(getActivity(), getString(R.string.Sunday), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.Sunday), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -22,21 +22,20 @@ public class NumberPickerDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        picker = new NumberPicker(getActivity());
+        picker = new NumberPicker(getContext());
         picker.setMinValue(0);
         picker.setMaxValue(100);
         picker.setValue(25);
-        //picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         builder.setView(picker);
-        builder.setTitle(R.string.NumberPicker);
+        builder.setTitle("Number Picker");
         builder.setNegativeButton(R.string.Cancel, null);
         builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getActivity(), getString(R.string.Value, picker.getValue()),
+                Toast.makeText(getContext(), getString(R.string.Value, picker.getValue()),
                         Toast.LENGTH_SHORT).show();
             }
         });

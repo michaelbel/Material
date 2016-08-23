@@ -30,7 +30,7 @@ public class CheckBoxCell extends BaseCell {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
         textView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
-                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 52, 0, 0, 0));
+                LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.CENTER_VERTICAL, 52, 0, 16, 0));
         addView(textView);
     }
 

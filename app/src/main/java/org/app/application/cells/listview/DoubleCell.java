@@ -13,7 +13,7 @@ import org.app.material.widget.LayoutHelper;
 public class DoubleCell extends BaseCell {
 
     private TextView textView;
-    private TextView valueView;
+    private TextView valueTextView;
 
     public DoubleCell(Context context) {
         super(context);
@@ -28,12 +28,12 @@ public class DoubleCell extends BaseCell {
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP, 16, 10, 16, 0));
         addView(textView);
 
-        valueView = new TextView(context);
-        valueView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        valueView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
-        valueView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
+        valueTextView = new TextView(context);
+        valueTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        valueTextView.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary));
+        valueTextView.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.BOTTOM, 16, 0, 16, 10));
-        addView(valueView);
+        addView(valueTextView);
     }
 
     public DoubleCell setText(@StringRes int stringId) {
@@ -42,7 +42,7 @@ public class DoubleCell extends BaseCell {
     }
 
     public DoubleCell setValue(@StringRes int stringId) {
-        valueView.setText(getContext().getText(stringId));
+        valueTextView.setText(getContext().getText(stringId));
         return this;
     }
 }
