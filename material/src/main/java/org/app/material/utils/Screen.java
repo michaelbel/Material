@@ -14,9 +14,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import org.app.material.annotation.Experimental;
+
 public class Screen {
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static int getScreenWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -24,7 +26,7 @@ public class Screen {
         return displayMetrics.widthPixels;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static int getScreenHeight(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -40,13 +42,13 @@ public class Screen {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static boolean isScreenLock(Context context) {
         KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         return keyguardManager.inKeyguardRestrictedInputMode();
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static void setTransparentStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.getWindow().addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -54,7 +56,7 @@ public class Screen {
         }
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static void hideStatusBar(Activity activity) {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN, LayoutParams.FLAG_FULLSCREEN);
@@ -71,13 +73,13 @@ public class Screen {
         return result;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static boolean isStatusBarExists(Activity activity) {
         LayoutParams params = activity.getWindow().getAttributes();
         return (params.flags & LayoutParams.FLAG_FULLSCREEN) != LayoutParams.FLAG_FULLSCREEN;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static int getActionBarHeight(Activity activity) {
         TypedValue tv = new TypedValue();
 
@@ -88,12 +90,12 @@ public class Screen {
         return 0;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static void setLandscape(Activity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static Bitmap captureWithStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
@@ -106,7 +108,7 @@ public class Screen {
         return bp;
     }
 
-    // TODO: DON'T TESTED.
+    @Experimental
     public static Bitmap captureWithoutStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);

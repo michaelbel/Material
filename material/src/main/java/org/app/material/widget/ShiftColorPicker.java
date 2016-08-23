@@ -1,3 +1,9 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2015 Bogdasarov Bogdan
+ */
+
 package org.app.material.widget;
 
 import android.content.Context;
@@ -14,7 +20,7 @@ import android.view.View;
 
 import org.app.material.utils.AndroidUtilities;
 
-public class ColorPickerShift extends View {
+public class ShiftColorPicker extends View {
 
 	public static final int VERTICAL = 1;
 	public static final int HORIZONTAL = 0;
@@ -56,17 +62,27 @@ public class ColorPickerShift extends View {
 	private int screenW;
 	private int screenH;
 
-	public ColorPickerShift(Context context) {
-		super(context);
-
-		AndroidUtilities.bind(context);
-
-		mPaint = new Paint();
-		mPaint.setStyle(Style.FILL);
+	public interface OnColorChangedListener {
+		void onColorChanged(int c);
 	}
 
-	public ColorPickerShift(Context context, AttributeSet attrs) {
+	public ShiftColorPicker(Context context) {
+		super(context);
+		initialize(context, null, 0);
+	}
+
+	public ShiftColorPicker(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		initialize(context, attrs, 0);
+	}
+
+	public ShiftColorPicker(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		initialize(context, attrs, defStyleAttr);
+	}
+
+	private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
+		AndroidUtilities.bind(context);
 
 		mPaint = new Paint();
 		mPaint.setStyle(Style.FILL);
@@ -74,24 +90,24 @@ public class ColorPickerShift extends View {
 		mOrientation = HORIZONTAL;
 
 		if (!isInEditMode()) {
-            final int colorsArrayResId = -1;
+			final int colorsArrayResId = -1;
 
-            if (colorsArrayResId > 0) {
-                final int[] colors = context.getResources().getIntArray(colorsArrayResId);
-                setColors(colors);
-            }
-        }
+			if (colorsArrayResId > 0) {
+				final int[] colors = context.getResources().getIntArray(colorsArrayResId);
+				setColors(colors);
+			}
+		}
 
 		final int selected = -1;
 
 		if (selected != -1) {
-            final int[] currentColors = getColors();
-            final int currentColorsLength = currentColors != null ? currentColors.length : 0;
+			final int[] currentColors = getColors();
+			final int currentColorsLength = currentColors != null ? currentColors.length : 0;
 
-            if (selected < currentColorsLength) {
-                setSelectedColorPosition(selected);
-            }
-        }
+			if (selected < currentColorsLength) {
+				setSelectedColorPosition(selected);
+			}
+		}
 	}
 
 	@Override
@@ -103,7 +119,6 @@ public class ColorPickerShift extends View {
 		} else {
 			drawVerticalPicker(canvas);
 		}
-
 	}
 
 	private void drawVerticalPicker(Canvas canvas) {
@@ -250,6 +265,7 @@ public class ColorPickerShift extends View {
 	}
 
 	public static class SavedState extends BaseSavedState {
+
 		private int selectedColor;
 		private boolean isColorSelected;
 
@@ -326,10 +342,10 @@ public class ColorPickerShift extends View {
 	}
 
 	private int recalcCellSize() {
-		if (mOrientation == HORIZONTAL) {
-			mCellSize = Math.round(screenW / (colors.length * 1f));
-		} else {
+		if (mOrientation == VERTICAL) {
 			mCellSize = Math.round(screenH / (colors.length * 1f));
+		} else {
+			mCellSize = Math.round(screenW / (colors.length * 1f));
 		}
 
 		return mCellSize;
@@ -351,9 +367,5 @@ public class ColorPickerShift extends View {
 
 	public void setOnColorChangedListener(OnColorChangedListener l) {
 		this.onColorChanged = l;
-	}
-
-	public interface OnColorChangedListener {
-		void onColorChanged(int c);
 	}
 }

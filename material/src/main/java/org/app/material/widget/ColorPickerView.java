@@ -13,12 +13,12 @@ import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import org.app.material.logger.Logger;
 import org.app.material.R;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ public class ColorPickerView extends View {
     private float mLightness = 1;
     private float mAlpha = 1;
     private static final float STROKE_RATIO = 2f;
+
     private Paint mColorWheelFill = PaintBuilder.newPaint().color(0).build();
     private Paint mSelectorStroke1 = PaintBuilder.newPaint().color(0xFFFFFFFF).build();
     private Paint mSelectorStroke2 = PaintBuilder.newPaint().color(0xff000000).build();
@@ -44,8 +45,16 @@ public class ColorPickerView extends View {
     private Bitmap mColorWheel;
     private Canvas mColorWheelCanvas;
     private Integer mInitialColor;
-    private Integer initialColors[] = new Integer[]{0xFFF44336, 0xFF9C27B0, 0xFF2196F3, 0xFF00BCD4, 0xFF4CAF50, 0xFFFFEB3B, 0xFFF44336};
-    private ColorCircle mCurrentColorCircle;
+    private Integer initialColors[] = new Integer[] {
+			0xFFF44336,
+			0xFF9C27B0,
+			0xFF2196F3,
+			0xFF00BCD4,
+			0xFF4CAF50,
+			0xFFFFEB3B,
+			0xFFF44336
+	};
+	private ColorCircle mCurrentColorCircle;
     private LinearLayout mColorPreview;
     private ColorWheelRenderer mRenderer;
 	private ArrayList<OnColorSelectedListener> mListeners = new ArrayList<>();
@@ -85,10 +94,12 @@ public class ColorPickerView extends View {
 
     public ColorPickerView setType(@TYPE int type) {
         if (type == CIRCLE) {
-            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder.getRenderer(ColorPickerView.WHEEL_TYPE.CIRCLE);
+            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder
+					.getRenderer(ColorPickerView.WHEEL_TYPE.CIRCLE);
             setRenderer(renderer);
         } else if (type == FLOWER) {
-            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder.getRenderer(WHEEL_TYPE.FLOWER);
+            ColorPickerView.ColorWheelRenderer renderer = ColorPickerView.ColorWheelRendererBuilder
+					.getRenderer(WHEEL_TYPE.FLOWER);
             setRenderer(renderer);
         }
 
@@ -223,7 +234,7 @@ public class ColorPickerView extends View {
 						try {
 							listener.onColorSelected(selectedColor);
 						} catch (Exception e) {
-							Logger.e("message", e);
+							Log.e("message", e.getMessage());
 						}
 					}
 				}
@@ -400,7 +411,7 @@ public class ColorPickerView extends View {
             return;
         }
 
-		this.mColorSelection = previewNumber;
+		mColorSelection = previewNumber;
 		setHighlightedColor(previewNumber);
 		Integer color = initialColors[previewNumber];
 
@@ -461,11 +472,10 @@ public class ColorPickerView extends View {
 		FLOWER, CIRCLE;
 
 		public static WHEEL_TYPE indexOf(int index) {
-			switch (index) {
-				case 0:
-					return FLOWER;
-				case 1:
-					return CIRCLE;
+			if (index == 0) {
+				return FLOWER;
+			} else if (index == 1) {
+				return CIRCLE;
 			}
 
 			return FLOWER;

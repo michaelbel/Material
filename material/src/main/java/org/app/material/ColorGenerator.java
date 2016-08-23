@@ -1,9 +1,12 @@
 package org.app.material;
 
+import org.app.material.annotation.Experimental;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@Experimental
 public class ColorGenerator {
 
     public static ColorGenerator DEFAULT;

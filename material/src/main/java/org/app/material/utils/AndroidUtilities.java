@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import org.app.material.R;
 import org.app.material.anim.ViewProxy;
+import org.app.material.annotation.Experimental;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -148,6 +149,7 @@ public class AndroidUtilities {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+    @Experimental
     public static boolean isKeyboardShowed(View view) {
         if (view == null) {
             return false;
@@ -166,7 +168,7 @@ public class AndroidUtilities {
         imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
-    /*@RequiresPermission(Manifest.permission.VIBRATE)*/
+    //@RequiresPermission(Manifest.permission.VIBRATE)
     public static void vibrate(int duration) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vibrator.vibrate(duration);
@@ -211,6 +213,7 @@ public class AndroidUtilities {
      * @param mAlpha Alpha value from 0.0 to 1.0
      * @return new color with alpha.
      */
+    @Experimental
     public static int setColorWithAlpha(int color, float mAlpha) {
         int alpha = Math.round(Color.alpha(color) * mAlpha);
         int red = Color.red(color);
