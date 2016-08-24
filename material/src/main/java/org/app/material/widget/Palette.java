@@ -55,54 +55,6 @@ public class Palette {
         };
     }
 
-    public static int[] PrimaryLightColors(Context context) {
-        return new int[] {
-                ContextCompat.getColor(context, R.color.primaryLight_red),
-                ContextCompat.getColor(context, R.color.primaryLight_pink),
-                ContextCompat.getColor(context, R.color.primaryLight_purple),
-                ContextCompat.getColor(context, R.color.primaryLight_deep_purple),
-                ContextCompat.getColor(context, R.color.primaryLight_indigo),
-                ContextCompat.getColor(context, R.color.primaryLight_blue),
-                ContextCompat.getColor(context, R.color.primaryLight_light_blue),
-                ContextCompat.getColor(context, R.color.primaryLight_cyan),
-                ContextCompat.getColor(context, R.color.primaryLight_teal),
-                ContextCompat.getColor(context, R.color.primaryLight_green),
-                ContextCompat.getColor(context, R.color.primaryLight_light_green),
-                ContextCompat.getColor(context, R.color.primaryLight_lime),
-                ContextCompat.getColor(context, R.color.primaryLight_yellow),
-                ContextCompat.getColor(context, R.color.primaryLight_amber),
-                ContextCompat.getColor(context, R.color.primaryLight_orange),
-                ContextCompat.getColor(context, R.color.primaryLight_deep_orange),
-                ContextCompat.getColor(context, R.color.primaryLight_brown),
-                ContextCompat.getColor(context, R.color.primaryLight_grey),
-                ContextCompat.getColor(context, R.color.primaryLight_blue_grey)
-        };
-    }
-
-    public static int[] PrimaryColors200(Context context) {
-        return new int[] {
-                ContextCompat.getColor(context, R.color.primary200_red),
-                ContextCompat.getColor(context, R.color.primary200_pink),
-                ContextCompat.getColor(context, R.color.primary200_purple),
-                ContextCompat.getColor(context, R.color.primary200_deep_purple),
-                ContextCompat.getColor(context, R.color.primary200_indigo),
-                ContextCompat.getColor(context, R.color.primary200_blue),
-                ContextCompat.getColor(context, R.color.primary200_light_blue),
-                ContextCompat.getColor(context, R.color.primary200_cyan),
-                ContextCompat.getColor(context, R.color.primary200_teal),
-                ContextCompat.getColor(context, R.color.primary200_green),
-                ContextCompat.getColor(context, R.color.primary200_light_green),
-                ContextCompat.getColor(context, R.color.primary200_lime),
-                ContextCompat.getColor(context, R.color.primary200_yellow),
-                ContextCompat.getColor(context, R.color.primary200_amber),
-                ContextCompat.getColor(context, R.color.primary200_orange),
-                ContextCompat.getColor(context, R.color.primary200_deep_orange),
-                ContextCompat.getColor(context, R.color.primary200_brown),
-                ContextCompat.getColor(context, R.color.primary200_grey),
-                ContextCompat.getColor(context, R.color.primary200_blue_grey)
-        };
-    }
-
     public static int[] AccentColors(Context context) {
         return new int[] {
                 ContextCompat.getColor(context, R.color.accent_red),
