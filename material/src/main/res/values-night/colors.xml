@@ -1,0 +1,20 @@
+<resources>
+    <!--Opacity 100%-->
+    <color name="primaryTextColor">#FFFFFFFF</color>
+    <!--Opacity 70%-->
+    <color name="secondaryTextColor">#B3FFFFFF</color>
+    <!--Disabled text, hint text, Opacity 50%-->
+    <color name="disabledTextColor">#80FFFFFF</color>
+    <!--Divider color, Opacity 12%-->
+    <color name="dividerColor">#1FFFFFFF</color>
+    <!--Opacity 100%-->
+    <color name="iconActiveColor">#FFFFFFFF</color>
+    <!--Opacity 50%-->
+    <color name="iconInactiveColor">#80FFFFFF</color>
+    <!--Themes-->
+    <color name="statusBarColor">@color/md_black</color>
+    <color name="appBarColor">@color/md_grey_900</color>
+    <color name="backgroundColor">#303030</color>
+    <!--Cards/Dialogs-->
+    <color name="foregroundColor">@color/md_grey_800</color>
+</resources>
