@@ -56,7 +56,7 @@
     </declare-styleable>
 
     <!--ColorPickerShift-->
-    <declare-styleable name="ColorPickerShift">
+    <declare-styleable name="ShiftColorPicker">
         <attr name="orientation" format="enum">
             <enum name="horizontal" value="0"/>
             <enum name="vertical" value="1"/>
