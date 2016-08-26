@@ -1,4 +1,4 @@
-# Material
+## Material
 Material Design Library
 
 [![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://github.com/michaelbel/material)
@@ -9,7 +9,7 @@ Material Design Library
 ## Download
 ```gradle
 dependencies {
-    compile 'com.github.michaelbel:material:0.1.5'
+    compile 'com.github.michaelbel:material:0.1.6'
 }
 ```
 
