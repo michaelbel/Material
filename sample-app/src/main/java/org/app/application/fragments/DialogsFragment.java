@@ -35,11 +35,12 @@ import org.app.application.dialogs.shift.MaterialColorDialog;
 import org.app.application.dialogs.shift.PrimaryColorDialog;
 import org.app.application.dialogs.shift.PrimaryDarkColorDialog;
 import org.app.application.model.DialogItem;
-import org.app.material.utils.AndroidUtilities;
 import org.app.material.picker.date.DatePickerDialog;
 import org.app.material.picker.time.RadialPickerLayout;
 import org.app.material.picker.time.TimePickerDialog;
-import org.app.material.widget.ColorView;
+import org.app.material.utils.AndroidUtilities;
+import org.app.material.widget.ColorPicker.ColorMode;
+import org.app.material.widget.ColorPicker.IndicatorMode;
 import org.app.material.widget.LayoutHelper;
 
 import java.util.ArrayList;
@@ -111,6 +112,14 @@ public class DialogsFragment extends Fragment {
                     dialog.show(getFragmentManager(), TAG);
                 }
 
+                if (i == 12) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder();
+                    builder.setInitialColor(0xFFFF5252);
+                    builder.setColorMode(ColorMode.RGB);
+                    builder.setIndicatorMode(IndicatorMode.HEX);
+                    builder.create().show(getFragmentManager(), TAG);
+                }
+
 
 
 
@@ -131,45 +140,40 @@ public class DialogsFragment extends Fragment {
                             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     startActivityForResult(intent, 0);
                 } else if (i == -15) {
-                    new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.RGB)
-                            .indicatorMode(ColorView.IndicatorMode.HEX)
-                            .create()
-                            .show(getFragmentManager(), TAG);
+
                 } else if (i == 16) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.ARGB)
-                            .indicatorMode(ColorView.IndicatorMode.HEX)
+                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
+                            .setColorMode(ColorMode.ARGB)
+                            .setIndicatorMode(IndicatorMode.HEX)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 17) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.HSV)
-                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
+                            .setColorMode(ColorMode.HSV)
+                            .setIndicatorMode(IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 18) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.HSL)
-                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
+                            .setColorMode(ColorMode.HSL)
+                            .setIndicatorMode(IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 19 ) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.CMYK)
-                            .indicatorMode(ColorView.IndicatorMode.DECIMAL)
+                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
+                            .setColorMode(ColorMode.CMYK)
+                            .setIndicatorMode(IndicatorMode.DECIMAL)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 20) {
                     new ColorPickerDialog.Builder()
-                            .initialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .colorMode(ColorView.ColorMode.CMYK255)
-                            .indicatorMode(ColorView.IndicatorMode.HEX)
+                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
+                            .setColorMode(ColorMode.CMYK255)
+                            .setIndicatorMode(IndicatorMode.HEX)
                             .create()
                             .show(getFragmentManager(), TAG);
                 } else if (i == 24) {
