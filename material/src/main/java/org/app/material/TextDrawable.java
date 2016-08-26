@@ -5,6 +5,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.annotation.ColorInt;
 
 import org.app.material.annotation.Experimental;
 
@@ -59,7 +60,7 @@ public class TextDrawable extends ShapeDrawable {
         paint.setColor(color);
     }
 
-    private int getDarkerShade(int color) {
+    private int getDarkerShade(@ColorInt int color) {
         return Color.rgb((int)(SHADE_FACTOR * Color.red(color)),
                 (int)(SHADE_FACTOR * Color.green(color)),
                 (int)(SHADE_FACTOR * Color.blue(color)));
@@ -168,7 +169,7 @@ public class TextDrawable extends ShapeDrawable {
             return this;
         }
 
-        public IConfigBuilder textColor(int color) {
+        public IConfigBuilder textColor(@ColorInt int color) {
             this.textColor = color;
             return this;
         }

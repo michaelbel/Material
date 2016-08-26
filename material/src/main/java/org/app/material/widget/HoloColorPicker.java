@@ -25,6 +25,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -150,7 +151,7 @@ public class HoloColorPicker extends View {
 		mShowCenterOldColor = true;
 	}
 
-	public HoloColorPicker setNewCenterColor(int color) {
+	public HoloColorPicker setNewCenterColor(@ColorInt int color) {
 		mCenterNewColor = color;
 		mCenterNewPaint.setColor(color);
 

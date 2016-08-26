@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -46,7 +48,7 @@ public class NumberTextView extends View {
     }
 
     private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-
+        AndroidUtilities.bind(context);
     }
 
     public void setProgress(float value) {
@@ -120,12 +122,12 @@ public class NumberTextView extends View {
         setNumber(currentNumber, false);
     }
 
-    public void setTextColor(int value) {
-        textPaint.setColor(value);
+    public void setTextColor(@ColorInt int color) {
+        textPaint.setColor(color);
         invalidate();
     }
 
-    public void setTypeface(Typeface typeface) {
+    public void setTypeface(@NonNull Typeface typeface) {
         textPaint.setTypeface(typeface);
         oldLetters.clear();
         letters.clear();

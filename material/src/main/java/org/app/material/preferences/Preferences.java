@@ -16,12 +16,12 @@
 
 package org.app.material.preferences;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.LinkedHashSet;
@@ -156,7 +156,7 @@ public class Preferences {
      * @see SharedPreferences#getStringSet(String, Set)
      * @see #getOrderedStringSet(String, Set)
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @NonNull
     public static Set<String> getStringSet(final String key, final Set<String> defValue) {
         SharedPreferences prefs = getPreferences();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -178,18 +178,22 @@ public class Preferences {
      *                            Strings.
      * @see #getStringSet(String, Set)
      */
+    @NonNull
     public static Set<String> getOrderedStringSet(String key, final Set<String> defValue) {
         SharedPreferences prefs = getPreferences();
         if (prefs.contains(key + LENGTH)) {
             LinkedHashSet<String> set = new LinkedHashSet<>();
             int stringSetLength = prefs.getInt(key + LENGTH, -1);
+
             if (stringSetLength >= 0) {
                 for (int i = 0; i < stringSetLength; i++) {
                     set.add(prefs.getString(key + "[" + i + "]", null));
                 }
             }
+
             return set;
         }
+
         return defValue;
     }
 
@@ -257,7 +261,6 @@ public class Preferences {
         editor.apply();
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static void putStringSet(final String key, final Set<String> value) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             final Editor editor = getPreferences().edit();
@@ -294,6 +297,7 @@ public class Preferences {
     public static void remove(final String key) {
         SharedPreferences prefs = getPreferences();
         final Editor editor = prefs.edit();
+
         if (prefs.contains(key + LENGTH)) {
             int stringSetLength = prefs.getInt(key + LENGTH, -1);
             if (stringSetLength >= 0) {
@@ -304,6 +308,7 @@ public class Preferences {
                 }
             }
         }
+
         editor.remove(key);
         editor.apply();
     }

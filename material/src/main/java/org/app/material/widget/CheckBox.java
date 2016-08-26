@@ -38,8 +38,6 @@ public class CheckBox extends View {
     private int mDisabledColor;
     private boolean darkTheme;
 
-    //private int mCheckColor = 0xFFFFFFFF;
-
     public CheckBox(Context context) {
         super(context);
         initialize(context, null, 0);

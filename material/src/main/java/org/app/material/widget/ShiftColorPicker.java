@@ -14,6 +14,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -171,7 +172,7 @@ public class ShiftColorPicker extends View {
 		}
 	}
 
-	private void onColorChanged(int color) {
+	private void onColorChanged(@ColorInt int color) {
 		if (onColorChanged != null) {
 			onColorChanged.onColorChanged(color);
 		}

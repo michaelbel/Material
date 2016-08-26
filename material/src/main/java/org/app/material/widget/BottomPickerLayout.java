@@ -2,6 +2,7 @@ package org.app.material.widget;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -9,8 +10,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.app.material.utils.AndroidUtilities;
 import org.app.material.R;
+import org.app.material.utils.AndroidUtilities;
 
 public class BottomPickerLayout extends FrameLayout {
 
@@ -59,7 +60,7 @@ public class BottomPickerLayout extends FrameLayout {
         addView(mPositiveButton);
     }
 
-    public BottomPickerLayout setNegativeButton(String text, OnClickListener listener) {
+    public BottomPickerLayout setNegativeButton(@NonNull String text, OnClickListener listener) {
         this.negativeButtonListener = listener;
 
         mNegativeButton.setText(text.toUpperCase());
@@ -75,12 +76,12 @@ public class BottomPickerLayout extends FrameLayout {
         return this;
     }
 
-    public BottomPickerLayout setNegativeButton(@StringRes int resId, OnClickListener listener) {
-        setNegativeButton(getContext().getString(resId), listener);
+    public BottomPickerLayout setNegativeButton(@StringRes int stringId, OnClickListener listener) {
+        setNegativeButton(getContext().getString(stringId), listener);
         return this;
     }
 
-    public BottomPickerLayout setPositiveButton(String text, OnClickListener listener) {
+    public BottomPickerLayout setPositiveButton(@NonNull String text, OnClickListener listener) {
         this.positiveButtonListener = listener;
 
         mPositiveButton.setText(text.toUpperCase());
@@ -96,8 +97,8 @@ public class BottomPickerLayout extends FrameLayout {
         return this;
     }
 
-    public BottomPickerLayout setPositiveButton(@StringRes int resId, OnClickListener listener) {
-        setPositiveButton(getContext().getString(resId), listener);
+    public BottomPickerLayout setPositiveButton(@StringRes int stringId, OnClickListener listener) {
+        setPositiveButton(getContext().getString(stringId), listener);
         return this;
     }
 

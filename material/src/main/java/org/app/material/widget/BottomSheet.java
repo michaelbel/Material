@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -893,12 +894,12 @@ public class BottomSheet extends Dialog {
             return this;
         }
 
-        public Builder setCustomView(View view) {
+        public Builder setCustomView(@NonNull View view) {
             bottomSheet.customView = view;
             return this;
         }
 
-        public Builder setTitle(CharSequence title) {
+        public Builder setTitle(@NonNull CharSequence title) {
             bottomSheet.title = title;
             return this;
         }

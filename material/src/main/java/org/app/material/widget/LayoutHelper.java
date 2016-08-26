@@ -1,6 +1,7 @@
 package org.app.material.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.FrameLayout;
@@ -15,9 +16,8 @@ public class LayoutHelper {
     public static final int MATCH_PARENT = -1;
     public static final int WRAP_CONTENT = -2;
 
-    private static int getSize(Context context, float size) {
-        AndroidUtilities.bind(context);
-        return (int) (size < 0 ? size : AndroidUtilities.dp(size));
+    private static int getSize(@NonNull Context context, float size) {
+        return (int) (size < 0 ? size : AndroidUtilities.dp(context, size));
     }
 
     /**
