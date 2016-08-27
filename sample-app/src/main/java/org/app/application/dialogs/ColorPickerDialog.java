@@ -1,6 +1,7 @@
 package org.app.application.dialogs;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
@@ -17,13 +18,11 @@ import org.app.material.widget.ColorView;
 
 public class ColorPickerDialog extends DialogFragment {
 
-    public int DEFAULT_COLOR = Color.getThemeColor(getContext(), R.attr.colorAccent);
+    private final static String ARG_INITIAL_COLOR = "initial_color";
+    private final static String ARG_COLOR_MODE = "color_mode";
+    private final static String ARG_INDICATOR_MODE = "indicator_mode";
 
-    private final static String ARG_INITIAL_COLOR = "arg_initial_color";
-    private final static String ARG_COLOR_MODE_ID = "arg_color_mode_id";
-    private final static String ARG_INDICATOR_MODE = "arg_indicator_mode";
-
-    private ColorView mColorView;
+    private ColorView colorView;
 
     private static ColorPickerDialog newInstance(@ColorInt int initialColor,
                                                  ColorMode colorMode,
@@ -37,27 +36,35 @@ public class ColorPickerDialog extends DialogFragment {
                                    IndicatorMode indicatorMode) {
         Bundle args = new Bundle();
         args.putInt(ARG_INITIAL_COLOR, initialColor);
-        args.putInt(ARG_COLOR_MODE_ID, colorMode.ordinal());
+        args.putInt(ARG_COLOR_MODE, colorMode.ordinal());
         args.putInt(ARG_INDICATOR_MODE, indicatorMode.ordinal());
         return args;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putAll(makeArgs(ColorView.getCurrentColor(), mColorView.getColorMode(),
-                mColorView.getIndicatorMode()));
+        outState.putAll(makeArgs(
+                colorView.getInitialColor(),
+                colorView.getColorMode(),
+                colorView.getIndicatorMode())
+        );
         super.onSaveInstanceState(outState);
     }
 
     public static class Builder {
 
+        private Context context;
         private @ColorInt int initialColor;
         private ColorMode colorMode;
         private IndicatorMode indicatorMode;
 
+        public Builder(Context context) {
+            this.context = context;
+        }
+
         public Builder setInitialColor(@ColorInt int color) {
             if (color == 0) {
-                color = 0xFFFF5252;
+                color = Color.getThemeColor(context, R.attr.colorAccent);
             }
 
             this.initialColor = color;
@@ -92,30 +99,31 @@ public class ColorPickerDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        @ColorInt int initColor;
+        ColorMode colorMode;
+        IndicatorMode indicatorMode;
+
         if (savedInstanceState == null) {
-            mColorView = new ColorView(
-                    getArguments().getInt(ARG_INITIAL_COLOR),
-                    ColorMode.values()[getArguments().getInt(ARG_COLOR_MODE_ID)],
-                    IndicatorMode.values()[getArguments().getInt(ARG_INDICATOR_MODE)],
-                    getContext());
+            initColor = getArguments().getInt(ARG_INITIAL_COLOR);
+            colorMode = ColorMode.values()[getArguments().getInt(ARG_COLOR_MODE)];
+            indicatorMode = IndicatorMode.values()[getArguments().getInt(ARG_INDICATOR_MODE)];
         } else {
-            mColorView = new ColorView(
-                    savedInstanceState.getInt(ARG_INITIAL_COLOR, ColorView.DEFAULT_COLOR),
-                    ColorMode.values()[savedInstanceState.getInt(ARG_COLOR_MODE_ID)],
-                    IndicatorMode.values()[savedInstanceState.getInt(ARG_INDICATOR_MODE)],
-                    getContext());
+            initColor = savedInstanceState.getInt(ARG_INITIAL_COLOR, ColorView.DEFAULT_COLOR);
+            colorMode = ColorMode.values()[savedInstanceState.getInt(ARG_COLOR_MODE)];
+            indicatorMode = IndicatorMode.values()[savedInstanceState.getInt(ARG_INDICATOR_MODE)];
         }
 
+        colorView = new ColorView(getContext(), initColor, colorMode, indicatorMode);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(mColorView);
+        builder.setView(colorView);
         builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), Integer.toHexString(ColorView.getCurrentColor()),
+                Toast.makeText(getContext(), Integer.toHexString(colorView.getInitialColor()),
                         Toast.LENGTH_SHORT).show();
             }
         });
-
         return builder.create();
     }
 }
