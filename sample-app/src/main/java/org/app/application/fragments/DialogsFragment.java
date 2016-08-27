@@ -20,7 +20,6 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.app.application.LaunchActivity;
 import org.app.application.R;
 import org.app.application.cells.listview.EmptyCell;
 import org.app.application.cells.listview.TextCell;
@@ -38,7 +37,7 @@ import org.app.application.model.DialogItem;
 import org.app.material.picker.date.DatePickerDialog;
 import org.app.material.picker.time.RadialPickerLayout;
 import org.app.material.picker.time.TimePickerDialog;
-import org.app.material.utils.AndroidUtilities;
+import org.app.material.utils.Color;
 import org.app.material.widget.ColorPicker.ColorMode;
 import org.app.material.widget.ColorPicker.IndicatorMode;
 import org.app.material.widget.LayoutHelper;
@@ -49,79 +48,116 @@ import java.util.Calendar;
 public class DialogsFragment extends Fragment {
 
     private static final String TAG = DialogsFragment.class.getSimpleName();
-    private ArrayList<DialogItem> dialogItems;
-
-    private LaunchActivity mActivity;
+    
+    private ArrayList<DialogItem> items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
-        FrameLayout fragmentView = new FrameLayout(getActivity());
+        FrameLayout fragmentView = new FrameLayout(getContext());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
-        mActivity = (LaunchActivity) getActivity();
+        items = new ArrayList<>();
+        items.add(new DialogItem("Number Picker"));                  //- 0
+        items.add(new DialogItem().setTitle("Number Picker"));       //- 1
+        items.add(new DialogItem().setTitle("String Picker"));       //- 2
+        items.add(new DialogItem("Shift Color Picker"));             //- 3
+        items.add(new DialogItem().setTitle("Primary Colors"));      //- 4
+        items.add(new DialogItem().setTitle("Primary Dark Colors")); //- 5
+        items.add(new DialogItem().setTitle("Accent Colors"));       //- 6
+        items.add(new DialogItem().setTitle("Material Colors"));     //- 7
+        items.add(new DialogItem("SeekBar Color Picker"));           //- 8
+        items.add(new DialogItem().setTitle("RGB"));                 //- 9
+        items.add(new DialogItem().setTitle("ARGB"));                //- 10
+        items.add(new DialogItem().setTitle("HSV"));                 //- 11
+        items.add(new DialogItem().setTitle("HSL"));                 //- 12
+        items.add(new DialogItem().setTitle("CMYK"));                //- 13
+        items.add(new DialogItem().setTitle("CMYK 255"));            //- 14
+        
+        items.add(new DialogItem(""));                               //- 15
+        items.add(new DialogItem().setTitle("Holo Color Picker"));   //- 16
+        items.add(new DialogItem().setTitle("View Color Picker"));   //- 17
 
-        dialogItems = new ArrayList<>();
-        dialogItems.add(new DialogItem("Shift Color Picker"));
-        dialogItems.add(new DialogItem().setTitle("Primary Colors"));
-        dialogItems.add(new DialogItem().setTitle("Primary Dark Colors"));
-        dialogItems.add(new DialogItem().setTitle("Accent Colors"));
-        dialogItems.add(new DialogItem().setTitle("Material Colors"));
-        dialogItems.add(new DialogItem("Number Picker"));
-        dialogItems.add(new DialogItem().setTitle("Number Picker"));
-        dialogItems.add(new DialogItem().setTitle("String Picker"));
-        dialogItems.add(new DialogItem(""));
-        dialogItems.add(new DialogItem().setTitle("Holo Color Picker"));
-        dialogItems.add(new DialogItem().setTitle("View Color Picker"));
-
-        ListView listView = new ListView(getActivity());
+        ListView listView = new ListView(getContext());
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
         listView.setAdapter(new ListViewAdapter());
-        listView.setLayoutParams(LayoutHelper.makeFrame(getActivity(),
+        listView.setLayoutParams(LayoutHelper.makeFrame(getContext(),
                 LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == 1) {
-                    PrimaryColorDialog dialog = PrimaryColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                } else if (i == 2) {
-                    PrimaryDarkColorDialog dialog = PrimaryDarkColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                } else if (i == 3) {
-                    AccentColorDialog dialog = AccentColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                } else if (i == 4) {
-                    MaterialColorDialog dialog = MaterialColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                }
-
-                if (i == 6) {
                     NumberPickerDialog dialog = NumberPickerDialog.newInstance();
                     dialog.show(getFragmentManager(), TAG);
-                } else if (i == 7) {
+                } else if (i == 2) {
                     StringPickerDialog dialog = StringPickerDialog.newInstance();
                     dialog.show(getFragmentManager(), TAG);
                 }
 
-                if (i == 9) {
-                    HoloColorPickerDialog dialog = HoloColorPickerDialog.newInstance();
+                if (i == 4) {
+                    PrimaryColorDialog dialog = PrimaryColorDialog.newInstance();
                     dialog.show(getFragmentManager(), TAG);
-                } else if (i == 10) {
-                    ViewColorPickerDialog dialog = ViewColorPickerDialog.newInstance();
+                } else if (i == 5) {
+                    PrimaryDarkColorDialog dialog = PrimaryDarkColorDialog.newInstance();
+                    dialog.show(getFragmentManager(), TAG);
+                } else if (i == 6) {
+                    AccentColorDialog dialog = AccentColorDialog.newInstance();
+                    dialog.show(getFragmentManager(), TAG);
+                } else if (i == 7) {
+                    MaterialColorDialog dialog = MaterialColorDialog.newInstance();
                     dialog.show(getFragmentManager(), TAG);
                 }
-
-                if (i == 12) {
-                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder();
-                    builder.setInitialColor(0xFFFF5252);
+                
+                if (i == 9) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.RGB);
+                    builder.setIndicatorMode(IndicatorMode.HEX);
+                    builder.create().show(getFragmentManager(), TAG);
+                } else if (i == 10) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setColorMode(ColorMode.ARGB);
+                    builder.setIndicatorMode(IndicatorMode.HEX);
+                    builder.create().show(getFragmentManager(), TAG);
+                } else if (i == 11) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setColorMode(ColorMode.HSV);
+                    builder.setIndicatorMode(IndicatorMode.DECIMAL);
+                    builder.create().show(getFragmentManager(), TAG);
+                } else if (i == 12) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setColorMode(ColorMode.HSL);
+                    builder.setIndicatorMode(IndicatorMode.DECIMAL);
+                    builder.create().show(getFragmentManager(), TAG);
+                } else if (i == 13) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setColorMode(ColorMode.CMYK);
+                    builder.setIndicatorMode(IndicatorMode.DECIMAL);
+                    builder.create().show(getFragmentManager(), TAG);
+                } else if (i == 14) {
+                    ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
+                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setColorMode(ColorMode.CMYK255);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
                 }
 
+                if (i == 16) {
+                    HoloColorPickerDialog dialog = HoloColorPickerDialog.newInstance();
+                    dialog.show(getFragmentManager(), TAG);
+                } else if (i == 17) {
+                    ViewColorPickerDialog dialog = ViewColorPickerDialog.newInstance();
+                    dialog.show(getFragmentManager(), TAG);
+                }
 
 
+
+                
+                
 
 
                 if (i == -2) {
@@ -139,44 +175,7 @@ public class DialogsFragment extends Fragment {
                     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
                             RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
                     startActivityForResult(intent, 0);
-                } else if (i == -15) {
-
-                } else if (i == 16) {
-                    new ColorPickerDialog.Builder()
-                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .setColorMode(ColorMode.ARGB)
-                            .setIndicatorMode(IndicatorMode.HEX)
-                            .create()
-                            .show(getFragmentManager(), TAG);
-                } else if (i == 17) {
-                    new ColorPickerDialog.Builder()
-                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .setColorMode(ColorMode.HSV)
-                            .setIndicatorMode(IndicatorMode.DECIMAL)
-                            .create()
-                            .show(getFragmentManager(), TAG);
-                } else if (i == 18) {
-                    new ColorPickerDialog.Builder()
-                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .setColorMode(ColorMode.HSL)
-                            .setIndicatorMode(IndicatorMode.DECIMAL)
-                            .create()
-                            .show(getFragmentManager(), TAG);
-                } else if (i == 19 ) {
-                    new ColorPickerDialog.Builder()
-                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .setColorMode(ColorMode.CMYK)
-                            .setIndicatorMode(IndicatorMode.DECIMAL)
-                            .create()
-                            .show(getFragmentManager(), TAG);
-                } else if (i == 20) {
-                    new ColorPickerDialog.Builder()
-                            .setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent))
-                            .setColorMode(ColorMode.CMYK255)
-                            .setIndicatorMode(IndicatorMode.HEX)
-                            .create()
-                            .show(getFragmentManager(), TAG);
-                } else if (i == 24) {
+                } else if (i == -24) {
                     Calendar now = Calendar.getInstance();
 
                     DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -184,7 +183,7 @@ public class DialogsFragment extends Fragment {
                                 @Override
                                 public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                                     String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-                                    Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
                                 }
                             },
                             now.get(Calendar.YEAR),
@@ -196,7 +195,7 @@ public class DialogsFragment extends Fragment {
                     dpd.setCancelText("Cancel");
                     dpd.setThemeDark(true);
                     dpd.show(getActivity().getFragmentManager(), "Date");
-                } else if (i == 25) {
+                } else if (i == -25) {
                     Calendar now = Calendar.getInstance();
 
                     TimePickerDialog time = TimePickerDialog.newInstance(
@@ -208,7 +207,7 @@ public class DialogsFragment extends Fragment {
                                     String secondString = second < 10 ? "0" + second : "" + second;
                                     String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
 
-                                    Toast.makeText(getActivity(), time1, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getContext(), time1, Toast.LENGTH_LONG).show();
                                 }
                             },
                             now.get(Calendar.HOUR_OF_DAY),
@@ -224,7 +223,6 @@ public class DialogsFragment extends Fragment {
             }
         });
         fragmentView.addView(listView);
-
         return fragmentView;
     }
 
@@ -248,7 +246,7 @@ public class DialogsFragment extends Fragment {
                 String secondString = second < 10 ? "0" + second : "" + second;
                 String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
 
-                Toast.makeText(getActivity(), time1, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), time1, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -257,7 +255,7 @@ public class DialogsFragment extends Fragment {
             @Override
             public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
                 String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-                Toast.makeText(getActivity(), date, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -266,14 +264,13 @@ public class DialogsFragment extends Fragment {
 
         @Override
         public boolean isEnabled(int i) {
-            DialogItem item = dialogItems.get(i);
-
+            DialogItem item = items.get(i);
             return item.isNotTitle();
         }
 
         @Override
         public int getCount() {
-            return dialogItems.size();
+            return items.size();
         }
 
         @Override
@@ -290,11 +287,11 @@ public class DialogsFragment extends Fragment {
         public View getView(int i, View view, ViewGroup viewGroup) {
             int type = getItemViewType(i);
 
-            DialogItem item = dialogItems.get(i);
+            DialogItem item = items.get(i);
 
             if (type == 0) {
                 if (view == null) {
-                    view = new TextCell(getActivity());
+                    view = new TextCell(getContext());
                 }
 
                 TextCell cell = (TextCell) view;
@@ -302,7 +299,7 @@ public class DialogsFragment extends Fragment {
 
             } else if (type == 1) {
                 if (view == null) {
-                    view = new EmptyCell(getActivity());
+                    view = new EmptyCell(getContext());
                 }
 
                 EmptyCell cell = (EmptyCell) view;
@@ -316,7 +313,7 @@ public class DialogsFragment extends Fragment {
 
         @Override
         public int getItemViewType(int i) {
-            DialogItem item = dialogItems.get(i);
+            DialogItem item = items.get(i);
 
             if (item.isNotTitle()) {
                 return 0;
@@ -338,7 +335,7 @@ public class DialogsFragment extends Fragment {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setSingleChoiceItems(new CharSequence[]{
                     getString(R.string.Winter),
                     getString(R.string.Spring),
@@ -349,13 +346,13 @@ public class DialogsFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (i == 0) {
-                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
                     } else if (i == 1) {
-                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
                     } else if (i == 2) {
-                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
                     } else if (i == 3) {
-                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -369,7 +366,7 @@ public class DialogsFragment extends Fragment {
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMultiChoiceItems(new CharSequence[]{
                     getString(R.string.Winter),
                     getString(R.string.Spring),
@@ -385,13 +382,13 @@ public class DialogsFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (i == 0) {
-                        Toast.makeText(getActivity(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Winter), Toast.LENGTH_SHORT).show();
                     } else if (i == 1) {
-                        Toast.makeText(getActivity(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Spring), Toast.LENGTH_SHORT).show();
                     } else if (i == 2) {
-                        Toast.makeText(getActivity(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Summer), Toast.LENGTH_SHORT).show();
                     } else if (i == 3) {
-                        Toast.makeText(getActivity(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.Autumn), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
