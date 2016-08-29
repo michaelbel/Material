@@ -16,6 +16,7 @@ import android.view.WindowManager.LayoutParams;
 
 import org.app.material.annotation.Experimental;
 
+@SuppressWarnings({""})
 public class Screen {
 
     @Experimental

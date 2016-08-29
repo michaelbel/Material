@@ -83,6 +83,18 @@ public class AndroidUtilities {
         return iconDrawable;
     }
 
+    public static int selectableItemBackgroundBorderless() {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackgroundBorderless
+        };
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
     @Deprecated
     public static int getThemeColor(@AttrRes int colorAttr) {
         int[] attrs = new int[] {
@@ -96,53 +108,7 @@ public class AndroidUtilities {
         return color;
     }
 
-    public static int selectableItemBackground() {
-        int[] attrs = new int[] {
-                R.attr.selectableItemBackground
-        };
 
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-        typedArray.recycle();
-
-        return backgroundResource;
-    }
-
-    public static int selectableItemBackgroundBorderless() {
-        int[] attrs = new int[] {
-                R.attr.selectableItemBackgroundBorderless
-        };
-
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-        typedArray.recycle();
-
-        return backgroundResource;
-    }
-
-    public static Drawable selectableItemBackgroundDrawable() {
-        int[] attrs = new int[] {
-                android.R.attr.selectableItemBackground
-        };
-
-        TypedArray ta = context.obtainStyledAttributes(attrs);
-        Drawable drawableFromTheme = ta.getDrawable(0);
-        ta.recycle();
-
-        return drawableFromTheme;
-    }
-
-    public static Drawable selectableItemBackgroundBorderlessDrawable() {
-        int[] attrs = new int[] {
-                android.R.attr.selectableItemBackgroundBorderless
-        };
-
-        TypedArray ta = context.obtainStyledAttributes(attrs);
-        Drawable drawableFromTheme = ta.getDrawable(0);
-        ta.recycle();
-
-        return drawableFromTheme;
-    }
 
     public static void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
