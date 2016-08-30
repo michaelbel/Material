@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.michaelbel.material.anim;
+package org.michaelbel.material.animation;
 
 import android.view.View;
 
