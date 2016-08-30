@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.anim.ViewProxy;
+import org.michaelbel.material.animation.ViewProxy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -41,11 +41,6 @@ public class AndroidUtilities {
     private static float density = 1;
     public static Point displaySize = new Point();
 
-    /**
-     * Bind context for all methods of the class.
-     *
-     * @param context Current context.
-     */
     public static void bind(@NonNull Context context) {
         AndroidUtilities.context = context;
     }
@@ -94,7 +89,6 @@ public class AndroidUtilities {
         return backgroundResource;
     }
 
-    @Deprecated
     public static int getThemeColor(@AttrRes int colorAttr) {
         int[] attrs = new int[] {
                 colorAttr
@@ -107,20 +101,9 @@ public class AndroidUtilities {
         return color;
     }
 
-
-
     public static void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-    public static boolean isKeyboardShowed(View view) {
-        if (view == null) {
-            return false;
-        }
-
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        return imm.isActive(view);
     }
 
     public static void hideKeyboard(View view) {
@@ -132,7 +115,6 @@ public class AndroidUtilities {
         imm.hideSoftInputFromWindow(view.getWindowToken(),0);
     }
 
-    //@RequiresPermission(Manifest.permission.VIBRATE)
     public static void vibrate(int duration) {
         Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
         vibrator.vibrate(duration);
