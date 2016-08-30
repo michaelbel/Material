@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package org.app.material.anim;
+package org.michaelbel.material.anim;
 
 import android.view.View;
 
+@SuppressWarnings("unused")
 public class ViewProxy {
 
     public static float getAlpha(View view) {

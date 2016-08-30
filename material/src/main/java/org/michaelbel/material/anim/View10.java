@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.app.material.anim;
+package org.michaelbel.material.anim;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;
