@@ -1,4 +1,4 @@
-package org.app.material.utils;
+package org.michaelbel.material.utils;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
@@ -14,12 +14,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
-import org.app.material.annotation.Experimental;
-
 @SuppressWarnings({""})
 public class Screen {
 
-    @Experimental
     public static int getScreenWidth(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -27,7 +24,6 @@ public class Screen {
         return displayMetrics.widthPixels;
     }
 
-    @Experimental
     public static int getScreenHeight(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -35,21 +31,15 @@ public class Screen {
         return displayMetrics.heightPixels;
     }
 
-    public static boolean isPortrait(Context context) {
-        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-    }
-
     public static boolean isLandscape(Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    @Experimental
     public static boolean isScreenLock(Context context) {
         KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         return keyguardManager.inKeyguardRestrictedInputMode();
     }
 
-    @Experimental
     public static void setTransparentStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             activity.getWindow().addFlags(LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -57,7 +47,6 @@ public class Screen {
         }
     }
 
-    @Experimental
     public static void hideStatusBar(Activity activity) {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
         activity.getWindow().setFlags(LayoutParams.FLAG_FULLSCREEN, LayoutParams.FLAG_FULLSCREEN);
@@ -74,13 +63,11 @@ public class Screen {
         return result;
     }
 
-    @Experimental
     public static boolean isStatusBarExists(Activity activity) {
         LayoutParams params = activity.getWindow().getAttributes();
         return (params.flags & LayoutParams.FLAG_FULLSCREEN) != LayoutParams.FLAG_FULLSCREEN;
     }
 
-    @Experimental
     public static int getActionBarHeight(Activity activity) {
         TypedValue tv = new TypedValue();
 
@@ -91,12 +78,10 @@ public class Screen {
         return 0;
     }
 
-    @Experimental
     public static void setLandscape(Activity activity) {
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
-    @Experimental
     public static Bitmap captureWithStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);
@@ -109,7 +94,6 @@ public class Screen {
         return bp;
     }
 
-    @Experimental
     public static Bitmap captureWithoutStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
         view.setDrawingCacheEnabled(true);

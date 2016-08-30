@@ -1,4 +1,4 @@
-package org.app.material.utils;
+package org.michaelbel.material.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;

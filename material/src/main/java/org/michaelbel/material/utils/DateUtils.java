@@ -1,4 +1,4 @@
-package org.app.material.utils;
+package org.michaelbel.material.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

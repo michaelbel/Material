@@ -1,4 +1,4 @@
-package org.app.material.utils;
+package org.michaelbel.material.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -27,9 +27,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.app.material.R;
-import org.app.material.anim.ViewProxy;
-import org.app.material.annotation.Experimental;
+import org.michaelbel.material.R;
+import org.michaelbel.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -115,7 +114,6 @@ public class AndroidUtilities {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    @Experimental
     public static boolean isKeyboardShowed(View view) {
         if (view == null) {
             return false;
@@ -172,20 +170,6 @@ public class AndroidUtilities {
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
-    }
-
-    /**
-     * @param color Current color
-     * @param mAlpha Alpha value from 0.0 to 1.0
-     * @return new color with alpha.
-     */
-    @Experimental
-    public static int setColorWithAlpha(int color, float mAlpha) {
-        int alpha = Math.round(Color.alpha(color) * mAlpha);
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        return Color.argb(alpha, red, green, blue);
     }
 
     public static final int FLAG_TAG_BR = 1;
