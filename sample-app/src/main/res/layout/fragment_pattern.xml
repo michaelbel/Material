@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.app.material.widget.PatternView
+    <org.michaelbel.material.widget.PatternView
         android:id="@+id/patternLock"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
