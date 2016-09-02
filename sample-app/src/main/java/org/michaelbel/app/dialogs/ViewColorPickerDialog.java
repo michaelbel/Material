@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.ColorPickerView;
 import org.michaelbel.material.widget.LayoutHelper;
 
@@ -31,7 +31,7 @@ public class ViewColorPickerDialog extends DialogFragment {
         final ColorPickerView picker = new ColorPickerView(getActivity());
         picker.setDensity(12);
         picker.setType(ColorPickerView.CIRCLE);
-        picker.setInitialColor(AndroidUtilities.getThemeColor(R.attr.colorAccent));
+        picker.setInitialColor(Utils.getThemeColor(R.attr.colorAccent));
         layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
 

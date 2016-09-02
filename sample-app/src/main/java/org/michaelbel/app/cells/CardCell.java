@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.LayoutHelper;
 
 public class CardCell extends CardView {
@@ -61,8 +61,8 @@ public class CardCell extends CardView {
         optionButton = new ImageView(context);
         optionButton.setFocusable(false);
         optionButton.setScaleType(ImageView.ScaleType.CENTER);
-        optionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        optionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+        optionButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
+        optionButton.setImageDrawable(Utils.getIcon(R.drawable.ic_dots_menu,
                 ContextCompat.getColor(context, R.color.textColorSecondary)));
         optionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
@@ -97,7 +97,7 @@ public class CardCell extends CardView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(
                 MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(100), MeasureSpec.EXACTLY));
+                MeasureSpec.makeMeasureSpec(Utils.dp(100), MeasureSpec.EXACTLY));
     }
 
     @Override

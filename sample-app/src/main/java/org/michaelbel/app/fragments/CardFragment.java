@@ -16,7 +16,7 @@ import android.widget.Toast;
 import org.michaelbel.app.R;
 import org.michaelbel.app.cells.CardCell;
 import org.michaelbel.app.model.Card;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 
@@ -115,8 +115,8 @@ public class CardFragment extends Fragment {
 
                 cardCell = (CardCell) itemView;
                 cardCell.setCardBackgroundColor(0xFFFFFFFF);
-                cardCell.setRadius(AndroidUtilities.dp(3.5F));
-                cardCell.setCardElevation(AndroidUtilities.dp(1.8F));
+                cardCell.setRadius(Utils.dp(3.5F));
+                cardCell.setCardElevation(Utils.dp(1.8F));
                 cardCell.setBackgroundResource(R.drawable.list_selector_white);
                 cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(),
                         LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));

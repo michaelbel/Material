@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.LayoutHelper;
 
 public class HoloColorPickerDialog extends DialogFragment {
@@ -33,7 +33,7 @@ public class HoloColorPickerDialog extends DialogFragment {
         picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         layout.addView(picker);
-        picker.setOldCenterColor(AndroidUtilities.getThemeColor(R.attr.colorAccent));
+        picker.setOldCenterColor(Utils.getThemeColor(R.attr.colorAccent));
 
         builder.setView(layout);
         builder.setTitle(R.string.ColorPickerHolo);

@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.AvatarImageView;
 import org.michaelbel.material.widget.LayoutHelper;
 
@@ -65,8 +65,8 @@ public class RecyclerCell extends FrameLayout {
         optionButton = new ImageView(context);
         optionButton.setFocusable(false);
         optionButton.setScaleType(ImageView.ScaleType.CENTER);
-        optionButton.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
-        optionButton.setImageDrawable(AndroidUtilities.getIcon(R.drawable.ic_dots_menu,
+        optionButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
+        optionButton.setImageDrawable(Utils.getIcon(R.drawable.ic_dots_menu,
                 ContextCompat.getColor(context, R.color.textColorSecondary)));
         optionButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.END | Gravity.TOP, 5, 5, 5, 5));
@@ -109,7 +109,7 @@ public class RecyclerCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (divider ? 1 : 0),
+                MeasureSpec.makeMeasureSpec(Utils.dp(64) + (divider ? 1 : 0),
                         MeasureSpec.EXACTLY));
     }
 

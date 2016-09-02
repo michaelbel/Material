@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 public class BaseCell extends FrameLayout {
 
@@ -38,7 +38,7 @@ public class BaseCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(height + (divider ? 1 : 0)),
+                MeasureSpec.makeMeasureSpec(Utils.dp(height + (divider ? 1 : 0)),
                         MeasureSpec.EXACTLY));
     }
 

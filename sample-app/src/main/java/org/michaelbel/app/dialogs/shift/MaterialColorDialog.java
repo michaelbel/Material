@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.ShiftColorPicker;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.Palette;
@@ -33,8 +33,8 @@ public class MaterialColorDialog extends DialogFragment {
         layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
                 LayoutHelper.WRAP_CONTENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24),
-                AndroidUtilities.dp(24));
+        layout.setPadding(Utils.dp(24), Utils.dp(24), Utils.dp(24),
+                Utils.dp(24));
 
         picker1 = new ShiftColorPicker(getContext());
         picker1.setColors(Palette.PrimaryColors(getContext()));

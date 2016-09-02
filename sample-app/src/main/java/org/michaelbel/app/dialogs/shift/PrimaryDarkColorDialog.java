@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.ShiftColorPicker;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.Palette;
@@ -30,8 +30,8 @@ public class PrimaryDarkColorDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         RelativeLayout layout = new RelativeLayout(getContext());
-        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(24), AndroidUtilities.dp(24),
-                AndroidUtilities.dp(24));
+        layout.setPadding(Utils.dp(24), Utils.dp(24), Utils.dp(24),
+                Utils.dp(24));
 
         picker = new ShiftColorPicker(getContext());
         picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));

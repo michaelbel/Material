@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.NumberTextView;
 
@@ -31,7 +31,7 @@ public class NumberViewFragment extends Fragment {
         numberTextView.setTextSize(30);
         numberTextView.setNumber(j, false);
         numberTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        numberTextView.setTextColor(AndroidUtilities.getThemeColor(R.attr.colorPrimary));
+        numberTextView.setTextColor(Utils.getThemeColor(R.attr.colorPrimary));
         numberTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
         fragmentView.addView(numberTextView);
