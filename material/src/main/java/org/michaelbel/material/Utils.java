@@ -1,10 +1,9 @@
-package org.michaelbel.material.utils;
+package org.michaelbel.material;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Service;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Vibrator;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -27,29 +25,47 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.michaelbel.material.R;
 import org.michaelbel.material.animation.ViewProxy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class AndroidUtilities {
+public class Utils {
 
-    private static final String TAG = AndroidUtilities.class.getSimpleName();
+    private static final String TAG = Utils.class.getSimpleName();
+
+    public static int dp (@NonNull Context context,  float value) {
+        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
+    }
+
+    public static int selectableItemBackgroundBorderless(@NonNull Context context) {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackgroundBorderless
+        };
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
+
+
+
+
+
+
 
     private static Context context;
     private static float density = 1;
     public static Point displaySize = new Point();
 
     public static void bind(@NonNull Context context) {
-        AndroidUtilities.context = context;
+        Utils.context = context;
     }
 
     public static int dp (float value) {
-        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
-    }
-
-    public static int dp (@NonNull Context context,  float value) {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
@@ -77,18 +93,6 @@ public class AndroidUtilities {
         return iconDrawable;
     }
 
-    public static int selectableItemBackgroundBorderless() {
-        int[] attrs = new int[] {
-                R.attr.selectableItemBackgroundBorderless
-        };
-
-        TypedArray typedArray = context.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-        typedArray.recycle();
-
-        return backgroundResource;
-    }
-
     public static int getThemeColor(@AttrRes int colorAttr) {
         int[] attrs = new int[] {
                 colorAttr
@@ -113,11 +117,6 @@ public class AndroidUtilities {
 
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(),0);
-    }
-
-    public static void vibrate(int duration) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
-        vibrator.vibrate(duration);
     }
 
     public static void shakeView(final View view, final float x, final int num) {

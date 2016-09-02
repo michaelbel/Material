@@ -19,7 +19,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class ShiftColorPicker extends View {
@@ -84,7 +84,7 @@ public class ShiftColorPicker extends View {
 	}
 
 	private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-		AndroidUtilities.bind(context);
+		Utils.bind(context);
 
 		mPaint = new Paint();
 		mPaint.setStyle(Style.FILL);

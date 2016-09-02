@@ -16,7 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class SimpleTextView extends View implements Drawable.Callback {
@@ -48,11 +48,11 @@ public class SimpleTextView extends View implements Drawable.Callback {
     public SimpleTextView(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 
-        drawablePadding = AndroidUtilities.dp(4);
+        drawablePadding = Utils.dp(4);
     }
 
     public void setTextColor(int color) {
@@ -67,7 +67,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
     }
 
     public void setTextSize(int size) {
-        int newSize = AndroidUtilities.dp(size);
+        int newSize = Utils.dp(size);
 
         if (newSize == textPaint.getTextSize()) {
             return;
@@ -123,7 +123,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
                     return;
                 }
 
-                layout = new StaticLayout(string, 0, string.length(), textPaint, width + AndroidUtilities.dp(8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                layout = new StaticLayout(string, 0, string.length(), textPaint, width + Utils.dp(8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 if (layout.getLineCount() > 0) {
                     textWidth = (int) Math.ceil(layout.getLineWidth(0));

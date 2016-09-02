@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 import java.util.ArrayList;
 
@@ -18,19 +18,19 @@ public class FrameLayoutFixed extends FrameLayout {
     public FrameLayoutFixed(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public FrameLayoutFixed(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public FrameLayoutFixed(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public final int getMeasuredStateFixed(View view) {
@@ -146,7 +146,7 @@ public class FrameLayoutFixed extends FrameLayout {
             try {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             } catch (Exception e2) {
-                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(10), MeasureSpec.EXACTLY));
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(Utils.dp(10), MeasureSpec.EXACTLY));
                 Log.e("message", e2.getMessage());
             }
         }

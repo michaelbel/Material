@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.ColorPicker.Channel;
 import org.michaelbel.material.widget.ColorPicker.ChannelView;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
@@ -39,7 +39,7 @@ public class ColorView extends FrameLayout {
     public ColorView(@NonNull Context context, @ColorInt int initColor,
                      @NonNull final ColorMode colorMode, @NonNull IndicatorMode indicatorMode) {
         super(context);
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         this.setClipToPadding(false);
 
@@ -79,8 +79,8 @@ public class ColorView extends FrameLayout {
             channelContainer.addView(c);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) c.getLayoutParams();
-            params.topMargin = AndroidUtilities.dp(16);
-            params.bottomMargin = AndroidUtilities.dp(4);
+            params.topMargin = Utils.dp(16);
+            params.bottomMargin = Utils.dp(4);
 
             c.registerListener(seekBarChangeListener);
         }

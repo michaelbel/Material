@@ -39,7 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.utils.Color;
 
 import java.util.Locale;
@@ -162,7 +162,7 @@ public class NumberPicker extends LinearLayout {
     public NumberPicker(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         init();
     }

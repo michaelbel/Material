@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 18
-        versionName "0.1.8"
+        versionCode 22
+        versionName "0.2.2"
     }
 
     buildTypes {
@@ -35,7 +35,7 @@ ext {
     libraryName = 'Material'
     artifact = 'material'
 
-    libraryVersion = '0.1.8'
+    libraryVersion = '0.2.2'
     libraryDescription = 'Material design library'
 
     siteUrl = 'https://github.com/michaelbel/material'

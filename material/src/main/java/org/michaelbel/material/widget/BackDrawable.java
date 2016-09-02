@@ -9,7 +9,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.view.animation.DecelerateInterpolator;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 public class BackDrawable extends Drawable {
 
@@ -24,13 +24,13 @@ public class BackDrawable extends Drawable {
     private DecelerateInterpolator interpolator = new DecelerateInterpolator();
 
     public BackDrawable(Context context) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public BackDrawable(boolean close) {
         super();
         paint.setColor(0xffffffff);
-        paint.setStrokeWidth(AndroidUtilities.dp(2));
+        paint.setStrokeWidth(Utils.dp(2));
         alwaysClose = close;
     }
 
@@ -92,11 +92,11 @@ public class BackDrawable extends Drawable {
             canvas.rotate(135 + currentRotation * (reverseAngle ? -180 : 180));
             rotation = 1.0f;
         }
-        canvas.drawLine(-AndroidUtilities.dp(7) - AndroidUtilities.dp(1) * rotation, 0, AndroidUtilities.dp(8), 0, paint);
-        float startYDiff = -AndroidUtilities.dp(0.5f);
-        float endYDiff = AndroidUtilities.dp(7) + AndroidUtilities.dp(1) * rotation;
-        float startXDiff = -AndroidUtilities.dp(7.0f) + AndroidUtilities.dp(7.0f) * rotation;
-        float endXDiff = AndroidUtilities.dp(0.5f) - AndroidUtilities.dp(0.5f) * rotation;
+        canvas.drawLine(-Utils.dp(7) - Utils.dp(1) * rotation, 0, Utils.dp(8), 0, paint);
+        float startYDiff = -Utils.dp(0.5f);
+        float endYDiff = Utils.dp(7) + Utils.dp(1) * rotation;
+        float startXDiff = -Utils.dp(7.0f) + Utils.dp(7.0f) * rotation;
+        float endXDiff = Utils.dp(0.5f) - Utils.dp(0.5f) * rotation;
         canvas.drawLine(startXDiff, -startYDiff, endXDiff, -endYDiff, paint);
         canvas.drawLine(startXDiff, startYDiff, endXDiff, endYDiff, paint);
         canvas.restore();
@@ -119,11 +119,11 @@ public class BackDrawable extends Drawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return AndroidUtilities.dp(24);
+        return Utils.dp(24);
     }
 
     @Override
     public int getIntrinsicHeight() {
-        return AndroidUtilities.dp(24);
+        return Utils.dp(24);
     }
 }

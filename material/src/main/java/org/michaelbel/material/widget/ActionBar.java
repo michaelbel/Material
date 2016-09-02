@@ -20,7 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.utils.Color;
 import org.michaelbel.material.utils.Screen;
 
@@ -76,7 +76,7 @@ public class ActionBar extends FrameLayout {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         /*TypedArray attr = context.obtainStyledAttributes(attrs, R.styleable.ActionBar, defStyleAttr, 0);
         mTitleTextColor = attr.getColor(R.styleable.ActionBar_titleTextColor, 0xFFFFFFFF);
@@ -245,7 +245,7 @@ public class ActionBar extends FrameLayout {
 
         mBackButtonImageView = new ImageView(getContext());
         mBackButtonImageView.setScaleType(ImageView.ScaleType.CENTER);
-        mBackButtonImageView.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        mBackButtonImageView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         addView(mBackButtonImageView, LayoutHelper.makeFrame(getContext(), 4, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
 
         mBackButtonImageView.setOnClickListener(new OnClickListener() {
@@ -325,11 +325,11 @@ public class ActionBar extends FrameLayout {
 
     public int getCurrentActionBarHeight() {
         if (isTablet) {
-            return AndroidUtilities.dp(64);
+            return Utils.dp(64);
         } else if (Screen.isLandscape(getContext())) {
-            return AndroidUtilities.dp(48);
+            return Utils.dp(48);
         } else {
-            return AndroidUtilities.dp(56);
+            return Utils.dp(56);
         }
     }
 
@@ -404,7 +404,7 @@ public class ActionBar extends FrameLayout {
                 ((BackDrawable) drawable).setRotation(1, true);
             }
 
-            mBackButtonImageView.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+            mBackButtonImageView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         }
     }
 
@@ -458,7 +458,7 @@ public class ActionBar extends FrameLayout {
                 ((BackDrawable) drawable).setRotation(0, true);
             }
 
-            mBackButtonImageView.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+            mBackButtonImageView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         }
     }
 
@@ -524,16 +524,16 @@ public class ActionBar extends FrameLayout {
 
         int textLeft;
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
-            mBackButtonImageView.measure(MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(54), MeasureSpec.EXACTLY), actionBarHeightSpec);
-            textLeft = AndroidUtilities.dp(isTablet ? 80 : 56);
+            mBackButtonImageView.measure(MeasureSpec.makeMeasureSpec(Utils.dp(54), MeasureSpec.EXACTLY), actionBarHeightSpec);
+            textLeft = Utils.dp(isTablet ? 80 : 56);
         } else {
-            textLeft = AndroidUtilities.dp(isTablet ? 26 : 16);
+            textLeft = Utils.dp(isTablet ? 26 : 16);
         }
 
         if (mMenu != null && mMenu.getVisibility() != GONE) {
             int menuWidth;
             if (isSearchFieldVisible) {
-                menuWidth = MeasureSpec.makeMeasureSpec(width - AndroidUtilities.dp(isTablet ? 74 : 66), MeasureSpec.EXACTLY);
+                menuWidth = MeasureSpec.makeMeasureSpec(width - Utils.dp(isTablet ? 74 : 66), MeasureSpec.EXACTLY);
             } else {
                 menuWidth = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
             }
@@ -541,16 +541,16 @@ public class ActionBar extends FrameLayout {
         }
 
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE || mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-            int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - AndroidUtilities.dp(16) - textLeft;
+            int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - Utils.dp(16) - textLeft;
 
             if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
                 mTitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 18 : 20);
-                mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(24), MeasureSpec.AT_MOST));
+                mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(24), MeasureSpec.AT_MOST));
 
             }
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
                 mSubtitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 12 : 14);
-                mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(20), MeasureSpec.AT_MOST));
+                mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(20), MeasureSpec.AT_MOST));
             }
         }
 
@@ -575,20 +575,20 @@ public class ActionBar extends FrameLayout {
 
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
             mBackButtonImageView.layout(0, additionalTop, mBackButtonImageView.getMeasuredWidth(), additionalTop + mBackButtonImageView.getMeasuredHeight());
-            textLeft = AndroidUtilities.dp(isTablet ? 80 : 56);
+            textLeft = Utils.dp(isTablet ? 80 : 56);
         } else {
-            textLeft = AndroidUtilities.dp(isTablet ? 26 : 12);
+            textLeft = Utils.dp(isTablet ? 26 : 12);
         }
 
         if (mMenu != null && mMenu.getVisibility() != GONE) {
-            int menuLeft = isSearchFieldVisible ? AndroidUtilities.dp(isTablet ? 74 : 56) : (right - left) - mMenu.getMeasuredWidth();
+            int menuLeft = isSearchFieldVisible ? Utils.dp(isTablet ? 74 : 56) : (right - left) - mMenu.getMeasuredWidth();
             mMenu.layout(menuLeft, additionalTop, menuLeft + mMenu.getMeasuredWidth(), additionalTop + mMenu.getMeasuredHeight());
         }
 
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
             int textTop;
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                textTop = (getCurrentActionBarHeight() / 2 - mTitleTextView.getTextHeight()) / 2 + AndroidUtilities.dp(!isTablet && Screen.isLandscape(getContext()) ? 2 : 3);
+                textTop = (getCurrentActionBarHeight() / 2 - mTitleTextView.getTextHeight()) / 2 + Utils.dp(!isTablet && Screen.isLandscape(getContext()) ? 2 : 3);
             } else {
                 textTop = (getCurrentActionBarHeight() - mTitleTextView.getTextHeight()) / 2;
             }
@@ -596,7 +596,7 @@ public class ActionBar extends FrameLayout {
         }
 
         if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-            int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - AndroidUtilities.dp(!isTablet && Screen.isLandscape(getContext()) ? 1 : 1);
+            int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - Utils.dp(!isTablet && Screen.isLandscape(getContext()) ? 1 : 1);
             mSubtitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mSubtitleTextView.getMeasuredWidth(), additionalTop + textTop + mSubtitleTextView.getTextHeight());
         }
 

@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.animation.ViewProxy;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.utils.Screen;
 
 import java.lang.reflect.Field;
@@ -80,12 +80,12 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
     public ActionBarMenuItem(Context context, ActionBarMenu menu) {
         super(context);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         mHandler = new Handler(context.getMainLooper());
-        menuHeight = AndroidUtilities.dp(16);
+        menuHeight = Utils.dp(16);
 
-        this.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        this.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
 
         parentMenu = menu;
 
@@ -257,7 +257,8 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
 
         TextView textView = new TextView(getContext());
         textView.setTextColor(0xFF212121);
-        textView.setBackgroundResource(R.drawable.list_selector);
+        //textView.setBackgroundResource(R.drawable.list_selector);
+        textView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
 
         if (!isRTL) {
             textView.setGravity(Gravity.CENTER_VERTICAL);
@@ -265,14 +266,14 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
         }
 
-        textView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+        textView.setPadding(Utils.dp(16), 0, Utils.dp(16), 0);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        textView.setMinWidth(AndroidUtilities.dp(196));
+        textView.setMinWidth(Utils.dp(196));
         textView.setTag(id);
         textView.setText(text);
 
         if (icon != 0) {
-            textView.setCompoundDrawablePadding(AndroidUtilities.dp(12));
+            textView.setCompoundDrawablePadding(Utils.dp(12));
             if (!isRTL) {
                 textView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(icon), null, null, null);
             } else {
@@ -289,7 +290,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         }
 
         layoutParams.width = LayoutHelper.MATCH_PARENT;
-        layoutParams.height = AndroidUtilities.dp(48);
+        layoutParams.height = Utils.dp(48);
         textView.setLayoutParams(layoutParams);
         textView.setOnClickListener(new OnClickListener() {
             @Override
@@ -346,7 +347,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             popupWindow.setClippingEnabled(true);
             popupWindow.setInputMethodMode(ActionBarPopupWindow.INPUT_METHOD_NOT_NEEDED);
             popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
-            popupLayout.measure(MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(1000), MeasureSpec.AT_MOST));
+            popupLayout.measure(MeasureSpec.makeMeasureSpec(Utils.dp(1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(1000), MeasureSpec.AT_MOST));
             popupWindow.getContentView().setFocusableInTouchMode(true);
             popupWindow.getContentView().setOnKeyListener(new OnKeyListener() {
                 @Override
@@ -388,7 +389,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             if (listener == null || listener != null && listener.canCollapseSearch()) {
                 searchContainer.setVisibility(GONE);
                 setVisibility(VISIBLE);
-                AndroidUtilities.hideKeyboard(searchField);
+                Utils.hideKeyboard(searchField);
                 if (listener != null) {
                     listener.onSearchCollapse();
                 }
@@ -401,7 +402,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             searchField.requestFocus();
 
             if (openKeyboard) {
-                AndroidUtilities.showKeyboard();
+                Utils.showKeyboard();
             }
 
             if (listener != null) {
@@ -448,7 +449,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             layoutParams.weight = 1;
             layoutParams.width = 0;
             layoutParams.height = LayoutHelper.MATCH_PARENT;
-            layoutParams.leftMargin = AndroidUtilities.dp(6);
+            layoutParams.leftMargin = Utils.dp(6);
             searchContainer.setLayoutParams(layoutParams);
             searchContainer.setVisibility(GONE);
 
@@ -490,7 +491,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (event != null && (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_SEARCH || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                        AndroidUtilities.hideKeyboard(searchField);
+                        Utils.hideKeyboard(searchField);
 
                         if (listener != null) {
                             listener.onSearchPressed(searchField);
@@ -538,8 +539,8 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             LayoutParams layoutParams2 = (LayoutParams) searchField.getLayoutParams();
             layoutParams2.width = LayoutHelper.MATCH_PARENT;
             layoutParams2.gravity = Gravity.CENTER_VERTICAL;
-            layoutParams2.height = AndroidUtilities.dp(36);
-            layoutParams2.rightMargin = needClearButton ? AndroidUtilities.dp(48) : 0;
+            layoutParams2.height = Utils.dp(36);
+            layoutParams2.rightMargin = needClearButton ? Utils.dp(48) : 0;
             searchField.setLayoutParams(layoutParams2);
 
             if (needClearButton) {
@@ -550,12 +551,12 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                     @Override
                     public void onClick(View v) {
                         searchField.setText("");
-                        AndroidUtilities.showKeyboard();
+                        Utils.showKeyboard();
                     }
                 });
                 searchContainer.addView(clearButton);
                 layoutParams2 = (LayoutParams) clearButton.getLayoutParams();
-                layoutParams2.width = AndroidUtilities.dp(48);
+                layoutParams2.width = Utils.dp(48);
                 layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
                 layoutParams2.height = LayoutHelper.MATCH_PARENT;
                 clearButton.setLayoutParams(layoutParams2);
@@ -639,11 +640,11 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             }
         } else {
             if (show) {
-                popupWindow.showAsDropDown(this, -AndroidUtilities.dp(8), offsetY);
+                popupWindow.showAsDropDown(this, -Utils.dp(8), offsetY);
             }
 
             if (update) {
-                popupWindow.update(this, -AndroidUtilities.dp(8), offsetY, -1, -1);
+                popupWindow.update(this, -Utils.dp(8), offsetY, -1, -1);
             }
         }
     }

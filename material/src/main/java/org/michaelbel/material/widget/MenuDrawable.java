@@ -8,7 +8,7 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.view.animation.DecelerateInterpolator;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 public class MenuDrawable extends Drawable {
 
@@ -24,10 +24,10 @@ public class MenuDrawable extends Drawable {
     public MenuDrawable(Context context) {
         super();
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         paint.setColor(0xffffffff);
-        paint.setStrokeWidth(AndroidUtilities.dp(2));
+        paint.setStrokeWidth(Utils.dp(2));
     }
 
     public void setRotation(float rotation, boolean animated) {
@@ -76,11 +76,11 @@ public class MenuDrawable extends Drawable {
         canvas.save();
         canvas.translate(getIntrinsicWidth() / 2, getIntrinsicHeight() / 2);
         canvas.rotate(currentRotation * (reverseAngle ? -180 : 180));
-        canvas.drawLine(-AndroidUtilities.dp(9), 0, AndroidUtilities.dp(9) - AndroidUtilities.dp(3.0f) * currentRotation, 0, paint);
-        float endYDiff = AndroidUtilities.dp(5) * (1 - Math.abs(currentRotation)) - AndroidUtilities.dp(0.5f) * Math.abs(currentRotation);
-        float endXDiff = AndroidUtilities.dp(9) - AndroidUtilities.dp(2.5f) * Math.abs(currentRotation);
-        float startYDiff = AndroidUtilities.dp(5) + AndroidUtilities.dp(2.0f) * Math.abs(currentRotation);
-        float startXDiff = -AndroidUtilities.dp(9) + AndroidUtilities.dp(7.5f) * Math.abs(currentRotation);
+        canvas.drawLine(-Utils.dp(9), 0, Utils.dp(9) - Utils.dp(3.0f) * currentRotation, 0, paint);
+        float endYDiff = Utils.dp(5) * (1 - Math.abs(currentRotation)) - Utils.dp(0.5f) * Math.abs(currentRotation);
+        float endXDiff = Utils.dp(9) - Utils.dp(2.5f) * Math.abs(currentRotation);
+        float startYDiff = Utils.dp(5) + Utils.dp(2.0f) * Math.abs(currentRotation);
+        float startXDiff = -Utils.dp(9) + Utils.dp(7.5f) * Math.abs(currentRotation);
         canvas.drawLine(startXDiff, -startYDiff, endXDiff, -endYDiff, paint);
         canvas.drawLine(startXDiff, startYDiff, endXDiff, endYDiff, paint);
         canvas.restore();
@@ -103,11 +103,11 @@ public class MenuDrawable extends Drawable {
 
     @Override
     public int getIntrinsicWidth() {
-        return AndroidUtilities.dp(24);
+        return Utils.dp(24);
     }
 
     @Override
     public int getIntrinsicHeight() {
-        return AndroidUtilities.dp(24);
+        return Utils.dp(24);
     }
 }

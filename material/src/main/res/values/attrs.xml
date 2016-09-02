@@ -1,5 +1,4 @@
 <resources>
-
     <!--Switch-->
     <declare-styleable name="Switch">
         <attr name="switch_thumbOn" format="color"/>
@@ -20,24 +19,35 @@
         <attr name="radioButton_accentColor" format="color"/>
     </declare-styleable>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--ActionBar-->
-    <declare-styleable name="ActionBar">
-        <attr name="titleTextColor" format="color"/>
-        <attr name="backIcon" format="reference"/>
+    <!--IndicatorView-->
+    <declare-styleable name="IndicatorView">
+        <attr name="indicator_width" format="dimension"/>
+        <attr name="indicator_height" format="dimension"/>
+        <attr name="indicator_margin" format="dimension"/>
+        <attr name="indicator_animator" format="reference"/>
+        <attr name="indicator_animatorReverse" format="reference"/>
+        <attr name="indicator_drawable" format="reference"/>
+        <attr name="indicator_drawableUnselected" format="reference"/>
+        <attr name="indicator_orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+        <attr name="indicator_gravity">
+            <flag name="top" value="0x30"/>
+            <flag name="bottom" value="0x50"/>
+            <flag name="left" value="0x03"/>
+            <flag name="right" value="0x05"/>
+            <flag name="center_vertical" value="0x10"/>
+            <flag name="fill_vertical" value="0x70"/>
+            <flag name="center_horizontal" value="0x01"/>
+            <flag name="fill_horizontal" value="0x07"/>
+            <flag name="center" value="0x11"/>
+            <flag name="fill" value="0x77"/>
+            <flag name="clip_vertical" value="0x80"/>
+            <flag name="clip_horizontal" value="0x08"/>
+            <flag name="start" value="0x00800003"/>
+            <flag name="end" value="0x00800005"/>
+        </attr>
     </declare-styleable>
 
     <!--ColorPickerView-->
@@ -55,33 +65,9 @@
         <attr name="pickerButtonCancel" format="reference|string"/>
     </declare-styleable>
 
-    <!--ColorPickerShift-->
-    <declare-styleable name="ShiftColorPicker">
-        <attr name="orientation" format="enum">
-            <enum name="horizontal" value="0"/>
-            <enum name="vertical" value="1"/>
-        </attr>
-        <attr name="colors" format="reference"/>
-        <attr name="selectedColorIndex" format="integer"/>
-    </declare-styleable>
-
-    <declare-styleable name="LobsterPicker">
-        <attr name="color_wheel_thickness" format="dimension" />
-        <attr name="color_wheel_radius" format="dimension" />
-        <attr name="color_wheel_pointer_radius" format="dimension" />
-        <attr name="color_wheel_pointer_shadow_radius" format="dimension"/>
-        <attr name="color_wheel_pointer_shadow" format="color"/>
-        <attr name="color_wheel_scheme" format="reference" />
-        <attr name="color_history_enabled" format="boolean"/>
-        <attr name="color_history_radius" format="dimension"/>
-    </declare-styleable>
-    <declare-styleable name="LobsterSlider">
-        <attr name="color_slider_thickness" format="dimension" />
-        <attr name="color_slider_length" format="dimension" />
-        <attr name="color_slider_pointer_radius" format="dimension" />
-        <attr name="color_slider_pointer_shadow_radius" format="dimension"/>
-    </declare-styleable>
-    <declare-styleable name="LobsterShadeSlider">
-        <attr name="color_slider_scheme" format="reference"/>
+    <!--ActionBar-->
+    <declare-styleable name="ActionBar">
+        <attr name="titleTextColor" format="color"/>
+        <attr name="backIcon" format="reference"/>
     </declare-styleable>
 </resources>

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.Service;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.os.Debug;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.annotation.RequiresPermission;
 import android.support.annotation.Size;
 import android.util.AttributeSet;
@@ -24,7 +26,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,7 @@ public class PatternView extends View {
     public PatternView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         setClickable(true);
         mPathPaint.setAntiAlias(true);
@@ -89,10 +91,10 @@ public class PatternView extends View {
         mPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mPathPaint.setStrokeCap(Paint.Cap.ROUND);
 
-        mPathWidth = AndroidUtilities.dp(3);
+        mPathWidth = Utils.dp(3);
         mPathPaint.setStrokeWidth(mPathWidth);
-        mDotSize = AndroidUtilities.dp(14);
-        mDotSizePressed = AndroidUtilities.dp(18);
+        mDotSize = Utils.dp(14);
+        mDotSizePressed = Utils.dp(18);
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
 
@@ -477,7 +479,8 @@ public class PatternView extends View {
             addCellToPattern(cell);
 
             if (mVibrate) {
-                AndroidUtilities.vibrate(mVibrateDuration);
+                Vibrator vibrator = (Vibrator) getContext().getSystemService(Service.VIBRATOR_SERVICE);
+                vibrator.vibrate(mVibrateDuration);
             }
 
             return cell;

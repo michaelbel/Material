@@ -14,7 +14,7 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.utils.Color;
 
 @SuppressWarnings("unused")
@@ -24,7 +24,7 @@ public class Browser {
 
     @SuppressLint("PrivateResource")
     public static void openUrl(@NonNull Context context, String url) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

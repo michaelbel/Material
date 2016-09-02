@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 @SuppressWarnings({"unused"})
 public class LayoutHelper {
@@ -18,7 +18,7 @@ public class LayoutHelper {
     public static final int WRAP_CONTENT = -2;
 
     private static int getSize(@NonNull Context context, float size) {
-        return (int) (size < 0 ? size : AndroidUtilities.dp(context, size));
+        return (int) (size < 0 ? size : Utils.dp(context, size));
     }
 
     /**

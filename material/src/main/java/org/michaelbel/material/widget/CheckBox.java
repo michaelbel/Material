@@ -13,7 +13,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.R;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
@@ -55,7 +55,7 @@ public class CheckBox extends View {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
         darkTheme = a.getBoolean(R.styleable.CheckBox_checkBox_darkTheme, false);
@@ -70,7 +70,7 @@ public class CheckBox extends View {
             mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mCheckPaint.setColor(mCheckColor);
             mCheckPaint.setStyle(Paint.Style.STROKE);
-            mCheckPaint.setStrokeWidth(AndroidUtilities.dp(2));
+            mCheckPaint.setStrokeWidth(Utils.dp(2));
             mEraser = new Paint(Paint.ANTI_ALIAS_FLAG);
             mEraser.setColor(0);
             mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -78,7 +78,7 @@ public class CheckBox extends View {
             mRectF = new RectF();
         }
 
-        drawBitmap = Bitmap.createBitmap(AndroidUtilities.dp(18), AndroidUtilities.dp(18), Bitmap.Config.ARGB_4444);
+        drawBitmap = Bitmap.createBitmap(Utils.dp(18), Utils.dp(18), Bitmap.Config.ARGB_4444);
         drawCanvas = new Canvas(drawBitmap);
     }
 
@@ -183,25 +183,25 @@ public class CheckBox extends View {
             mBackgroundPaint.setColor(mBorderColor);
         }
 
-        float bounce = AndroidUtilities.dp(1) * bounceProgress;
-        mRectF.set(bounce, bounce, AndroidUtilities.dp(18) - bounce, AndroidUtilities.dp(18) - bounce);
+        float bounce = Utils.dp(1) * bounceProgress;
+        mRectF.set(bounce, bounce, Utils.dp(18) - bounce, Utils.dp(18) - bounce);
 
         drawBitmap.eraseColor(0);
-        drawCanvas.drawRoundRect(mRectF, AndroidUtilities.dp(2), AndroidUtilities.dp(2), mBackgroundPaint);
+        drawCanvas.drawRoundRect(mRectF, Utils.dp(2), Utils.dp(2), mBackgroundPaint);
 
         if (checkProgress != 1) {
-            float rad = Math.min(AndroidUtilities.dp(7), AndroidUtilities.dp(7) * checkProgress + bounce);
-            mRectF.set(AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(2) + rad, AndroidUtilities.dp(16) - rad, AndroidUtilities.dp(16) - rad);
+            float rad = Math.min(Utils.dp(7), Utils.dp(7) * checkProgress + bounce);
+            mRectF.set(Utils.dp(2) + rad, Utils.dp(2) + rad, Utils.dp(16) - rad, Utils.dp(16) - rad);
             drawCanvas.drawRect(mRectF, mEraser);
         }
 
         if (progress > 0.5f) {
-            int endX = (int) (AndroidUtilities.dp(7.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
-            int endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(5) * (1.0f - bounceProgress));
-            drawCanvas.drawLine(AndroidUtilities.dp(7.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
-            endX = (int) (AndroidUtilities.dpf2(6.5f) + AndroidUtilities.dp(9) * (1.0f - bounceProgress));
-            endY = (int) (AndroidUtilities.dpf2(13.5f) - AndroidUtilities.dp(9) * (1.0f - bounceProgress));
-            drawCanvas.drawLine((int) AndroidUtilities.dpf2(6.5f), (int) AndroidUtilities.dpf2(13.5f), endX, endY, mCheckPaint);
+            int endX = (int) (Utils.dp(7.5f) - Utils.dp(5) * (1.0f - bounceProgress));
+            int endY = (int) (Utils.dpf2(13.5f) - Utils.dp(5) * (1.0f - bounceProgress));
+            drawCanvas.drawLine(Utils.dp(7.5f), (int) Utils.dpf2(13.5f), endX, endY, mCheckPaint);
+            endX = (int) (Utils.dpf2(6.5f) + Utils.dp(9) * (1.0f - bounceProgress));
+            endY = (int) (Utils.dpf2(13.5f) - Utils.dp(9) * (1.0f - bounceProgress));
+            drawCanvas.drawLine((int) Utils.dpf2(6.5f), (int) Utils.dpf2(13.5f), endX, endY, mCheckPaint);
         }
 
         canvas.drawBitmap(drawBitmap, 0, 0, null);

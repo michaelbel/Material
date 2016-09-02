@@ -30,7 +30,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class HoloColorPicker extends View {
@@ -107,17 +107,17 @@ public class HoloColorPicker extends View {
 	}
 
 	private void initialize(Context context, AttributeSet attrs, int defStyle) {
-		AndroidUtilities.bind(context);
+		Utils.bind(context);
 
-		mColorWheelThickness = AndroidUtilities.dp(9);
-		mColorWheelRadius = AndroidUtilities.dp(124);
+		mColorWheelThickness = Utils.dp(9);
+		mColorWheelRadius = Utils.dp(124);
 		mPreferredColorWheelRadius = mColorWheelRadius;
-		mColorCenterRadius = AndroidUtilities.dp(54);
+		mColorCenterRadius = Utils.dp(54);
 		mPreferredColorCenterRadius = mColorCenterRadius;
-		mColorCenterHaloRadius = AndroidUtilities.dp(54);
+		mColorCenterHaloRadius = Utils.dp(54);
 		mPreferredColorCenterHaloRadius = mColorCenterHaloRadius;
-		mColorPointerRadius = AndroidUtilities.dp(16);
-		mColorPointerHaloRadius = AndroidUtilities.dp(16);
+		mColorPointerRadius = Utils.dp(16);
+		mColorPointerHaloRadius = Utils.dp(16);
 
 		mAngle = (float) (-Math.PI / 2);
 

@@ -15,7 +15,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -49,7 +49,7 @@ public class NumberTextView extends View {
     }
 
     private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public void setProgress(float value) {
@@ -117,7 +117,7 @@ public class NumberTextView extends View {
     }
 
     public void setTextSize(int size) {
-        textPaint.setTextSize(AndroidUtilities.dp(size));
+        textPaint.setTextSize(Utils.dp(size));
         oldLetters.clear();
         letters.clear();
         setNumber(currentNumber, false);
@@ -192,7 +192,7 @@ public class NumberTextView extends View {
 
             canvas.restore();
             if (layout != null) canvas.translate(layout.getLineWidth(0), 0);
-            else canvas.translate((old != null ? old.getLineWidth(0) : 0) + AndroidUtilities.dp(1), 0);
+            else canvas.translate((old != null ? old.getLineWidth(0) : 0) + Utils.dp(1), 0);
         }
 
         canvas.restore();

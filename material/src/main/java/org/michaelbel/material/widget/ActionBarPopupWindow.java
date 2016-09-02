@@ -20,7 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -78,13 +78,13 @@ public class ActionBarPopupWindow extends PopupWindow {
         public ActionBarPopupWindowLayout(Context context) {
             super(context);
 
-            AndroidUtilities.bind(context);
+            Utils.bind(context);
 
             if (backgroundDrawable == null) {
                 backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.popup_fixed);
             }
 
-            this.setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8));
+            this.setPadding(Utils.dp(8), Utils.dp(8), Utils.dp(8), Utils.dp(8));
             this.setWillNotDraw(false);
 
             try {
@@ -139,7 +139,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                     visibleCount += getItemAt(a).getVisibility() == VISIBLE ? 1 : 0;
                 }
 
-                int height = getMeasuredHeight() - AndroidUtilities.dp(16);
+                int height = getMeasuredHeight() - Utils.dp(16);
 
                 if (showedFromBottom) {
                     for (int a = lastStartedChild; a >= 0; a--) {
@@ -148,8 +148,8 @@ public class ActionBarPopupWindow extends PopupWindow {
                             continue;
                         }
                         Integer position = positions.get(child);
-                        if (position != null && height - (position * AndroidUtilities.dp(48) +
-                                AndroidUtilities.dp(32)) > value * height) {
+                        if (position != null && height - (position * Utils.dp(48) +
+                                Utils.dp(32)) > value * height) {
                             break;
                         }
                         lastStartedChild = a - 1;
@@ -165,7 +165,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                         Integer position = positions.get(child);
 
-                        if (position != null && (position + 1) * AndroidUtilities.dp(48) - AndroidUtilities.dp(24) > value * height) {
+                        if (position != null && (position + 1) * Utils.dp(48) - Utils.dp(24) > value * height) {
                             break;
                         }
 
@@ -183,7 +183,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                 animatorSet.playTogether(
                         ObjectAnimator.ofFloat(child, "alpha", 0.0f, 1.0f),
-                        ObjectAnimator.ofFloat(child, "translationY", AndroidUtilities.dp(showedFromBottom ? 6 : -6), 0));
+                        ObjectAnimator.ofFloat(child, "translationY", Utils.dp(showedFromBottom ? 6 : -6), 0));
 
                 animatorSet.setDuration(180);
                 animatorSet.setInterpolator(decelerateInterpolator);
@@ -414,7 +414,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             ActionBarPopupWindowLayout content = (ActionBarPopupWindowLayout) getContentView();
             windowAnimatorSet = new AnimatorSet();
             windowAnimatorSet.playTogether(
-                    ObjectAnimator.ofFloat(content, "translationY", AndroidUtilities.dp(content.showedFromBottom ? 5 : -5)),
+                    ObjectAnimator.ofFloat(content, "translationY", Utils.dp(content.showedFromBottom ? 5 : -5)),
                     ObjectAnimator.ofFloat(content, "alpha", 0.0f));
             windowAnimatorSet.setDuration(150);
             windowAnimatorSet.addListener(new Animator.AnimatorListener() {

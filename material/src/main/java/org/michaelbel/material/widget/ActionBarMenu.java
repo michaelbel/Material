@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 
 public class ActionBarMenu extends LinearLayout {
 
@@ -18,13 +18,13 @@ public class ActionBarMenu extends LinearLayout {
         this.setOrientation(LinearLayout.HORIZONTAL);
         parentActionBar = layer;
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public ActionBarMenu(Context context) {
         super(context);
 
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
     }
 
     public View addItemResource(int id, int resourceId) {
@@ -36,7 +36,7 @@ public class ActionBarMenu extends LinearLayout {
         LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
 
-        view.setBackgroundResource(AndroidUtilities.selectableItemBackgroundBorderless());
+        view.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
 
         view.setLayoutParams(layoutParams);
         view.setOnClickListener(new OnClickListener() {
@@ -49,11 +49,11 @@ public class ActionBarMenu extends LinearLayout {
     }
 
     public ActionBarMenuItem addItem(int id, Drawable drawable) {
-        return addItem(id, 0, drawable, AndroidUtilities.dp(48));
+        return addItem(id, 0, drawable, Utils.dp(48));
     }
 
     public ActionBarMenuItem addItem(int id, int icon) {
-        return addItem(id, icon, null, AndroidUtilities.dp(48));
+        return addItem(id, icon, null, Utils.dp(48));
     }
 
     public ActionBarMenuItem addItemWithWidth(int id, int icon, int width) {

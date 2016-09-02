@@ -39,7 +39,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.R;
 import org.michaelbel.material.animation.ViewProxy;
 import org.michaelbel.material.utils.Screen;
@@ -147,14 +147,14 @@ public class BottomSheet extends Dialog {
 
         public BottomSheetCell(Context context, int type) {
             super(context);
-            AndroidUtilities.bind(context);
+            Utils.bind(context);
 
             isGrid = type == 1;
 
             this.setBackgroundResource(R.drawable.list_selector);
 
             if (type != 1) {
-                setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), 0);
+                setPadding(Utils.dp(16), 0, Utils.dp(16), 0);
             }
 
             imageView = new ImageView(context);
@@ -193,9 +193,9 @@ public class BottomSheet extends Dialog {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(isGrid ? MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(96),
+            super.onMeasure(isGrid ? MeasureSpec.makeMeasureSpec(Utils.dp(96),
                     MeasureSpec.EXACTLY) : widthMeasureSpec,
-                    MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(isGrid ? 80 : 48),
+                    MeasureSpec.makeMeasureSpec(Utils.dp(isGrid ? 80 : 48),
                             MeasureSpec.EXACTLY));
         }
 
@@ -215,8 +215,8 @@ public class BottomSheet extends Dialog {
                 imageView.setVisibility(VISIBLE);
 
                 if (!isGrid) {
-                    textView.setPadding(isRTL ? 0 : AndroidUtilities.dp(56), 0,
-                            isRTL ? AndroidUtilities.dp(56) : 0, 0);
+                    textView.setPadding(isRTL ? 0 : Utils.dp(56), 0,
+                            isRTL ? Utils.dp(56) : 0, 0);
                 }
             } else {
                 imageView.setVisibility(INVISIBLE);
@@ -267,9 +267,9 @@ public class BottomSheet extends Dialog {
                         int widthSpec;
 
                         if (isTablet) {
-                            widthSpec = MeasureSpec.makeMeasureSpec((int) (Math.min(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y) * 0.8f) + left * 2, MeasureSpec.EXACTLY);
+                            widthSpec = MeasureSpec.makeMeasureSpec((int) (Math.min(Utils.displaySize.x, Utils.displaySize.y) * 0.8f) + left * 2, MeasureSpec.EXACTLY);
                         } else {
-                            widthSpec = MeasureSpec.makeMeasureSpec(isPortrait ? width + left * 2 : (int) Math.max(width * 0.8f, Math.min(AndroidUtilities.dp(480), width)) + left * 2, MeasureSpec.EXACTLY);
+                            widthSpec = MeasureSpec.makeMeasureSpec(isPortrait ? width + left * 2 : (int) Math.max(width * 0.8f, Math.min(Utils.dp(480), width)) + left * 2, MeasureSpec.EXACTLY);
                         }
 
                         if (lastInsets != null && Build.VERSION.SDK_INT >= 21 && focusable) {
@@ -444,7 +444,7 @@ public class BottomSheet extends Dialog {
             titleView.setTextColor(titleTextColor);
             titleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             titleView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
-            titleView.setPadding(AndroidUtilities.dp(16), 0, AndroidUtilities.dp(16), AndroidUtilities.dp(8));
+            titleView.setPadding(Utils.dp(16), 0, Utils.dp(16), Utils.dp(8));
             titleView.setGravity(Gravity.CENTER_VERTICAL);
             containerView.addView(titleView, LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 48));
             titleView.setOnTouchListener(new View.OnTouchListener() {
@@ -467,7 +467,7 @@ public class BottomSheet extends Dialog {
         if (items != null) {
             if (customView != null) {
                 FrameLayout frameLayout = new FrameLayout(getContext());
-                frameLayout.setPadding(0, AndroidUtilities.dp(8), 0, 0);
+                frameLayout.setPadding(0, Utils.dp(8), 0, 0);
                 frameLayout.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 16));
                 containerView.addView(frameLayout);
 
@@ -561,7 +561,7 @@ public class BottomSheet extends Dialog {
 
         int left = useRevealAnimation && Build.VERSION.SDK_INT <= 19 || disableBackground ? 0 : backgroundPaddingLeft;
         int top = useRevealAnimation && Build.VERSION.SDK_INT <= 19 || disableBackground ? 0 : backgroundPaddingTop;
-        containerView.setPadding(left, (applyTopPadding ? AndroidUtilities.dp(8) : 0) + top, left, (applyBottomPadding ? AndroidUtilities.dp(isGrid ? 16 : 8) : 0));
+        containerView.setPadding(left, (applyTopPadding ? Utils.dp(8) : 0) + top, left, (applyBottomPadding ? Utils.dp(isGrid ? 16 : 8) : 0));
 
         if (Build.VERSION.SDK_INT >= 21) {
             runOnUIThread(new Runnable() {
@@ -621,7 +621,7 @@ public class BottomSheet extends Dialog {
             float top;
 
             if (Build.VERSION.SDK_INT <= 19) {
-                top = AndroidUtilities.displaySize.y - containerView.getMeasuredHeight() - Screen.getStatusBarHeight(getContext());
+                top = Utils.displaySize.y - containerView.getMeasuredHeight() - Screen.getStatusBarHeight(getContext());
             } else {
                 top = containerView.getY();
             }
@@ -633,8 +633,8 @@ public class BottomSheet extends Dialog {
                 revealY -= Screen.getStatusBarHeight(getContext());
             }
         } else {
-            revealX = AndroidUtilities.displaySize.x / 2 + backgroundPaddingLeft;
-            revealY = (int) (AndroidUtilities.displaySize.y - containerView.getY());
+            revealX = Utils.displaySize.x / 2 + backgroundPaddingLeft;
+            revealY = (int) (Utils.displaySize.y - containerView.getY());
         }
 
         int corners[][] = new int[][]{
@@ -656,7 +656,7 @@ public class BottomSheet extends Dialog {
         animators.add(ObjectAnimator.ofInt(backgroundDrawable, "alpha", open ? 51 : 0));
 
         if (Build.VERSION.SDK_INT >= 21) {
-            containerView.setElevation(AndroidUtilities.dp(10));
+            containerView.setElevation(Utils.dp(10));
             try {
                 animators.add(ViewAnimationUtils.createCircularReveal(containerView, finalRevealX, revealY, open ? 0 : finalRevealRadius, open ? finalRevealRadius : 0));
             } catch (Exception e) {
@@ -718,7 +718,7 @@ public class BottomSheet extends Dialog {
 
     private void startOpenAnimation() {
         if (containerView.getMeasuredHeight() == 0) {
-            containerView.measure(View.MeasureSpec.makeMeasureSpec(AndroidUtilities.displaySize.x, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(AndroidUtilities.displaySize.y, View.MeasureSpec.AT_MOST));
+            containerView.measure(View.MeasureSpec.makeMeasureSpec(Utils.displaySize.x, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(Utils.displaySize.y, View.MeasureSpec.AT_MOST));
         }
         backgroundDrawable.setAlpha(0);
         containerView.setVisibility(View.VISIBLE);
@@ -792,7 +792,7 @@ public class BottomSheet extends Dialog {
         dismissed = true;
         AnimatorSet animatorSetProxy = new AnimatorSet();
         animatorSetProxy.playTogether(
-                ObjectAnimator.ofFloat(containerView, "translationY", containerView.getMeasuredHeight() + AndroidUtilities.dp(10)),
+                ObjectAnimator.ofFloat(containerView, "translationY", containerView.getMeasuredHeight() + Utils.dp(10)),
                 ObjectAnimator.ofInt(backgroundDrawable, "alpha", 0)
         );
         animatorSetProxy.setDuration(180);
@@ -833,7 +833,7 @@ public class BottomSheet extends Dialog {
         } else {
             AnimatorSet animatorSetProxy = new AnimatorSet();
             animatorSetProxy.playTogether(
-                    ObjectAnimator.ofFloat(containerView, "translationY", containerView.getMeasuredHeight() + AndroidUtilities.dp(10)),
+                    ObjectAnimator.ofFloat(containerView, "translationY", containerView.getMeasuredHeight() + Utils.dp(10)),
                     ObjectAnimator.ofInt(backgroundDrawable, "alpha", 0)
             );
             animatorSetProxy.setDuration(180);

@@ -36,7 +36,7 @@ import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.widget.CompoundButton;
 
-import org.michaelbel.material.utils.AndroidUtilities;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.R;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
@@ -102,7 +102,7 @@ public class Switch extends CompoundButton {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        AndroidUtilities.bind(context);
+        Utils.bind(context);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Switch, defStyleAttr, 0);
         isRTL = a.getBoolean(R.styleable.Switch_switch_supportRTL, false);
@@ -129,10 +129,10 @@ public class Switch extends CompoundButton {
 
         //---
 
-        this.mSwitchMinWidth = AndroidUtilities.getDensity() < 1 ? AndroidUtilities.dp(30) : 0;
+        this.mSwitchMinWidth = Utils.getDensity() < 1 ? Utils.dp(30) : 0;
         ViewConfiguration mViewConfiguration = ViewConfiguration.get(context);
 
-        NONE = new Insets(AndroidUtilities.dp(4), 0, AndroidUtilities.dp(4), 0);
+        NONE = new Insets(Utils.dp(4), 0, Utils.dp(4), 0);
 
         mTouchSlop = mViewConfiguration.getScaledTouchSlop();
         mMinFlingVelocity = mViewConfiguration.getScaledMinimumFlingVelocity();
@@ -622,7 +622,7 @@ public class Switch extends CompoundButton {
 
             final int thumbLeft = thumbInitialLeft - padding.left;
             final int thumbRight = thumbInitialLeft + mThumbWidth + padding.right;
-            int offset = (AndroidUtilities.getDensity() == 1.5f ? AndroidUtilities.dp(1) : 0);
+            int offset = (Utils.getDensity() == 1.5f ? Utils.dp(1) : 0);
             mThumbDrawable.setBounds(thumbLeft, switchTop + offset, thumbRight, switchBottom + offset);
 
             final Drawable background = getBackground();
