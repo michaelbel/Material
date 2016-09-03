@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -50,6 +51,33 @@ public class Utils {
         return backgroundResource;
     }
 
+    public static int getAttrColor(@NonNull Context context, @AttrRes int colorAttr) {
+        int[] attrs = new int[] {
+                colorAttr
+        };
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int color = typedArray.getColor(0, 0);
+        typedArray.recycle();
+
+        return color;
+    }
+
+    public static boolean isLandscape(Context context) {
+        return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+    }
+
+    public static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return result;
+    }
+
 
 
 
@@ -93,7 +121,7 @@ public class Utils {
         return iconDrawable;
     }
 
-    public static int getThemeColor(@AttrRes int colorAttr) {
+    public static int getAttrColor(@AttrRes int colorAttr) {
         int[] attrs = new int[] {
                 colorAttr
         };
