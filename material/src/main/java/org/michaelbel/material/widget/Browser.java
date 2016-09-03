@@ -15,7 +15,6 @@ import android.util.Log;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.utils.Color;
 
 @SuppressWarnings("unused")
 public class Browser {
@@ -29,7 +28,7 @@ public class Browser {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
-            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", Color.getThemeColor(context, R.attr.colorPrimary));
+            intent.putExtra("android.support.customtabs.extra.TOOLBAR_COLOR", Utils.getAttrColor(context, R.attr.colorPrimary));
             intent.putExtra("android.support.customtabs.extra.TITLE_VISIBILITY", 1);
             Intent actionIntent = new Intent(Intent.ACTION_SEND);
             actionIntent.setType("text/plain");

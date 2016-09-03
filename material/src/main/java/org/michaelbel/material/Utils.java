@@ -93,7 +93,7 @@ public class Utils {
         Utils.context = context;
     }
 
-    public static int dp (float value) {
+    public static int dp(float value) {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 

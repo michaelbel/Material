@@ -42,7 +42,6 @@ import android.widget.TextView;
 import org.michaelbel.material.Utils;
 import org.michaelbel.material.R;
 import org.michaelbel.material.animation.ViewProxy;
-import org.michaelbel.material.utils.Screen;
 
 import java.util.ArrayList;
 
@@ -621,7 +620,7 @@ public class BottomSheet extends Dialog {
             float top;
 
             if (Build.VERSION.SDK_INT <= 19) {
-                top = Utils.displaySize.y - containerView.getMeasuredHeight() - Screen.getStatusBarHeight(getContext());
+                top = Utils.displaySize.y - containerView.getMeasuredHeight() - Utils.getStatusBarHeight(getContext());
             } else {
                 top = containerView.getY();
             }
@@ -630,7 +629,7 @@ public class BottomSheet extends Dialog {
             revealY = (int) (coords[1] + view.getMeasuredHeight() / 2 - top);
 
             if (Build.VERSION.SDK_INT <= 19) {
-                revealY -= Screen.getStatusBarHeight(getContext());
+                revealY -= Utils.getStatusBarHeight(getContext());
             }
         } else {
             revealX = Utils.displaySize.x / 2 + backgroundPaddingLeft;

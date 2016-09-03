@@ -129,10 +129,10 @@ public class Switch extends CompoundButton {
 
         //---
 
-        this.mSwitchMinWidth = Utils.getDensity() < 1 ? Utils.dp(30) : 0;
+        this.mSwitchMinWidth = Utils.getDensity() < 1 ? Utils.dp(getContext(), 30) : 0;
         ViewConfiguration mViewConfiguration = ViewConfiguration.get(context);
 
-        NONE = new Insets(Utils.dp(4), 0, Utils.dp(4), 0);
+        NONE = new Insets(Utils.dp(getContext(), 4), 0, Utils.dp(getContext(), 4), 0);
 
         mTouchSlop = mViewConfiguration.getScaledTouchSlop();
         mMinFlingVelocity = mViewConfiguration.getScaledMinimumFlingVelocity();

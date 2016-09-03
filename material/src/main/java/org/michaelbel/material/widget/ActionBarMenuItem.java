@@ -26,9 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.animation.ViewProxy;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.utils.Screen;
+import org.michaelbel.material.animation.ViewProxy;
 
 import java.lang.reflect.Field;
 
@@ -540,7 +539,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             layoutParams2.width = LayoutHelper.MATCH_PARENT;
             layoutParams2.gravity = Gravity.CENTER_VERTICAL;
             layoutParams2.height = Utils.dp(36);
-            layoutParams2.rightMargin = needClearButton ? Utils.dp(48) : 0;
+            layoutParams2.rightMargin = needClearButton ? Utils.dp(getContext(), 48) : 0;
             searchField.setLayoutParams(layoutParams2);
 
             if (needClearButton) {
@@ -556,7 +555,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                 });
                 searchContainer.addView(clearButton);
                 layoutParams2 = (LayoutParams) clearButton.getLayoutParams();
-                layoutParams2.width = Utils.dp(48);
+                layoutParams2.width = Utils.dp(getContext(), 48);
                 layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
                 layoutParams2.height = LayoutHelper.MATCH_PARENT;
                 clearButton.setLayoutParams(layoutParams2);
@@ -594,7 +593,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         int offsetY;
         if (showFromBottom) {
             getLocationOnScreen(location);
-            int diff = location[1] - Screen.getStatusBarHeight(getContext()) + getMeasuredHeight() - menuHeight;
+            int diff = location[1] - Utils.getStatusBarHeight(getContext()) + getMeasuredHeight() - menuHeight;
             offsetY = -menuHeight;
             if (diff < 0) {
                 offsetY -= diff;
@@ -640,11 +639,11 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             }
         } else {
             if (show) {
-                popupWindow.showAsDropDown(this, -Utils.dp(8), offsetY);
+                popupWindow.showAsDropDown(this, -Utils.dp(getContext(), 8), offsetY);
             }
 
             if (update) {
-                popupWindow.update(this, -Utils.dp(8), offsetY, -1, -1);
+                popupWindow.update(this, -Utils.dp(getContext(), 8), offsetY, -1, -1);
             }
         }
     }

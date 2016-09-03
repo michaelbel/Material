@@ -35,16 +35,15 @@ public class BottomPickerLayout extends FrameLayout {
         mPickerHeight = 48;
         mPickerElevation = 8;
 
-        this.setElevation(Utils.dp(mPickerElevation));
-        /*this.setBackgroundColor(mPickerColor);*/
+        this.setElevation(Utils.dp(context, mPickerElevation));
 
         mNegativeButton = new TextView(context);
         mNegativeButton.setClickable(true);
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mNegativeButton.setTextColor(Utils.getThemeColor(R.attr.colorPrimary));
-        mNegativeButton.setPadding(Utils.dp(32), 0, Utils.dp(32), 0);
+        mNegativeButton.setTextColor(Utils.getAttrColor(R.attr.colorPrimary));
+        mNegativeButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
         mNegativeButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mNegativeButton);
@@ -54,8 +53,8 @@ public class BottomPickerLayout extends FrameLayout {
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mPositiveButton.setTextColor(Utils.getThemeColor(R.attr.colorPrimary));
-        mPositiveButton.setPadding(Utils.dp(32), 0, Utils.dp(32), 0);
+        mPositiveButton.setTextColor(Utils.getAttrColor(R.attr.colorPrimary));
+        mPositiveButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
         mPositiveButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
         addView(mPositiveButton);
@@ -115,6 +114,6 @@ public class BottomPickerLayout extends FrameLayout {
 
     @Override
     protected void onMeasure(int wMeasureSpec, int hMeasureSpec) {
-        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(Utils.dp(mPickerHeight), MeasureSpec.EXACTLY));
+        super.onMeasure(wMeasureSpec, MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), mPickerHeight), MeasureSpec.EXACTLY));
     }
 }

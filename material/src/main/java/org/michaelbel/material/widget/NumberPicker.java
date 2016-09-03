@@ -40,7 +40,6 @@ import android.widget.TextView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.utils.Color;
 
 import java.util.Locale;
 
@@ -117,7 +116,7 @@ public class NumberPicker extends LinearLayout {
 
     private void init() {
         solidColor = 0;
-        selectionDivider = new ColorDrawable(Color.getThemeColor(getContext(), R.attr.colorPrimary));
+        selectionDivider = new ColorDrawable(Utils.getAttrColor(getContext(), R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
         mSelectionDividersDistance = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDERS_DISTANCE, getResources().getDisplayMetrics());
         mMinHeight = SIZE_UNSPECIFIED;

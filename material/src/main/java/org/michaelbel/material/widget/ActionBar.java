@@ -21,8 +21,6 @@ import android.widget.ImageView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.utils.Color;
-import org.michaelbel.material.utils.Screen;
 
 import java.util.ArrayList;
 
@@ -85,7 +83,7 @@ public class ActionBar extends FrameLayout {
 
         this.mTitleTextColor = 0xFFFFFFFF;
         this.mSubtitleTextColor = 0xFFFFFFFF;
-        this.setBackgroundColor(Color.getThemeColor(context, R.attr.colorPrimary));
+        this.setBackgroundColor(Utils.getAttrColor(context, R.attr.colorPrimary));
     }
 
     public ActionBar setTitle(@NonNull CharSequence value) {
@@ -219,7 +217,7 @@ public class ActionBar extends FrameLayout {
         occupyStatusBar = value;
 
         if (mActionMode != null) {
-            mActionMode.setPadding(0, occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0, 0, 0);
+            mActionMode.setPadding(0, occupyStatusBar ? Utils.getStatusBarHeight(getContext()) : 0, 0, 0);
         }
 
         return this;
@@ -299,7 +297,7 @@ public class ActionBar extends FrameLayout {
         mActionMode.setBackgroundColor(0xFFFFFFFF);
         addView(mActionMode, indexOfChild(mBackButtonImageView));
 
-        mActionMode.setPadding(0, occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0, 0, 0);
+        mActionMode.setPadding(0, occupyStatusBar ? Utils.getStatusBarHeight(getContext()) : 0, 0, 0);
 
         LayoutParams layoutParams = (LayoutParams) mActionMode.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
@@ -313,7 +311,7 @@ public class ActionBar extends FrameLayout {
             mActionModeTop.setBackgroundColor(0x99000000);
             addView(mActionModeTop);
             layoutParams = (LayoutParams) mActionModeTop.getLayoutParams();
-            layoutParams.height = Screen.getStatusBarHeight(getContext());
+            layoutParams.height = Utils.getStatusBarHeight(getContext());
             layoutParams.width = LayoutHelper.MATCH_PARENT;
             layoutParams.gravity = Gravity.TOP | Gravity.START;
             mActionModeTop.setLayoutParams(layoutParams);
@@ -323,13 +321,23 @@ public class ActionBar extends FrameLayout {
         return mActionMode;
     }
 
+    public int getCurrentActionBarHeightDp() {
+        if (isTablet) {
+            return Utils.dp(getContext(), 64);
+        } else if (Utils.isLandscape(getContext())) {
+            return Utils.dp(getContext(), 48);
+        } else {
+            return Utils.dp(getContext(), 56);
+        }
+    }
+
     public int getCurrentActionBarHeight() {
         if (isTablet) {
-            return Utils.dp(64);
-        } else if (Screen.isLandscape(getContext())) {
-            return Utils.dp(48);
+            return 64;
+        } else if (Utils.isLandscape(getContext())) {
+            return 48;
         } else {
-            return Utils.dp(56);
+            return 56;
         }
     }
 
@@ -468,7 +476,7 @@ public class ActionBar extends FrameLayout {
             mActionModeTop.setBackgroundColor(0x99000000);
             addView(mActionModeTop);
             LayoutParams layoutParams = (LayoutParams) mActionModeTop.getLayoutParams();
-            layoutParams.height = Screen.getStatusBarHeight(getContext());
+            layoutParams.height = Utils.getStatusBarHeight(getContext());
             layoutParams.width = LayoutHelper.MATCH_PARENT;
             layoutParams.gravity = Gravity.TOP | Gravity.START;
             mActionModeTop.setLayoutParams(layoutParams);
@@ -517,10 +525,10 @@ public class ActionBar extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-        int actionBarHeight = getCurrentActionBarHeight();
+        int actionBarHeight = getCurrentActionBarHeightDp();
         int actionBarHeightSpec = MeasureSpec.makeMeasureSpec(actionBarHeight, MeasureSpec.EXACTLY);
 
-        setMeasuredDimension(width, actionBarHeight + (occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0));
+        setMeasuredDimension(width, actionBarHeight + (occupyStatusBar ? Utils.getStatusBarHeight(getContext()) : 0));
 
         int textLeft;
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
@@ -544,12 +552,12 @@ public class ActionBar extends FrameLayout {
             int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - Utils.dp(16) - textLeft;
 
             if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
-                mTitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 18 : 20);
+                mTitleTextView.setTextSize(!isTablet && Utils.isLandscape(getContext()) ? 18 : 20);
                 mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(24), MeasureSpec.AT_MOST));
 
             }
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                mSubtitleTextView.setTextSize(!isTablet && Screen.isLandscape(getContext()) ? 12 : 14);
+                mSubtitleTextView.setTextSize(!isTablet && Utils.isLandscape(getContext()) ? 12 : 14);
                 mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(20), MeasureSpec.AT_MOST));
             }
         }
@@ -569,7 +577,7 @@ public class ActionBar extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int additionalTop = occupyStatusBar ? Screen.getStatusBarHeight(getContext()) : 0;
+        int additionalTop = occupyStatusBar ? Utils.getStatusBarHeight(getContext()) : 0;
 
         int textLeft;
 
@@ -588,15 +596,15 @@ public class ActionBar extends FrameLayout {
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
             int textTop;
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                textTop = (getCurrentActionBarHeight() / 2 - mTitleTextView.getTextHeight()) / 2 + Utils.dp(!isTablet && Screen.isLandscape(getContext()) ? 2 : 3);
+                textTop = (getCurrentActionBarHeightDp() / 2 - mTitleTextView.getTextHeight()) / 2 + Utils.dp(!isTablet && Utils.isLandscape(getContext()) ? 2 : 3);
             } else {
-                textTop = (getCurrentActionBarHeight() - mTitleTextView.getTextHeight()) / 2;
+                textTop = (getCurrentActionBarHeightDp() - mTitleTextView.getTextHeight()) / 2;
             }
             mTitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mTitleTextView.getMeasuredWidth(), additionalTop + textTop + mTitleTextView.getTextHeight());
         }
 
         if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-            int textTop = getCurrentActionBarHeight() / 2 + (getCurrentActionBarHeight() / 2 - mSubtitleTextView.getTextHeight()) / 2 - Utils.dp(!isTablet && Screen.isLandscape(getContext()) ? 1 : 1);
+            int textTop = getCurrentActionBarHeightDp() / 2 + (getCurrentActionBarHeightDp() / 2 - mSubtitleTextView.getTextHeight()) / 2 - Utils.dp(getContext(), !isTablet && Utils.isLandscape(getContext()) ? 1 : 1);
             mSubtitleTextView.layout(textLeft, additionalTop + textTop, textLeft + mSubtitleTextView.getMeasuredWidth(), additionalTop + textTop + mSubtitleTextView.getTextHeight());
         }
 
