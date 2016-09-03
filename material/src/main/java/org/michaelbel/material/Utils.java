@@ -34,7 +34,7 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
 
-    public static int dp (@NonNull Context context,  float value) {
+    public static int dp(@NonNull Context context,  float value) {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
     }
 
