@@ -1,1 +1,2 @@
-<translate xmlns:android="http://schemas.android.com/apk/res/android" android:duration="10"/>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+           android:duration="10"/>
