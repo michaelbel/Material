@@ -33,7 +33,7 @@ public class HoloColorPickerDialog extends DialogFragment {
         picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         layout.addView(picker);
-        picker.setOldCenterColor(Utils.getThemeColor(R.attr.colorAccent));
+        picker.setOldCenterColor(Utils.getAttrColor(R.attr.colorAccent));
 
         builder.setView(layout);
         builder.setTitle(R.string.ColorPickerHolo);

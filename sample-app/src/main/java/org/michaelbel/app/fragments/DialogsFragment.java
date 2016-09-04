@@ -35,10 +35,10 @@ import org.michaelbel.app.dialogs.shift.MaterialColorDialog;
 import org.michaelbel.app.dialogs.shift.PrimaryColorDialog;
 import org.michaelbel.app.dialogs.shift.PrimaryDarkColorDialog;
 import org.michaelbel.app.model.DialogItem;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.picker.date.DatePickerDialog;
 import org.michaelbel.material.picker.time.RadialPickerLayout;
 import org.michaelbel.material.picker.time.TimePickerDialog;
-import org.michaelbel.material.utils.Color;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
 import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
 import org.michaelbel.material.widget.LayoutHelper;
@@ -114,37 +114,37 @@ public class DialogsFragment extends Fragment {
                 
                 if (i == 9) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.RGB);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
                 } else if (i == 10) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.ARGB);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
                 } else if (i == 11) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.HSV);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
                 } else if (i == 12) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.HSL);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
                 } else if (i == 13) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.CMYK);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
                 } else if (i == 14) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
-                    builder.setInitialColor(Color.getThemeColor(getContext(), R.attr.colorAccent));
+                    builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.CMYK255);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);

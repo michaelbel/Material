@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.utils.Color;
+import org.michaelbel.material.Utils;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
 import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
 import org.michaelbel.material.widget.ColorView;
@@ -65,7 +65,7 @@ public class ColorPickerDialog extends DialogFragment {
 
         public Builder setInitialColor(@ColorInt int color) {
             if (color == 0) {
-                color = Color.getThemeColor(context, R.attr.colorAccent);
+                color = Utils.getAttrColor(context, R.attr.colorAccent);
             }
 
             this.initialColor = color;

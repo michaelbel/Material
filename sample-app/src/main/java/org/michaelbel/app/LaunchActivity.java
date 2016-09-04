@@ -11,7 +11,6 @@ import org.michaelbel.app.fragments.CardFragment;
 import org.michaelbel.app.fragments.DialogsFragment;
 import org.michaelbel.app.fragments.FabFragment;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.utils.Screen;
 import org.michaelbel.material.widget.ActionBar;
 import org.michaelbel.material.widget.ActionBarMenu;
 import org.michaelbel.material.widget.ActionBarMenuItem;
@@ -59,7 +58,7 @@ public class LaunchActivity extends FragmentActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         FrameLayout.LayoutParams viewPagerParams = (FrameLayout.LayoutParams) viewPager.getLayoutParams();
-        viewPagerParams.setMargins(0, Screen.isLandscape(this) ?
+        viewPagerParams.setMargins(0, Utils.isLandscape(this) ?
                 Utils.dp(96) : Utils.dp(104), 0, 0);
         viewPager.setLayoutParams(viewPagerParams);
 
@@ -72,7 +71,7 @@ public class LaunchActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setBackgroundColor(Utils.getThemeColor(R.attr.colorPrimary));
+        tabLayout.setBackgroundColor(Utils.getAttrColor(R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -89,7 +88,7 @@ public class LaunchActivity extends FragmentActivity {
 
         FrameLayout.LayoutParams tabLayoutParams = (FrameLayout.LayoutParams)
                 tabLayout.getLayoutParams();
-        tabLayoutParams.setMargins(0, actionBar.getCurrentActionBarHeight(), 0, 0);
+        tabLayoutParams.setMargins(0, actionBar.getCurrentActionBarHeightDp(), 0, 0);
         tabLayout.setLayoutParams(tabLayoutParams);
     }
 

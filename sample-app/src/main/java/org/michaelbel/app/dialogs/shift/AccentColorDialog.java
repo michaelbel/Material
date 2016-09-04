@@ -30,8 +30,8 @@ public class AccentColorDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         RelativeLayout layout = new RelativeLayout(getContext());
-        layout.setPadding(Utils.dp(24), Utils.dp(24), Utils.dp(24),
-                Utils.dp(24));
+        layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
+                Utils.dp(getContext(), 24));
 
         picker = new ShiftColorPicker(getContext());
         picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));

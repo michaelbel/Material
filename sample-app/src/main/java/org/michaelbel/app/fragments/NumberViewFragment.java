@@ -31,7 +31,7 @@ public class NumberViewFragment extends Fragment {
         numberTextView.setTextSize(30);
         numberTextView.setNumber(j, false);
         numberTextView.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        numberTextView.setTextColor(Utils.getThemeColor(R.attr.colorPrimary));
+        numberTextView.setTextColor(Utils.getAttrColor(R.attr.colorPrimary));
         numberTextView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT,
                 LayoutHelper.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL));
         fragmentView.addView(numberTextView);

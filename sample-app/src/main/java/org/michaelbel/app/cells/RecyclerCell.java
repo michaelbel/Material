@@ -109,7 +109,7 @@ public class RecyclerCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(Utils.dp(64) + (divider ? 1 : 0),
+                MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 64) + (divider ? 1 : 0),
                         MeasureSpec.EXACTLY));
     }
 
