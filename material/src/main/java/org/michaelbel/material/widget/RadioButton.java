@@ -20,6 +20,9 @@ import java.lang.reflect.Method;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RadioButton extends View {
+
+    private static final String TAG = RadioButton.class.getSimpleName();
+
     private static final int ANIMATION_DURATION = 200;
 
     private int mAccentColor;
@@ -68,7 +71,7 @@ public class RadioButton extends View {
 
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            paint.setStrokeWidth(Utils.dp(2));
+            paint.setStrokeWidth(Utils.dp(context, 2));
             paint.setStyle(Paint.Style.STROKE);
             checkedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             eraser = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -77,7 +80,7 @@ public class RadioButton extends View {
         }
 
         try {
-            bitmap = Bitmap.createBitmap(Utils.dp(size), Utils.dp(size), Bitmap.Config.ARGB_4444);
+            bitmap = Bitmap.createBitmap(Utils.dp(context, size), Utils.dp(context, size), Bitmap.Config.ARGB_4444);
 
             if (ImageLoader.getInstance().runtimeHack != null) {
                 ImageLoader.getInstance().runtimeHack.trackFree(bitmap.getRowBytes() * bitmap.getHeight());
@@ -85,7 +88,7 @@ public class RadioButton extends View {
 
             bitmapCanvas = new Canvas(bitmap);
         } catch (Throwable e) {
-            Log.e("message", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -186,7 +189,7 @@ public class RadioButton extends View {
 
                 bitmapCanvas = new Canvas(bitmap);
             } catch (Throwable e) {
-                Log.e("message", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
         }
 
@@ -243,7 +246,7 @@ public class RadioButton extends View {
                     Object res = trackAllocation.invoke(runtime, size);
                     return (res instanceof Boolean) ? (Boolean) res : true;
                 } catch (Exception e) {
-                    Log.e("message", e.getMessage());
+                    Log.e(TAG, e.getMessage());
                     return false;
                 }
             }
@@ -257,7 +260,7 @@ public class RadioButton extends View {
                     Object res = trackFree.invoke(runtime, size);
                     return (res instanceof Boolean) ? (Boolean) res : true;
                 } catch (Exception e) {
-                    Log.e("message", e.getMessage());
+                    Log.e(TAG, e.getMessage());
                     return false;
                 }
             }

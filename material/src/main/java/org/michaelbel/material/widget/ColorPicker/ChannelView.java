@@ -1,5 +1,6 @@
 package org.michaelbel.material.widget.ColorPicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import org.michaelbel.material.R;
 
+@SuppressLint("ViewConstructor")
 public class ChannelView extends RelativeLayout {
 
     private final Channel channel;
@@ -21,10 +23,12 @@ public class ChannelView extends RelativeLayout {
         this.channel = channel;
         this.indicatorMode = indicatorMode;
 
-        channel.setProgress(channel.getExtractor().extract(color));
+        channel.setProgress(channel.getColorExtractor().extract(color));
 
-        if (channel.getProgress() < channel.getMin() || channel.getProgress() > channel.getMax()) {
-            throw new IllegalArgumentException("Initial progress for channel: " + channel.getClass().getSimpleName() + " must be between " + channel.getMin() + " and " + channel.getMax());
+        if (channel.getProgress() < channel.getMinValue() || channel.getProgress() > channel.getMaxValue()) {
+            throw new IllegalArgumentException("Initial progress for channel: " +
+                    channel.getClass().getSimpleName() + " must be between " +
+                    channel.getMinValue() + " and " + channel.getMaxValue());
         }
 
         View rootView = inflate(context, R.layout.channel_row, this);
@@ -37,7 +41,7 @@ public class ChannelView extends RelativeLayout {
         final TextView progressView = (TextView) rootView.findViewById(R.id.progress_text);
         setProgress(progressView, channel.getProgress());
         SeekBar seekbar = (SeekBar) rootView.findViewById(R.id.seekbar);
-        seekbar.setMax(channel.getMax());
+        seekbar.setMax(channel.getMaxValue());
         seekbar.setProgress(channel.getProgress());
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

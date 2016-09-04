@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import org.michaelbel.material.Utils;
 
+@SuppressWarnings("unused")
 public class ActionBarMenu extends LinearLayout {
 
     protected ActionBar parentActionBar;

@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -32,6 +33,8 @@ import org.michaelbel.material.animation.ViewProxy;
 import java.lang.reflect.Field;
 
 public class ActionBarMenuItem extends FrameLayoutFixed {
+
+    private static final String TAG = ActionBarMenuItem.class.getSimpleName();
 
     public static volatile Handler mHandler;
 
@@ -265,16 +268,16 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
         }
 
-        textView.setPadding(Utils.dp(16), 0, Utils.dp(16), 0);
+        textView.setPadding(Utils.dp(getContext(), 16), 0, Utils.dp(getContext(), 16), 0);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        textView.setMinWidth(Utils.dp(196));
+        textView.setMinWidth(Utils.dp(getContext(), 196));
         textView.setTag(id);
         textView.setText(text);
 
         if (icon != 0) {
-            textView.setCompoundDrawablePadding(Utils.dp(12));
+            textView.setCompoundDrawablePadding(Utils.dp(getContext(), 12));
             if (!isRTL) {
-                textView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(icon), null, null, null);
+                textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), icon), null, null, null);
             } else {
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(icon), null);
             }
@@ -289,7 +292,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         }
 
         layoutParams.width = LayoutHelper.MATCH_PARENT;
-        layoutParams.height = Utils.dp(48);
+        layoutParams.height = Utils.dp(getContext(), 48);
         textView.setLayoutParams(layoutParams);
         textView.setOnClickListener(new OnClickListener() {
             @Override
@@ -346,7 +349,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             popupWindow.setClippingEnabled(true);
             popupWindow.setInputMethodMode(ActionBarPopupWindow.INPUT_METHOD_NOT_NEEDED);
             popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
-            popupLayout.measure(MeasureSpec.makeMeasureSpec(Utils.dp(1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(1000), MeasureSpec.AT_MOST));
+            popupLayout.measure(MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 1000), MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 1000), MeasureSpec.AT_MOST));
             popupWindow.getContentView().setFocusableInTouchMode(true);
             popupWindow.getContentView().setOnKeyListener(new OnKeyListener() {
                 @Override
@@ -448,14 +451,14 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             layoutParams.weight = 1;
             layoutParams.width = 0;
             layoutParams.height = LayoutHelper.MATCH_PARENT;
-            layoutParams.leftMargin = Utils.dp(6);
+            layoutParams.leftMargin = Utils.dp(getContext(), 6);
             searchContainer.setLayoutParams(layoutParams);
             searchContainer.setVisibility(GONE);
 
             searchField = new EditText(getContext());
             searchField.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
             searchField.setHintTextColor(0x88ffffff);
-            searchField.setTextColor(0xffffffff);
+            searchField.setTextColor(0xFFFFFFFF);
             searchField.setSingleLine(true);
             searchField.setBackgroundResource(0);
             searchField.setPadding(0, 0, 0, 0);
@@ -524,7 +527,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
                 mCursorDrawableRes.setAccessible(true);
                 mCursorDrawableRes.set(searchField, R.drawable.search_carret);
             } catch (Exception e) {
-                Log.e("message", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
 
             if (Build.VERSION.SDK_INT >= 11) {
@@ -538,7 +541,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
             LayoutParams layoutParams2 = (LayoutParams) searchField.getLayoutParams();
             layoutParams2.width = LayoutHelper.MATCH_PARENT;
             layoutParams2.gravity = Gravity.CENTER_VERTICAL;
-            layoutParams2.height = Utils.dp(36);
+            layoutParams2.height = Utils.dp(getContext(), 36);
             layoutParams2.rightMargin = needClearButton ? Utils.dp(getContext(), 48) : 0;
             searchField.setLayoutParams(layoutParams2);
 

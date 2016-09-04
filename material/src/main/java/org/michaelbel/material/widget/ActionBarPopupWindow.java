@@ -84,7 +84,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                 backgroundDrawable = ContextCompat.getDrawable(context, R.drawable.popup_fixed);
             }
 
-            this.setPadding(Utils.dp(8), Utils.dp(8), Utils.dp(8), Utils.dp(8));
+            this.setPadding(Utils.dp(context, 8), Utils.dp(context, 8), Utils.dp(context, 8), Utils.dp(context, 8));
             this.setWillNotDraw(false);
 
             try {
@@ -139,7 +139,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                     visibleCount += getItemAt(a).getVisibility() == VISIBLE ? 1 : 0;
                 }
 
-                int height = getMeasuredHeight() - Utils.dp(16);
+                int height = getMeasuredHeight() - Utils.dp(getContext(), 16);
 
                 if (showedFromBottom) {
                     for (int a = lastStartedChild; a >= 0; a--) {
@@ -148,8 +148,8 @@ public class ActionBarPopupWindow extends PopupWindow {
                             continue;
                         }
                         Integer position = positions.get(child);
-                        if (position != null && height - (position * Utils.dp(48) +
-                                Utils.dp(32)) > value * height) {
+                        if (position != null && height - (position * Utils.dp(getContext(), 48) +
+                                Utils.dp(getContext(), 32)) > value * height) {
                             break;
                         }
                         lastStartedChild = a - 1;
@@ -165,7 +165,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                         Integer position = positions.get(child);
 
-                        if (position != null && (position + 1) * Utils.dp(48) - Utils.dp(24) > value * height) {
+                        if (position != null && (position + 1) * Utils.dp(getContext(), 48) - Utils.dp(getContext(), 24) > value * height) {
                             break;
                         }
 
@@ -281,7 +281,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                 superListenerField.set(this, NOP);
             } catch (Exception e) {
                 mSuperScrollListener = null;
-                Log.e("message", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
         }
     }
@@ -429,7 +429,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                     try {
                         ActionBarPopupWindow.super.dismiss();
                     } catch (Exception e) {
-                        Log.e("message", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     unregisterListener();
@@ -448,7 +448,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             try {
                 super.dismiss();
             } catch (Exception e) {
-                Log.e("message", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
 
             unregisterListener();

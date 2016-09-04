@@ -37,6 +37,8 @@ import java.lang.reflect.Method;
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RecyclerListView extends RecyclerView {
 
+    private static final String TAG = RecyclerListView.class.getSimpleName();
+
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
     private RecyclerView.OnScrollListener onScrollListener;
@@ -82,7 +84,7 @@ public class RecyclerListView extends RecyclerView {
             initializeScrollbars.invoke(this, a);
             a.recycle();
         } catch (Throwable e) {
-            Log.e("message", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         super.addOnScrollListener(new OnScrollListener() {
@@ -98,7 +100,7 @@ public class RecyclerListView extends RecyclerView {
                     try {
                         mGestureDetector.onTouchEvent(event);
                     } catch (Exception e) {
-                        Log.e("message", e.getMessage());
+                        Log.e(TAG, e.getMessage());
                     }
 
                     currentChildView.onTouchEvent(event);
@@ -231,7 +233,7 @@ public class RecyclerListView extends RecyclerView {
                         mGestureDetector.onTouchEvent(event);
                     }
                 } catch (Exception e) {
-                    Log.e("message", e.getMessage());
+                    Log.e(TAG, e.getMessage());
                 }
             }
 
@@ -318,7 +320,7 @@ public class RecyclerListView extends RecyclerView {
                 return (int[]) f.get(null);
             }
         } catch (Throwable e) {
-            Log.e("message", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
 
         return null;
@@ -417,7 +419,7 @@ public class RecyclerListView extends RecyclerView {
         try {
             super.stopScroll();
         } catch (NullPointerException e) {
-            Log.e("message", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
     }
 

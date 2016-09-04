@@ -549,16 +549,16 @@ public class ActionBar extends FrameLayout {
         }
 
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE || mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-            int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - Utils.dp(16) - textLeft;
+            int availableWidth = width - (mMenu != null ? mMenu.getMeasuredWidth() : 0) - Utils.dp(getContext(), 16) - textLeft;
 
             if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
                 mTitleTextView.setTextSize(!isTablet && Utils.isLandscape(getContext()) ? 18 : 20);
-                mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(24), MeasureSpec.AT_MOST));
+                mTitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 24), MeasureSpec.AT_MOST));
 
             }
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
                 mSubtitleTextView.setTextSize(!isTablet && Utils.isLandscape(getContext()) ? 12 : 14);
-                mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(20), MeasureSpec.AT_MOST));
+                mSubtitleTextView.measure(MeasureSpec.makeMeasureSpec(availableWidth, MeasureSpec.AT_MOST), MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 20), MeasureSpec.AT_MOST));
             }
         }
 

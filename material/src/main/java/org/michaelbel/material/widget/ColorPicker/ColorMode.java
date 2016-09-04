@@ -7,11 +7,11 @@ import java.util.List;
 
 public enum ColorMode {
     RGB,
-    HSV,
     ARGB,
+    HSV,
+    HSL,
     CMYK,
-    CMYK255,
-    HSL;
+    CMYK255;
 
     public AbstractColorMode getColorMode() {
         switch (this) {

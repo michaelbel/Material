@@ -79,8 +79,8 @@ public class ColorView extends FrameLayout {
             channelContainer.addView(c);
 
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) c.getLayoutParams();
-            params.topMargin = Utils.dp(16);
-            params.bottomMargin = Utils.dp(4);
+            params.topMargin = Utils.dp(context, 16);
+            params.bottomMargin = Utils.dp(context, 4);
 
             c.registerListener(seekBarChangeListener);
         }

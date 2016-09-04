@@ -23,15 +23,15 @@ public class Channel {
         return mMode;
     }
 
-    public int getMin() {
+    public int getMinValue() {
         return mMinValue;
     }
 
-    public int getMax() {
+    public int getMaxValue() {
         return mMaxValue;
     }
 
-    public ColorExtractor getExtractor() {
+    public ColorExtractor getColorExtractor() {
         return mExtractor;
     }
 
