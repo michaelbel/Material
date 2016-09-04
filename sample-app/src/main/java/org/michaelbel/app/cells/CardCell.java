@@ -97,7 +97,7 @@ public class CardCell extends CardView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(
                 MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(Utils.dp(100), MeasureSpec.EXACTLY));
+                MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 100), MeasureSpec.EXACTLY));
     }
 
     @Override

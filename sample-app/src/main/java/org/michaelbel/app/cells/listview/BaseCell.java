@@ -38,7 +38,7 @@ public class BaseCell extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
                 MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(Utils.dp(height + (divider ? 1 : 0)),
+                MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), height + (divider ? 1 : 0)),
                         MeasureSpec.EXACTLY));
     }
 
