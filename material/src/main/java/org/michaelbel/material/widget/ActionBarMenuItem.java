@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.animation.ViewProxy;
+import org.michaelbel.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
 
@@ -85,7 +85,7 @@ public class ActionBarMenuItem extends FrameLayoutFixed {
         Utils.bind(context);
 
         mHandler = new Handler(context.getMainLooper());
-        menuHeight = Utils.dp(16);
+        menuHeight = Utils.dp(context, 16);
 
         this.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
 

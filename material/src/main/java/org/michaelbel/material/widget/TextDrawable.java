@@ -13,6 +13,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class TextDrawable extends ShapeDrawable {
@@ -32,17 +33,14 @@ public class TextDrawable extends ShapeDrawable {
     private TextDrawable(Builder builder) {
         super(builder.shape);
 
-        // shape properties
         shape = builder.shape;
         height = builder.height;
         width = builder.width;
         radius = builder.radius;
 
-        // text and color
         text = builder.toUpperCase ? builder.text.toUpperCase() : builder.text;
         color = builder.color;
 
-        // text paint settings
         fontSize = builder.fontSize;
         textPaint = new Paint();
         textPaint.setColor(builder.textColor);
@@ -53,22 +51,22 @@ public class TextDrawable extends ShapeDrawable {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setStrokeWidth(builder.borderThickness);
 
-        // border paint settings
         borderThickness = builder.borderThickness;
         borderPaint = new Paint();
         borderPaint.setColor(getDarkerShade(color));
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(borderThickness);
 
-        // drawable paint color
         Paint paint = getPaint();
         paint.setColor(color);
     }
 
     private int getDarkerShade(@ColorInt int color) {
-        return Color.rgb((int)(SHADE_FACTOR * Color.red(color)),
+        return Color.rgb(
+                (int)(SHADE_FACTOR * Color.red(color)),
                 (int)(SHADE_FACTOR * Color.green(color)),
-                (int)(SHADE_FACTOR * Color.blue(color)));
+                (int)(SHADE_FACTOR * Color.blue(color))
+        );
     }
 
     @Override
@@ -76,15 +74,12 @@ public class TextDrawable extends ShapeDrawable {
         super.draw(canvas);
         Rect r = getBounds();
 
-        // draw border
         if (borderThickness > 0) {
             drawBorder(canvas);
         }
 
         int count = canvas.save();
         canvas.translate(r.left, r.top);
-
-        // draw text
         int width = this.width < 0 ? r.width() : this.width;
         int height = this.height < 0 ? r.height() : this.height;
         int fontSize = this.fontSize < 0 ? (Math.min(width, height) / 2) : this.fontSize;
@@ -153,7 +148,7 @@ public class TextDrawable extends ShapeDrawable {
         private Builder() {
             text = "";
             color = Color.GRAY;
-            textColor = Color.WHITE;
+            textColor = 0xFFFFFFFF;
             borderThickness = 0;
             width = -1;
             height = -1;
@@ -184,7 +179,7 @@ public class TextDrawable extends ShapeDrawable {
             return this;
         }
 
-        public IConfigBuilder useFont(Typeface font) {
+        public IConfigBuilder useFont(@NonNull Typeface font) {
             this.font = font;
             return this;
         }

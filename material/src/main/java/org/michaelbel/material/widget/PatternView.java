@@ -16,6 +16,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.support.annotation.ColorInt;
 import android.support.annotation.RequiresPermission;
 import android.support.annotation.Size;
 import android.util.AttributeSet;
@@ -91,10 +92,10 @@ public class PatternView extends View {
         mPathPaint.setStrokeJoin(Paint.Join.ROUND);
         mPathPaint.setStrokeCap(Paint.Cap.ROUND);
 
-        mPathWidth = Utils.dp(3);
+        mPathWidth = Utils.dp(context, 3);
         mPathPaint.setStrokeWidth(mPathWidth);
-        mDotSize = Utils.dp(14);
-        mDotSizePressed = Utils.dp(18);
+        mDotSize = Utils.dp(context, 14);
+        mDotSizePressed = Utils.dp(context, 18);
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
 
@@ -164,7 +165,7 @@ public class PatternView extends View {
         return this;
     }
 
-    public PatternView setDotsSizePressed(@Size(min = 1)int size) {
+    public PatternView setDotsSizePressed(@Size(min = 1) int size) {
         if (size != 0) {
             this.mDotSizePressed = size;
         }
@@ -172,17 +173,17 @@ public class PatternView extends View {
         return this;
     }
 
-    public PatternView setRegularColor(int color) {
+    public PatternView setRegularColor(@ColorInt int color) {
         this.mRegularColor = color;
         return this;
     }
 
-    public PatternView setErrorColor(int color) {
+    public PatternView setErrorColor(@ColorInt int color) {
         this.mErrorColor = color;
         return this;
     }
 
-    public PatternView setSuccessColor(int color) {
+    public PatternView setSuccessColor(@ColorInt int color) {
         this.mSuccessColor = color;
         return this;
     }

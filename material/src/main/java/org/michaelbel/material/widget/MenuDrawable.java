@@ -26,8 +26,8 @@ public class MenuDrawable extends Drawable {
 
         Utils.bind(context);
 
-        paint.setColor(0xffffffff);
-        paint.setStrokeWidth(Utils.dp(2));
+        paint.setColor(0xFFFFFFFF);
+        paint.setStrokeWidth(Utils.dp(context, 2));
     }
 
     public void setRotation(float rotation, boolean animated) {

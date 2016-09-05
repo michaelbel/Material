@@ -1,6 +1,8 @@
 package org.michaelbel.material.widget;
 
 import android.content.Context;
+import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import org.michaelbel.material.R;
@@ -8,7 +10,7 @@ import org.michaelbel.material.R;
 @SuppressWarnings("unused")
 public class Palette {
 
-    public static int[] PrimaryColors(Context context) {
+    public static int[] PrimaryColors(@NonNull Context context) {
         return new int[] {
                 ContextCompat.getColor(context, R.color.primary_red),
                 ContextCompat.getColor(context, R.color.primary_pink),
@@ -32,7 +34,7 @@ public class Palette {
         };
     }
 
-    public static int[] PrimaryDarkColors(Context context) {
+    public static int[] PrimaryDarkColors(@NonNull Context context) {
         return new int[] {
                 ContextCompat.getColor(context, R.color.primary_dark_red),
                 ContextCompat.getColor(context, R.color.primary_dark_pink),
@@ -56,7 +58,7 @@ public class Palette {
         };
     }
 
-    public static int[] AccentColors(Context context) {
+    public static int[] AccentColors(@NonNull Context context) {
         return new int[] {
                 ContextCompat.getColor(context, R.color.accent_red),
                 ContextCompat.getColor(context, R.color.accent_pink),
@@ -77,7 +79,7 @@ public class Palette {
         };
     }
 
-    public static int[] MaterialColors(Context context, int color) {
+    public static int[] MaterialColors(@NonNull Context context, @ColorInt int color) {
         if (color == ContextCompat.getColor(context, R.color.primary_red)) {
             return new int[]{
                     ContextCompat.getColor(context, R.color.md_red_100),

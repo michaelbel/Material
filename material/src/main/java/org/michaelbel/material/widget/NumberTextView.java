@@ -117,7 +117,7 @@ public class NumberTextView extends View {
     }
 
     public void setTextSize(int size) {
-        textPaint.setTextSize(Utils.dp(size));
+        textPaint.setTextSize(size);
         oldLetters.clear();
         letters.clear();
         setNumber(currentNumber, false);
@@ -192,7 +192,7 @@ public class NumberTextView extends View {
 
             canvas.restore();
             if (layout != null) canvas.translate(layout.getLineWidth(0), 0);
-            else canvas.translate((old != null ? old.getLineWidth(0) : 0) + Utils.dp(1), 0);
+            else canvas.translate((old != null ? old.getLineWidth(0) : 0) + Utils.dp(getContext(), 1), 0);
         }
 
         canvas.restore();

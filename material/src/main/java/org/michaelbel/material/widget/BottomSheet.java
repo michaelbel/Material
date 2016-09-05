@@ -41,7 +41,7 @@ import android.widget.TextView;
 
 import org.michaelbel.material.Utils;
 import org.michaelbel.material.R;
-import org.michaelbel.material.animation.ViewProxy;
+import org.michaelbel.material.anim.ViewProxy;
 
 import java.util.ArrayList;
 

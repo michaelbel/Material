@@ -67,7 +67,7 @@ public class RadioButton extends View {
         mDisabledColor =  darkTheme ? 0x4DFFFFFF : 0x42000000;
         a.recycle();
 
-        size = Utils.dp(22);
+        size = Utils.dp(context, 22);
 
         if (paint == null) {
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -218,10 +218,10 @@ public class RadioButton extends View {
             bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad, paint);
 
             if (progress <= 0.5f) {
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - Utils.dp(1)), checkedPaint);
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - Utils.dp(1)) * (1.0f - circleProgress), eraser);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - Utils.dp(getContext(), 1)), checkedPaint);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, (rad - Utils.dp(getContext(), 1)) * (1.0f - circleProgress), eraser);
             } else {
-                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, size / 4 + (rad - Utils.dp(1) - size / 4) * circleProgress, checkedPaint);
+                bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, size / 4 + (rad - Utils.dp(getContext(), 1) - size / 4) * circleProgress, checkedPaint);
             }
 
             canvas.drawBitmap(bitmap, 0, 0, null);

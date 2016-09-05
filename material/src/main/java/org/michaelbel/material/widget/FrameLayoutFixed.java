@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class FrameLayoutFixed extends FrameLayout {
 
+    private static final String TAG = FrameLayoutFixed.class.getSimpleName();
+
     private final ArrayList<View> mMatchParentChildren = new ArrayList<>(1);
 
     public FrameLayoutFixed(Context context) {
@@ -34,7 +36,7 @@ public class FrameLayoutFixed extends FrameLayout {
     }
 
     public final int getMeasuredStateFixed(View view) {
-        return (view.getMeasuredWidth() & 0xff000000) | ((view.getMeasuredHeight() >> 16) & (0xff000000 >> 16));
+        return (view.getMeasuredWidth() & 0xFF000000) | ((view.getMeasuredHeight() >> 16) & (0xFF000000 >> 16));
     }
 
     public static int resolveSizeAndStateFixed(int size, int measureSpec, int childMeasuredState) {
@@ -59,7 +61,7 @@ public class FrameLayoutFixed extends FrameLayout {
                 break;
         }
 
-        return result | (childMeasuredState & 0xff000000);
+        return result | (childMeasuredState & 0xFF000000);
     }
 
     @Override
@@ -141,13 +143,13 @@ public class FrameLayoutFixed extends FrameLayout {
                 }
             }
         } catch (Exception e) {
-            Log.e("message", e.getMessage());
+            Log.e(TAG, e.getMessage());
 
             try {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             } catch (Exception e2) {
-                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(Utils.dp(10), MeasureSpec.EXACTLY));
-                Log.e("message", e2.getMessage());
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 10), MeasureSpec.EXACTLY));
+                Log.e(TAG, e2.getMessage());
             }
         }
     }

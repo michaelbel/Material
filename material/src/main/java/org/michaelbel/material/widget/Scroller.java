@@ -289,8 +289,7 @@ public class Scroller  {
 
                 break;
             }
-        }
-        else {
+        } else {
             mCurrX = mFinalX;
             mCurrY = mFinalY;
             mFinished = true;
@@ -419,8 +418,7 @@ public class Scroller  {
         mFinalY = Math.max(mFinalY, mMinY);
     }
     
-    static float viscousFluid(float x)
-    {
+    static float viscousFluid(float x) {
         x *= sViscousFluidScale;
         if (x < 1.0f) {
             x -= (1.0f - (float)Math.exp(-x));

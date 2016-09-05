@@ -532,16 +532,16 @@ public class ActionBar extends FrameLayout {
 
         int textLeft;
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
-            mBackButtonImageView.measure(MeasureSpec.makeMeasureSpec(Utils.dp(54), MeasureSpec.EXACTLY), actionBarHeightSpec);
-            textLeft = Utils.dp(isTablet ? 80 : 56);
+            mBackButtonImageView.measure(MeasureSpec.makeMeasureSpec(Utils.dp(getContext(), 54), MeasureSpec.EXACTLY), actionBarHeightSpec);
+            textLeft = Utils.dp(getContext(), isTablet ? 80 : 56);
         } else {
-            textLeft = Utils.dp(isTablet ? 26 : 16);
+            textLeft = Utils.dp(getContext(), isTablet ? 26 : 16);
         }
 
         if (mMenu != null && mMenu.getVisibility() != GONE) {
             int menuWidth;
             if (isSearchFieldVisible) {
-                menuWidth = MeasureSpec.makeMeasureSpec(width - Utils.dp(isTablet ? 74 : 66), MeasureSpec.EXACTLY);
+                menuWidth = MeasureSpec.makeMeasureSpec(width - Utils.dp(getContext(), isTablet ? 74 : 66), MeasureSpec.EXACTLY);
             } else {
                 menuWidth = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
             }
@@ -583,20 +583,20 @@ public class ActionBar extends FrameLayout {
 
         if (mBackButtonImageView != null && mBackButtonImageView.getVisibility() != GONE) {
             mBackButtonImageView.layout(0, additionalTop, mBackButtonImageView.getMeasuredWidth(), additionalTop + mBackButtonImageView.getMeasuredHeight());
-            textLeft = Utils.dp(isTablet ? 80 : 56);
+            textLeft = Utils.dp(getContext(), isTablet ? 80 : 56);
         } else {
-            textLeft = Utils.dp(isTablet ? 26 : 12);
+            textLeft = Utils.dp(getContext(), isTablet ? 26 : 12);
         }
 
         if (mMenu != null && mMenu.getVisibility() != GONE) {
-            int menuLeft = isSearchFieldVisible ? Utils.dp(isTablet ? 74 : 56) : (right - left) - mMenu.getMeasuredWidth();
+            int menuLeft = isSearchFieldVisible ? Utils.dp(getContext(), isTablet ? 74 : 56) : (right - left) - mMenu.getMeasuredWidth();
             mMenu.layout(menuLeft, additionalTop, menuLeft + mMenu.getMeasuredWidth(), additionalTop + mMenu.getMeasuredHeight());
         }
 
         if (mTitleTextView != null && mTitleTextView.getVisibility() != GONE) {
             int textTop;
             if (mSubtitleTextView != null && mSubtitleTextView.getVisibility() != GONE) {
-                textTop = (getCurrentActionBarHeightDp() / 2 - mTitleTextView.getTextHeight()) / 2 + Utils.dp(!isTablet && Utils.isLandscape(getContext()) ? 2 : 3);
+                textTop = (getCurrentActionBarHeightDp() / 2 - mTitleTextView.getTextHeight()) / 2 + Utils.dp(getContext(), !isTablet && Utils.isLandscape(getContext()) ? 2 : 3);
             } else {
                 textTop = (getCurrentActionBarHeightDp() - mTitleTextView.getTextHeight()) / 2;
             }

@@ -183,7 +183,7 @@ public class ActionBarPopupWindow extends PopupWindow {
 
                 animatorSet.playTogether(
                         ObjectAnimator.ofFloat(child, "alpha", 0.0f, 1.0f),
-                        ObjectAnimator.ofFloat(child, "translationY", Utils.dp(showedFromBottom ? 6 : -6), 0));
+                        ObjectAnimator.ofFloat(child, "translationY", Utils.dp(getContext(), showedFromBottom ? 6 : -6), 0));
 
                 animatorSet.setDuration(180);
                 animatorSet.setInterpolator(decelerateInterpolator);

@@ -141,8 +141,8 @@ public class Switch extends CompoundButton {
         setChecked(isChecked());
     }
 
-    public Switch setRTL(boolean rtl) {
-        isRTL = rtl;
+    public Switch setRTL(boolean value) {
+        isRTL = value;
         return this;
     }
 
@@ -172,7 +172,7 @@ public class Switch extends CompoundButton {
 
     public Switch setDarkTheme(boolean theme) {
         darkTheme = theme;
-        invalidate();
+        /*invalidate();*/
         return this;
     }
 
@@ -622,7 +622,7 @@ public class Switch extends CompoundButton {
 
             final int thumbLeft = thumbInitialLeft - padding.left;
             final int thumbRight = thumbInitialLeft + mThumbWidth + padding.right;
-            int offset = (Utils.getDensity() == 1.5f ? Utils.dp(1) : 0);
+            int offset = (Utils.getDensity() == 1.5f ? Utils.dp(getContext(), 1) : 0);
             mThumbDrawable.setBounds(thumbLeft, switchTop + offset, thumbRight, switchBottom + offset);
 
             final Drawable background = getBackground();

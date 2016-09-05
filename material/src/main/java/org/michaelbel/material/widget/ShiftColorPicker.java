@@ -93,11 +93,6 @@ public class ShiftColorPicker extends View {
 
 		if (!isInEditMode()) {
 			final int colorsArrayResId = -1;
-
-			if (colorsArrayResId > 0) {
-				final int[] colors = context.getResources().getIntArray(colorsArrayResId);
-				setColors(colors);
-			}
 		}
 
 		final int selected = -1;
@@ -191,11 +186,9 @@ public class ShiftColorPicker extends View {
 			case MotionEvent.ACTION_UP:
 				newColor = getColorAtXY(event.getX(), event.getY());
 				setSelectedColor(newColor);
-
 				if (isClick) {
 					performClick();
 				}
-
 				break;
 			case MotionEvent.ACTION_MOVE:
 				newColor = getColorAtXY(event.getX(), event.getY());
@@ -218,11 +211,9 @@ public class ShiftColorPicker extends View {
 		if (mOrientation == HORIZONTAL) {
 			int left;
 			int right = 0;
-
 			for (int color : colors) {
 				left = right;
 				right += mCellSize;
-
 				if (left <= x && right >= x) {
 					return color;
 				}

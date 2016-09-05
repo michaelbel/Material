@@ -70,7 +70,7 @@ public class CheckBox extends View {
             mCheckPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mCheckPaint.setColor(mCheckColor);
             mCheckPaint.setStyle(Paint.Style.STROKE);
-            mCheckPaint.setStrokeWidth(Utils.dp(2));
+            mCheckPaint.setStrokeWidth(Utils.dp(context, 2));
             mEraser = new Paint(Paint.ANTI_ALIAS_FLAG);
             mEraser.setColor(0);
             mEraser.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
@@ -78,7 +78,7 @@ public class CheckBox extends View {
             mRectF = new RectF();
         }
 
-        drawBitmap = Bitmap.createBitmap(Utils.dp(18), Utils.dp(18), Bitmap.Config.ARGB_4444);
+        drawBitmap = Bitmap.createBitmap(Utils.dp(context, 18), Utils.dp(context, 18), Bitmap.Config.ARGB_4444);
         drawCanvas = new Canvas(drawBitmap);
     }
 
@@ -187,17 +187,17 @@ public class CheckBox extends View {
         mRectF.set(bounce, bounce, Utils.dp(getContext(), 18) - bounce, Utils.dp(getContext(), 18) - bounce);
 
         drawBitmap.eraseColor(0);
-        drawCanvas.drawRoundRect(mRectF, Utils.dp(getContext(), 2), Utils.dp(2), mBackgroundPaint);
+        drawCanvas.drawRoundRect(mRectF, Utils.dp(getContext(), 2), Utils.dp(getContext(), 2), mBackgroundPaint);
 
         if (checkProgress != 1) {
             float rad = Math.min(Utils.dp(getContext(), 7), Utils.dp(getContext(), 7) * checkProgress + bounce);
-            mRectF.set(Utils.dp(2) + rad, Utils.dp(getContext(), 2) + rad, Utils.dp(getContext(), 16) - rad, Utils.dp(getContext(), 16) - rad);
+            mRectF.set(Utils.dp(getContext(), 2) + rad, Utils.dp(getContext(), 2) + rad, Utils.dp(getContext(), 16) - rad, Utils.dp(getContext(), 16) - rad);
             drawCanvas.drawRect(mRectF, mEraser);
         }
 
         if (progress > 0.5f) {
-            int endX = (int) (Utils.dp(getContext(), 7.5f) - Utils.dp(5) * (1.0f - bounceProgress));
-            int endY = (int) (Utils.dpf2(13.5f) - Utils.dp(5) * (1.0f - bounceProgress));
+            int endX = (int) (Utils.dp(getContext(), 7.5f) - Utils.dp(getContext(), 5) * (1.0f - bounceProgress));
+            int endY = (int) (Utils.dpf2(13.5f) - Utils.dp(getContext(), 5) * (1.0f - bounceProgress));
             drawCanvas.drawLine(Utils.dp(getContext(), 7.5f), (int) Utils.dpf2(13.5f), endX, endY, mCheckPaint);
             endX = (int) (Utils.dpf2(6.5f) + Utils.dp(getContext(), 9) * (1.0f - bounceProgress));
             endY = (int) (Utils.dpf2(13.5f) - Utils.dp(getContext(), 9) * (1.0f - bounceProgress));

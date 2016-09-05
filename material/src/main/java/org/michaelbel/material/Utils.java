@@ -26,7 +26,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.michaelbel.material.animation.ViewProxy;
+import org.michaelbel.material.anim.ViewProxy;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -63,11 +63,11 @@ public class Utils {
         return color;
     }
 
-    public static boolean isLandscape(Context context) {
+    public static boolean isLandscape(@NonNull Context context) {
         return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    public static int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeight(@NonNull Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
 

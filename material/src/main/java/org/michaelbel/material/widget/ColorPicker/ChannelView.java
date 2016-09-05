@@ -17,25 +17,16 @@ public class ChannelView extends RelativeLayout {
     private final IndicatorMode indicatorMode;
     private OnProgressChangedListener listener;
 
-    public ChannelView(Channel channel, @ColorInt int color, IndicatorMode indicatorMode, Context context) {
+    public ChannelView(Channel c, @ColorInt int color, IndicatorMode indicatorMode, Context context) {
         super(context);
 
-        this.channel = channel;
+        this.channel = c;
         this.indicatorMode = indicatorMode;
 
         channel.setProgress(channel.getColorExtractor().extract(color));
 
-        if (channel.getProgress() < channel.getMinValue() || channel.getProgress() > channel.getMaxValue()) {
-            throw new IllegalArgumentException("Initial progress for channel: " +
-                    channel.getClass().getSimpleName() + " must be between " +
-                    channel.getMinValue() + " and " + channel.getMaxValue());
-        }
-
         View rootView = inflate(context, R.layout.channel_row, this);
-        bindViews(rootView);
-    }
 
-    private void bindViews(View rootView) {
         TextView label = (TextView) rootView.findViewById(R.id.label);
         label.setText(channel.getNameResourceId());
         final TextView progressView = (TextView) rootView.findViewById(R.id.progress_text);
