@@ -30,8 +30,8 @@ public class PrimaryDarkColorDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         RelativeLayout layout = new RelativeLayout(getContext());
-        layout.setPadding(Utils.dp(24), Utils.dp(24), Utils.dp(24),
-                Utils.dp(24));
+        layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
+                Utils.dp(getContext(), 24));
 
         picker = new ShiftColorPicker(getContext());
         picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
@@ -42,7 +42,7 @@ public class PrimaryDarkColorDialog extends DialogFragment {
         builder.setView(layout);
         builder.setTitle("Primary Dark Color");
         builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
                         Toast.LENGTH_SHORT).show();

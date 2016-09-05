@@ -42,7 +42,7 @@ public class AccentColorDialog extends DialogFragment {
         builder.setView(layout);
         builder.setTitle("Accent Color");
         builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
                         Toast.LENGTH_SHORT).show();

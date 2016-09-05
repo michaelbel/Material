@@ -59,7 +59,7 @@ public class LaunchActivity extends FragmentActivity {
 
         FrameLayout.LayoutParams viewPagerParams = (FrameLayout.LayoutParams) viewPager.getLayoutParams();
         viewPagerParams.setMargins(0, Utils.isLandscape(this) ?
-                Utils.dp(96) : Utils.dp(104), 0, 0);
+                Utils.dp(this, 96) : Utils.dp(this, 104), 0, 0);
         viewPager.setLayoutParams(viewPagerParams);
 
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(this, getSupportFragmentManager());

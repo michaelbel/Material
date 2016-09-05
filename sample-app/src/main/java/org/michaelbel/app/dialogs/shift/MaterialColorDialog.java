@@ -33,8 +33,7 @@ public class MaterialColorDialog extends DialogFragment {
         layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
                 LayoutHelper.WRAP_CONTENT));
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(Utils.dp(24), Utils.dp(24), Utils.dp(24),
-                Utils.dp(24));
+        layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), 0);
 
         picker1 = new ShiftColorPicker(getContext());
         picker1.setColors(Palette.PrimaryColors(getContext()));
@@ -67,7 +66,7 @@ public class MaterialColorDialog extends DialogFragment {
         builder.setView(layout);
         builder.setTitle("Material Color");
         builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), Integer.toHexString(picker2.getColor()),
                         Toast.LENGTH_SHORT).show();

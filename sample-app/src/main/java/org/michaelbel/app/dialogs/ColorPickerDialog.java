@@ -59,7 +59,7 @@ public class ColorPickerDialog extends DialogFragment {
         private ColorMode colorMode;
         private IndicatorMode indicatorMode;
 
-        public Builder(Context context) {
+        public Builder(@NonNull Context context) {
             this.context = context;
         }
 
@@ -119,7 +119,7 @@ public class ColorPickerDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(colorView);
         builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), Integer.toHexString(colorView.getInitialColor()),
                         Toast.LENGTH_SHORT).show();
