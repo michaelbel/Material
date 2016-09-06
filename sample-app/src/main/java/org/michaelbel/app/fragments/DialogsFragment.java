@@ -26,8 +26,6 @@ import org.michaelbel.app.cells.listview.TextCell;
 import org.michaelbel.app.dialogs.ColorPickerDialog;
 import org.michaelbel.app.dialogs.HoloColorPickerDialog;
 import org.michaelbel.app.dialogs.ViewColorPickerDialog;
-import org.michaelbel.app.dialogs.bottom.BottomSheetDialog1;
-import org.michaelbel.app.dialogs.bottom.BottomSheetDialog2;
 import org.michaelbel.app.dialogs.number.NumberPickerDialog;
 import org.michaelbel.app.dialogs.number.StringPickerDialog;
 import org.michaelbel.app.dialogs.shift.AccentColorDialog;
@@ -151,11 +149,9 @@ public class DialogsFragment extends Fragment {
                 }
 
                 if (i == 16) {
-                    BottomSheetDialog1 dialog = BottomSheetDialog1.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+
                 } else if (i == 17) {
-                    BottomSheetDialog2 dialog = BottomSheetDialog2.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+
                 }
 
                 if (i == 19) {

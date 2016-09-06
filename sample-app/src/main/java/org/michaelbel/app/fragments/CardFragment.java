@@ -117,7 +117,7 @@ public class CardFragment extends Fragment {
                 cardCell.setCardBackgroundColor(0xFFFFFFFF);
                 cardCell.setRadius(Utils.dp(getContext(), 3.5F));
                 cardCell.setCardElevation(Utils.dp(getContext(), 1.8F));
-                cardCell.setBackgroundResource(R.drawable.list_selector_white);
+                //cardCell.setBackgroundResource(R.drawable.list_selector_white);
                 cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(),
                         LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
 
