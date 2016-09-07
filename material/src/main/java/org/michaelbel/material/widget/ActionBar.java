@@ -92,8 +92,8 @@ public class ActionBar extends FrameLayout {
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
         this.setBackgroundColor(Utils.getAttrColor(context, R.attr.colorPrimary));
 
-        this.mTitleTextColor = ContextCompat.getColor(context, R.color.primaryTextColor);
-        this.mSubtitleTextColor = ContextCompat.getColor(context, R.color.primaryTextColor);
+        this.mTitleTextColor = ContextCompat.getColor(context, R.color.md_white);
+        this.mSubtitleTextColor = ContextCompat.getColor(context, R.color.md_white);
     }
 
     public SimpleTextView getTitleTextView() {
@@ -189,7 +189,6 @@ public class ActionBar extends FrameLayout {
         params.gravity = Gravity.START | Gravity.TOP;
 
         addView(mTitleTextView, 0, params);
-        //addView(mTitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP));
     }
 
     public ActionBar setSubtitle(@NonNull CharSequence value) {
@@ -223,7 +222,6 @@ public class ActionBar extends FrameLayout {
         params.gravity = Gravity.START | Gravity.TOP;
 
         addView(mSubtitleTextView, 0, params);
-        //addView(mSubtitleTextView, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP));
     }
 
     @NonNull
@@ -274,6 +272,26 @@ public class ActionBar extends FrameLayout {
         } else {
             return 56;
         }
+    }
+
+    public ActionBar setTitleTextColor(@ColorInt int color) {
+        this.mTitleTextColor = color;
+        return this;
+    }
+
+    @ColorInt
+    public int getTitleTextColor() {
+        return mTitleTextColor;
+    }
+
+    public ActionBar setSubtitleTextColor(@ColorInt int color) {
+        this.mSubtitleTextColor = color;
+        return this;
+    }
+
+    @ColorInt
+    public int getSubtitleTextColor() {
+        return mSubtitleTextColor;
     }
 
 
@@ -692,7 +710,7 @@ public class ActionBar extends FrameLayout {
         return false;
     }
     
-    public class BackDrawable extends Drawable {
+    public static class BackDrawable extends Drawable {
 
         private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private boolean reverseAngle = false;
@@ -703,11 +721,14 @@ public class ActionBar extends FrameLayout {
         private int currentAnimationTime;
         private boolean alwaysClose;
         private DecelerateInterpolator interpolator = new DecelerateInterpolator();
+        private Context context;
 
-        public BackDrawable(boolean close) {
+        public BackDrawable(Context context, boolean close) {
             super();
+            this.context = context;
+
             paint.setColor(0xFFFFFFFF);
-            paint.setStrokeWidth(Utils.dp(getContext(), 2));
+            paint.setStrokeWidth(Utils.dp(context, 2));
             alwaysClose = close;
         }
 
@@ -767,11 +788,11 @@ public class ActionBar extends FrameLayout {
                 canvas.rotate(135 + currentRotation * (reverseAngle ? -180 : 180));
                 rotation = 1.0f;
             }
-            canvas.drawLine(-Utils.dp(getContext(), 7) - Utils.dp(getContext(), 1) * rotation, 0, Utils.dp(getContext(), 8), 0, paint);
-            float startYDiff = -Utils.dp(getContext(), 0.5f);
-            float endYDiff = Utils.dp(getContext(), 7) + Utils.dp(getContext(), 1) * rotation;
-            float startXDiff = -Utils.dp(getContext(), 7.0f) + Utils.dp(getContext(), 7.0f) * rotation;
-            float endXDiff = Utils.dp(getContext(), 0.5f) - Utils.dp(getContext(), 0.5f) * rotation;
+            canvas.drawLine(-Utils.dp(context, 7) - Utils.dp(context, 1) * rotation, 0, Utils.dp(context, 8), 0, paint);
+            float startYDiff = -Utils.dp(context, 0.5f);
+            float endYDiff = Utils.dp(context, 7) + Utils.dp(context, 1) * rotation;
+            float startXDiff = -Utils.dp(context, 7.0f) + Utils.dp(context, 7.0f) * rotation;
+            float endXDiff = Utils.dp(context, 0.5f) - Utils.dp(context, 0.5f) * rotation;
             canvas.drawLine(startXDiff, -startYDiff, endXDiff, -endYDiff, paint);
             canvas.drawLine(startXDiff, startYDiff, endXDiff, endYDiff, paint);
             canvas.restore();
@@ -790,12 +811,12 @@ public class ActionBar extends FrameLayout {
 
         @Override
         public int getIntrinsicWidth() {
-            return Utils.dp(getContext(), 24);
+            return Utils.dp(context, 24);
         }
 
         @Override
         public int getIntrinsicHeight() {
-            return Utils.dp(getContext(), 24);
+            return Utils.dp(context, 24);
         }
     }
 
