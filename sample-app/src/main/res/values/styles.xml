@@ -11,5 +11,6 @@
 
     <style name="AppTheme.Tabs" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorAccent">#FFFFFFFF</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
     </style>
 </resources>
