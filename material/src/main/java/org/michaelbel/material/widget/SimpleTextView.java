@@ -5,15 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -22,16 +18,14 @@ import org.michaelbel.material.Utils;
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class SimpleTextView extends View implements Drawable.Callback {
 
-    private static final String TAG = SimpleTextView.class.getSimpleName();
-
     private Layout layout;
     private TextPaint textPaint;
-    private int gravity = Gravity.START|Gravity.TOP;
+    private int gravity = Gravity.LEFT | Gravity.TOP;
     private CharSequence text;
     private SpannableStringBuilder spannableStringBuilder;
     private Drawable leftDrawable;
     private Drawable rightDrawable;
-    private int drawablePadding;
+    private int drawablePadding = Utils.dp(getContext(), 4);
     private int leftDrawableTopPadding;
     private int rightDrawableTopPadding;
 
@@ -40,22 +34,12 @@ public class SimpleTextView extends View implements Drawable.Callback {
     private int textHeight;
     private boolean wasLayout;
 
-    public enum Alignment {
-        ALIGN_NORMAL,
-        ALIGN_OPPOSITE,
-        ALIGN_CENTER,
-        ALIGN_LEFT,
-        ALIGN_RIGHT
-    }
-
     public SimpleTextView(Context context) {
         super(context);
-        Utils.bind(context);
         textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        drawablePadding = Utils.dp(context, 4);
     }
 
-    public void setTextColor(@ColorInt int color) {
+    public void setTextColor(int color) {
         textPaint.setColor(color);
         invalidate();
     }
@@ -67,14 +51,14 @@ public class SimpleTextView extends View implements Drawable.Callback {
     }
 
     public void setTextSize(int size) {
-        int newSize = size;
-
+        int newSize = Utils.dp(getContext(), size);
         if (newSize == textPaint.getTextSize()) {
             return;
         }
-
         textPaint.setTextSize(newSize);
-        recreateLayoutMaybe();
+        if (!recreateLayoutMaybe()) {
+            invalidate();
+        }
     }
 
     public void setGravity(int value) {
@@ -87,15 +71,12 @@ public class SimpleTextView extends View implements Drawable.Callback {
 
     public int getSideDrawablesSize() {
         int size = 0;
-
         if (leftDrawable != null) {
             size += leftDrawable.getIntrinsicWidth() + drawablePadding;
         }
-
         if (rightDrawable != null) {
             size += rightDrawable.getIntrinsicWidth() + drawablePadding;
         }
-
         return size;
     }
 
@@ -103,48 +84,45 @@ public class SimpleTextView extends View implements Drawable.Callback {
         return textPaint;
     }
 
-    private void createLayout(int width) {
+    private boolean createLayout(int width) {
         if (text != null) {
             try {
                 if (leftDrawable != null) {
                     width -= leftDrawable.getIntrinsicWidth();
                     width -= drawablePadding;
                 }
-
                 if (rightDrawable != null) {
                     width -= rightDrawable.getIntrinsicWidth();
                     width -= drawablePadding;
                 }
-
                 width -= getPaddingLeft() + getPaddingRight();
                 CharSequence string = TextUtils.ellipsize(text, textPaint, width, TextUtils.TruncateAt.END);
-
                 if (layout != null && TextUtils.equals(layout.getText(), string)) {
-                    return;
+                    return false;
                 }
-
                 layout = new StaticLayout(string, 0, string.length(), textPaint, width + Utils.dp(getContext(), 8), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
 
                 if (layout.getLineCount() > 0) {
                     textWidth = (int) Math.ceil(layout.getLineWidth(0));
                     textHeight = layout.getLineBottom(0);
-
-                    if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.START) {
+                    if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.LEFT) {
                         offsetX = -(int) layout.getLineLeft(0);
                     } else if (layout.getLineLeft(0) == 0) {
                         offsetX = width - textWidth;
                     } else {
-                        offsetX = 0;
+                        offsetX = -Utils.dp(getContext(), 8);
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
+                //ignore
             }
         } else {
             layout = null;
             textWidth = 0;
             textHeight = 0;
         }
+        invalidate();
+        return true;
     }
 
     @Override
@@ -152,22 +130,19 @@ public class SimpleTextView extends View implements Drawable.Callback {
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         createLayout(width - getPaddingLeft() - getPaddingRight());
-        int finalHeight;
 
-        if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY) {
+        int finalHeight;
+        if (MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY) {
             finalHeight = height;
         } else {
             finalHeight = textHeight;
         }
-
         setMeasuredDimension(width, finalHeight);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        if (changed) {
-            wasLayout = true;
-        }
+        wasLayout = true;
     }
 
     public int getTextWidth() {
@@ -187,50 +162,49 @@ public class SimpleTextView extends View implements Drawable.Callback {
     }
 
     public void setLeftDrawable(int resId) {
-        setLeftDrawable(resId == 0 ? null : ContextCompat.getDrawable(getContext(), resId));
+        setLeftDrawable(resId == 0 ? null : getContext().getResources().getDrawable(resId));
     }
 
     public void setRightDrawable(int resId) {
-        setRightDrawable(resId == 0 ? null : ContextCompat.getDrawable(getContext(), resId));
+        setRightDrawable(resId == 0 ? null : getContext().getResources().getDrawable(resId));
     }
 
     public void setLeftDrawable(Drawable drawable) {
         if (leftDrawable == drawable) {
             return;
         }
-
         if (leftDrawable != null) {
             leftDrawable.setCallback(null);
         }
-
         leftDrawable = drawable;
-
         if (drawable != null) {
             drawable.setCallback(this);
         }
-
-        recreateLayoutMaybe();
+        if (!recreateLayoutMaybe()) {
+            invalidate();
+        }
     }
 
     public void setRightDrawable(Drawable drawable) {
         if (rightDrawable == drawable) {
             return;
         }
-
         if (rightDrawable != null) {
             rightDrawable.setCallback(null);
         }
-
         rightDrawable = drawable;
-
         if (drawable != null) {
             drawable.setCallback(this);
         }
-
-        recreateLayoutMaybe();
+        if (!recreateLayoutMaybe()) {
+            invalidate();
+        }
     }
 
-    public void setText(@NonNull CharSequence value) {
+    public void setText(CharSequence value) {
+        if (text == null && value == null || text != null && value != null && text.equals(value)) {
+            return;
+        }
         text = value;
         recreateLayoutMaybe();
     }
@@ -240,16 +214,18 @@ public class SimpleTextView extends View implements Drawable.Callback {
             return;
         }
         drawablePadding = value;
-        recreateLayoutMaybe();
+        if (!recreateLayoutMaybe()) {
+            invalidate();
+        }
     }
 
-    private void recreateLayoutMaybe() {
+    private boolean recreateLayoutMaybe() {
         if (wasLayout) {
-            createLayout(getMeasuredWidth());
-            invalidate();
+            return createLayout(getMeasuredWidth());
         } else {
             requestLayout();
         }
+        return true;
     }
 
     public CharSequence getText() {
@@ -262,37 +238,29 @@ public class SimpleTextView extends View implements Drawable.Callback {
     @Override
     protected void onDraw(Canvas canvas) {
         int textOffsetX = 0;
-
         if (leftDrawable != null) {
             int y = (textHeight - leftDrawable.getIntrinsicHeight()) / 2 + leftDrawableTopPadding;
             leftDrawable.setBounds(0, y, leftDrawable.getIntrinsicWidth(), y + leftDrawable.getIntrinsicHeight());
             leftDrawable.draw(canvas);
-
-            if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.START) {
+            if ((gravity & Gravity.HORIZONTAL_GRAVITY_MASK) == Gravity.LEFT) {
                 textOffsetX += drawablePadding + leftDrawable.getIntrinsicWidth();
             }
         }
-
         if (rightDrawable != null) {
             int x = textOffsetX + textWidth + drawablePadding;
-
             if (leftDrawable != null) {
                 x += drawablePadding + leftDrawable.getIntrinsicWidth();
             }
-
             int y = (textHeight - rightDrawable.getIntrinsicHeight()) / 2 + rightDrawableTopPadding;
             rightDrawable.setBounds(x, y, x + rightDrawable.getIntrinsicWidth(), y + rightDrawable.getIntrinsicHeight());
             rightDrawable.draw(canvas);
         }
-
         if (layout != null) {
             if (offsetX + textOffsetX != 0) {
                 canvas.save();
                 canvas.translate(offsetX + textOffsetX, 0);
             }
-
             layout.draw(canvas);
-
             if (offsetX + textOffsetX != 0) {
                 canvas.restore();
             }
@@ -300,7 +268,16 @@ public class SimpleTextView extends View implements Drawable.Callback {
     }
 
     @Override
-    public void invalidateDrawable(@NonNull Drawable who) {
-        invalidate();
+    public void invalidateDrawable(Drawable who) {
+        if (who == leftDrawable) {
+            invalidate(leftDrawable.getBounds());
+        } else if (who == rightDrawable) {
+            invalidate(rightDrawable.getBounds());
+        }
+    }
+
+    @Override
+    public boolean hasOverlappingRendering() {
+        return false;
     }
 }

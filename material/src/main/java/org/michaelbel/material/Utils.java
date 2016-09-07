@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+    public static volatile Handler applicationHandler;
 
     public static int dp(@NonNull Context context,  float value) {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
@@ -78,6 +80,32 @@ public class Utils {
         return result;
     }
 
+    public static boolean isTablet() {
+        return false;
+    }
+
+    public static boolean isTablet(@NonNull Context context) {
+        return false;
+    }
+
+    public static void runOnUIThread(Context context, Runnable runnable) {
+        runOnUIThread(context, runnable, 0);
+    }
+
+    public static void runOnUIThread(Context context, Runnable runnable, long delay) {
+        applicationHandler = new Handler(context.getMainLooper());
+
+        if (delay == 0) {
+            applicationHandler.post(runnable);
+        } else {
+            applicationHandler.postDelayed(runnable, delay);
+        }
+    }
+
+    public static void cancelRunOnUIThread(Context context, Runnable runnable) {
+        applicationHandler = new Handler(context.getMainLooper());
+        applicationHandler.removeCallbacks(runnable);
+    }
 
 
 
