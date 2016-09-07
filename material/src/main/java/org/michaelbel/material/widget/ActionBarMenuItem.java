@@ -3,6 +3,7 @@ package org.michaelbel.material.widget;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -29,22 +30,18 @@ import java.lang.reflect.Field;
 public class ActionBarMenuItem extends FrameLayout {
 
     public static class ActionBarMenuItemSearchListener {
-        public void onSearchExpand() {
-        }
+
+        public void onSearchExpand() {}
 
         public boolean canCollapseSearch() {
             return true;
         }
 
-        public void onSearchCollapse() {
+        public void onSearchCollapse() {}
 
-        }
+        public void onTextChanged(EditText editText) {}
 
-        public void onTextChanged(EditText editText) {
-        }
-
-        public void onSearchPressed(EditText editText) {
-        }
+        public void onSearchPressed(EditText editText) {}
     }
 
     public interface ActionBarMenuItemDelegate {
@@ -75,7 +72,7 @@ public class ActionBarMenuItem extends FrameLayout {
     public ActionBarMenuItem(Context context, ActionBarMenu menu, int backgroundColor) {
         super(context);
         if (backgroundColor != 0) {
-            //setBackgroundDrawable(Theme.createBarSelectorDrawable(backgroundColor));
+            setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         }
         parentMenu = menu;
 
@@ -172,7 +169,7 @@ public class ActionBarMenuItem extends FrameLayout {
     public void setShowFromBottom(boolean value) {
         showFromBottom = value;
         if (popupLayout != null) {
-            popupLayout.setShowedFromBotton(showFromBottom);
+            popupLayout.setShowedFromBottom(showFromBottom);
         }
     }
 
@@ -209,8 +206,8 @@ public class ActionBarMenuItem extends FrameLayout {
             });
         }
         TextView textView = new TextView(getContext());
-        textView.setTextColor(0xff212121);
-        //textView.setBackgroundResource(R.drawable.list_selector);
+        textView.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryTextColor));
+        textView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setPadding(Utils.dp(getContext(), 16), 0, Utils.dp(getContext(), 16), 0);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
@@ -219,9 +216,9 @@ public class ActionBarMenuItem extends FrameLayout {
         textView.setText(text);
         if (icon != 0) {
             textView.setCompoundDrawablePadding(Utils.dp(getContext(), 12));
-            textView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(icon), null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), icon), null, null, null);
         }
-        popupLayout.setShowedFromBotton(showFromBottom);
+        popupLayout.setShowedFromBottom(showFromBottom);
         popupLayout.addView(textView);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) textView.getLayoutParams();
         layoutParams.width = LayoutHelper.MATCH_PARENT;
@@ -376,8 +373,8 @@ public class ActionBarMenuItem extends FrameLayout {
 
             searchField = new EditText(getContext());
             searchField.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            searchField.setHintTextColor(0x88ffffff);
-            searchField.setTextColor(0xffffffff);
+            searchField.setHintTextColor(0x88FFFFFF);
+            searchField.setTextColor(0xFFFFFFFF);
             searchField.setSingleLine(true);
             searchField.setBackgroundResource(0);
             searchField.setPadding(0, 0, 0, 0);
@@ -403,7 +400,7 @@ public class ActionBarMenuItem extends FrameLayout {
             searchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (/*actionId == EditorInfo.IME_ACTION_SEARCH || */event != null && (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_SEARCH || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    if (event != null && (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_SEARCH || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                         Utils.hideKeyboard(searchField);
                         if (listener != null) {
                             listener.onSearchPressed(searchField);
@@ -466,7 +463,7 @@ public class ActionBarMenuItem extends FrameLayout {
             searchContainer.addView(clearButton);
             layoutParams2 = (FrameLayout.LayoutParams) clearButton.getLayoutParams();
             layoutParams2.width = Utils.dp(getContext(), 48);
-            layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
+            layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
             layoutParams2.height = LayoutHelper.MATCH_PARENT;
             clearButton.setLayoutParams(layoutParams2);
         }

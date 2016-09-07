@@ -2,6 +2,7 @@ package org.michaelbel.material.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,24 +14,24 @@ public class ActionBarMenu extends LinearLayout {
 
     protected ActionBar parentActionBar;
 
-    public ActionBarMenu(Context context, ActionBar layer) {
+    public ActionBarMenu(@NonNull Context context) {
+        super(context);
+    }
+
+    public ActionBarMenu(@NonNull Context context, ActionBar layer) {
         super(context);
         setOrientation(LinearLayout.HORIZONTAL);
         parentActionBar = layer;
     }
 
-    public ActionBarMenu(Context context) {
-        super(context);
-    }
-
     public View addItemResource(int id, int resourceId) {
-        LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = li.inflate(resourceId, null);
+        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(resourceId, null);
         view.setTag(id);
         addView(view);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
         layoutParams.height = LayoutHelper.MATCH_PARENT;
-        //view.setBackgroundDrawable(Theme.createBarSelectorDrawable(parentActionBar.itemsBackgroundColor));
+        view.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         view.setLayoutParams(layoutParams);
         view.setOnClickListener(new OnClickListener() {
             @Override
