@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.fragments.CardFragment;
@@ -22,25 +21,25 @@ public class LaunchActivity extends FragmentActivity {
     private static final int github = 1;
     private static final int settings = 2;
 
+    private ActionBar actionBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.linear_layout);
-
-        ActionBar actionBar = (ActionBar) findViewById(R.id.action_bar);
+        actionBar = (ActionBar) findViewById(R.id.action_bar);
         actionBar.setNavigationIcon(R.drawable.ic_menu);
-        actionBar.setTitle("Material Demo");
+        actionBar.setTitle(R.string.MaterialDemo);
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
-                if (id == -1) {
+                if (id == ActionBar.MENU_ICON) {
                     Toast.makeText(LaunchActivity.this, "Drawer is not implemented", Toast.LENGTH_SHORT).show();
                 } else if (id == github) {
                     Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
                 } else if (id == settings) {
-
+                    actionBar.onMenuButtonPressed();
                 }
             }
         });
