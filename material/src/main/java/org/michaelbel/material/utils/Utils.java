@@ -1,4 +1,4 @@
-package org.michaelbel.material;
+package org.michaelbel.material.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import org.michaelbel.material.R;
 import org.michaelbel.material.anim.ViewProxy;
 
 public class Utils {

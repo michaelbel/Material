@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class SimpleTextView extends View implements Drawable.Callback {

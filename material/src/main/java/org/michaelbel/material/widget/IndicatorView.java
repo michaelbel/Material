@@ -32,7 +32,7 @@ import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 import static android.support.v4.view.ViewPager.OnPageChangeListener;
 

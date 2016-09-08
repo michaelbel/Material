@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 @SuppressWarnings({"unused"})
 public class LayoutHelper {

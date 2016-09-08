@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 import java.util.ArrayList;
 

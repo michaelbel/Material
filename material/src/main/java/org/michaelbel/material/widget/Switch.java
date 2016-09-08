@@ -36,7 +36,7 @@ import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.widget.CompoundButton;
 
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 import org.michaelbel.material.R;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})

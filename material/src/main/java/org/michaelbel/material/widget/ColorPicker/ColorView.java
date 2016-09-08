@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

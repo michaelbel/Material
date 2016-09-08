@@ -20,7 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

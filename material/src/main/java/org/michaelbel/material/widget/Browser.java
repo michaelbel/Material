@@ -14,7 +14,7 @@ import android.support.annotation.StringRes;
 import android.util.Log;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.utils.Utils;
 
 @SuppressWarnings("unused")
 public class Browser {
