@@ -2,9 +2,11 @@ package org.michaelbel.material.widget;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import org.michaelbel.material.Utils;
@@ -12,27 +14,27 @@ import org.michaelbel.material.Utils;
 @SuppressWarnings("unused")
 public class ActionBarMenu extends LinearLayout {
 
-    protected ActionBar parentActionBar;
+    protected ActionBar actionBar;
 
     public ActionBarMenu(@NonNull Context context) {
         super(context);
     }
 
-    public ActionBarMenu(@NonNull Context context, ActionBar layer) {
+    public ActionBarMenu(@NonNull Context context, ActionBar actionBar) {
         super(context);
-        setOrientation(LinearLayout.HORIZONTAL);
-        parentActionBar = layer;
+        this.setOrientation(LinearLayout.HORIZONTAL);
+        this.actionBar = actionBar;
     }
 
-    public View addItemResource(int id, int resourceId) {
+    public View addItemResource(int id, int resId) {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(resourceId, null);
+        View view = layoutInflater.inflate(resId, null);
         view.setTag(id);
         addView(view);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-        layoutParams.height = LayoutHelper.MATCH_PARENT;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         view.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
-        view.setLayoutParams(layoutParams);
+        view.setLayoutParams(params);
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,23 +44,23 @@ public class ActionBarMenu extends LinearLayout {
         return view;
     }
 
-    public ActionBarMenuItem addItem(int id, Drawable drawable) {
-        return addItem(id, 0, parentActionBar.itemsBackgroundColor, drawable, Utils.dp(getContext(), 48));
+    public ActionBarMenuItem addItem(int id, @DrawableRes Drawable drawable) {
+        return addItem(id, 0, actionBar.itemsBackgroundColor, drawable, Utils.dp(getContext(), 48));
     }
 
-    public ActionBarMenuItem addItem(int id, int icon) {
-        return addItem(id, icon, parentActionBar.itemsBackgroundColor);
+    public ActionBarMenuItem addItem(int id, @DrawableRes int icon) {
+        return addItem(id, icon, actionBar.itemsBackgroundColor);
     }
 
-    public ActionBarMenuItem addItem(int id, int icon, int backgroundColor) {
+    public ActionBarMenuItem addItem(int id, @DrawableRes int icon, int backgroundColor) {
         return addItem(id, icon, backgroundColor, null, Utils.dp(getContext(), 48));
     }
 
-    public ActionBarMenuItem addItemWithWidth(int id, int icon, int width) {
-        return addItem(id, icon, parentActionBar.itemsBackgroundColor, null, width);
+    public ActionBarMenuItem addItemWithWidth(int id, @DrawableRes int icon, int width) {
+        return addItem(id, icon, actionBar.itemsBackgroundColor, null, width);
     }
 
-    public ActionBarMenuItem addItem(int id, int icon, int backgroundColor, Drawable drawable, int width) {
+    public ActionBarMenuItem addItem(int id, @DrawableRes int icon, int backgroundColor, Drawable drawable, int width) {
         ActionBarMenuItem menuItem = new ActionBarMenuItem(getContext(), this, backgroundColor);
         menuItem.setTag(id);
         if (drawable != null) {
@@ -67,20 +69,20 @@ public class ActionBarMenu extends LinearLayout {
             menuItem.iconView.setImageResource(icon);
         }
         addView(menuItem);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) menuItem.getLayoutParams();
-        layoutParams.height = LayoutHelper.MATCH_PARENT;
-        layoutParams.width = width;
-        menuItem.setLayoutParams(layoutParams);
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) menuItem.getLayoutParams();
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.width = width;
+        menuItem.setLayoutParams(params);
         menuItem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActionBarMenuItem item = (ActionBarMenuItem) view;
                 if (item.hasSubMenu()) {
-                    if (parentActionBar.actionBarMenuOnItemClick.canOpenMenu()) {
+                    if (actionBar.actionBarMenuOnItemClick.canOpenMenu()) {
                         item.toggleSubMenu();
                     }
                 } else if (item.isSearchField()) {
-                    parentActionBar.onSearchFieldVisibilityChanged(item.toggleSearch(true));
+                    actionBar.onSearchFieldVisibilityChanged(item.toggleSearch(true));
                 } else {
                     onItemClick((Integer) view.getTag());
                 }
@@ -100,8 +102,8 @@ public class ActionBarMenu extends LinearLayout {
     }
 
     public void onItemClick(int id) {
-        if (parentActionBar.actionBarMenuOnItemClick != null) {
-            parentActionBar.actionBarMenuOnItemClick.onItemClick(id);
+        if (actionBar.actionBarMenuOnItemClick != null) {
+            actionBar.actionBarMenuOnItemClick.onItemClick(id);
         }
     }
 
@@ -136,7 +138,7 @@ public class ActionBarMenu extends LinearLayout {
             if (view instanceof ActionBarMenuItem) {
                 ActionBarMenuItem item = (ActionBarMenuItem) view;
                 if (item.isSearchField()) {
-                    parentActionBar.onSearchFieldVisibilityChanged(item.toggleSearch(false));
+                    actionBar.onSearchFieldVisibilityChanged(item.toggleSearch(false));
                     break;
                 }
             }
@@ -151,7 +153,7 @@ public class ActionBarMenu extends LinearLayout {
                 ActionBarMenuItem item = (ActionBarMenuItem) view;
                 if (item.isSearchField()) {
                     if (toggle) {
-                        parentActionBar.onSearchFieldVisibilityChanged(item.toggleSearch(true));
+                        actionBar.onSearchFieldVisibilityChanged(item.toggleSearch(true));
                     }
                     item.getSearchField().setText(text);
                     item.getSearchField().setSelection(text.length());

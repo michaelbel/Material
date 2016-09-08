@@ -6,7 +6,11 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -36,6 +41,11 @@ import java.lang.reflect.Field;
 public class ActionBarMenuItem extends FrameLayout {
 
     private static final String TAG = ActionBarMenuItem.class.getSimpleName();
+
+    private static final int CLOSE_ICON_ANIMATION_DURATION = 220;
+
+    private ImageView mClearIcon;
+    private EditText mSearchEditText;
 
     public static class ActionBarMenuItemSearchListener {
 
@@ -59,8 +69,6 @@ public class ActionBarMenuItem extends FrameLayout {
     private ActionBarPopupWindow.ActionBarPopupWindowLayout popupLayout;
     private ActionBarMenu parentMenu;
     private ActionBarPopupWindow popupWindow;
-    private EditText searchField;
-    private ImageView clearButton;
     protected ImageView iconView;
     private FrameLayout searchContainer;
     private boolean isSearchField = false;
@@ -77,19 +85,24 @@ public class ActionBarMenuItem extends FrameLayout {
     protected boolean overrideMenuClick;
     private boolean processedPopupClick;
 
+    public ActionBarMenuItem(Context context) {
+        super(context);
+    }
+
     public ActionBarMenuItem(Context context, ActionBarMenu menu, int backgroundColor) {
         super(context);
         if (backgroundColor != 0) {
-            setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
+            this.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         }
         parentMenu = menu;
 
         iconView = new ImageView(context);
+        iconView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         iconView.setScaleType(ImageView.ScaleType.CENTER);
         addView(iconView);
         LayoutParams layoutParams = (LayoutParams) iconView.getLayoutParams();
-        layoutParams.width = LayoutHelper.MATCH_PARENT;
-        layoutParams.height = LayoutHelper.MATCH_PARENT;
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         iconView.setLayoutParams(layoutParams);
     }
 
@@ -215,10 +228,11 @@ public class ActionBarMenuItem extends FrameLayout {
         }
         TextView textView = new TextView(getContext());
         textView.setTextColor(ContextCompat.getColor(getContext(), R.color.primaryTextColor));
-        textView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
+        textView.setBackground(Utils.selectableItemBackgroundDrawable(getContext()));
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setPadding(Utils.dp(getContext(), 16), 0, Utils.dp(getContext(), 16), 0);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        //textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         textView.setMinWidth(Utils.dp(getContext(), 196));
         textView.setTag(id);
         textView.setText(text);
@@ -229,7 +243,7 @@ public class ActionBarMenuItem extends FrameLayout {
         popupLayout.setShowedFromBottom(showFromBottom);
         popupLayout.addView(textView);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) textView.getLayoutParams();
-        layoutParams.width = LayoutHelper.MATCH_PARENT;
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.height = Utils.dp(getContext(), 48);
         textView.setLayoutParams(layoutParams);
         textView.setOnClickListener(new OnClickListener() {
@@ -307,7 +321,7 @@ public class ActionBarMenuItem extends FrameLayout {
         if (searchContainer == null || searchContainer.getVisibility() == VISIBLE || parentMenu == null) {
             return;
         }
-        parentMenu.parentActionBar.onSearchFieldVisibilityChanged(toggleSearch(openKeyboard));
+        parentMenu.actionBar.onSearchFieldVisibilityChanged(toggleSearch(openKeyboard));
     }
 
     public boolean toggleSearch(boolean openKeyboard) {
@@ -317,9 +331,9 @@ public class ActionBarMenuItem extends FrameLayout {
         if (searchContainer.getVisibility() == VISIBLE) {
             if (listener == null || listener != null && listener.canCollapseSearch()) {
                 searchContainer.setVisibility(GONE);
-                searchField.clearFocus();
+                mSearchEditText.clearFocus();
                 setVisibility(VISIBLE);
-                Utils.hideKeyboard(searchField);
+                Utils.hideKeyboard(mSearchEditText);
                 if (listener != null) {
                     listener.onSearchCollapse();
                 }
@@ -328,11 +342,11 @@ public class ActionBarMenuItem extends FrameLayout {
         } else {
             searchContainer.setVisibility(VISIBLE);
             setVisibility(GONE);
-            searchField.setText("");
-            searchField.requestFocus();
+            mSearchEditText.setText(null);
+            mSearchEditText.requestFocus();
             if (openKeyboard) {
                 Utils.showKeyboard();
-                //Utils.showKeyboard(searchField);
+                //Utils.showKeyboard(mSearchEditText);
             }
             if (listener != null) {
                 listener.onSearchExpand();
@@ -356,7 +370,7 @@ public class ActionBarMenuItem extends FrameLayout {
     }
 
     public EditText getSearchField() {
-        return searchField;
+        return mSearchEditText;
     }
 
     public ActionBarMenuItem setOverrideMenuClick(boolean value) {
@@ -379,16 +393,16 @@ public class ActionBarMenuItem extends FrameLayout {
             searchContainer.setLayoutParams(layoutParams);
             searchContainer.setVisibility(GONE);
 
-            searchField = new EditText(getContext());
-            searchField.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-            searchField.setHintTextColor(0x88FFFFFF);
-            searchField.setTextColor(0xFFFFFFFF);
-            searchField.setSingleLine(true);
-            searchField.setBackgroundResource(0);
-            searchField.setPadding(0, 0, 0, 0);
-            int inputType = searchField.getInputType() | EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
-            searchField.setInputType(inputType);
-            searchField.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+            mSearchEditText = new EditText(getContext());
+            mSearchEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, Utils.isLandscape(getContext()) ? 16 : 18);
+            mSearchEditText.setHintTextColor(0x88FFFFFF);
+            mSearchEditText.setTextColor(0xFFFFFFFF);
+            mSearchEditText.setSingleLine(true);
+            mSearchEditText.setBackgroundResource(0);
+            mSearchEditText.setPadding(0, 0, 0, 0);
+            int inputType = mSearchEditText.getInputType() | EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
+            mSearchEditText.setInputType(inputType);
+            mSearchEditText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                     return false;
                 }
@@ -403,19 +417,19 @@ public class ActionBarMenuItem extends FrameLayout {
                     return false;
                 }
             });
-            searchField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (event != null && (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_SEARCH || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                        Utils.hideKeyboard(searchField);
+                        Utils.hideKeyboard(mSearchEditText);
                         if (listener != null) {
-                            listener.onSearchPressed(searchField);
+                            listener.onSearchPressed(mSearchEditText);
                         }
                     }
                     return false;
                 }
             });
-            searchField.addTextChangedListener(new TextWatcher() {
+            mSearchEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -425,16 +439,10 @@ public class ActionBarMenuItem extends FrameLayout {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (listener != null) {
-                        listener.onTextChanged(searchField);
+                        listener.onTextChanged(mSearchEditText);
                     }
-                    if (clearButton != null) {
-                        if (s == null || s.length() == 0) {
-                            showClearIcon(false);
-                        } else {
-                            showClearIcon(true);
-                        }
-
-                        //clearButton.setAlpha(s == null || s.length() == 0 ? 0.6f : 1.0f);
+                    if (mClearIcon != null) {
+                        showClearIcon(!(s == null || s.length() == 0));
                     }
                 }
             });
@@ -442,87 +450,111 @@ public class ActionBarMenuItem extends FrameLayout {
             try {
                 Field mCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
                 mCursorDrawableRes.setAccessible(true);
-                mCursorDrawableRes.set(searchField, R.drawable.search_carret);
+                mCursorDrawableRes.set(mSearchEditText, R.drawable.search_carret);
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
-            searchField.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_ACTION_SEARCH);
-            searchField.setTextIsSelectable(false);
-            searchContainer.addView(searchField);
-            FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) searchField.getLayoutParams();
-            layoutParams2.width = LayoutHelper.MATCH_PARENT;
-            layoutParams2.gravity = Gravity.CENTER_VERTICAL;
-            layoutParams2.height = Utils.dp(getContext(), 36);
-            layoutParams2.rightMargin = Utils.dp(getContext(), 48);
-            searchField.setLayoutParams(layoutParams2);
+            mSearchEditText.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_ACTION_SEARCH);
+            mSearchEditText.setTextIsSelectable(false);
+            searchContainer.addView(mSearchEditText);
+            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mSearchEditText.getLayoutParams();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = Utils.dp(getContext(), 36);
+            params.gravity = Gravity.CENTER_VERTICAL;
+            params.rightMargin = Utils.dp(getContext(), 56);
+            mSearchEditText.setLayoutParams(params);
 
-            clearButton = new ImageView(getContext());
-            clearButton.setImageResource(R.drawable.ic_close);
-            clearButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
-            clearButton.setScaleType(ImageView.ScaleType.CENTER);
-            clearButton.setPadding(4, 4, 4, 4);
-            //clearButton.setPadding(Utils.dp(getContext(), 4), Utils.dp(getContext(), 4), Utils.dp(getContext(), 4), Utils.dp(getContext(), 4));
-            clearButton.setOnClickListener(new OnClickListener() {
+            mClearIcon = new ImageView(getContext());
+            mClearIcon.setImageResource(android.R.drawable.ic_delete);
+            mClearIcon.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
+            mClearIcon.setScaleType(ImageView.ScaleType.CENTER);
+            mClearIcon.setPadding(
+                    Utils.dp(getContext(), 8),
+                    Utils.dp(getContext(), 8),
+                    Utils.dp(getContext(), 8),
+                    Utils.dp(getContext(), 8)
+            );
+            mClearIcon.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    searchField.setText("");
-                    searchField.requestFocus();
+                    mSearchEditText.setText(null);
+                    mSearchEditText.requestFocus();
                     Utils.showKeyboard();
-                    //Utils.showKeyboard(searchField);
+                    //Utils.showKeyboard(mSearchEditText);
                     showClearIcon(false);
                 }
             });
 
-            clearButton.setVisibility(INVISIBLE);
-            //clearButton.setAlpha(0.0F);
-            clearButton.setRotation(-135F);
-            clearButton.setScaleY(0.0F);
-            clearButton.setScaleX(0.0F);
+            mClearIcon.setVisibility(INVISIBLE);
+            mClearIcon.setRotation(-135F);
+            mClearIcon.setScaleY(0.0F);
+            mClearIcon.setScaleX(0.0F);
 
-            searchContainer.addView(clearButton);
-            layoutParams2 = (FrameLayout.LayoutParams) clearButton.getLayoutParams();
-            layoutParams2.width = Utils.dp(getContext(), 48);
-            layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
-            layoutParams2.height = LayoutHelper.MATCH_PARENT;
-            layoutParams2.leftMargin = 8;
-            layoutParams2.topMargin = 8;
-            layoutParams2.rightMargin = 8;
-            layoutParams2.bottomMargin = 8;
-            clearButton.setLayoutParams(layoutParams2);
+            searchContainer.addView(mClearIcon);
+            params = (FrameLayout.LayoutParams) mClearIcon.getLayoutParams();
+            params.width = Utils.dp(getContext(), 24);
+            params.height = Utils.dp(getContext(), 24);
+            params.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
+            params.leftMargin = Utils.dp(getContext(), 16);
+            params.rightMargin = Utils.dp(getContext(), 16);
+            mClearIcon.setLayoutParams(params);
         }
         isSearchField = value;
         return this;
     }
 
-    private void showClearIcon(boolean value) {
-        if (value && clearButton.getVisibility() != VISIBLE) {
-            clearButton.setVisibility(VISIBLE);
+    public ActionBarMenuItem setClearIcon(@DrawableRes int icon) {
+        if (mClearIcon != null) {
+            mClearIcon.setImageResource(icon);
+        }
+        return this;
+    }
 
-            AnimatorSet animatorSet = new AnimatorSet();
+    public ActionBarMenuItem setClearIcon(@DrawableRes Drawable resId) {
+        if (mClearIcon != null) {
+            mClearIcon.setImageDrawable(resId);
+        }
+        return this;
+    }
+
+    public ActionBarMenuItem setSearchHint(CharSequence text) {
+        mSearchEditText.setHint(text);
+        return this;
+    }
+
+    public ActionBarMenuItem setSearchHint(@StringRes int stringId) {
+        setSearchHint(getContext().getText(stringId));
+        return this;
+    }
+
+    @UiThread
+    private void showClearIcon(boolean value) {
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        if (value && mClearIcon.getVisibility() != VISIBLE && !animatorSet.isRunning()) {
+            mClearIcon.setVisibility(VISIBLE);
             animatorSet.playTogether(
-                    ObjectAnimator.ofFloat(clearButton, "scaleY", 0.0f, 1.0f),
-                    ObjectAnimator.ofFloat(clearButton, "scaleX", 0.0f, 1.0f),
-                    ObjectAnimator.ofFloat(clearButton, "rotation", -90F, 0F)
+                    ObjectAnimator.ofFloat(mClearIcon, "scaleY", 0.0f, 1.0f),
+                    ObjectAnimator.ofFloat(mClearIcon, "scaleX", 0.0f, 1.0f),
+                    ObjectAnimator.ofFloat(mClearIcon, "rotation", -90F, 0F)
             );
-            animatorSet.setDuration(250);
-            animatorSet.start();
-        } else if (!value && clearButton.getVisibility() == VISIBLE) {
-            AnimatorSet animatorSet = new AnimatorSet();
+        } else if (!value && mClearIcon.getVisibility() == VISIBLE && !animatorSet.isRunning()) {
             animatorSet.playTogether(
-                    ObjectAnimator.ofFloat(clearButton, "scaleY", 1.0f, 0.0f),
-                    ObjectAnimator.ofFloat(clearButton, "scaleX", 1.0f, 0.0f),
-                    ObjectAnimator.ofFloat(clearButton, "rotation", 0F, -90F)
+                    ObjectAnimator.ofFloat(mClearIcon, "scaleY", 1.0f, 0.0f),
+                    ObjectAnimator.ofFloat(mClearIcon, "scaleX", 1.0f, 0.0f),
+                    ObjectAnimator.ofFloat(mClearIcon, "rotation", 0F, -90F)
             );
             animatorSet.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    clearButton.setVisibility(INVISIBLE);
+                    mClearIcon.setVisibility(INVISIBLE);
                 }
             });
-            animatorSet.setDuration(250);
-            animatorSet.start();
         }
+
+        animatorSet.setDuration(CLOSE_ICON_ANIMATION_DURATION);
+        animatorSet.start();
     }
 
     public boolean isSearchField() {
@@ -558,7 +590,7 @@ public class ActionBarMenuItem extends FrameLayout {
             }
         } else {
             if (parentMenu != null && subMenuOpenSide == 0) {
-                offsetY = -parentMenu.parentActionBar.getMeasuredHeight() + parentMenu.getTop();
+                offsetY = -parentMenu.actionBar.getMeasuredHeight() + parentMenu.getTop();
             } else {
                 offsetY = -getMeasuredHeight();
             }
@@ -578,7 +610,7 @@ public class ActionBarMenuItem extends FrameLayout {
                 }
             } else {
                 if (parentMenu != null) {
-                    View parent = parentMenu.parentActionBar;
+                    View parent = parentMenu.actionBar;
                     if (show) {
                         popupWindow.showAsDropDown(parent, getLeft() + parentMenu.getLeft() + getMeasuredWidth() - popupLayout.getMeasuredWidth(), offsetY);
                     }

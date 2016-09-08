@@ -107,6 +107,18 @@ public class Utils {
         applicationHandler.removeCallbacks(runnable);
     }
 
+    public static Drawable selectableItemBackgroundDrawable(@NonNull Context context) {
+        int[] attrs = new int[] {
+                android.R.attr.selectableItemBackground
+        };
+
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Drawable drawableFromTheme = ta.getDrawable(0);
+        ta.recycle();
+
+        return drawableFromTheme;
+    }
+
 
 
 
