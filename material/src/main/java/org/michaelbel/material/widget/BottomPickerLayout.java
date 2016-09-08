@@ -30,8 +30,6 @@ public class BottomPickerLayout extends FrameLayout {
     public BottomPickerLayout(Context context) {
         super(context);
 
-        Utils.bind(context);
-
         mPickerHeight = 48;
         mPickerElevation = 8;
 
@@ -42,7 +40,7 @@ public class BottomPickerLayout extends FrameLayout {
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mNegativeButton.setTextColor(Utils.getAttrColor(R.attr.colorPrimary));
+        mNegativeButton.setTextColor(Utils.getAttrColor(context, R.attr.colorPrimary));
         mNegativeButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
         mNegativeButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
@@ -53,7 +51,7 @@ public class BottomPickerLayout extends FrameLayout {
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
-        mPositiveButton.setTextColor(Utils.getAttrColor(R.attr.colorPrimary));
+        mPositiveButton.setTextColor(Utils.getAttrColor(context, R.attr.colorPrimary));
         mPositiveButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
         mPositiveButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));

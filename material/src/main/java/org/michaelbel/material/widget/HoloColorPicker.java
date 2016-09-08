@@ -107,8 +107,6 @@ public class HoloColorPicker extends View {
 	}
 
 	private void initialize(Context context, AttributeSet attrs, int defStyle) {
-		Utils.bind(context);
-
 		mColorWheelThickness = Utils.dp(context, 9);
 		mColorWheelRadius = Utils.dp(context, 124);
 		mPreferredColorWheelRadius = mColorWheelRadius;

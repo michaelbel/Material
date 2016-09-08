@@ -39,7 +39,6 @@ public class ColorView extends FrameLayout {
     public ColorView(@NonNull Context context, @ColorInt int initColor,
                      @NonNull final ColorMode colorMode, @NonNull IndicatorMode indicatorMode) {
         super(context);
-        Utils.bind(context);
 
         this.setClipToPadding(false);
 

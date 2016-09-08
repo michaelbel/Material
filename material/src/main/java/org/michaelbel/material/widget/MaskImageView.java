@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import org.michaelbel.material.R;
 
-public class AvatarImageView extends ImageView {
+public class MaskImageView extends ImageView {
 
     private Paint mMaskedPaint;
     private Rect mBounds;
@@ -31,7 +31,7 @@ public class AvatarImageView extends ImageView {
     public static final int CIRCLE = 1;
     public static final int ROUNDED = 2;
 
-    public AvatarImageView(Context context) {
+    public MaskImageView(Context context) {
         super(context);
 
         prepareDrawables(mImageShape);

@@ -23,8 +23,6 @@ public class Browser {
 
     @SuppressLint("PrivateResource")
     public static void openUrl(@NonNull Context context, String url) {
-        Utils.bind(context);
-
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             intent.putExtra("android.support.customtabs.extra.SESSION", (Parcelable) null);
