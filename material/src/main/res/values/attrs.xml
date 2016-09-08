@@ -64,10 +64,4 @@
         <attr name="pickerButtonOk" format="reference|string"/>
         <attr name="pickerButtonCancel" format="reference|string"/>
     </declare-styleable>
-
-    <!--ActionBar-->
-    <declare-styleable name="ActionBar">
-        <attr name="titleTextColor" format="color"/>
-        <attr name="backIcon" format="reference"/>
-    </declare-styleable>
 </resources>

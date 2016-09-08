@@ -1,14 +1,12 @@
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <View
         android:id="@+id/color_view"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        tools:background="@android:color/holo_blue_bright"/>
+        android:layout_height="80dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
