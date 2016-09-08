@@ -29,31 +29,31 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ViewPagerAdapter extends PagerAdapter {
 
-    private Context mContext;
-    private List<View> mViews = new ArrayList<>();
-    private List<CharSequence> mTitles = new ArrayList<>();
+    private Context context;
+    private List<View> layouts = new ArrayList<>();
+    private List<CharSequence> titles = new ArrayList<>();
 
     public ViewPagerAdapter(Context context) {
-        mContext = context;
+        this.context = context;
     }
 
-    public void addView(View view, CharSequence title) {
-        mViews.add(view);
-        mTitles.add(title);
+    public void addLayout(View view, CharSequence title) {
+        layouts.add(view);
+        titles.add(title);
     }
 
     public void addLayout(View view, @StringRes int stringId) {
-        addView(view, mContext.getText(stringId));
+        addLayout(view, context.getText(stringId));
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles.get(position);
+        return titles.get(position);
     }
 
     @Override
     public int getCount() {
-        return mViews.size();
+        return layouts.size();
     }
 
     @Override
@@ -63,11 +63,10 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        FrameLayout layout = new FrameLayout(mContext);
-        layout.addView(mViews.get(position));
+        FrameLayout layout = new FrameLayout(context);
+        layout.addView(layouts.get(position));
 
         container.addView(layout);
-
         return layout;
     }
 

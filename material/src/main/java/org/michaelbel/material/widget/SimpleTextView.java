@@ -10,6 +10,7 @@ import android.text.SpannableStringBuilder;
 import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -17,6 +18,8 @@ import org.michaelbel.material.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class SimpleTextView extends View implements Drawable.Callback {
+
+    private static final String TAG = SimpleTextView.class.getSimpleName();
 
     private Layout layout;
     private TextPaint textPaint;
@@ -114,7 +117,7 @@ public class SimpleTextView extends View implements Drawable.Callback {
                     }
                 }
             } catch (Exception e) {
-                //ignore
+                Log.e(TAG, e.getMessage());
             }
         } else {
             layout = null;

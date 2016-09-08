@@ -46,11 +46,7 @@ public class ShiftColorPicker extends View {
 	int[] colors;
 
 	{
-        if (isInEditMode()) {
-            colors = DEFAULT;
-        } else {
-            colors = new int[1];
-        }
+		colors = isInEditMode() ? DEFAULT : new int[1];
     }
 
 	private Paint mPaint;

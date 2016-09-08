@@ -1,4 +1,4 @@
-package org.michaelbel.material.widget;
+package org.michaelbel.material.widget.ColorPicker;
 
 import android.content.Context;
 import android.support.annotation.ColorInt;
@@ -10,11 +10,6 @@ import android.widget.LinearLayout;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.widget.ColorPicker.Channel;
-import org.michaelbel.material.widget.ColorPicker.ChannelView;
-import org.michaelbel.material.widget.ColorPicker.ColorMode;
-import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
-import org.michaelbel.material.widget.ColorPicker.OnProgressChangedListener;
 
 import java.util.ArrayList;
 import java.util.List;

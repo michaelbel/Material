@@ -272,15 +272,15 @@ public class IndicatorView extends LinearLayout {
             animator.cancel();
         }
 
-        View Indicator = new View(getContext());
-        Indicator.setBackgroundResource(backgroundDrawableId);
-        addView(Indicator, mIndicatorWidth, mIndicatorHeight);
-        LayoutParams lp = (LayoutParams) Indicator.getLayoutParams();
-        lp.leftMargin = mIndicatorMargin;
-        lp.rightMargin = mIndicatorMargin;
-        Indicator.setLayoutParams(lp);
+        View indicator = new View(getContext());
+        indicator.setBackgroundResource(backgroundDrawableId);
+        addView(indicator, mIndicatorWidth, mIndicatorHeight);
+        LayoutParams params = (LayoutParams) indicator.getLayoutParams();
+        params.leftMargin = mIndicatorMargin;
+        params.rightMargin = mIndicatorMargin;
+        indicator.setLayoutParams(params);
 
-        animator.setTarget(Indicator);
+        animator.setTarget(indicator);
         animator.start();
     }
 

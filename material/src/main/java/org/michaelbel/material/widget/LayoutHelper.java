@@ -2,8 +2,6 @@ package org.michaelbel.material.widget;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,12 +19,6 @@ public class LayoutHelper {
         return (int) (size < 0 ? size : Utils.dp(context, size));
     }
 
-    /**
-     * @param context Current context
-     * @param width The width in pixels
-     * @param height The height in pixels
-     * @return new Instance of ScrollView with width and height in DP
-     */
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height) {
         return new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
     }
@@ -47,57 +39,6 @@ public class LayoutHelper {
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
         ScrollView.LayoutParams params = new ScrollView.LayoutParams(getSize(context, width), getSize(context, height));
         params.gravity = gravity;
-        params.leftMargin = getSize(context, startMargin);
-        params.topMargin = getSize(context, topMargin);
-        params.rightMargin = getSize(context, endMargin);
-        params.bottomMargin = getSize(context, bottomMargin);
-        return params;
-    }
-
-    public static SwipeRefreshLayout.LayoutParams makeSwipeRefresh(Context context, int width, int height) {
-        return new SwipeRefreshLayout.LayoutParams(getSize(context, width), getSize(context, height));
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height) {
-        return new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height, int gravity) {
-        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        return params;
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, float width, float height, int gravity, int anhorGravity) {
-        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        params.anchorGravity = anhorGravity;
-        return params;
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, float startMargin, float topMargin, float endMargin, float bottomMargin) {
-        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-        params.leftMargin = getSize(context, startMargin);
-        params.topMargin = getSize(context, topMargin);
-        params.rightMargin = getSize(context, endMargin);
-        params.bottomMargin = getSize(context, bottomMargin);
-        return params;
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, int gravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
-        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        params.leftMargin = getSize(context, startMargin);
-        params.topMargin = getSize(context, topMargin);
-        params.rightMargin = getSize(context, endMargin);
-        params.bottomMargin = getSize(context, bottomMargin);
-        return params;
-    }
-
-    public static CoordinatorLayout.LayoutParams makeCoordinator(Context context, int width, int height, int gravity, int anhorGravity, float startMargin, float topMargin, float endMargin, float bottomMargin) {
-        CoordinatorLayout.LayoutParams params = new CoordinatorLayout.LayoutParams(getSize(context, width), getSize(context, height));
-        params.gravity = gravity;
-        params.anchorGravity = gravity;
         params.leftMargin = getSize(context, startMargin);
         params.topMargin = getSize(context, topMargin);
         params.rightMargin = getSize(context, endMargin);

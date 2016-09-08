@@ -1,6 +1,7 @@
 package org.michaelbel.material.widget;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -28,7 +29,6 @@ import android.widget.ImageView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.Utils;
-import org.michaelbel.material.anim.AnimatorListenerAdapterProxy;
 
 import java.util.ArrayList;
 
@@ -246,7 +246,7 @@ public class ActionBar extends FrameLayout {
         params.gravity = Gravity.END;
 
         addView(menu, 0, params);
-        //addView(menu, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.RIGHT));
+        //addLayout(menu, 0, LayoutHelper.makeFrame(getContext(), LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.RIGHT));
         return menu;
     }
 
@@ -358,9 +358,10 @@ public class ActionBar extends FrameLayout {
         actionModeAnimation = new AnimatorSet();
         actionModeAnimation.playTogether(animators);
         actionModeAnimation.setDuration(200);
-        actionModeAnimation.addListener(new AnimatorListenerAdapterProxy() {
+        actionModeAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
                 actionMode.setVisibility(VISIBLE);
                 if (occupyStatusBar && actionModeTop != null) {
                     actionModeTop.setVisibility(VISIBLE);
@@ -369,6 +370,7 @@ public class ActionBar extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
                 if (actionModeAnimation != null && actionModeAnimation.equals(animation)) {
                     actionModeAnimation = null;
                     if (mTitleTextView != null) {
@@ -385,6 +387,7 @@ public class ActionBar extends FrameLayout {
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
                 if (actionModeAnimation != null && actionModeAnimation.equals(animation)) {
                     actionModeAnimation = null;
                 }
@@ -416,9 +419,10 @@ public class ActionBar extends FrameLayout {
         actionModeAnimation = new AnimatorSet();
         actionModeAnimation.playTogether(animators);
         actionModeAnimation.setDuration(200);
-        actionModeAnimation.addListener(new AnimatorListenerAdapterProxy() {
+        actionModeAnimation.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
                 if (actionModeAnimation != null && actionModeAnimation.equals(animation)) {
                     actionModeAnimation = null;
                     actionMode.setVisibility(INVISIBLE);
@@ -430,6 +434,7 @@ public class ActionBar extends FrameLayout {
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
                 if (actionModeAnimation != null && actionModeAnimation.equals(animation)) {
                     actionModeAnimation = null;
                 }
