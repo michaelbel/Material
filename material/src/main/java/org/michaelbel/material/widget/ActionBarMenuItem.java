@@ -1,11 +1,16 @@
 package org.michaelbel.material.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -27,7 +32,10 @@ import org.michaelbel.material.Utils;
 
 import java.lang.reflect.Field;
 
+@SuppressWarnings("unused")
 public class ActionBarMenuItem extends FrameLayout {
+
+    private static final String TAG = ActionBarMenuItem.class.getSimpleName();
 
     public static class ActionBarMenuItemSearchListener {
 
@@ -385,9 +393,7 @@ public class ActionBarMenuItem extends FrameLayout {
                     return false;
                 }
 
-                public void onDestroyActionMode(ActionMode mode) {
-
-                }
+                public void onDestroyActionMode(ActionMode mode) {}
 
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                     return false;
@@ -411,9 +417,10 @@ public class ActionBarMenuItem extends FrameLayout {
             });
             searchField.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                }
+                @Override
+                public void afterTextChanged(Editable s) {}
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -421,13 +428,14 @@ public class ActionBarMenuItem extends FrameLayout {
                         listener.onTextChanged(searchField);
                     }
                     if (clearButton != null) {
-                        clearButton.setAlpha(s == null || s.length() == 0 ? 0.6f : 1.0f);
+                        if (s == null || s.length() == 0) {
+                            showClearIcon(false);
+                        } else {
+                            showClearIcon(true);
+                        }
+
+                        //clearButton.setAlpha(s == null || s.length() == 0 ? 0.6f : 1.0f);
                     }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
                 }
             });
 
@@ -436,7 +444,7 @@ public class ActionBarMenuItem extends FrameLayout {
                 mCursorDrawableRes.setAccessible(true);
                 mCursorDrawableRes.set(searchField, R.drawable.search_carret);
             } catch (Exception e) {
-                //nothing to do
+                Log.e(TAG, e.getMessage());
             }
             searchField.setImeOptions(EditorInfo.IME_FLAG_NO_FULLSCREEN | EditorInfo.IME_ACTION_SEARCH);
             searchField.setTextIsSelectable(false);
@@ -450,7 +458,10 @@ public class ActionBarMenuItem extends FrameLayout {
 
             clearButton = new ImageView(getContext());
             clearButton.setImageResource(R.drawable.ic_close);
+            clearButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
             clearButton.setScaleType(ImageView.ScaleType.CENTER);
+            clearButton.setPadding(4, 4, 4, 4);
+            //clearButton.setPadding(Utils.dp(getContext(), 4), Utils.dp(getContext(), 4), Utils.dp(getContext(), 4), Utils.dp(getContext(), 4));
             clearButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -458,17 +469,60 @@ public class ActionBarMenuItem extends FrameLayout {
                     searchField.requestFocus();
                     Utils.showKeyboard();
                     //Utils.showKeyboard(searchField);
+                    showClearIcon(false);
                 }
             });
+
+            clearButton.setVisibility(INVISIBLE);
+            //clearButton.setAlpha(0.0F);
+            clearButton.setRotation(-135F);
+            clearButton.setScaleY(0.0F);
+            clearButton.setScaleX(0.0F);
+
             searchContainer.addView(clearButton);
             layoutParams2 = (FrameLayout.LayoutParams) clearButton.getLayoutParams();
             layoutParams2.width = Utils.dp(getContext(), 48);
             layoutParams2.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
             layoutParams2.height = LayoutHelper.MATCH_PARENT;
+            layoutParams2.leftMargin = 8;
+            layoutParams2.topMargin = 8;
+            layoutParams2.rightMargin = 8;
+            layoutParams2.bottomMargin = 8;
             clearButton.setLayoutParams(layoutParams2);
         }
         isSearchField = value;
         return this;
+    }
+
+    private void showClearIcon(boolean value) {
+        if (value && clearButton.getVisibility() != VISIBLE) {
+            clearButton.setVisibility(VISIBLE);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(
+                    ObjectAnimator.ofFloat(clearButton, "scaleY", 0.0f, 1.0f),
+                    ObjectAnimator.ofFloat(clearButton, "scaleX", 0.0f, 1.0f),
+                    ObjectAnimator.ofFloat(clearButton, "rotation", -90F, 0F)
+            );
+            animatorSet.setDuration(250);
+            animatorSet.start();
+        } else if (!value && clearButton.getVisibility() == VISIBLE) {
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(
+                    ObjectAnimator.ofFloat(clearButton, "scaleY", 1.0f, 0.0f),
+                    ObjectAnimator.ofFloat(clearButton, "scaleX", 1.0f, 0.0f),
+                    ObjectAnimator.ofFloat(clearButton, "rotation", 0F, -90F)
+            );
+            animatorSet.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    clearButton.setVisibility(INVISIBLE);
+                }
+            });
+            animatorSet.setDuration(250);
+            animatorSet.start();
+        }
     }
 
     public boolean isSearchField() {

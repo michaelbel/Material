@@ -320,9 +320,9 @@ public class ActionBar extends FrameLayout {
         actionMode.setBackgroundColor(0xFFFFFFFF);
         addView(actionMode, indexOfChild(mNavigationIconImageView));
         actionMode.setPadding(0, occupyStatusBar ? Utils.getStatusBarHeight(getContext()) : 0, 0, 0);
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams)actionMode.getLayoutParams();
-        layoutParams.height = LayoutHelper.MATCH_PARENT;
-        layoutParams.width = LayoutHelper.MATCH_PARENT;
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) actionMode.getLayoutParams();
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
         layoutParams.gravity = Gravity.END;
         actionMode.setLayoutParams(layoutParams);
         actionMode.setVisibility(INVISIBLE);
