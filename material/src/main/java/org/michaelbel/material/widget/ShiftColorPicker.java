@@ -19,7 +19,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class ShiftColorPicker extends View {

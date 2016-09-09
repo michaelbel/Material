@@ -13,7 +13,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.R;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})

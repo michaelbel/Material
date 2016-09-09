@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 24
-        versionName "0.2.4"
+        versionCode 25
+        versionName "0.2.5"
     }
 
     buildTypes {
@@ -34,7 +34,7 @@ ext {
     libraryName = 'Material'
     artifact = 'material'
 
-    libraryVersion = '0.2.4'
+    libraryVersion = '0.2.5'
     libraryDescription = 'Material design library'
 
     siteUrl = 'https://github.com/michaelbel/material'
@@ -49,11 +49,11 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 
-//javadoc {
-//    options {
-//        encoding = 'UTF-8'
-//    }
-//}
+javadoc {
+    options {
+        encoding = 'UTF-8'
+    }
+}

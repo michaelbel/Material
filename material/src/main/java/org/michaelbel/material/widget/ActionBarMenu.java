@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 
 @SuppressWarnings("unused")
 public class ActionBarMenu extends LinearLayout {

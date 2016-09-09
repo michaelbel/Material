@@ -15,7 +15,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Locale;

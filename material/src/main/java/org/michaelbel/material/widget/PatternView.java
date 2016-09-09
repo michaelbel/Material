@@ -27,7 +27,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

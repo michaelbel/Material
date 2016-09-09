@@ -33,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.michaelbel.material.R;
-import org.michaelbel.material.utils.Utils;
+import org.michaelbel.material.util.Utils;
 
 import java.lang.reflect.Field;
 
