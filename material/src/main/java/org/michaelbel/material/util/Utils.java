@@ -10,7 +10,6 @@ import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -21,8 +20,6 @@ import org.michaelbel.material.R;
 import org.michaelbel.material.anim.ViewProxy;
 
 public class Utils {
-
-    public static volatile Handler applicationHandler;
 
     public static int dp(@NonNull Context context,  float value) {
         return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
@@ -75,25 +72,6 @@ public class Utils {
         return false;
     }
 
-    public static void runOnUIThread(Context context, Runnable runnable) {
-        runOnUIThread(context, runnable, 0);
-    }
-
-    public static void runOnUIThread(Context context, Runnable runnable, long delay) {
-        applicationHandler = new Handler(context.getMainLooper());
-
-        if (delay == 0) {
-            applicationHandler.post(runnable);
-        } else {
-            applicationHandler.postDelayed(runnable, delay);
-        }
-    }
-
-    public static void cancelRunOnUIThread(Context context, Runnable runnable) {
-        applicationHandler = new Handler(context.getMainLooper());
-        applicationHandler.removeCallbacks(runnable);
-    }
-
     public static Drawable selectableItemBackgroundDrawable(@NonNull Context context) {
         int[] attrs = new int[] {
                 android.R.attr.selectableItemBackground
@@ -109,12 +87,6 @@ public class Utils {
     public static float dpf2(float value) {
         return context.getResources().getDisplayMetrics().density * value;
     }
-
-
-
-
-
-
 
     private static Context context;
     private static float density = 1;

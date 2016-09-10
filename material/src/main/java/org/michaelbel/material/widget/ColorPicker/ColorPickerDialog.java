@@ -1,4 +1,4 @@
-package org.michaelbel.app.dialogs;
+package org.michaelbel.material.widget.ColorPicker;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -9,12 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
-
-import org.michaelbel.app.R;
-import org.michaelbel.material.Utils;
-import org.michaelbel.material.widget.ColorPicker.ColorMode;
-import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
-import org.michaelbel.material.widget.ColorView;
+import org.michaelbel.material.R;
+import org.michaelbel.material.util.Utils;
 
 public class ColorPickerDialog extends DialogFragment {
 
@@ -118,8 +114,8 @@ public class ColorPickerDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(colorView);
-        builder.setNegativeButton(R.string.Cancel, null);
-        builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Cancel", null);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), Integer.toHexString(colorView.getInitialColor()),
                         Toast.LENGTH_SHORT).show();

@@ -8,7 +8,10 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.content.ContextCompat;
@@ -85,6 +88,8 @@ public class ActionBarMenuItem extends FrameLayout {
     protected boolean overrideMenuClick;
     private boolean processedPopupClick;
 
+    public static Handler handler = new Handler(Looper.getMainLooper());
+
     public ActionBarMenuItem(Context context) {
         super(context);
     }
@@ -94,6 +99,7 @@ public class ActionBarMenuItem extends FrameLayout {
         if (backgroundColor != 0) {
             this.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         }
+
         parentMenu = menu;
 
         iconView = new ImageView(context);
@@ -119,7 +125,7 @@ public class ActionBarMenuItem extends FrameLayout {
                         toggleSubMenu();
                     }
                 };
-                Utils.runOnUIThread(getContext(), showMenuRunnable, 200);
+                runOnUIThread(showMenuRunnable, 200);
             }
         } else if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
             if (hasSubMenu() && (popupWindow == null || popupWindow != null && !popupWindow.isShowing())) {
@@ -198,7 +204,19 @@ public class ActionBarMenuItem extends FrameLayout {
         subMenuOpenSide = side;
     }
 
-    public TextView addSubItem(int id, String text, int icon) {
+    public TextView addSubItem(int id, @NonNull String text) {
+        return addSubItem(id, text, 0);
+    }
+
+    public TextView addSubItem(int id, @StringRes int textId) {
+        return addSubItem(id, getContext().getText(textId), 0);
+    }
+
+    public TextView addSubItem(int id, @StringRes int textId, @DrawableRes int resId) {
+        return addSubItem(id, getContext().getText(textId), resId);
+    }
+
+    public TextView addSubItem(int id, @NonNull CharSequence text, @DrawableRes int resId) {
         if (popupLayout == null) {
             rect = new Rect();
             location = new int[2];
@@ -232,13 +250,12 @@ public class ActionBarMenuItem extends FrameLayout {
         textView.setGravity(Gravity.CENTER_VERTICAL);
         textView.setPadding(Utils.dp(getContext(), 16), 0, Utils.dp(getContext(), 16), 0);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        //textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         textView.setMinWidth(Utils.dp(getContext(), 196));
         textView.setTag(id);
         textView.setText(text);
-        if (icon != 0) {
+        if (resId != 0) {
             textView.setCompoundDrawablePadding(Utils.dp(getContext(), 12));
-            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), icon), null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), resId), null, null, null);
         }
         popupLayout.setShowedFromBottom(showFromBottom);
         popupLayout.addView(textView);
@@ -276,7 +293,7 @@ public class ActionBarMenuItem extends FrameLayout {
             return;
         }
         if (showMenuRunnable != null) {
-            Utils.cancelRunOnUIThread(getContext(), showMenuRunnable);
+            cancelRunOnUIThread(showMenuRunnable);
             showMenuRunnable = null;
         }
         if (popupWindow != null && popupWindow.isShowing()) {
@@ -649,5 +666,17 @@ public class ActionBarMenuItem extends FrameLayout {
         if (view != null) {
             view.setVisibility(VISIBLE);
         }
+    }
+
+    private void runOnUIThread(Runnable runnable, long delay) {
+        if (delay == 0) {
+            handler.post(runnable);
+        } else {
+            handler.postDelayed(runnable, delay);
+        }
+    }
+
+    private void cancelRunOnUIThread(Runnable runnable) {
+        handler.removeCallbacks(runnable);
     }
 }
