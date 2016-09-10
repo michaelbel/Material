@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,37 +19,32 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.michaelbel.app.R;
 import org.michaelbel.app.cells.listview.EmptyCell;
 import org.michaelbel.app.cells.listview.TextCell;
-import org.michaelbel.app.dialogs.ColorPickerDialog;
-import org.michaelbel.app.dialogs.HoloColorPickerDialog;
-import org.michaelbel.app.dialogs.ViewColorPickerDialog;
-import org.michaelbel.app.dialogs.number.NumberPickerDialog;
-import org.michaelbel.app.dialogs.number.StringPickerDialog;
-import org.michaelbel.app.dialogs.shift.AccentColorDialog;
-import org.michaelbel.app.dialogs.shift.MaterialColorDialog;
-import org.michaelbel.app.dialogs.shift.PrimaryColorDialog;
-import org.michaelbel.app.dialogs.shift.PrimaryDarkColorDialog;
 import org.michaelbel.app.model.DialogItem;
-import org.michaelbel.material.Utils;
-import org.michaelbel.material.picker.date.DatePickerDialog;
-import org.michaelbel.material.picker.time.RadialPickerLayout;
-import org.michaelbel.material.picker.time.TimePickerDialog;
+import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
+import org.michaelbel.material.widget.ColorPicker.ColorPickerDialog;
 import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
+import org.michaelbel.material.widget.ColorPickerView;
+import org.michaelbel.material.widget.HoloColorPicker;
 import org.michaelbel.material.widget.LayoutHelper;
+import org.michaelbel.material.widget.NumberPicker;
+import org.michaelbel.material.widget.Palette;
+import org.michaelbel.material.widget.ShiftColorPicker;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class DialogsFragment extends Fragment {
 
     private static final String TAG = DialogsFragment.class.getSimpleName();
-    
+    protected Dialog alertDialog = null;
     private ArrayList<DialogItem> items;
 
     @Override
@@ -89,25 +86,198 @@ public class DialogsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
                 if (i == 1) {
-                    NumberPickerDialog dialog = NumberPickerDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    final NumberPicker picker = new NumberPicker(getContext());
+                    picker.setMinValue(0);
+                    picker.setMaxValue(100);
+                    picker.setValue(25);
+
+                    builder.setView(picker);
+                    builder.setTitle("Number Picker");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), getString(R.string.Value, picker.getValue()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
                 } else if (i == 2) {
-                    StringPickerDialog dialog = StringPickerDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    final NumberPicker picker = new NumberPicker(getContext());
+                    picker.setMinValue(0);
+                    picker.setMaxValue(6);
+                    picker.setValue(4);
+                    picker.setFormatter(new NumberPicker.Formatter() {
+                        @Override
+                        public String format(int value) {
+                            if (value == 0) {
+                                return getString(R.string.Monday);
+                            } else if (value == 1) {
+                                return getString(R.string.Tuesday);
+                            } else if (value == 2) {
+                                return getString(R.string.Wednesday);
+                            } else if (value == 3) {
+                                return getString(R.string.Thursday);
+                            } else if (value == 4) {
+                                return getString(R.string.Friday);
+                            } else if (value == 5) {
+                                return getString(R.string.Saturday);
+                            } else if (value == 6) {
+                                return getString(R.string.Sunday);
+                            }
+
+                            return null;
+                        }
+                    });
+
+                    builder.setView(picker);
+                    builder.setTitle("String Piker");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            which = picker.getValue();
+
+                            if (which == 0) {
+                                Toast.makeText(getContext(), getString(R.string.Monday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 1) {
+                                Toast.makeText(getContext(), getString(R.string.Tuesday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 2) {
+                                Toast.makeText(getContext(), getString(R.string.Wednesday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 3) {
+                                Toast.makeText(getContext(), getString(R.string.Thursday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 4) {
+                                Toast.makeText(getContext(), getString(R.string.Friday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 5) {
+                                Toast.makeText(getContext(), getString(R.string.Saturday), Toast.LENGTH_SHORT).show();
+                            } else if (which == 6) {
+                                Toast.makeText(getContext(), getString(R.string.Sunday), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    showDialog(builder.create());
                 }
 
                 if (i == 4) {
-                    PrimaryColorDialog dialog = PrimaryColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    RelativeLayout layout = new RelativeLayout(getContext());
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
+                            Utils.dp(getContext(), 24));
+
+                    final ShiftColorPicker picker = new ShiftColorPicker(getContext());
+                    picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
+                    picker.setColors(Palette.PrimaryColors(getContext()));
+                    picker.setSelectedColor(ContextCompat.getColor(getContext(), R.color.primary_red));
+                    layout.addView(picker);
+
+                    builder.setView(layout);
+                    builder.setTitle("Primary Color");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
                 } else if (i == 5) {
-                    PrimaryDarkColorDialog dialog = PrimaryDarkColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    RelativeLayout layout = new RelativeLayout(getContext());
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
+                            Utils.dp(getContext(), 24));
+
+                    final ShiftColorPicker picker = new ShiftColorPicker(getContext());
+                    picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
+                    picker.setColors(Palette.PrimaryDarkColors(getContext()));
+                    picker.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.primary_dark_blue));
+                    layout.addView(picker);
+
+                    builder.setView(layout);
+                    builder.setTitle("Primary Dark Color");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
                 } else if (i == 6) {
-                    AccentColorDialog dialog = AccentColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    RelativeLayout layout = new RelativeLayout(getContext());
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
+                            Utils.dp(getContext(), 24));
+
+                    final ShiftColorPicker picker = new ShiftColorPicker(getContext());
+                    picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
+                    picker.setColors(Palette.AccentColors(getContext()));
+                    picker.setSelectedColor(ContextCompat.getColor(getContext(), R.color.accent_blue));
+                    layout.addView(picker);
+
+                    builder.setView(layout);
+                    builder.setTitle("Accent Color");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
                 } else if (i == 7) {
-                    MaterialColorDialog dialog = MaterialColorDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+                    LinearLayout layout = new LinearLayout(getContext());
+                    layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
+                            LayoutHelper.WRAP_CONTENT));
+                    layout.setOrientation(LinearLayout.VERTICAL);
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), 0);
+
+                    final ShiftColorPicker picker1 = new ShiftColorPicker(getContext());
+                    picker1.setColors(Palette.PrimaryColors(getContext()));
+                    picker1.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 60));
+                    layout.addView(picker1);
+
+                    final ShiftColorPicker picker2 = new ShiftColorPicker(getContext());
+                    picker2.setLayoutParams(LayoutHelper.makeLinear(getContext(), LayoutHelper.MATCH_PARENT, 40, 0, 10, 0, 0));
+
+                    for (int i1 : picker1.getColors()) {
+                        for (int i2 : Palette.MaterialColors(getActivity(), i1)) {
+                            if (i2 == 0xff4CaF50) {
+                                picker1.setSelectedColor(i1);
+                                picker2.setColors(Palette.MaterialColors(getContext(), i1));
+                                picker2.setSelectedColor(i2);
+                                break;
+                            }
+                        }
+                    }
+                    layout.addView(picker2);
+
+                    picker1.setOnColorChangedListener(new ShiftColorPicker.OnColorChangedListener() {
+                        @Override
+                        public void onColorChanged(int c) {
+                            picker2.setColors(Palette.MaterialColors(getContext(), picker1.getColor()));
+                            picker2.setSelectedColor(picker1.getColor());
+                        }
+                    });
+
+                    builder.setView(layout);
+                    builder.setTitle("Material Color");
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getContext(), Integer.toHexString(picker2.getColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
                 }
                 
                 if (i == 9) {
@@ -148,39 +318,7 @@ public class DialogsFragment extends Fragment {
                     builder.create().show(getFragmentManager(), TAG);
                 }
 
-                if (i == 16) {
-
-                } else if (i == 17) {
-
-                }
-
-                if (i == 19) {
-                    HoloColorPickerDialog dialog = HoloColorPickerDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                } else if (i == 20) {
-                    ViewColorPickerDialog dialog = ViewColorPickerDialog.newInstance();
-                    dialog.show(getFragmentManager(), TAG);
-                }
-
-
-
-                
-                
-
-
-                if (i == -3) {
-                    new SingleChoiceDialog().show(getFragmentManager(), TAG);
-                } else if (i == -4) {
-                    new MultiChoiceDialog().show(getFragmentManager(), TAG);
-                } else if (i == -6) {
-                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
-                            RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
-                            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                    startActivityForResult(intent, 0);
-                } else if (i == -24) {
+                /*if (i == 16) {
                     Calendar now = Calendar.getInstance();
 
                     DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -200,7 +338,7 @@ public class DialogsFragment extends Fragment {
                     dpd.setCancelText("Cancel");
                     dpd.setThemeDark(true);
                     dpd.show(getActivity().getFragmentManager(), "Date");
-                } else if (i == -25) {
+                } else if (i == 17) {
                     Calendar now = Calendar.getInstance();
 
                     TimePickerDialog time = TimePickerDialog.newInstance(
@@ -224,6 +362,67 @@ public class DialogsFragment extends Fragment {
                     time.setCancelText("Cancel");
                     time.setThemeDark(true);
                     time.show(getActivity().getFragmentManager(), "Time");
+                }*/
+
+                if (i == 19) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    LinearLayout layout = new LinearLayout(getActivity());
+                    layout.setOrientation(LinearLayout.VERTICAL);
+
+                    final HoloColorPicker picker = new HoloColorPicker(getActivity());
+                    picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
+                            LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+                    layout.addView(picker);
+                    picker.setOldCenterColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
+
+                    builder.setView(layout);
+                    builder.setTitle(R.string.ColorPickerHolo);
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
+                } else if (i == 20) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    LinearLayout layout = new LinearLayout(getActivity());
+                    layout.setOrientation(LinearLayout.VERTICAL);
+
+                    final ColorPickerView picker = new ColorPickerView(getActivity());
+                    picker.setDensity(12);
+                    picker.setType(ColorPickerView.CIRCLE);
+                    picker.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
+                    layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
+                            LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+
+                    builder.setView(layout);
+                    builder.setTitle(R.string.ColorPickerView);
+                    builder.setNegativeButton(R.string.Cancel, null);
+                    builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    showDialog(builder.create());
+                }
+
+                if (i == -3) {
+                    new SingleChoiceDialog().show(getFragmentManager(), TAG);
+                } else if (i == -4) {
+                    new MultiChoiceDialog().show(getFragmentManager(), TAG);
+                } else if (i == -6) {
+                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
+                            RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
+                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
+                            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    startActivityForResult(intent, 0);
                 }
             }
         });
@@ -236,7 +435,7 @@ public class DialogsFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         TimePickerDialog tpd = (TimePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Time");
@@ -263,6 +462,29 @@ public class DialogsFragment extends Fragment {
                 Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
             }
         });
+    }*/
+
+    //public void showDialog(Dialog dialog) {
+    //    ((LaunchActivity) getActivity()).showDialog(dialog);
+    //}
+
+    public Dialog showDialog(Dialog dialog) {
+        try {
+            alertDialog = dialog;
+            alertDialog.setCanceledOnTouchOutside(true);
+            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    alertDialog = null;
+                }
+            });
+            alertDialog.show();
+            return alertDialog;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+
+        return null;
     }
 
     public class ListViewAdapter extends BaseAdapter {

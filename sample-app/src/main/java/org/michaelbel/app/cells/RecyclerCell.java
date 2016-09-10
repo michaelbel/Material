@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.Utils;
-import org.michaelbel.material.widget.AvatarImageView;
+import org.michaelbel.material.util.Utils;
+import org.michaelbel.material.widget.MaskImageView;
 import org.michaelbel.material.widget.LayoutHelper;
 
 public class RecyclerCell extends FrameLayout {
@@ -24,7 +24,7 @@ public class RecyclerCell extends FrameLayout {
     private TextView textView1;
     private TextView textView2;
     private ImageView optionButton;
-    private AvatarImageView imageView;
+    private MaskImageView imageView;
 
     private Paint paint;
     private boolean divider = false;
@@ -39,10 +39,10 @@ public class RecyclerCell extends FrameLayout {
             paint.setColor(0xFFD9D9D9);
         }
 
-        imageView = new AvatarImageView(context);
+        imageView = new MaskImageView(context);
         imageView.setFocusable(false);
         imageView.setScaleType(ImageView.ScaleType.CENTER);
-        imageView.setShapeDrawable(AvatarImageView.CIRCLE);
+        imageView.setShapeDrawable(MaskImageView.CIRCLE);
         imageView.setLayoutParams(LayoutHelper.makeFrame(context, 48, 48, Gravity.START |
                 Gravity.CENTER_VERTICAL, 16, 0, 16, 0));
         addView(imageView);

@@ -16,7 +16,7 @@ import android.widget.Toast;
 import org.michaelbel.app.R;
 import org.michaelbel.app.cells.CardCell;
 import org.michaelbel.app.model.Card;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 
