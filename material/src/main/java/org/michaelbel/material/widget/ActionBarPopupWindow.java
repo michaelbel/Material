@@ -299,6 +299,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             if (windowAnimatorSet != null) {
                 return;
             }
+
             ActionBarPopupWindowLayout content = (ActionBarPopupWindowLayout) getContentView();
             content.setTranslationY(0);
             content.setAlpha(1.0f);
@@ -312,15 +313,18 @@ public class ActionBarPopupWindow extends PopupWindow {
                 if (child.getVisibility() != View.VISIBLE) {
                     continue;
                 }
+
                 content.positions.put(child, visibleCount);
                 child.setAlpha(0.0f);
                 visibleCount++;
             }
+
             if (content.showedFromBottom) {
                 content.lastStartedChild = count - 1;
             } else {
                 content.lastStartedChild = 0;
             }
+
             windowAnimatorSet = new AnimatorSet();
             windowAnimatorSet.playTogether(
                     ObjectAnimator.ofFloat(content, "backScaleY", 0.0f, 1.0f),
