@@ -108,16 +108,6 @@ public class ActionBar extends FrameLayout {
         return mNavigationIconImageView;
     }
 
-    public ActionBar setNavigationIcon(@DrawableRes int icon) {
-        if (mNavigationIconImageView == null) {
-            createBackButtonImage();
-        }
-        mNavigationIconImageView.setVisibility(icon == 0 ? GONE : VISIBLE);
-        mNavigationIconImageView.setImageResource(icon);
-
-        return this;
-    }
-
     public ActionBar setNavigationIcon(@DrawableRes Drawable resId) {
         if (mNavigationIconImageView == null) {
             createBackButtonImage();
@@ -129,6 +119,11 @@ public class ActionBar extends FrameLayout {
             ((BackDrawable) resId).setRotation(isActionModeShowed() ? 1 : 0, false);
         }
 
+        return this;
+    }
+
+    public ActionBar setNavigationIcon(@DrawableRes int icon) {
+        setNavigationIcon(ContextCompat.getDrawable(getContext(), icon));
         return this;
     }
 
