@@ -205,18 +205,22 @@ public class ActionBarMenuItem extends FrameLayout {
     }
 
     public TextView addSubItem(int id, @NonNull String text) {
-        return addSubItem(id, text, 0);
+        return addSubItem(id, text, null);
     }
 
     public TextView addSubItem(int id, @StringRes int textId) {
-        return addSubItem(id, getContext().getText(textId), 0);
+        return addSubItem(id, getContext().getText(textId), null);
     }
 
     public TextView addSubItem(int id, @StringRes int textId, @DrawableRes int resId) {
+        return addSubItem(id, getContext().getText(textId), ContextCompat.getDrawable(getContext(), resId));
+    }
+
+    public TextView addSubItem(int id, @StringRes int textId, @DrawableRes Drawable resId) {
         return addSubItem(id, getContext().getText(textId), resId);
     }
 
-    public TextView addSubItem(int id, @NonNull CharSequence text, @DrawableRes int resId) {
+    public TextView addSubItem(int id, @NonNull CharSequence text, @DrawableRes Drawable resId) {
         if (popupLayout == null) {
             rect = new Rect();
             location = new int[2];
@@ -253,9 +257,9 @@ public class ActionBarMenuItem extends FrameLayout {
         textView.setMinWidth(Utils.dp(getContext(), 196));
         textView.setTag(id);
         textView.setText(text);
-        if (resId != 0) {
+        if (resId != null) {
             textView.setCompoundDrawablePadding(Utils.dp(getContext(), 12));
-            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), resId), null, null, null);
+            textView.setCompoundDrawablesWithIntrinsicBounds(resId, null, null, null);
         }
         popupLayout.setShowedFromBottom(showFromBottom);
         popupLayout.addView(textView);

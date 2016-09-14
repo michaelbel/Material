@@ -135,7 +135,7 @@ public class ActionBar extends FrameLayout {
         mNavigationIconImageView.setScaleType(ImageView.ScaleType.CENTER);
         mNavigationIconImageView.setBackgroundResource(Utils.selectableItemBackgroundBorderless(getContext()));
         mNavigationIconImageView.setPadding(Utils.dp(getContext(), 1), 0, 0, 0);
-        addView(mNavigationIconImageView, LayoutHelper.makeFrame(getContext(), 54, 54, Gravity.START | Gravity.TOP));
+        addView(mNavigationIconImageView, LayoutHelper.makeFrame(getContext(), 54, LayoutHelper.WRAP_CONTENT, Gravity.START | Gravity.TOP));
 
         mNavigationIconImageView.setOnClickListener(new OnClickListener() {
             @Override
