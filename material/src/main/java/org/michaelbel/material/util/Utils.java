@@ -37,6 +37,18 @@ public class Utils {
         return backgroundResource;
     }
 
+    public static int selectableItemBackground(@NonNull Context context) {
+        int[] attrs = new int[] {
+                R.attr.selectableItemBackground
+        };
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        typedArray.recycle();
+
+        return backgroundResource;
+    }
+
     public static int getAttrColor(@NonNull Context context, @AttrRes int colorAttr) {
         int[] attrs = new int[] {
                 colorAttr

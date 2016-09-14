@@ -25,9 +25,9 @@ import org.michaelbel.material.util.Utils;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 
-public class ActionBarPopupWindow extends PopupWindow {
+public class ActionBarPopupMenu extends PopupWindow {
 
-    private static final String TAG = ActionBarPopupWindow.class.getSimpleName();
+    private static final String TAG = ActionBarPopupMenu.class.getSimpleName();
 
     private static final Field superListenerField;
     private static final boolean animationEnabled = Build.VERSION.SDK_INT >= 18;
@@ -37,12 +37,14 @@ public class ActionBarPopupWindow extends PopupWindow {
 
     static {
         Field f = null;
+
         try {
             f = PopupWindow.class.getDeclaredField("mOnScrollChangedListener");
             f.setAccessible(true);
         } catch (NoSuchFieldException e) {
             Log.e(TAG, e.getMessage());
         }
+
         superListenerField = f;
     }
 
@@ -60,7 +62,7 @@ public class ActionBarPopupWindow extends PopupWindow {
         void onDispatchKeyEvent(KeyEvent keyEvent);
     }
 
-    public static class ActionBarPopupWindowLayout extends FrameLayout {
+    public static class ActionBarPopupMenuLayout extends FrameLayout {
 
         private OnDispatchKeyEventListener mOnDispatchKeyEventListener;
         protected static Drawable backgroundDrawable;
@@ -74,7 +76,7 @@ public class ActionBarPopupWindow extends PopupWindow {
         private ScrollView scrollView;
         private LinearLayout linearLayout;
 
-        public ActionBarPopupWindowLayout(Context context) {
+        public ActionBarPopupMenuLayout(Context context) {
             super(context);
 
             if (backgroundDrawable == null) {
@@ -223,27 +225,27 @@ public class ActionBarPopupWindow extends PopupWindow {
         }
     }
 
-    public ActionBarPopupWindow(Context context) {
+    public ActionBarPopupMenu(Context context) {
         super(context);
         initialize(context);
     }
 
-    public ActionBarPopupWindow(Context context, int width, int height) {
+    public ActionBarPopupMenu(Context context, int width, int height) {
         super(width, height);
         initialize(context);
     }
 
-    public ActionBarPopupWindow(Context context, View contentView) {
+    public ActionBarPopupMenu(Context context, View contentView) {
         super(contentView);
         initialize(context);
     }
 
-    public ActionBarPopupWindow(Context context, View contentView, int width, int height, boolean focusable) {
+    public ActionBarPopupMenu(Context context, View contentView, int width, int height, boolean focusable) {
         super(contentView, width, height, focusable);
         initialize(context);
     }
 
-    public ActionBarPopupWindow(Context context, View contentView, int width, int height) {
+    public ActionBarPopupMenu(Context context, View contentView, int width, int height) {
         super(contentView, width, height);
         initialize(context);
     }
@@ -300,7 +302,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                 return;
             }
 
-            ActionBarPopupWindowLayout content = (ActionBarPopupWindowLayout) getContentView();
+            ActionBarPopupMenuLayout content = (ActionBarPopupMenuLayout) getContentView();
             content.setTranslationY(0);
             content.setAlpha(1.0f);
             content.setPivotX(content.getMeasuredWidth());
@@ -382,7 +384,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             if (windowAnimatorSet != null) {
                 windowAnimatorSet.cancel();
             }
-            ActionBarPopupWindowLayout content = (ActionBarPopupWindowLayout) getContentView();
+            ActionBarPopupMenuLayout content = (ActionBarPopupMenuLayout) getContentView();
             windowAnimatorSet = new AnimatorSet();
             windowAnimatorSet.playTogether(
                     ObjectAnimator.ofFloat(content, "translationY", Utils.dp(context, content.showedFromBottom ? 5 : -5)),
@@ -399,7 +401,7 @@ public class ActionBarPopupWindow extends PopupWindow {
                     windowAnimatorSet = null;
                     setFocusable(false);
                     try {
-                        ActionBarPopupWindow.super.dismiss();
+                        ActionBarPopupMenu.super.dismiss();
                     } catch (Exception e) {
                         Log.e(TAG, e.getMessage());
                     }
@@ -423,6 +425,7 @@ public class ActionBarPopupWindow extends PopupWindow {
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
             }
+
             unregisterListener();
         }
     }
