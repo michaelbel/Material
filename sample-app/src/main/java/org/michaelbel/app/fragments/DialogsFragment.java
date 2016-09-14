@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +28,8 @@ import org.michaelbel.app.R;
 import org.michaelbel.app.cells.listview.EmptyCell;
 import org.michaelbel.app.cells.listview.TextCell;
 import org.michaelbel.app.model.DialogItem;
+import org.michaelbel.material.color.ColorChooserDialog;
+import org.michaelbel.material.core.util.DialogUtils;
 import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
 import org.michaelbel.material.widget.ColorPicker.ColorPickerDialog;
@@ -41,17 +43,22 @@ import org.michaelbel.material.widget.ShiftColorPicker;
 
 import java.util.ArrayList;
 
-public class DialogsFragment extends Fragment {
+public class DialogsFragment extends Fragment implements ColorChooserDialog.ColorCallback {
 
     private static final String TAG = DialogsFragment.class.getSimpleName();
-    protected Dialog alertDialog = null;
     private ArrayList<DialogItem> items;
+
+    private int primaryPreselect;
+    private int accentPreselect;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getContext());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
+
+        primaryPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorPrimary);
+        accentPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorAccent);
         items = new ArrayList<>();
         items.add(new DialogItem("Number Picker"));                  //- 0
         items.add(new DialogItem().setTitle("Number Picker"));       //- 1
@@ -103,7 +110,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 } else if (i == 2) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -159,7 +166,7 @@ public class DialogsFragment extends Fragment {
                             }
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 }
 
                 if (i == 4) {
@@ -184,7 +191,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 } else if (i == 5) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -207,7 +214,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 } else if (i == 6) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -230,7 +237,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 } else if (i == 7) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -277,7 +284,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 }
                 
                 if (i == 9) {
@@ -292,31 +299,63 @@ public class DialogsFragment extends Fragment {
                     builder.setColorMode(ColorMode.ARGB);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
-                } else if (i == 11) {
+                } else if (i == 110) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
                     builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.HSV);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
-                } else if (i == 12) {
+                } else if (i == 120) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
                     builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.HSL);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
-                } else if (i == 13) {
+                } else if (i == 130) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
                     builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.CMYK);
                     builder.setIndicatorMode(IndicatorMode.DECIMAL);
                     builder.create().show(getFragmentManager(), TAG);
-                } else if (i == 14) {
+                } else if (i == 140) {
                     ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getContext());
                     builder.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
                     builder.setColorMode(ColorMode.CMYK255);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
-                }
+                } /*else if (i == 11) {
+                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
+                            .titleSub(org.michaelbel.material.R.string.colors)
+                            .preselect(primaryPreselect)
+                            .show();
+                } else if (i == 12) {
+                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
+                            .titleSub(org.michaelbel.material.R.string.colors)
+                            .accentMode(true)
+                            .preselect(accentPreselect)
+                            .show();
+                } else if (i == 13) {
+                    int[][] subColors = new int[][]{
+                            new int[]{Color.parseColor("#EF5350"), Color.parseColor("#F44336"), Color.parseColor("#E53935")},
+                            new int[]{Color.parseColor("#EC407A"), Color.parseColor("#E91E63"), Color.parseColor("#D81B60")},
+                            new int[]{Color.parseColor("#AB47BC"), Color.parseColor("#9C27B0"), Color.parseColor("#8E24AA")},
+                            new int[]{Color.parseColor("#7E57C2"), Color.parseColor("#673AB7"), Color.parseColor("#5E35B1")},
+                            new int[]{Color.parseColor("#5C6BC0"), Color.parseColor("#3F51B5"), Color.parseColor("#3949AB")},
+                            new int[]{Color.parseColor("#42A5F5"), Color.parseColor("#2196F3"), Color.parseColor("#1E88E5")}
+                    };
+
+                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
+                            .titleSub(org.michaelbel.material.R.string.colors)
+                            .preselect(primaryPreselect)
+                            .customColors(org.michaelbel.material.R.array.custom_colors, subColors)
+                            .show();
+                } else if (i == 14) {
+                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
+                            .titleSub(org.michaelbel.material.R.string.colors)
+                            .preselect(0xF44336)
+                            .customColors(org.michaelbel.material.R.array.custom_colors, null)
+                            .show();
+                }*/
 
                 /*if (i == 16) {
                     Calendar now = Calendar.getInstance();
@@ -385,7 +424,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 } else if (i == 20) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     LinearLayout layout = new LinearLayout(getActivity());
@@ -408,7 +447,7 @@ public class DialogsFragment extends Fragment {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-                    showDialog(builder.create());
+                    builder.show();
                 }
 
                 if (i == -3) {
@@ -467,25 +506,6 @@ public class DialogsFragment extends Fragment {
     //public void showDialog(Dialog dialog) {
     //    ((LaunchActivity) getActivity()).showDialog(dialog);
     //}
-
-    public Dialog showDialog(Dialog dialog) {
-        try {
-            alertDialog = dialog;
-            alertDialog.setCanceledOnTouchOutside(true);
-            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    alertDialog = null;
-                }
-            });
-            alertDialog.show();
-            return alertDialog;
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-
-        return null;
-    }
 
     public class ListViewAdapter extends BaseAdapter {
 
@@ -622,5 +642,10 @@ public class DialogsFragment extends Fragment {
 
             return builder.create();
         }
+    }
+
+    @Override
+    public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
+        Toast.makeText(getContext(), Integer.toHexString(color), Toast.LENGTH_SHORT).show();
     }
 }
