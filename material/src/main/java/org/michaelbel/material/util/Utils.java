@@ -108,7 +108,7 @@ public class Utils {
         Utils.context = context;
     }
 
-    public static float getDensity() {
+    public static float getDensity(Context context) {
         density = context.getResources().getDisplayMetrics().density;
         return density;
     }

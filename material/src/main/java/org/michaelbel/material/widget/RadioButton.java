@@ -212,7 +212,7 @@ public class RadioButton extends View {
 
         if (bitmap != null) {
             bitmap.eraseColor(0);
-            float rad = size / 2 - (1 + circleProgress) * Utils.getDensity();
+            float rad = size / 2 - (1 + circleProgress) * Utils.getDensity(getContext());
             bitmapCanvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, rad, paint);
 
             if (progress <= 0.5f) {

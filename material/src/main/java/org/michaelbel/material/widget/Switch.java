@@ -125,7 +125,7 @@ public class Switch extends CompoundButton {
 
         //---
 
-        this.mSwitchMinWidth = Utils.getDensity() < 1 ? Utils.dp(getContext(), 30) : 0;
+        this.mSwitchMinWidth = Utils.getDensity(getContext()) < 1 ? Utils.dp(getContext(), 30) : 0;
         ViewConfiguration mViewConfiguration = ViewConfiguration.get(context);
 
         NONE = new Insets(Utils.dp(getContext(), 4), 0, Utils.dp(getContext(), 4), 0);
@@ -618,7 +618,7 @@ public class Switch extends CompoundButton {
 
             final int thumbLeft = thumbInitialLeft - padding.left;
             final int thumbRight = thumbInitialLeft + mThumbWidth + padding.right;
-            int offset = (Utils.getDensity() == 1.5f ? Utils.dp(getContext(), 1) : 0);
+            int offset = (Utils.getDensity(getContext()) == 1.5f ? Utils.dp(getContext(), 1) : 0);
             mThumbDrawable.setBounds(thumbLeft, switchTop + offset, thumbRight, switchBottom + offset);
 
             final Drawable background = getBackground();
