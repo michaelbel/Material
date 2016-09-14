@@ -3,7 +3,7 @@ package org.michaelbel.app;
 import android.app.Application;
 import android.content.Context;
 
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.util.Utils;
 
 public class BaseApplication extends Application {
 

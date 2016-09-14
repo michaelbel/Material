@@ -1,19 +1,18 @@
 package org.michaelbel.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 import org.michaelbel.app.fragments.CardFragment;
 import org.michaelbel.app.fragments.DialogsFragment;
 import org.michaelbel.app.fragments.FabFragment;
-import org.michaelbel.material.Utils;
+import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.ActionBar;
 import org.michaelbel.material.widget.ActionBarMenu;
 import org.michaelbel.material.widget.ActionBarMenuItem;
-import org.michaelbel.material.widget.Browser;
 import org.michaelbel.material.widget.FragmentsPagerAdapter;
 
 public class LaunchActivity extends FragmentActivity {
@@ -21,25 +20,24 @@ public class LaunchActivity extends FragmentActivity {
     private static final int github = 1;
     private static final int settings = 2;
 
-    private ActionBar actionBar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        actionBar = (ActionBar) findViewById(R.id.action_bar);
+        ActionBar actionBar = (ActionBar) findViewById(R.id.action_bar);
         actionBar.setNavigationIcon(R.drawable.ic_menu);
         actionBar.setTitle(R.string.MaterialDemo);
         actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
             @Override
             public void onItemClick(int id) {
                 if (id == ActionBar.MENU_ICON) {
-                    Toast.makeText(LaunchActivity.this, "Drawer is not implemented", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LaunchActivity.this, ActionmodActivity.class));
                 } else if (id == github) {
-                    Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
+                    //Browser.openUrl(LaunchActivity.this, R.string.GithubURL);
+                    startActivity(new Intent(LaunchActivity.this, MainActivity.class));
                 } else if (id == settings) {
-                    actionBar.onMenuButtonPressed();
+                    startActivity(new Intent(LaunchActivity.this, SearchableActivity.class));
                 }
             }
         });
@@ -48,7 +46,9 @@ public class LaunchActivity extends FragmentActivity {
         menu.addItem(github, R.drawable.ic_github);
 
         ActionBarMenuItem item = menu.addItem(0, R.drawable.ic_dots_menu);
-        item.addSubItem(settings, getString(R.string.Settings), 0);
+        //item.setPopupMenuBackgroundColor(0xFF303030);
+
+        item.addSubItem(settings, R.string.Settings);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
@@ -61,7 +61,7 @@ public class LaunchActivity extends FragmentActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.setBackgroundColor(Utils.getAttrColor(R.attr.colorPrimary));
+        tabLayout.setBackgroundColor(Utils.getAttrColor(this, R.attr.colorPrimary));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
