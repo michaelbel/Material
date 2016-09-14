@@ -18,8 +18,8 @@ public class BottomPickerLayout extends FrameLayout {
 
     private int mPickerHeight;
     private float mPickerElevation;
-    private TextView mNegativeButton;
-    private TextView mPositiveButton;
+    protected TextView mNegativeButton;
+    protected TextView mPositiveButton;
     private OnClickListener positiveButtonListener;
     private OnClickListener negativeButtonListener;
 
@@ -33,15 +33,15 @@ public class BottomPickerLayout extends FrameLayout {
         mPickerHeight = 48;
         mPickerElevation = 8;
 
-        this.setElevation(Utils.dp(context, mPickerElevation));
+        setElevation(Utils.dp(context, mPickerElevation));
 
         mNegativeButton = new TextView(context);
         mNegativeButton.setClickable(true);
         mNegativeButton.setGravity(Gravity.CENTER);
         mNegativeButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mNegativeButton.setTextColor(Utils.getAttrColor(context, R.attr.colorPrimary));
         mNegativeButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
+        mNegativeButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mNegativeButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mNegativeButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.START | Gravity.CENTER_VERTICAL));
         addView(mNegativeButton);
@@ -50,16 +50,16 @@ public class BottomPickerLayout extends FrameLayout {
         mPositiveButton.setClickable(true);
         mPositiveButton.setGravity(Gravity.CENTER);
         mPositiveButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mPositiveButton.setTextColor(Utils.getAttrColor(context, R.attr.colorPrimary));
         mPositiveButton.setPadding(Utils.dp(context, 32), 0, Utils.dp(context, 32), 0);
+        mPositiveButton.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
         mPositiveButton.setBackgroundResource(Utils.selectableItemBackgroundBorderless(context));
         mPositiveButton.setLayoutParams(LayoutHelper.makeFrame(context, LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.END | Gravity.CENTER_VERTICAL));
         addView(mPositiveButton);
     }
 
     public BottomPickerLayout setNegativeButton(@NonNull String text, OnClickListener listener) {
-        this.negativeButtonListener = listener;
+        negativeButtonListener = listener;
 
         mNegativeButton.setText(text.toUpperCase());
         mNegativeButton.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +80,7 @@ public class BottomPickerLayout extends FrameLayout {
     }
 
     public BottomPickerLayout setPositiveButton(@NonNull String text, OnClickListener listener) {
-        this.positiveButtonListener = listener;
+        positiveButtonListener = listener;
 
         mPositiveButton.setText(text.toUpperCase());
         mPositiveButton.setOnClickListener(new View.OnClickListener() {
@@ -101,12 +101,12 @@ public class BottomPickerLayout extends FrameLayout {
     }
 
     public BottomPickerLayout setHeight(int height) {
-        this.mPickerHeight = height;
+        mPickerHeight = height;
         return this;
     }
 
     public BottomPickerLayout setElevation(int elevation) {
-        this.mPickerElevation = elevation;
+        mPickerElevation = elevation;
         return this;
     }
 

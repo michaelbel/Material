@@ -58,8 +58,6 @@ public class RadioButton extends View {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        Utils.bind(context);
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RadioButton, defStyleAttr, 0);
         darkTheme = a.getBoolean(R.styleable.RadioButton_radioButton_darkTheme, false);
         mAccentColor = a.getColor(R.styleable.RadioButton_radioButton_accentColor, 0xFF009688);

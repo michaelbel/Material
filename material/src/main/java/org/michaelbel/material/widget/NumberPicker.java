@@ -114,7 +114,22 @@ public class NumberPicker extends LinearLayout {
         String format(int value);
     }
 
-    private void init() {
+    public NumberPicker(Context context) {
+        super(context);
+        initialize(context, null, 0);
+    }
+
+    public NumberPicker(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initialize(context, attrs, 0);
+    }
+
+    public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initialize(context, attrs, defStyle);
+    }
+
+    private void initialize(Context context, AttributeSet attrs, int defStyle) {
         solidColor = 0;
         selectionDivider = new ColorDrawable(Utils.getAttrColor(getContext(), R.attr.colorPrimary));
         selectionDividerHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, UNSCALED_DEFAULT_SELECTION_DIVIDER_HEIGHT, getResources().getDisplayMetrics());
@@ -156,24 +171,6 @@ public class NumberPicker extends LinearLayout {
         flingScroller = new Scroller(getContext(), null, true);
         adjustScroller = new Scroller(getContext(), new DecelerateInterpolator(2.5f));
         updateInputTextView();
-    }
-
-    public NumberPicker(Context context) {
-        super(context);
-
-        Utils.bind(context);
-
-        init();
-    }
-
-    public NumberPicker(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
     }
 
     @Override

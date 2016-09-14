@@ -19,20 +19,10 @@ public class FrameLayoutFixed extends FrameLayout {
 
     public FrameLayoutFixed(Context context) {
         super(context);
-
-        Utils.bind(context);
     }
 
     public FrameLayoutFixed(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        Utils.bind(context);
-    }
-
-    public FrameLayoutFixed(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
-        Utils.bind(context);
     }
 
     public final int getMeasuredStateFixed(View view) {

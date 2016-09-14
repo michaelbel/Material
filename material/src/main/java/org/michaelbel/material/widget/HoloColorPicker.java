@@ -197,19 +197,19 @@ public class HoloColorPicker extends View {
 	}
 
 	public void setOnColorChangedListener(OnColorChangedListener listener) {
-		this.onColorChangedListener = listener;
+		onColorChangedListener = listener;
 	}
 
 	public OnColorChangedListener getOnColorChangedListener() {
-		return this.onColorChangedListener;
+		return onColorChangedListener;
 	}
 
 	public void setOnColorSelectedListener(OnColorSelectedListener listener) {
-		this.onColorSelectedListener = listener;
+		onColorSelectedListener = listener;
 	}
 
 	public OnColorSelectedListener getOnColorSelectedListener() {
-		return this.onColorSelectedListener;
+		return onColorSelectedListener;
 	}
 
 	@Override

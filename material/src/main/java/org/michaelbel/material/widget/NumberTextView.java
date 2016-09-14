@@ -49,7 +49,7 @@ public class NumberTextView extends View {
     }
 
     private void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        Utils.bind(context);
+        // nothing
     }
 
     public void setProgress(float value) {

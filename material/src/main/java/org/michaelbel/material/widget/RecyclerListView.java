@@ -69,10 +69,10 @@ public class RecyclerListView extends RecyclerView {
 
     public RecyclerListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context, attrs, defStyle);
+        initialize(context, attrs, defStyle);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyle) {
+    private void initialize(Context context, AttributeSet attrs, int defStyle) {
         try {
             if (!gotAttributes) {
                 attributes = getResourceDeclareStyleableIntArray("com.android.internal", "View");

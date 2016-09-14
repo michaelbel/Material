@@ -55,8 +55,6 @@ public class CheckBox extends View {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        Utils.bind(context);
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CheckBox, defStyleAttr, 0);
         darkTheme = a.getBoolean(R.styleable.CheckBox_checkBox_darkTheme, false);
         mAccentColor = a.getColor(R.styleable.CheckBox_checkBox_accentColor, 0xFF009688);

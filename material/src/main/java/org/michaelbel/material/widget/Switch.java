@@ -60,8 +60,6 @@ public class Switch extends CompoundButton {
     private @DrawableRes Drawable mTrackDrawable;
     private ObjectAnimator objectAnimator;
 
-
-
     private int colorAccent;
     private Rect mTempRect = new Rect();
     private VelocityTracker mVelocityTracker = VelocityTracker.obtain();
@@ -102,8 +100,6 @@ public class Switch extends CompoundButton {
     }
 
     public void initialize(Context context, AttributeSet attrs, int defStyleAttr) {
-        Utils.bind(context);
-
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Switch, defStyleAttr, 0);
         isRTL = a.getBoolean(R.styleable.Switch_switch_supportRTL, false);
         darkTheme = a.getBoolean(R.styleable.Switch_switch_darkTheme, false);

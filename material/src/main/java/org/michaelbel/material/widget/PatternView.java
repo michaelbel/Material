@@ -32,6 +32,7 @@ import org.michaelbel.material.util.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class PatternView extends View {
 
     public enum DisplayMode {

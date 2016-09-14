@@ -36,13 +36,16 @@ import android.support.annotation.ColorInt;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+@SuppressWarnings("unused")
 public class MediaControlDrawable extends Drawable {
 
     public enum State {
-        PLAY, PAUSE, STOP
+        PLAY,
+        PAUSE,
+        STOP
     }
 
-    private float mPadding = 0f;
+    private float mPadding;
     private float mRotation;
     private float mCenter;
     private float mSize;

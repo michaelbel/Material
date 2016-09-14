@@ -1,5 +1,6 @@
 package org.michaelbel.material.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 
 import org.michaelbel.material.R;
 
+@SuppressWarnings("unused")
 public class MaskImageView extends ImageView {
 
     private Paint mMaskedPaint;
@@ -33,7 +35,6 @@ public class MaskImageView extends ImageView {
 
     public MaskImageView(Context context) {
         super(context);
-
         prepareDrawables(mImageShape);
         setUpPaints();
     }
@@ -79,6 +80,7 @@ public class MaskImageView extends ImageView {
         return changed;
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         if (mBounds == null) {
