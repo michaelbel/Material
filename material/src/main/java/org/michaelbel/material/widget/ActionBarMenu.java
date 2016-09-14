@@ -44,27 +44,35 @@ public class ActionBarMenu extends LinearLayout {
         return view;
     }
 
-    public ActionBarMenuItem addItem(int id, @DrawableRes Drawable drawable) {
-        return addItem(id, 0, actionBar.itemsBackgroundColor, drawable, Utils.dp(getContext(), 48));
-    }
-
     public ActionBarMenuItem addItem(int id, @DrawableRes int icon) {
         return addItem(id, icon, actionBar.itemsBackgroundColor);
     }
 
+    public ActionBarMenuItem addItem(int id, @DrawableRes Drawable resId) {
+        return addItem(id, 0, resId, actionBar.itemsBackgroundColor, Utils.dp(getContext(), 48));
+    }
+
     public ActionBarMenuItem addItem(int id, @DrawableRes int icon, int backgroundColor) {
-        return addItem(id, icon, backgroundColor, null, Utils.dp(getContext(), 48));
+        return addItem(id, icon, null, backgroundColor, Utils.dp(getContext(), 48));
+    }
+
+    public ActionBarMenuItem addItem(int id, @DrawableRes Drawable resId, int backgroundColor) {
+        return addItem(id, 0, resId, backgroundColor, Utils.dp(getContext(), 48));
     }
 
     public ActionBarMenuItem addItemWithWidth(int id, @DrawableRes int icon, int width) {
-        return addItem(id, icon, actionBar.itemsBackgroundColor, null, width);
+        return addItem(id, icon, null, actionBar.itemsBackgroundColor, width);
     }
 
-    public ActionBarMenuItem addItem(int id, @DrawableRes int icon, int backgroundColor, Drawable drawable, int width) {
+    public ActionBarMenuItem addItemWithWidth(int id, @DrawableRes Drawable resId, int width) {
+        return addItem(id, 0, resId, actionBar.itemsBackgroundColor, width);
+    }
+
+    public ActionBarMenuItem addItem(int id, @DrawableRes int icon, Drawable resId, int backgroundColor, int width) {
         ActionBarMenuItem menuItem = new ActionBarMenuItem(getContext(), this, backgroundColor);
         menuItem.setTag(id);
-        if (drawable != null) {
-            menuItem.iconView.setImageDrawable(drawable);
+        if (resId != null) {
+            menuItem.iconView.setImageDrawable(resId);
         } else {
             menuItem.iconView.setImageResource(icon);
         }
