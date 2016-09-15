@@ -49,19 +49,4 @@
             <flag name="end" value="0x00800005"/>
         </attr>
     </declare-styleable>
-
-    <!--ColorPickerView-->
-    <declare-styleable name="ColorPickerView">
-        <attr name="alphaSlider" format="boolean"/>
-        <attr name="lightnessSlider" format="boolean"/>
-        <attr name="density" format="integer"/>
-        <attr name="initialColor" format="integer"/>
-        <attr name="wheelType" format="enum">
-            <enum name="FLOWER" value="0"/>
-            <enum name="CIRCLE" value="1"/>
-        </attr>
-        <attr name="pickerTitle" format="reference|string"/>
-        <attr name="pickerButtonOk" format="reference|string"/>
-        <attr name="pickerButtonCancel" format="reference|string"/>
-    </declare-styleable>
 </resources>
