@@ -2,9 +2,7 @@ package org.michaelbel.app.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -34,7 +32,6 @@ import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
 import org.michaelbel.material.widget.ColorPicker.ColorPickerDialog;
 import org.michaelbel.material.widget.ColorPicker.IndicatorMode;
-import org.michaelbel.material.widget.ColorPickerView;
 import org.michaelbel.material.widget.HoloColorPicker;
 import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.NumberPicker;
@@ -425,43 +422,12 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                         }
                     });
                     builder.show();
-                } else if (i == 20) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    LinearLayout layout = new LinearLayout(getActivity());
-                    layout.setOrientation(LinearLayout.VERTICAL);
-
-                    final ColorPickerView picker = new ColorPickerView(getActivity());
-                    picker.setDensity(12);
-                    picker.setType(ColorPickerView.CIRCLE);
-                    picker.setInitialColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
-                    layout.addView(picker, LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
-                            LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
-
-                    builder.setView(layout);
-                    builder.setTitle(R.string.ColorPickerView);
-                    builder.setNegativeButton(R.string.Cancel, null);
-                    builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getSelectedColor()),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    builder.show();
                 }
 
                 if (i == -3) {
                     new SingleChoiceDialog().show(getFragmentManager(), TAG);
                 } else if (i == -4) {
                     new MultiChoiceDialog().show(getFragmentManager(), TAG);
-                } else if (i == -6) {
-                    Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,
-                            RingtoneManager.TYPE_NOTIFICATION | RingtoneManager.TYPE_RINGTONE);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true);
-                    intent.putExtra(RingtoneManager.EXTRA_RINGTONE_DEFAULT_URI,
-                            RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                    startActivityForResult(intent, 0);
                 }
             }
         });
