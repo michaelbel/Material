@@ -13,12 +13,19 @@
         android:theme="@style/AppTheme"
         android:label="Material">
 
-        <activity android:name="org.michaelbel.app.LaunchActivity">
+        <activity
+            android:name="org.michaelbel.app.LaunchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name=".ActionbarActivity"/>
+        <activity android:name=".SearchableActivity"/>
+        <activity android:name=".ActionmodActivity"/>
+        <activity android:name=".MainActivity"/>
 
     </application>
 
