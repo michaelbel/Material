@@ -1,5 +1,5 @@
 ## Material
-Material Design Library
+Material Design Library.
 
 [![Platform](https://img.shields.io/badge/Platform-Android-blue.svg)](https://github.com/michaelbel/material)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg)](https://github.com/michaelbel/material)
