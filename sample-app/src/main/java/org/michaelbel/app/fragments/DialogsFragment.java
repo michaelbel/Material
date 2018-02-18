@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -26,8 +25,6 @@ import org.michaelbel.app.R;
 import org.michaelbel.app.cells.listview.EmptyCell;
 import org.michaelbel.app.cells.listview.TextCell;
 import org.michaelbel.app.model.DialogItem;
-import org.michaelbel.material.color.ColorChooserDialog;
-import org.michaelbel.material.core.util.DialogUtils;
 import org.michaelbel.material.util.Utils;
 import org.michaelbel.material.widget.ColorPicker.ColorMode;
 import org.michaelbel.material.widget.ColorPicker.ColorPickerDialog;
@@ -40,7 +37,7 @@ import org.michaelbel.material.widget.ShiftColorPicker;
 
 import java.util.ArrayList;
 
-public class DialogsFragment extends Fragment implements ColorChooserDialog.ColorCallback {
+public class DialogsFragment extends Fragment /*implements ColorChooserDialog.ColorCallback*/ {
 
     private static final String TAG = DialogsFragment.class.getSimpleName();
     private ArrayList<DialogItem> items;
@@ -49,15 +46,14 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
     private int accentPreselect;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getContext());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
-
-        primaryPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorPrimary);
-        accentPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorAccent);
+        //primaryPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorPrimary);
+        //accentPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorAccent);
         items = new ArrayList<>();
-        items.add(new DialogItem("Number Picker"));                  //- 0
+        items.add(new DialogItem("Number Picker"));          //- 0
         items.add(new DialogItem().setTitle("Number Picker"));       //- 1
         items.add(new DialogItem().setTitle("String Picker"));       //- 2
         items.add(new DialogItem("Shift Color Picker"));             //- 3
@@ -84,8 +80,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
         listView.setDividerHeight(0);
         listView.setDrawSelectorOnTop(true);
         listView.setAdapter(new ListViewAdapter());
-        listView.setLayoutParams(LayoutHelper.makeFrame(getContext(),
-                LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        listView.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int i, long id) {
@@ -103,8 +98,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), getString(R.string.Value, picker.getValue()),
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), getString(R.string.Value, picker.getValue()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -170,8 +164,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                     RelativeLayout layout = new RelativeLayout(getContext());
-                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
-                            Utils.dp(getContext(), 24));
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24));
 
                     final ShiftColorPicker picker = new ShiftColorPicker(getContext());
                     picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
@@ -184,8 +177,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setNegativeButton(R.string.Cancel, null);
                     builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -193,8 +185,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                     RelativeLayout layout = new RelativeLayout(getContext());
-                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
-                            Utils.dp(getContext(), 24));
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24));
 
                     final ShiftColorPicker picker = new ShiftColorPicker(getContext());
                     picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
@@ -207,8 +198,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setNegativeButton(R.string.Cancel, null);
                     builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -216,8 +206,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                     RelativeLayout layout = new RelativeLayout(getContext());
-                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24),
-                            Utils.dp(getContext(), 24));
+                    layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24));
 
                     final ShiftColorPicker picker = new ShiftColorPicker(getContext());
                     picker.setLayoutParams(LayoutHelper.makeRelative(getContext(), LayoutHelper.MATCH_PARENT, 60));
@@ -230,8 +219,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setNegativeButton(R.string.Cancel, null);
                     builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -239,8 +227,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                     LinearLayout layout = new LinearLayout(getContext());
-                    layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT,
-                            LayoutHelper.WRAP_CONTENT));
+                    layout.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
                     layout.setOrientation(LinearLayout.VERTICAL);
                     layout.setPadding(Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), Utils.dp(getContext(), 24), 0);
 
@@ -277,8 +264,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setNegativeButton(R.string.Cancel, null);
                     builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getContext(), Integer.toHexString(picker2.getColor()),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), Integer.toHexString(picker2.getColor()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -406,8 +392,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     layout.setOrientation(LinearLayout.VERTICAL);
 
                     final HoloColorPicker picker = new HoloColorPicker(getActivity());
-                    picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT,
-                            LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
+                    picker.setLayoutParams(LayoutHelper.makeLinear(getActivity(), LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
                     layout.addView(picker);
                     picker.setOldCenterColor(Utils.getAttrColor(getContext(), R.attr.colorAccent));
 
@@ -417,8 +402,7 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
                     builder.setPositiveButton(R.string.Set, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "" + Integer.toHexString(picker.getColor()), Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.show();
@@ -610,8 +594,8 @@ public class DialogsFragment extends Fragment implements ColorChooserDialog.Colo
         }
     }
 
-    @Override
+    /*@Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, @ColorInt int color) {
         Toast.makeText(getContext(), Integer.toHexString(color), Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }
