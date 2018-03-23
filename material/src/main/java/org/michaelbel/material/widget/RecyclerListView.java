@@ -1,17 +1,17 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright 2018 Michael Bel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 
 package org.michaelbel.material.widget;
@@ -22,7 +22,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
@@ -34,10 +33,8 @@ import android.view.ViewGroup;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-@SuppressWarnings({"unused", "FieldCanBeLocal"})
+@SuppressWarnings("all")
 public class RecyclerListView extends RecyclerView {
-
-    private static final String TAG = RecyclerListView.class.getSimpleName();
 
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
@@ -84,7 +81,7 @@ public class RecyclerListView extends RecyclerView {
             initializeScrollbars.invoke(this, a);
             a.recycle();
         } catch (Throwable e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
         }
 
         super.addOnScrollListener(new OnScrollListener() {
@@ -100,7 +97,7 @@ public class RecyclerListView extends RecyclerView {
                     try {
                         mGestureDetector.onTouchEvent(event);
                     } catch (Exception e) {
-                        Log.e(TAG, e.getMessage());
+                        e.printStackTrace();
                     }
 
                     currentChildView.onTouchEvent(event);
@@ -109,6 +106,7 @@ public class RecyclerListView extends RecyclerView {
                     currentChildView = null;
                     interceptedByChild = false;
                 }
+
                 if (onScrollListener != null) {
                     onScrollListener.onScrollStateChanged(recyclerView, newState);
                 }
@@ -121,6 +119,7 @@ public class RecyclerListView extends RecyclerView {
                 }
             }
         });
+
         addOnItemTouchListener(new RecyclerListViewItemClickListener(context));
     }
 
@@ -233,7 +232,7 @@ public class RecyclerListView extends RecyclerView {
                         mGestureDetector.onTouchEvent(event);
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, e.getMessage());
+                    e.printStackTrace();
                 }
             }
 
@@ -320,7 +319,7 @@ public class RecyclerListView extends RecyclerView {
                 return (int[]) f.get(null);
             }
         } catch (Throwable e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
         }
 
         return null;
@@ -419,7 +418,7 @@ public class RecyclerListView extends RecyclerView {
         try {
             super.stopScroll();
         } catch (NullPointerException e) {
-            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
         }
     }
 
