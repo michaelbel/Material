@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Date: Sut, Mar 3 2018
+ * Date: 3 MAR 2018
  * Time: 23:19 MSK
  *
  * @author Michael Bel
