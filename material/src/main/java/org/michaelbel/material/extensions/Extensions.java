@@ -19,7 +19,7 @@ import org.michaelbel.material.R;
 import java.lang.reflect.Field;
 
 /**
- * Date: Sun, Feb 3 2018
+ * Date: 3 FEB 2018
  * Time: 23:22 MSK
  *
  * @author Michael Bel
