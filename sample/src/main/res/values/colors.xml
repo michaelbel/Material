@@ -1,0 +1,31 @@
+<resources>
+    <color name="colorPrimary">@color/md_green_500</color>
+    <color name="colorPrimaryDark">@color/md_green_700</color>
+    <color name="colorPrimaryLight">@color/md_green_100</color>
+    <color name="colorAccent">@color/md_red_A200</color>
+
+    <color name="textColorPrimary">#212121</color>
+    <color name="textColorSecondary">#727272</color>
+    <color name="dividerColor">#D9D9D9</color>
+
+    <!--Divider color 12%-->
+    <color name="divider">#1FFFFFFF</color>
+    <!--Active icon 54%-->
+    <color name="icon_active">#8AFFFFFF</color>
+    <!--Inactive icon 38%-->
+    <color name="icon_inactive">#61FFFFFF</color>
+    <!--Primary text 87%-->
+    <color name="primary_text">#DEFFFFFF</color>
+    <!--Secondary text 54%-->
+    <color name="secondary_text">#8AFFFFFF</color>
+    <!--Disabled text, hint text, and icons 38%-->
+    <color name="disabled_text">#61FFFFFF</color>
+    <!--Status bar-->
+    <color name="status_bar">#000000</color>
+    <!--App bar-->
+    <color name="app_bar">#212121</color>
+    <!--Background-->
+    <color name="background">#303030</color>
+    <!--Cards and Dialogs-->
+    <color name="component">#424242</color>
+</resources>
