@@ -28,6 +28,10 @@ import java.lang.reflect.Field;
 @SuppressWarnings("all")
 public class Extensions {
 
+    public static int dp(@NonNull Context context,  float value) {
+        return (int) Math.ceil(context.getResources().getDisplayMetrics().density * value);
+    }
+
     public static void copyToClipboard(Context context, @NonNull CharSequence text) {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = ClipData.newPlainText(text, text);
