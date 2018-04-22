@@ -20,8 +20,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:design:27.1.0'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
 
 ext {
@@ -30,7 +30,7 @@ ext {
 
     artifact = 'material'
     publishedGroupId = 'org.michaelbel'
-    libraryVersion = '0.3.2'
+    libraryVersion = '0.3.3'
     libraryName = 'Material'
     libraryDescription = 'Material design components library for Android'
 
