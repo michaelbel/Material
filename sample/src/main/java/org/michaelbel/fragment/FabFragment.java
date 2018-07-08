@@ -19,7 +19,7 @@ import android.widget.FrameLayout;
 
 import org.michaelbel.LaunchActivity;
 import org.michaelbel.app.R;
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget2.MediaControlDrawable;
 
 public class FabFragment extends Fragment implements View.OnClickListener {

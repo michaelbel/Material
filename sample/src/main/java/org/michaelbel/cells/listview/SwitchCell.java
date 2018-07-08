@@ -8,7 +8,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import org.michaelbel.app.R;
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget2.Switch;
 
 public class SwitchCell extends BaseCell {

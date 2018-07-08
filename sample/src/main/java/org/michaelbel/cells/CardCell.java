@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import org.michaelbel.app.R;
 import org.michaelbel.material.util2.Utils;
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 
 public class CardCell extends CardView {
 

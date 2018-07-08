@@ -18,7 +18,7 @@ import org.michaelbel.app.R;
 import org.michaelbel.cells.CardCell;
 import org.michaelbel.model.Card;
 import org.michaelbel.material.util2.Utils;
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget.RecyclerListView;
 
 import java.util.ArrayList;
@@ -51,22 +51,6 @@ public class CardFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setLayoutParams(LayoutHelper.makeFrame(getActivity(), LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-        recyclerView.setOnItemClickListener(new RecyclerListView.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Card item = items.get(position);
-                Toast.makeText(getActivity(), getString(R.string.ClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
-            }
-        });
-        recyclerView.setOnItemLongClickListener(new RecyclerListView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemClick(View view, int position) {
-                Card item = items.get(position);
-                Toast.makeText(getActivity(), getString(R.string.LongClickOnCard, item.getId()), Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
         fragmentView.addView(recyclerView);
         return fragmentView;
     }
@@ -114,7 +98,6 @@ public class CardFragment extends Fragment {
                 cardCell.setCardBackgroundColor(0xFFFFFFFF);
                 cardCell.setRadius(Utils.dp(getContext(), 3.5F));
                 cardCell.setCardElevation(Utils.dp(getContext(), 1.8F));
-                //cardCell.setBackgroundResource(R.drawable.list_selector_white);
                 cardCell.setLayoutParams(LayoutHelper.makeFrame(getContext(), LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 6, 5, 6, 1));
 
                 cardCell.setOnOptionsClick(new View.OnClickListener() {

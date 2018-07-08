@@ -28,7 +28,7 @@ import org.michaelbel.material.widget2.ColorPicker.ColorMode;
 import org.michaelbel.material.widget2.ColorPicker.ColorPickerDialog;
 import org.michaelbel.material.widget2.ColorPicker.IndicatorMode;
 import org.michaelbel.material.widget2.HoloColorPicker;
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 import org.michaelbel.material.widget2.NumberPicker;
 import org.michaelbel.material.widget2.Palette;
 import org.michaelbel.material.widget2.ShiftColorPicker;
@@ -41,21 +41,16 @@ public class DialogsFragment extends Fragment {
     private static final String TAG = DialogsFragment.class.getSimpleName();
     private ArrayList<DialogItem> items;
 
-    private int primaryPreselect;
-    private int accentPreselect;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup view, Bundle savedInstanceState) {
         FrameLayout fragmentView = new FrameLayout(getContext());
         fragmentView.setBackgroundColor(0xFFF0F0F0);
 
-        //primaryPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorPrimary);
-        //accentPreselect = DialogUtils.resolveColor(getContext(), R.attr.colorAccent);
         items = new ArrayList<>();
-        items.add(new DialogItem("Number Picker"));          //- 0
-        items.add(new DialogItem().setTitle("Number Picker"));       //- 1
-        items.add(new DialogItem().setTitle("String Picker"));       //- 2
-        items.add(new DialogItem("Shift Color Picker"));             //- 3
+        items.add(new DialogItem("Number Picker"));
+        items.add(new DialogItem().setTitle("Number Picker"));
+        items.add(new DialogItem().setTitle("String Picker"));
+        items.add(new DialogItem("Shift Color Picker"));
         items.add(new DialogItem().setTitle("Primary Colors"));      //- 4
         items.add(new DialogItem().setTitle("Primary Dark Colors")); //- 5
         items.add(new DialogItem().setTitle("Accent Colors"));       //- 6
@@ -94,12 +89,6 @@ public class DialogsFragment extends Fragment {
                     builder.setView(picker);
                     builder.setTitle("Number Picker");
                     builder.setNegativeButton(R.string.Cancel, null);
-                    builder.setPositiveButton(R.string.Done, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Toast.makeText(getContext(), getString(R.string.Value, picker.getValue()), Toast.LENGTH_SHORT).show();
-                        }
-                    });
                     builder.show();
                 } else if (i == 2) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -305,85 +294,7 @@ public class DialogsFragment extends Fragment {
                     builder.setColorMode(ColorMode.CMYK255);
                     builder.setIndicatorMode(IndicatorMode.HEX);
                     builder.create().show(getFragmentManager(), TAG);
-                } /*else if (i == 11) {
-                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
-                            .titleSub(org.michaelbel.material.R.string.colors)
-                            .preselect(primaryPreselect)
-                            .show();
-                } else if (i == 12) {
-                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
-                            .titleSub(org.michaelbel.material.R.string.colors)
-                            .accentMode(true)
-                            .preselect(accentPreselect)
-                            .show();
-                } else if (i == 13) {
-                    int[][] subColors = new int[][]{
-                            new int[]{Color.parseColor("#EF5350"), Color.parseColor("#F44336"), Color.parseColor("#E53935")},
-                            new int[]{Color.parseColor("#EC407A"), Color.parseColor("#E91E63"), Color.parseColor("#D81B60")},
-                            new int[]{Color.parseColor("#AB47BC"), Color.parseColor("#9C27B0"), Color.parseColor("#8E24AA")},
-                            new int[]{Color.parseColor("#7E57C2"), Color.parseColor("#673AB7"), Color.parseColor("#5E35B1")},
-                            new int[]{Color.parseColor("#5C6BC0"), Color.parseColor("#3F51B5"), Color.parseColor("#3949AB")},
-                            new int[]{Color.parseColor("#42A5F5"), Color.parseColor("#2196F3"), Color.parseColor("#1E88E5")}
-                    };
-
-                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
-                            .titleSub(org.michaelbel.material.R.string.colors)
-                            .preselect(primaryPreselect)
-                            .customColors(org.michaelbel.material.R.array.custom_colors, subColors)
-                            .show();
-                } else if (i == 14) {
-                    new ColorChooserDialog.Builder(this, org.michaelbel.material.R.string.color_palette)
-                            .titleSub(org.michaelbel.material.R.string.colors)
-                            .preselect(0xF44336)
-                            .customColors(org.michaelbel.material.R.array.custom_colors, null)
-                            .show();
-                }*/
-
-                /*if (i == 16) {
-                    Calendar now = Calendar.getInstance();
-
-                    DatePickerDialog dpd = DatePickerDialog.newInstance(
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                                    String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-                                    Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
-                                }
-                            },
-                            now.get(Calendar.YEAR),
-                            now.get(Calendar.MONTH),
-                            now.get(Calendar.DAY_OF_MONTH)
-                    );
-                    dpd.setOkText("Set");
-                    dpd.setAccentColor(0xFFFF5252);
-                    dpd.setCancelText("Cancel");
-                    dpd.setThemeDark(true);
-                    dpd.show(getActivity().getFragmentManager(), "Date");
-                } else if (i == 17) {
-                    Calendar now = Calendar.getInstance();
-
-                    TimePickerDialog time = TimePickerDialog.newInstance(
-                            new TimePickerDialog.OnTimeSetListener() {
-                                @Override
-                                public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-                                    String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
-                                    String minuteString = minute < 10 ? "0" + minute : "" + minute;
-                                    String secondString = second < 10 ? "0" + second : "" + second;
-                                    String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
-
-                                    Toast.makeText(getContext(), time1, Toast.LENGTH_LONG).show();
-                                }
-                            },
-                            now.get(Calendar.HOUR_OF_DAY),
-                            now.get(Calendar.MINUTE),
-                            true
-                    );
-                    time.setOkText("Set");
-                    time.setAccentColor(0xFFFF5252);
-                    time.setCancelText("Cancel");
-                    time.setThemeDark(true);
-                    time.show(getActivity().getFragmentManager(), "Time");
-                }*/
+                }
 
                 if (i == 19) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -417,39 +328,6 @@ public class DialogsFragment extends Fragment {
         fragmentView.addView(listView);
         return fragmentView;
     }
-
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        TimePickerDialog tpd = (TimePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Time");
-        DatePickerDialog dpd = (DatePickerDialog) getActivity().getFragmentManager().findFragmentByTag("Date");
-
-        if (tpd != null)
-            tpd.setOnTimeSetListener(new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-                String hourString = hourOfDay < 10 ? "0" + hourOfDay : "" + hourOfDay;
-                String minuteString = minute < 10 ? "0" + minute : "" + minute;
-                String secondString = second < 10 ? "0" + second : "" + second;
-                String time1 = "You picked the following time: " + hourString + "h" + minuteString + "m" + secondString + "s";
-
-                Toast.makeText(getContext(), time1, Toast.LENGTH_LONG).show();
-            }
-        });
-
-        if (dpd != null)
-            dpd.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-                String date = "You picked the following date: "+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
-                Toast.makeText(getContext(), date, Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
-
-    //public void showDialog(Dialog dialog) {
-    //    ((LaunchActivity) getActivity()).showDialog(dialog);
-    //}
 
     public class ListViewAdapter extends BaseAdapter {
 

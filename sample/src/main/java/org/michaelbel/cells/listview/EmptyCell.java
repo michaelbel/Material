@@ -7,7 +7,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TextView;
 
-import org.michaelbel.material.widget2.LayoutHelper;
+import org.michaelbel.material.widget.LayoutHelper;
 
 public class EmptyCell extends BaseCell {
 
