@@ -7,10 +7,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ArrayRes;
+import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
@@ -252,5 +255,45 @@ public class Extensions {
         }
 
         return null;
+    }
+
+    public static float convertPixelsToDp(Context context, float px) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
+
+    public static int getAttrColor(@NonNull Context context, @AttrRes int colorAttr) {
+        int color = 0;
+        int[] attrs = new int[] {
+                colorAttr
+        };
+
+        try {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs);
+            color = typedArray.getColor(0, 0);
+            typedArray.recycle();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return color;
+    }
+
+    public static int[] getColorArray(@NonNull Context context, @ArrayRes int arrayRes) {
+        if (arrayRes == 0) {
+            return null;
+        }
+
+        TypedArray ta = context.getResources().obtainTypedArray(arrayRes);
+        int[] colors = new int[ta.length()];
+
+        for (int i = 0; i < ta.length(); i++) {
+            colors[i] = ta.getColor(i, 0);
+        }
+
+        ta.recycle();
+        return colors;
     }
 }
