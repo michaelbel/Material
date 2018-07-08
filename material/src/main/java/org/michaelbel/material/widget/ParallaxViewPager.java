@@ -28,7 +28,6 @@ import static android.graphics.drawable.GradientDrawable.Orientation.RIGHT_LEFT;
  * Date: 2014-08-15
  *
  * Updated:
- *
  * Date: 23 MAR 2018
  * Time: 22:20 MSK
  *
@@ -44,18 +43,18 @@ public class ParallaxViewPager extends ViewPager {
     private int mShadowEnd = Color.parseColor("#00000000");
 
     private Drawable mRightShadow =
-            new GradientDrawable(LEFT_RIGHT, new int[]{
-                    mShadowStart,
-                    mShadowMid,
-                    mShadowEnd
-            });
+        new GradientDrawable(LEFT_RIGHT, new int[]{
+            mShadowStart,
+            mShadowMid,
+            mShadowEnd
+        });
 
     private Drawable mLeftShadow =
-            new GradientDrawable(RIGHT_LEFT, new int[]{
-                    mShadowStart,
-                    mShadowMid,
-                    mShadowEnd
-            });
+        new GradientDrawable(RIGHT_LEFT, new int[]{
+            mShadowStart,
+            mShadowMid,
+            mShadowEnd
+        });
 
     private int mOutset;
     private int mShadowWidth;
@@ -65,7 +64,6 @@ public class ParallaxViewPager extends ViewPager {
     private ParallaxTransformer mParallaxTransformer;
 
     public enum Mode {
-
         LEFT_OVERLAY(0),
         RIGHT_OVERLAY(1),
         NONE(2);

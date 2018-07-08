@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.michaelbel.material.R;
 import org.michaelbel.material.util2.Utils;
+import org.michaelbel.material.widget.LayoutHelper;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class BottomPickerLayout extends FrameLayout {

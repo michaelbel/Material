@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.michaelbel.material.util2.Utils;
+import org.michaelbel.material.widget.LayoutHelper;
 
 import java.util.ArrayList;
 

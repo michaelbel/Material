@@ -8,6 +8,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import org.michaelbel.material.util2.Utils;
+import org.michaelbel.material.widget.LayoutHelper;
 
 public class ChannelCell extends LinearLayout {
 
