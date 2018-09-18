@@ -10,13 +10,16 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ArrayRes;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -295,5 +298,27 @@ public class Extensions {
 
         ta.recycle();
         return colors;
+    }
+
+    public static float convertPixelsToDp(float px, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
+
+    public static Drawable getIcon(Context context, @DrawableRes int resource, int colorFilter) {
+        return getIcon(context, resource, colorFilter, PorterDuff.Mode.MULTIPLY);
+    }
+
+    public static Drawable getIcon(Context context, @DrawableRes int resource, int colorFilter, PorterDuff.Mode mode) {
+        Drawable iconDrawable = ContextCompat.getDrawable(context, resource);
+
+        if (iconDrawable != null) {
+            iconDrawable.clearColorFilter();
+            iconDrawable.mutate().setColorFilter(colorFilter, mode);
+        }
+
+        return iconDrawable;
     }
 }
