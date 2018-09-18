@@ -30,9 +30,9 @@ ext {
 
     artifact = 'material'
     publishedGroupId = 'org.michaelbel'
-    libraryVersion = '0.3.5'
+    libraryVersion = '0.3.6'
     libraryName = 'Material'
-    libraryDescription = 'Material design components library for Android'
+    libraryDescription = 'Material components library for Android'
 
     siteUrl = 'https://github.com/michaelbel/material'
     gitUrl = 'https://github.com/michaelbel/material.git'
