@@ -38,7 +38,7 @@ public class CardFragment extends Fragment {
         items.add(new Card(3, R.drawable.space3, "3. Main text", "Middle text", "Small text"));
         items.add(new Card(4, R.drawable.space4, "4. Main text", "Middle text", "Small text"));
         items.add(new Card(5, R.drawable.space5, "5. Main text", "Middle text", "Small text"));
-        items.add(new Card(6, R.drawable.space6, "6. Main text", "Middle text", "Small text"));
+        items.add(new Card(6, R.drawable.space5, "6. Main text", "Middle text", "Small text"));
         items.add(new Card(7, R.drawable.space1, "7. Main text", "Middle text", "Small text"));
         items.add(new Card(8, R.drawable.space2, "8. Main text", "Middle text", "Small text"));
         items.add(new Card(9, R.drawable.space3, "9. Main text", "Middle text", "Small text"));
@@ -112,8 +112,7 @@ public class CardFragment extends Fragment {
                                 final Card item = items.get(getAdapterPosition());
 
                                 if (i == 0) {
-                                    Toast.makeText(getActivity(), getString(R.string.OpeningCard,
-                                            item.getId()), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), getString(R.string.OpeningCard, item.getId()), Toast.LENGTH_SHORT).show();
                                 } else if (i == 1) {
                                     items.remove(getAdapterPosition());
                                     notifyItemRemoved(getAdapterPosition());
