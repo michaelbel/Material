@@ -1,3 +1,0 @@
-<resources>
-    <item name="msf_interpolator" type="interpolator">@android:interpolator/decelerate_cubic</item>
-</resources>

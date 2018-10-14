@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.michaelbel.material.widget2;
+package org.michaelbel.material.widget;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
@@ -26,7 +26,7 @@ import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("all")
 public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;

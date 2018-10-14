@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Michael Bel
+ * Copyright 2015 Michael Bel
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -24,16 +24,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
-import org.michaelbel.material.util2.Utils;
+import org.michaelbel.material.extensions.Extensions;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("all")
 public class LayoutHelper {
 
     public static final int MATCH_PARENT = -1;
     public static final int WRAP_CONTENT = -2;
 
     private static int getSize(@NonNull Context context, float size) {
-        return (int) (size < 0 ? size : Utils.dp(context, size));
+        return (int) (size < 0 ? size : Extensions.dp(context, size));
     }
 
     public static ScrollView.LayoutParams makeScroll(Context context, int width, int height) {

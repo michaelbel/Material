@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.michaelbel.material.widget2;
+package org.michaelbel.material.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -36,7 +36,7 @@ import android.support.annotation.ColorInt;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("all")
 public class MediaControlDrawable extends Drawable {
 
     public enum State {
