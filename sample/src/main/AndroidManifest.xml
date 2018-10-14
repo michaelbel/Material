@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.michaelbel.app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="org.michaelbel.app">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -7,11 +7,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name="org.michaelbel.BaseApplication"
-        android:allowBackup="true"
+        android:name="org.michaelbel.Material"
+        android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
-        android:label="Material">
+        android:label="Material"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <activity
             android:name="org.michaelbel.LaunchActivity"
