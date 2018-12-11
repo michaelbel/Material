@@ -3,7 +3,7 @@ package org.michaelbel;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import org.michaelbel.app.R;
+import org.michaelbel.R;
 
 public class LaunchActivity extends FragmentActivity {
 

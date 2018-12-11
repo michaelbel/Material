@@ -310,13 +310,6 @@ public class Extensions {
         return colors;
     }
 
-    public static float convertPixelsToDp(float px, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-        return dp;
-    }
-
     public static Drawable getIcon(Context context, @DrawableRes int resource, int colorFilter) {
         return getIcon(context, resource, colorFilter, PorterDuff.Mode.MULTIPLY);
     }
